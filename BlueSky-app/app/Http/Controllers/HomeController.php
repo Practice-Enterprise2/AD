@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
     public function changeInfo()
     {
-       return view('change-info');
+        return view('change-info');
     }
 
     public function profileUpdate(Request $request)
@@ -30,8 +31,7 @@ class HomeController extends Controller
             'old_password' => 'required',
             'new_password' => 'required|confirmed',
         ]);
-
-
+        $user->save();
         #Match The Old Password
         if (!Hash::check($request->old_password, auth()->user()->password)) {
             return back()->with("error", "Old Password Doesn't match!");
@@ -42,6 +42,10 @@ class HomeController extends Controller
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
+        $user->save();
+
+
+
 
         return back()->with('message', 'Profile Updated');
     }
