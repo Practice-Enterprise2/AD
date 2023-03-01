@@ -26,12 +26,14 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->name = $request['name'];
         $user->email = $request['email'];
+
+        $user->save();
+
         # Validation
         $request->validate([
             'old_password' => 'required',
             'new_password' => 'required|confirmed',
         ]);
-        $user->save();
         #Match The Old Password
         if (!Hash::check($request->old_password, auth()->user()->password)) {
             return back()->with("error", "Old Password Doesn't match!");
