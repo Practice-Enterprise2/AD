@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('job_title', 50);
             $table->integer('salary');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default('1');
             $table->timestamps();
         });
     }
