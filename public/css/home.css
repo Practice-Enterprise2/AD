@@ -1,0 +1,42 @@
+.header {
+    float: left;
+
+}
+
+ul {
+    text-decoration: none;
+    list-style: none;
+}
+
+li {
+    float: left;
+    display: block;
+
+    padding: 10px;
+    color:  rgb(65, 115, 208);
+}
+
+.dropdown {
+    display: none;
+}
+.dropdown li {
+    clear: both;
+}
+.dropdown li a {
+    text-decoration: none;
+    color: rgb(65, 115, 208);
+}
+
+.hovor{
+
+}
+
+.hovor:hover .dropdown {
+    display: block;
+    color:  red;
+}
+
+h1 {
+    margin-top: 210px ;
+    text-align: center;
+}

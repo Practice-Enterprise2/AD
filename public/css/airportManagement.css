@@ -1,0 +1,161 @@
+
+.header {
+    
+}
+ul {
+    text-decoration: none;
+    list-style: none;
+
+}
+
+li {
+    float: left;
+    display: block;
+    padding: 10px;
+    color:  rgb(65, 115, 208);
+}
+
+.dropdown {
+    position: absolute;
+    display: none;
+}
+.dropdown li {
+    clear: both;
+}
+.dropdown li a {
+    text-decoration: none;
+    color: rgb(65, 115, 208);
+}
+
+.hovor{
+
+}
+
+.hovor:hover .dropdown {
+    display: block;
+    color:  red;
+}
+
+.clear { clear: both; }
+
+/* Magament css */ 
+
+.container {
+    margin-top: 65px;
+    background-color: #c3c3c3;
+    border:3px solid #999999;
+    border-radius: 5px;
+    position: relative;
+    padding: 5px;
+    top: 0;
+}
+.container a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.addDiv {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    width: fit-content;
+    margin: 0px auto;
+    cursor: pointer;
+}
+.addDiv:hover {
+    font-size: 110%;
+    transition: 0.5s;
+}
+
+
+.legendDiv {
+    border: 3px solid black;
+    border-radius: 5px;
+    width: 95%;
+    margin: 15px auto 0 auto;
+}
+.legendDiv div{
+    display: inline-block;
+    text-align: center;
+    padding: 2.5px;
+    font-weight: bold;
+}
+.legendDiv .legend_name {
+    margin-left: 170px;
+}
+.legendDiv .legend_location {
+    margin-left: 70px;
+}
+.legendDiv .legend_size {
+    margin-left: 40px;
+}
+.legendDiv .legend_owner {
+    margin-left: 40px;
+}
+.legendDiv .legend_buttons {
+    margin-left: 330px;
+}
+
+.showItemDiv{
+    margin-top: 10px;
+}
+
+.airportCard {
+    width: 95%;
+    margin: 3px auto;
+    border: 2px solid gray;
+    background-color: rgb(216, 216, 216);
+    border-radius: 4px;
+    padding: 4px;
+    text-align: center;
+}
+.airportCard div {
+    display: inline-block;
+}
+
+.dataCard {
+    width: 40%;
+}
+.dataCard div {
+
+}
+
+.airportCard .name {
+    width: 30%;
+}
+.airportCard .location {
+   width: 20%;
+}
+.airportCard .size {
+   width: 15%;
+}
+.airportCard .owner {
+   width: 20%;
+}
+
+
+.relButtons {
+    display: inline-block;
+    width: 55%;
+    margin-left: 20px;
+    text-align: center;
+    width: 45%;
+}
+.relButtons div {
+    width: 20%;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.deleteButton{
+    border: 2px solid #dc3545; 
+}
+.editButton {
+    border: 2px solid #ffc107;
+}
+.infoButton {
+    border: 2px solid #0d6efd;
+
+}
