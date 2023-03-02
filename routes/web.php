@@ -18,9 +18,6 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/page2', function(){
-    return view('page2');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
