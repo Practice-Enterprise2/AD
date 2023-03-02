@@ -20,6 +20,8 @@ After cloning the project, put the following commands in your CLI:
 3. php artisan key:generate
 4. php artisan migrate
 
+5. database name = 'bluesky' (in .env)
+
 ## Running the project
 run the following commands in different terminals (!)
 1. 'npm run dev'
