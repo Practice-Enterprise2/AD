@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('job_title', 50);
             $table->integer('salary');
             $table->boolean('is_active');
+            $table->string('password', 100);
             $table->timestamps();
         });
     }
