@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
+Route::get('/home', [App\Http\Controllers\ProfileController::class, 'checkUser'])->name('checkUser');
+
+
+
+
 Route::get('/', function () {
     return view('app');
 });
