@@ -13,18 +13,6 @@ class ProfileController extends Controller
 {
 
 
-
-
-    //see if the user is logged in
-    public function checkUser()
-    {
-        if (Auth::user()->status == 1) {
-            return 'Profile';
-        } else {
-            return 'Log in';
-        }
-    }
-
     /**
      * Display the user's profile form.
      */
