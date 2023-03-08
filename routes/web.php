@@ -23,7 +23,8 @@ Route::get('/home', [App\Http\Controllers\ProfileController::class, 'checkUser']
 
 
 Route::get('/', function () {
-    return view('app');
+    return redirect('/home');
+
 });
 
 

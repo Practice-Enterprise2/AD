@@ -63,7 +63,7 @@
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ route('dashboard') }}"
                                         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         v-pre>
-                                        Dashboard
+                                        {{ Auth::user()->name }}
                                     </a>
                                 </li>
                             @endguest
