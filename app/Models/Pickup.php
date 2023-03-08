@@ -20,6 +20,7 @@ class Pickup extends Model
         'region',
         'country',
         'time',
+        'status',
     ];
 
 }

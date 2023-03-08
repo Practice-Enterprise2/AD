@@ -8,6 +8,8 @@
             <th class="border-2 border-black">City</th>
             <th class="border-2 border-black">Region</th>
             <th class="border-2 border-black">Country</th>
+            <th class="border-2 border-black">Status</th>
+            <th class="border-2 border-black">Cancel</th>
         </tr>
         @foreach($pickups as $pickup)
         <tr class="border-2 border-black">
@@ -18,6 +20,8 @@
             <td class="border-2 border-black">{{ $pickup->city }}</td>
             <td class="border-2 border-black">{{ $pickup->region }}</td>
             <td class="border-2 border-black">{{ $pickup->country }}</td>
+            <td class="border-2 border-black">{{ $pickup->status }}</td>
+            <td class="border-2 border-black"><button wire:click="cancel_pickup({{ $pickup->id }})">Cancel</button></td>
         </tr>
         @endforeach
     </table>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('region', 200);
             $table->string('country', 200);
             $table->dateTimeTz('time');
+            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

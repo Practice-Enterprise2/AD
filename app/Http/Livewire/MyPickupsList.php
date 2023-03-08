@@ -10,6 +10,14 @@ class MyPickupsList extends Component
 {
     public $pickups;
 
+    public function cancel_pickup(int $pickup_id)
+    {
+        $pickup = Pickup::find($pickup_id);
+        $pickup->status = 'canceled';
+        $pickup->save();
+        $this->pickups = Pickup::where('user_id', Auth::id())->get();
+    }
+
     public function mount()
     {
         $this->pickups = Pickup::where('user_id', Auth::id())->get();
