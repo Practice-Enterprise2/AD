@@ -35,6 +35,14 @@ Route::get('/page2', function () {
     return view('page2');
 });
 
+Route::get('create-pickup', function () {
+    return view('create-pickup');
+})->middleware(['auth', 'verified'])->name('create-pickup');
+
+Route::get('/dashboard/my-pickups', function () {
+    return view('dashboard.my_pickups');
+})->middleware(['auth', 'verified'])->name('my-pickups');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

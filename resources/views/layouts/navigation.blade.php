@@ -19,15 +19,12 @@
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profile') }}
                     </x-nav-link>
-
+                    <x-nav-link :href="route('my-pickups')" :active="request()->routeIs('dashboard.my_pickups')">
+                        {{ __('My Pickups') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-
-     
-
-
-
                 </div>
             </div>
 
