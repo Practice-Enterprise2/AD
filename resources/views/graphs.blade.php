@@ -1,13 +1,17 @@
 @extends('layouts.header')
 @section('content')
-<h1 class="text-3xl font-bold underline">Graphs</h1>
-<hr>
+
 <style>
 .chartBox{
     width: 770px;
     float: left;
 }
+
+
+
+
 </style>
+<div>
 <div class="chartCard">
     <div class="chartBox">
       <canvas id="myChart"></canvas>
@@ -18,14 +22,30 @@
       <canvas id="lineChart"></canvas>
     </div>
   </div>
+
+  <?php
+  
+  $con = new mysqli('localhost','root','','pe2');
+  $query = $con->query("
+  SELECT ShipmentDate,COUNT(ShipmentDate) AS sales FROM shipments
+     WHERE ShipmentDate > current_date - interval 7 day
+     GROUP BY ShipmentDate
+     ORDER BY ShipmentDate ASC;
+  ");
+  foreach ($query as $data) {
+    $day[] = $data['ShipmentDate'];
+    $shipments[] = $data['sales'];
+  }
+  ?>
+</div>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
   <script>
   // setup 
   const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    labels: <?php echo json_encode($day) ?>,
     datasets: [{
-      label: 'Weekly Sales',
-      data: [18, 12, 6, 9, 12, 3, 9],
+      label: 'Weekly shipments per day',
+      data: <?php echo json_encode($shipments) ?>,
       backgroundColor: [
         'rgba(255, 26, 104, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -91,4 +111,10 @@
   const chartVersion = document.getElementById('chartVersion');
   chartVersion.innerText = Chart.version;
   </script>
+
+
+  </div>
+  <div class="text-center pt-6">
+<a href="./shipmentsOverview"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Back</button></a>
+  </div>
 @endsection

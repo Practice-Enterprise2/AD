@@ -38,7 +38,8 @@ Route::get('/shipments', function(){
     return view('shipments');
 });
 
-Route::get('/shipments','App\Http\Controllers\Controller@showshipments');
+Route::get('/shipments','App\Http\Controllers\Controller@showShipments');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

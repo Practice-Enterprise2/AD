@@ -10,8 +10,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function showshipments(){
+    public function showShipments(){
         $shipments = DB::select('select * from shipments');
         return view('shipments',['shipments'=>$shipments]);
     }
+
+    
 }
