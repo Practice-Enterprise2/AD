@@ -15,5 +15,8 @@ class Controller extends BaseController
         return view('shipments',['shipments'=>$shipments]);
     }
 
-    
+    public function showShipments_details($id){
+        $shipments = DB::select("select * from shipments WHERE ShipmentID = '$id'");
+        return view('shipments_details',['shipments'=>$shipments]);
+    }
 }
