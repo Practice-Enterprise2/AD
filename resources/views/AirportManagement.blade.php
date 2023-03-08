@@ -47,12 +47,12 @@
                 <div class="name">{{$data->name}}</div>
                 <div class="location">{{$data->location}}</div>
                 <div class="size">{{$data->size}}</div>
-                <div class="owner">{{$data->ID}}</div>
+                <div class="owner">{{$data->owner}}</div>
             </div>
 
             <div class="relButtons">
                 <a href="{{ url('delete/'.$data->ID) }}"> <div class="deleteButton"> Delete </div></a>
-                <div class="editButton"> Edit </div>
+                <a  href="{{ url('edit/'.$data->ID) }}"><div class="editButton"> Edit </div></a>
                 <div class="infoButton"> Info </div>
             </div>
         </div>

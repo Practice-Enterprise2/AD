@@ -8,7 +8,7 @@
     <link href="{{url('css/airportManagement.css')}}" rel="stylesheet" type="text/css" >
 
 
-    <title>Airport Management</title>
+    <title>Depot Management</title>
 </head>
 <body>
 
@@ -43,14 +43,14 @@
         @foreach($depots as $data)
         <div class="airportCard">
             <div class="dataCard">        
-                <div class="name">{{$data->Code}}</div>
-                <div class="location">{{$data->Location}}</div>
-                <div class="size">{{$data->Size}}</div>
+                <div class="name">{{$data->code}}</div>
+                <div class="location">{{$data->location}}</div>
+                <div class="size">{{$data->size}}</div>
             </div>
 
             <div class="relButtons">
-                <a href="{{ url('delete/'.$data->ID) }}"> <div class="deleteButton"> Delete </div></a>
-                <div class="editButton"> Edit </div>
+                <a href="{{ url('deleteDepot/'.$data->ID) }}"> <div class="deleteButton"> Delete </div></a>
+                <a href="{{ url('editDepot/'.$data->ID) }}"> <div class="editButton"> Edit </div></a>
                 <div class="infoButton"> Info </div>
             </div>
         </div>

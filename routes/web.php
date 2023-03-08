@@ -5,6 +5,7 @@ use App\Http\Controllers\AirportController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\addAirportController;
 use App\Http\Controllers\addDepotController;
+use App\Http\Controllers\editAirportController;
 use App\Models\Airports;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +27,7 @@ Route::get('/', function () {
 Route::get('/airport-management', function () {
     return view('AirportManagement');
 }); 
+
 /* Route::get('/add-airport', function() {
     return view('AddAirport');
 });
@@ -41,7 +43,13 @@ Route::get('/airport-management', 'App\Http\Controllers\AirportController@index'
 Route::view('addAirport', 'AddAirport');
 Route::post('addAirport',[addAirportController::class, 'addData']);
 // Delete Airport
-Route::get('delete/{id}', [AirportController::class, 'delete']);
+Route::get('delete/{id}', [AirportController::class, 'deleteAirport']);
+// Edit Airport
+Route::get('edit/{id}', [AirportController::class, 'showData']);
+Route::post('edit/{id}',[AirportController::class, 'updateAirport']);
+// Route::get('edit/{id}', [AirportController::class, 'editAirport']);
+//Route::put('updateAirport/{id}',[AirportController::class, 'updateAirport']);
+
 
 // Depots DB Routes
 Route::get('depots',[DepotController::class, 'oldindex']);
@@ -50,7 +58,10 @@ Route::get('/depot-management', 'App\Http\Controllers\DepotController@index');
 Route::view('addDepot', 'AddDepot');
 Route::post('addDepot',[addDepotController::class, 'addData']);
 // Delete Depo
-Route::get('delete/{id}', [DepotController::class, 'delete']);
+Route::get('deleteDepot/{id}', [DepotController::class, 'deleteDepot']);
+// Edit Depot
+Route::get('editDepot/{id}', [DepotController::class, 'showDepotData']);
+Route::post('editDepot/{id}',[DepotController::class, 'updateDepot']);
 
 
 
