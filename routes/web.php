@@ -37,6 +37,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+//roles() method gives an error but it still works (I have no idea how or why)
 Route::get('/employee', function(){
     return Auth::user()->roles()->first()->name == 'employee' || 
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(403);
