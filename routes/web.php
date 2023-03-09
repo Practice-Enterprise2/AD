@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,18 @@ Route::get('/home', [App\Http\Controllers\ProfileController::class, 'checkUser']
 Route::get('/', function () {
     return redirect('/home');
 });
+
+Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth', 'verified'])->name('orders.index');
+
+Route::get('/orders/create', [OrderController::class, 'create'])->middleware(['auth', 'verified'])->name('orders.create');
+
+Route::post('/orders', [OrderController::class, 'store'])->middleware(['auth', 'verified'])->name('orders.store');
+
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->middleware(['auth', 'verified'])->name('orders.edit');
+
+Route::patch('/orders/{order}', [OrderController::class, 'update'])->middleware(['auth', 'verified'])->name('orders.update');
+
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->middleware(['auth', 'verified'])->name('orders.destroy');
 
 
 Route::get('/home', function () {
