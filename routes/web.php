@@ -20,12 +20,12 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/home', function () {
-    return View::make('app');
-})->name('home');
 Route::get('/home', [
     App\Http\Controllers\ProfileController::class, 'checkUser'
 ])->name('checkUser');
+Route::get('/home', function () {
+    return View::make('app');
+})->name('home');
 
 
 Route::get('/page2', function () {
