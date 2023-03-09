@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
-
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Redirect;
 */
 
 Route::get('/home', [App\Http\Controllers\ProfileController::class, 'checkUser'])->name('checkUser');
-
-
-
 
 Route::get('/', function () {
     return redirect('/home');
@@ -39,6 +36,17 @@ Route::get('/page2', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/employee', function(){
+    return Auth::user()->roles()->first()->name == 'employee' || 
+        Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(403);
+})->middleware(['auth', 'verified'])->name('employee');
+
+Route::get('/admin', function(){
+    //this gives an error but it works
+    return Auth::user()->roles()->first()->name == 'admin' ? view('admin') : abort(403);
+})->middleware(['auth', 'verified'])->name('admin');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

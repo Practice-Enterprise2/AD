@@ -12,5 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Use factories from models (\App\Models) to fill database.
+
+        $this->call([
+            RoleTableSeeder::class,
+            UserTableSeeder::class,
+        ]);
     }
 }
