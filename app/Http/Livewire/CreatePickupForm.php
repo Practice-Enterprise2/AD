@@ -6,6 +6,10 @@ use App\Models\Pickup;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
+/*
+ * Livewire component form for customers to create a home pickup for their
+ * package.
+*/
 class CreatePickupForm extends Component
 {
     public Pickup $pickup;

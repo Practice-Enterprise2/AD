@@ -1,4 +1,7 @@
 <?php
+/*
+Livewire component list to show all the pickups for the logged in user.
+*/
 
 namespace App\Http\Livewire;
 
