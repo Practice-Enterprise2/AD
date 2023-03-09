@@ -25,14 +25,6 @@ run the following commands in different terminals (!)
 1. 'npm run dev'
 2. 'php artisan serve'
 
-## Creating your own page
-1. Extend your page from the header -> @extends('layouts.header')
-2. Start section -> @section('content')
-This will be put under the header on the page. (you can see the content div in layouts/header)
-3. insert your html code (no need for body, can be just div. Kinda like a component)
-4. end your section with @endsection
-5. add route for your page and optionally link it in header
-
 
  
 
