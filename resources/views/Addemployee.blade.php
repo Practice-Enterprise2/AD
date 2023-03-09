@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        @extends('layouts.header')
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="css/employee_add.css">
-        <title>Employee</title>
-    </head>
-    <>
-    @section('content') 
+@extends('layouts.header')
+@section('content') 
         <h1>New Employee</h1>
         <form method="post" action="employee_add" accept-charset="UTF-8">
             @csrf
@@ -51,5 +43,4 @@
             <button type="reset">reset</button>
             <button type="submit">New</button>
         </form>
-        @endsection
-</html>
+@endsection
