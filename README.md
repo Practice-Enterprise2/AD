@@ -22,8 +22,9 @@ After cloning the project, put the following commands in your CLI:
 
 ## Running the project
 run the following commands in different terminals (!)
-1. 'npm run dev'
-2. 'php artisan serve'
+1. php artisan migrate --seed
+2. npm run dev
+3. php artisan serve
 
 
  
