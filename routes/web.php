@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\employeeViewController;
+use App\Http\Controllers\CustomerOvervieuw;
+use App\Http\Controllers\overviewEmployees;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,8 +59,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-route::get('/addemployee', function(){
+Route::get('employee_overview',[employeeViewController::class, 'index']);
+Route::get('/new_employee', function () {
     return view('Addemployee');
 });
+Route::post('employee_add',[employeeViewController::class, 'save']);
+
+Route::get('/CustomerOvervieuw', [CustomerOvervieuw::class,"index"]);  
+Route::get('/customer/{custID}', [CustomerOvervieuw::class, 'show'])->name('customer.show');
+Route::get('/customer/{custID}/edit', [CustomerOvervieuw::class, 'edit'])->name('customer.edit');
+Route::put('/customer/{custID}', [CustomerOvervieuw::class, 'update'])->name('customer.update');
 
 require __DIR__ . '/auth.php';
