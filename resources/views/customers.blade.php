@@ -1,5 +1,46 @@
 @extends('layouts.header')
 @section('content')
+<style>
+    :root {
+        --lgrey: #e0e0e0;
+       
+        --eLgrey: #f9f9f9;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .tableContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tableCust {
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: var(--lgrey);
+        font-size: 20px;
+     
+    }
+
+    tr {
+        background-color:var(--eLgrey);
+    } 
+    tr:hover {
+    background-color: var(--lgrey);
+}
+</style>
 <h1>Customer Overview</h1>
     <div class="tableContainer">
         <table class="tableCust">

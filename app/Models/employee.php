@@ -12,7 +12,7 @@ class employee extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'employeee';
+    protected $table = 'employees';
     public $timestamps = true;
 
     /**

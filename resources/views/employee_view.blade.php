@@ -1,11 +1,27 @@
 @extends('layouts.header')
 @section('content')
+<style>
+.userpanel{
+    width: 350px;
+    background-color: azure;
+    padding: 25px;
+    margin-top: 50px;
+    clear: both;
+}
+a#newemployee{
+   color: cadetblue;
+   border: 2px solid black;
+   padding:5px;
+   margin-top: 20px;
+}
+a#newemployee:hover{
+   background-color: purple;
+}
+
+
+</style>
 <div>
-         <div>
-            <p><a href="/">Home</a></p>
-            <p><a href="/new_employee">New employee</a></p>
-         </div>
-        </div>
+   <a id="newemployee" href="/new_employee">new employee</a>
          @foreach ($users as $user)
          <div class="userpanel">
 
@@ -14,6 +30,6 @@
             <p>last name: {{ $user->lastName }}</p>
             <p>street: {{ $user->street }}</p>
             <p>province: {{ $user->province }}</p>
-         </div>
+</div>
          @endforeach
 @endsection

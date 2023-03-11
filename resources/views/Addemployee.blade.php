@@ -1,5 +1,35 @@
 @extends('layouts.header')
 @section('content') 
+<style>
+h1 {
+    padding-top: 50px;
+    text-align: center;
+}
+div#everything {
+    background-color: lightblue;
+    width: 80%;
+    margin: auto;
+}
+form {
+    text-align: center;
+}
+
+input {
+    margin-bottom: 20px;
+}
+form button {
+    border-radius: 250px;
+    color: darkgoldenrod;
+    font-size: x-large;
+    margin: 50px;
+    padding: 15px;
+    width: 200px;
+}
+form button:hover {
+    background-color: blueviolet;
+    color: black;
+}
+</style>
         <h1>New Employee</h1>
         <form method="post" action="employee_add" accept-charset="UTF-8">
             @csrf

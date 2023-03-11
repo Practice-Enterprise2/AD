@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\employeeViewController;
 use App\Http\Controllers\CustomerOvervieuw;
-use App\Http\Controllers\overviewEmployees;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +44,7 @@ Route::get('/dashboard', function () {
 //roles() method gives an error but it still works (I have no idea how or why)
 Route::get('/employee', function(){
     return Auth::user()->roles()->first()->name == 'employee' || 
-        Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(403);
+        Auth::user()->roles()->first()->name == 'admin' ? view('employee_overview') : abort(403);
 })->middleware(['auth', 'verified'])->name('employee');
 
 Route::get('/admin', function(){

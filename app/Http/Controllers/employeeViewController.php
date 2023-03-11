@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 class employeeViewController extends Controller
 {
     public function index() {
-        $users = FacadesDB::select('select * from employeee');
+        $users = FacadesDB::select('select * from employees');
         return view('employee_view',['users'=>$users]);
      }
     //
@@ -73,12 +73,12 @@ class employeeViewController extends Controller
             $host = "localhost";
             $user = "root";
             $password = "";
-            $database = "laravel_test";
+            $database = "laravel";
 
             $link = mysqli_connect($host,$user,$password) or die("Error: No connection to the host");
             mysqli_select_db($link, $database) or die("Error: no database found");
 
-            $quer = "Select * From employee Where mail = '$name'";
+            $quer = "Select * From employees Where mail = '$name'";
             $res = mysqli_query($link, $quer);
             $row = mysqli_fetch_assoc($res);
             $ammount =  mysqli_num_rows($res);
