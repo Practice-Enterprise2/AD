@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShipmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,19 @@ Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->middleware
 Route::patch('/orders/{order}', [OrderController::class, 'update'])->middleware(['auth', 'verified'])->name('orders.update');
 
 Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->middleware(['auth', 'verified'])->name('orders.destroy');
+
+
+Route::get('/shipments', [ShipmentController::class, 'index'])->middleware(['auth', 'verified'])->name('shipments.index');
+
+Route::get('/shipments/create', [ShipmentController::class, 'create'])->middleware(['auth', 'verified'])->name('shipments.create');
+
+Route::post('/shipments', [ShipmentController::class, 'store'])->middleware(['auth', 'verified'])->name('shipments.store');
+
+Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->middleware(['auth', 'verified'])->name('shipments.edit');
+
+Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->middleware(['auth', 'verified'])->name('shipments.update');
+
+Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->middleware(['auth', 'verified'])->name('shipments.destroy');
 
 
 Route::get('/home', function () {

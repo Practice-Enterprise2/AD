@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
+            $table->string('CustomerID');
             $table->string('name', 50);
-            $table->foreignId('source_address_id')->constrained('addresses');
-            $table->foreignId('destination_address_id')->constrained('addresses');
+            $table->integer('source_address_id');
+            $table->integer('destination_address_id');
             $table->date('shipment_date');
             $table->date('delivery_date');
             $table->integer('status');

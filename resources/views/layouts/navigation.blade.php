@@ -23,6 +23,9 @@
                         <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
                             {{ __('Orders') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('shipments.index')" :active="request()->routeIs('shipments.index')">
+                            {{ __('Shipments') }}
+                        </x-nav-link>
                         @if(Auth::user()->roles()->first()->name == 'admin')
                             <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
                                 {{ __('Employee') }}
