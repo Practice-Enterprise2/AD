@@ -1,0 +1,50 @@
+.titleke{
+    width: 40%;
+    text-align: center;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-size: 3em;
+    border-bottom: 3px solid gray;
+}
+#shipmentForm{
+    padding: 25px;
+    width: 30%;
+    margin: auto;
+}
+.pdate{
+    margin-top: 2.5%;
+    color: darkgreen;
+}
+.submitknop{
+    margin-top:15px;
+    background-color: #008CBA;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border: 3px solid white;
+}
+.submitknop:hover{
+    background-color: lightblue;
+    padding: 10px;
+    border: 3px solid gray;
+    color: black;
+}
+.titleSection{
+    color: gray;
+    font-size: 1.1em;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+.form-control{
+    margin-bottom: 2.5%;
+}
+#Country{
+    margin-left: 2.5%;
+}
+#Type{
+    margin-left: 2.5%;
+}
+.form-group{
+    margin-left: 2.5%;
+}

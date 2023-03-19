@@ -24,6 +24,11 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
+Route::get('/createShipment', function () {
+    return view('createShipment');
+})->middleware(['auth', 'verified'])->name('createShipment');
+Route::get('insert','App\Http\Controllers\Controller@insertform');
+Route::post('create','App\Http\Controllers\Controller@insert');
 
 Route::get('/home', function () {
     return View::make('app');
@@ -52,4 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+
+
+
+require __DIR__.'/auth.php';
