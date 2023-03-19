@@ -14,7 +14,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     public function insertform() {
-        return view('createShipment');
+        return view('payment');
      }
       
      public function insert(Request $request) {
@@ -43,7 +43,6 @@ class Controller extends BaseController
         //$sourceAddress = DB::select('select address_id from customers where id = ?',[1]);
         $sourceAddress = DB::table('customers')->where('id', $customerID)->value('address_id');
         DB::insert('insert into shipments values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[null, $customerID, $ShipmentName, $sourceAddress, $AddressID, $shippingDate, $shippingDate, $ShipmentStatus, $expense, $ShipmentWeight, $ShipmentType, $current_date_time, $updated_date_time]);
-        echo "Record inserted successfully.<br/>";
-        echo '<a href = "/insert">Click Here</a> to go back.';
+        return view('payment');
      }
 }

@@ -1,14 +1,8 @@
 @extends('layouts.navigation')
 <x-app-layout>
-
-<head>
-  <link rel="stylesheet" href="css/createShipment.css" type="text/css">
-  
-</head>
-
   <div class="py-12 font-mono">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <form id='shipmentForm' name='shipmentForm' method='post' action= '/create'>
+    <form id='shipmentForm' name='shipmentForm' method='post' action= '/payment'>
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-l">
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Create new shipment</h1>
@@ -25,15 +19,15 @@
           <p class="text-4xl text-gray-900 dark:text-white ">Address</p>
           <div class="p-4 form-group">
             <label for="Street">Street</label>
-            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full h-10" id="Street" name="Street" placeholder="Street name" style='width:20em' required>
+            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full h-10" id="Street" name="Street" placeholder="Street name" required>
           </div>
           <div class="p-4 form-group">
             <label for="HouseNr">House Nr.</label>
-            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full h-10" id="HouseNr" name="HouseNr" placeholder="e.g. 5" required>
+            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-25 h-10" id="HouseNr" name="HouseNr" placeholder="e.g. 5" required>
           </div>
           <div class="p-4 form-group">
             <label for="PostalCode">Postal Code</label>
-            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full h-10" id="PostalCode" name="PostalCode" placeholder="e.g. 2830" required>
+            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-25 h-10" id="PostalCode" name="PostalCode" placeholder="e.g. 2830" required>
           </div>
           <div class="p-4 form-group">
             <label for="City">City</label>
@@ -295,7 +289,7 @@
           <p class="text-4xl text-gray-900 dark:text-white ">Package info</p>
           <div class="p-4 form-group">
             <label for="Weight">Weight</label>
-            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full h-10" id="Weight" name="Weight" placeholder="e.g. 2 kg" required>
+            <input type="text" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-20 h-10" id="Weight" name="Weight" placeholder="e.g. 2 kg" required>
           </div>
           <div class="p-4 form-group">
             <label for="Type">Type</label>

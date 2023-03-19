@@ -27,8 +27,15 @@ Route::get('/', function () {
 Route::get('/createShipment', function () {
     return view('createShipment');
 })->middleware(['auth', 'verified'])->name('createShipment');
-Route::get('insert','App\Http\Controllers\Controller@insertform');
-Route::post('create','App\Http\Controllers\Controller@insert');
+//Route::get('payment','App\Http\Controllers\Controller@insertform');
+Route::post('payment','App\Http\Controllers\Controller@insert');
+
+Route::get('/payment', function () {
+    return view('payment');
+})->middleware(['auth', 'verified'])->name('payment');
+Route::get('/paymentSuccess', function () {
+    return view('paymentSuccess');
+})->middleware(['auth', 'verified'])->name('paymentSuccess');
 
 Route::get('/home', function () {
     return View::make('app');
