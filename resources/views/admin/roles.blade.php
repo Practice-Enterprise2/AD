@@ -3,19 +3,113 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <table class="border-1 border-black">
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                        </tr>
-                        @foreach($roles as $role)
-                        <tr>
-                            <td>{{ __($role['id']) }}</td>
-                            <td>{{ __($role['name']) }}</td>
-                        </tr>
-                        @endforeach
-                    </table>
-                    
+                <table class="table-auto">
+    <thead>
+        <tr>
+            <th class="px-4 py-2">Role ID</th>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($roles as $role)
+        <tr>
+            <td class="px-4 py-2 text-center">{{ $role->id }}</td>
+            <td class="px-4 py-2 text-center">
+                <span id="name-{{ $role->id }}" class="name-span">{{ $role->name }}</span>
+                <input id="edit-name-{{ $role->id }}" class="hidden edit-name-input" type="text" value="{{ $role->name }}">
+            </td>
+            <td class="px-4 py-2">
+                <button data-id="{{ $role->id }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button">
+                    Edit
+                </button>
+                <button data-id="{{ $role->id }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden save-button">
+                    Save
+                </button>
+            </td>
+            <td class="px-4 py-2">
+                <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+<div class="mt-4">
+    <h3 class="text-lg font-medium mb-2">Add New Role</h3>
+    <form action="{{ route('roles.store') }}" method="POST">
+        @csrf
+        <div class="flex items-center mb-4">
+            <label for="name" class="mr-4">Name:</label>
+            <input type="text" name="name" id="name" class="border rounded py-2 px-3">
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add Role
+        </button>
+    </form>
+</div>
+
+<script>
+    const editButtons = document.querySelectorAll('.edit-button');
+    const saveButtons = document.querySelectorAll('.save-button');
+    const nameSpans = document.querySelectorAll('.name-span');
+    const nameInputs = document.querySelectorAll('.edit-name-input');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.dataset.id;
+            const nameSpan = document.querySelector(`#name-${id}`);
+            const nameInput = document.querySelector(`#edit-name-${id}`);
+            const editButton = document.querySelector(`button[data-id="${id}"].edit-button`);
+            const saveButton = document.querySelector(`button[data-id="${id}"].save-button`);
+
+            nameSpan.classList.add('hidden');
+            nameInput.classList.remove('hidden');
+            editButton.classList.add('hidden');
+            saveButton.classList.remove('hidden');
+        });
+    });
+
+    saveButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.dataset.id;
+            const nameSpan = document.querySelector(`#name-${id}`);
+            const nameInput = document.querySelector(`#edit-name-${id}`);
+            const editButton = document.querySelector(`button[data-id="${id}"].edit-button`);
+            const saveButton = document.querySelector(`button[data-id="${id}"].save-button`);
+
+            // Make AJAX call to update the role name
+            fetch(`/admin/roles/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    name: nameInput.value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the name-span with the new name
+                nameSpan.textContent = data.name;
+
+                // Hide the edit-name-input and show the name-span
+                nameSpan.classList.remove('hidden');
+                nameInput.classList.add('hidden');
+                editButton.classList.remove('hidden');
+                saveButton.classList.add('hidden');
+            })
+            .catch((error) => {
+console.error(error);
+});
+});
+});
+</script>
                 </div>
             </div>
         </div>

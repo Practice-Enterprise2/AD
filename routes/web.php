@@ -49,6 +49,10 @@ Route::get('/admin/users', function(){
 Route::get('/admin/roles', [RoleController::class, 'show'],  function(){
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.roles') : abort(404);
 })->middleware(['auth', 'verified'])->name('roles');
+Route::put('/admin/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
+Route::delete('admin/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+Route::post('/admin/roles', [RoleController::class, 'store'])->name('roles.store');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
