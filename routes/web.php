@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +36,19 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/overview', function ()
+{
+    $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
+
+    // dd($tickets);
+
+    // return redirect()->route('dump');
+    return view('overview', ['tickets' => $tickets]);
+});
+
+// Route::get('/dump', 'ticket_overview@dump')->name('dump');
+
+Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
+Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
