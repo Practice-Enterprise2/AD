@@ -9,7 +9,9 @@ class ShipmentController extends Controller
     function index(){
         $shipments = DB::select('SELECT shipments.ShipmentName, shipments.ShipmentDate, shipmentstatus.Name
         FROM shipments
-        JOIN shipmentstatus ON shipments.ShipmentID = shipmentstatus.StatusID');
+        INNER JOIN shipmentstatus ON shipments.ShipmentStatus = shipmentstatus.StatusID
+        ORDER BY shipments.ShipmentID ASC');
+        
         return view('shipments',['shipments'=>$shipments]);
     }
 }

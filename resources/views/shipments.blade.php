@@ -1,6 +1,6 @@
 @extends('layouts.navigation')
 <x-app-layout>
-<div class="bg-white h-screen justify-center text-center">
+<div class="bg-white h-screen text-center">
 <h1 class="text-2xl">Shipment Tracking</h1>
 <table class="text-center table-sortable">
     <thead>
@@ -16,25 +16,24 @@
         <tr class="hover:bg-white hover:shadow-lg">
             <td class="p-3">{{$shipment->ShipmentName}}</td>
             <td>{{$shipment->ShipmentDate}}</td>
-            <td style="background-color:
-            @if ($shipment->Name == 'On hold')
-                    red
+            <td class=
+            "@if ($shipment->Name == 'On hold')
+                    bg-red
                 @elseif ($shipment->Name == 'In progress')
-                    orange
+                    bg-orange
                 @elseif ($shipment->Name == 'In Transit')
-                    yellow
+                    bg-yellow
                 @elseif ($shipment->Name == 'Delivered')
-                    lime
+                    bg-lime
                 @elseif ($shipment->Name == 'Completed')
-                    green
+                    bg-green
                 @else
-                    white
+                    bg-white
                 @endif
             ">{{$shipment->Name}}</td>
         </tr>
        @endforeach
    </tbody>
-
   </table>
-    </div>
+</div>
 </x-app-layout>

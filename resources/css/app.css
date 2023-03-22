@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-red{
+    background-color: red;
+}
+.bg-yellow{
+    background-color: yellow;
+}
+.bg-green{
+    background-color: green;
+}
+.bg-orange{
+    background-color: orange;
+}
+.bg-white{
+    background-color: white;
+}
+.bg-lime{
+    background-color: lime;
+}
