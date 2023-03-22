@@ -16,21 +16,20 @@ github will tell you that your branch has no conflicts. Wait for someone to acce
 ## Cloning the project
 After cloning the project, put the following commands in your CLI:
 1. composer install
+2. npm ci
 2. cp .env.example .env
 3. php artisan key:generate
-4. php artisan migrate
+4. php artisan migrate --seed
 
 ## Running the project
 run the following commands in different terminals (!)
-1. php artisan migrate --seed
-2. npm run dev
-3. php artisan serve
+1. npm run dev
+2. php artisan serve
 
 ## Basic user accounts
-
-admin@local.test
-employee@local.test
-user@local.test
+- admin@local.test
+- employee@local.test
+- user@local.test
 
 password: letmein
 
