@@ -26,6 +26,14 @@ run the following commands in different terminals (!)
 2. npm run dev
 3. php artisan serve
 
+## Basic user accounts
+
+admin@local.test
+employee@local.test
+user@local.test
+
+password: letmein
+
 
  
 
