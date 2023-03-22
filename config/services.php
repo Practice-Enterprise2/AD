@@ -22,7 +22,8 @@ return [
     ],
 
     'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
+        'token' => env('b5268f52-8e2a-4a97-94ca-7e94e37b53a8'),
+        'from' => 'r0902342@student.thomasmore.be',
     ],
 
     'ses' => [
