@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employeeComplaintsController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Role;
 use Illuminate\Auth\Events\Verified;
@@ -51,5 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('sendComplaint', [employeeComplaintsController::class, 'sendComplaint'])->name('sendComplaint.employee');
 
 require __DIR__ . '/auth.php';
