@@ -8,21 +8,28 @@ use App\Models\Role;
 use App\Models\UserRoles;
 
 use Illuminate\Http\Request;
+use Psy\Readline\Hoa\Console;
 
 class UserController extends Controller
 {
     public function show(){
         $users = User::with('roles')->get();
-        $roleNames = Role::pluck('name')->unique();
-        return view('admin.users', ['users' => $users, 'roleNames' => $roleNames]);
+        $roles = Role::pluck('name')->unique();
+        return view('admin.users', ['users' => $users, 'roles' => $roles]);
     }
 
     public function update(Request $request, $id){
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->save();
-        return response()->json(['name' => $user->name, 'email' => $user->email]);
+        $role = Role::where('name', $request->role)->first();
+        $user->roles()->sync([$role->id]);
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $role->name
+        ]);
     }
 
     public function destroy($id){
