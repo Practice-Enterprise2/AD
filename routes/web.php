@@ -52,4 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/shipments', function () {
+    return view('shipments');
+})->name('shipments');
+
+Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('index');
+
 require __DIR__ . '/auth.php';
