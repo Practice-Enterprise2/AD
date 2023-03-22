@@ -3,7 +3,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <table class="table-auto">
+                    <div class="mb-4 w-1/4">
+                        <input type="text" id="search" name="search" placeholder="Search by name" class="border-gray-300 rounded-md focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block w-full pl-7 pr-12 sm:text-sm sm:leading-5">
+                    </div>
+                    <table class="table-auto w-full">
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">User ID</th>
@@ -52,108 +55,104 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="mt-4">
-                        <h3 class="text-lg font-medium mb-2">Add New User</h3>
-                        <form action="{{ route('users.store') }}" method="POST">
-                            @csrf
-                            <div class="flex items-center mb-4">
-                                <label for="name" class="mr-4">Name:</label>
-                                <input type="text" name="name" id="name" class="border rounded py-2 px-3">
-                            </div>
-                            <div class="flex items-center mb-4">
-                                <label for="email" class="mr-4">Email:</label>
-                                <input type="email" name="email" id="email" class="border rounded py-2 px-3">
-                            </div>
-                            <div class="flex items-center mb-4">
-                                <label for="password" class="mr-4">Password:</label>
-                                <input type="password" name="password" id="password" class="border rounded py-2 px-3">
-                            </div>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Add User
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-<script>
-const editButtons = document.querySelectorAll('.edit-button');
-const saveButtons = document.querySelectorAll('.save-button');
-const nameSpans = document.querySelectorAll('.name-span');
-const emailSpans = document.querySelectorAll('.email-span');
-const roleSpans = document.querySelectorAll('.role-span');
-const nameInputs = document.querySelectorAll('.edit-name-input');
-const emailInputs = document.querySelectorAll('.edit-email-input');
-const roleInputs = document.querySelectorAll('.edit-role-input');
+    <script>
+        const editButtons = document.querySelectorAll('.edit-button');
+        const saveButtons = document.querySelectorAll('.save-button');
+        const nameSpans = document.querySelectorAll('.name-span');
+        const emailSpans = document.querySelectorAll('.email-span');
+        const roleSpans = document.querySelectorAll('.role-span');
+        const nameInputs = document.querySelectorAll('.edit-name-input');
+        const emailInputs = document.querySelectorAll('.edit-email-input');
+        const roleInputs = document.querySelectorAll('.edit-role-input');
 
-editButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const id = button.dataset.id;
-    const nameSpan = document.querySelector(`#name-${id}`);
-    const emailSpan = document.querySelector(`#email-${id}`);
-    const roleSpan = document.querySelector(`#role-${id}`);
-    const nameInput = document.querySelector(`#edit-name-${id}`);
-    const emailInput = document.querySelector(`#edit-email-${id}`);
-    const roleInput = document.querySelector(`#edit-role-${id}`);
-    const originalRole = roleSpan.innerText;
+        editButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const id = button.dataset.id;
+            const nameSpan = document.querySelector(`#name-${id}`);
+            const emailSpan = document.querySelector(`#email-${id}`);
+            const roleSpan = document.querySelector(`#role-${id}`);
+            const nameInput = document.querySelector(`#edit-name-${id}`);
+            const emailInput = document.querySelector(`#edit-email-${id}`);
+            const roleInput = document.querySelector(`#edit-role-${id}`);
+            const originalRole = roleSpan.innerText;
 
-    nameSpan.classList.add('hidden');
-    emailSpan.classList.add('hidden');
-    roleSpan.classList.add('hidden');
-    nameInput.classList.remove('hidden');
-    emailInput.classList.remove('hidden');
-    roleInput.classList.remove('hidden');
-    roleInput.value = originalRole;
+            nameSpan.classList.add('hidden');
+            emailSpan.classList.add('hidden');
+            roleSpan.classList.add('hidden');
+            nameInput.classList.remove('hidden');
+            emailInput.classList.remove('hidden');
+            roleInput.classList.remove('hidden');
+            roleInput.value = originalRole;
 
-    button.classList.add('hidden');
-    saveButtons.forEach(saveButton => {
-      if (saveButton.dataset.id === id) {
-        saveButton.classList.remove('hidden');
-      }
+            button.classList.add('hidden');
+            saveButtons.forEach(saveButton => {
+              if (saveButton.dataset.id === id) {
+                saveButton.classList.remove('hidden');
+              }
+            });
+          });
+        });
+
+        saveButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const id = button.dataset.id;
+            const nameSpan = document.querySelector(`#name-${id}`);
+            const emailSpan = document.querySelector(`#email-${id}`);
+            const roleSpan = document.querySelector(`#role-${id}`);
+            const nameInput = document.querySelector(`#edit-name-${id}`);
+            const emailInput = document.querySelector(`#edit-email-${id}`);
+            const roleInput = document.querySelector(`#edit-role-${id}`);
+
+            // make an AJAX request to update the user in the database
+            axios.put(`/admin/users/${id}`, {
+              name: nameInput.value,
+              email: emailInput.value,
+              role: roleInput.value,
+            }).then(() => {
+              // update the text of the name, email and role spans with the new values
+              nameSpan.textContent = nameInput.value;
+              emailSpan.textContent = emailInput.value;
+              roleSpan.textContent = roleInput.value;
+
+              // show the name and email spans, and hide the name and email inputs
+              nameSpan.classList.remove('hidden');
+              emailSpan.classList.remove('hidden');
+              nameInput.classList.add('hidden');
+              emailInput.classList.add('hidden');
+
+              // show the role span, and hide the role input and the save button
+              roleSpan.classList.remove('hidden');
+              roleInput.classList.add('hidden');
+              button.classList.add('hidden');
+
+              // show the edit button
+              document.querySelector(`.edit-button[data-id="${id}"]`).classList.remove('hidden');
+            }).catch((error) => {
+              console.log(error);
+            });
+          });
+        });
+    </script>
+    <script>
+    const searchInput = document.querySelector('#search');
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const nameSpans = document.querySelectorAll('.name-span');
+
+        nameSpans.forEach(nameSpan => {
+            const name = nameSpan.textContent.trim().toLowerCase();
+
+            if (name.includes(searchTerm)) {
+                nameSpan.closest('tr').classList.remove('hidden');
+            } else {
+                nameSpan.closest('tr').classList.add('hidden');
+            }
+        });
     });
-  });
-});
-
-saveButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const id = button.dataset.id;
-    const nameSpan = document.querySelector(`#name-${id}`);
-    const emailSpan = document.querySelector(`#email-${id}`);
-    const roleSpan = document.querySelector(`#role-${id}`);
-    const nameInput = document.querySelector(`#edit-name-${id}`);
-    const emailInput = document.querySelector(`#edit-email-${id}`);
-    const roleInput = document.querySelector(`#edit-role-${id}`);
-
-    // make an AJAX request to update the user in the database
-    axios.put(`/admin/users/${id}`, {
-      name: nameInput.value,
-      email: emailInput.value,
-      role: roleInput.value,
-    }).then(() => {
-      // update the text of the name, email and role spans with the new values
-      nameSpan.textContent = nameInput.value;
-      emailSpan.textContent = emailInput.value;
-      roleSpan.textContent = roleInput.value;
-
-      // show the name and email spans, and hide the name and email inputs
-      nameSpan.classList.remove('hidden');
-      emailSpan.classList.remove('hidden');
-      nameInput.classList.add('hidden');
-      emailInput.classList.add('hidden');
-
-      // show the role span, and hide the role input and the save button
-      roleSpan.classList.remove('hidden');
-      roleInput.classList.add('hidden');
-      button.classList.add('hidden');
-
-      // show the edit button
-      document.querySelector(`.edit-button[data-id="${id}"]`).classList.remove('hidden');
-    }).catch((error) => {
-      console.log(error);
-    });
-  });
-});
-
 </script>
 </x-app-layout>

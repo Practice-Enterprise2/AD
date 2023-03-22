@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
-use App\Models\UserRoles;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
-use Psy\Readline\Hoa\Console;
+
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -39,19 +44,21 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8',
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-    
-        $user = new User;
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->password = bcrypt($data['password']);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        event(new Registered($user));
+
         $user->roles()->attach(Role::where('name', 'user')->first());
         $user->save();
-    
-        return redirect()->back()->with('success', 'User added successfully.');
+
+        return redirect()->back()->with('success', 'User created successfully!');
     }
 }
