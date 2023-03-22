@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Models\Role;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
@@ -40,17 +41,26 @@ Route::get('/employee', function(){
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(404);
 })->middleware(['auth', 'verified'])->name('employee');
 
+
+//admin page
 Route::get('/admin', function(){
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin') : abort(404);
 })->middleware(['auth', 'verified'])->name('admin');
-Route::get('/admin/users', function(){
+
+//user page
+Route::get('/admin/users', [UserController::class, 'show'], function(){
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.users') : abort(404);
 })->middleware(['auth', 'verified'])->name('users');
+Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
+
+//roles page
 Route::get('/admin/roles', [RoleController::class, 'show'],  function(){
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.roles') : abort(404);
 })->middleware(['auth', 'verified'])->name('roles');
 Route::put('/admin/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
-Route::delete('admin/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+Route::delete('/admin/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 Route::post('/admin/roles', [RoleController::class, 'store'])->name('roles.store');
 
 
