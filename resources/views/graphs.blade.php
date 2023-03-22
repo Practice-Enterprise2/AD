@@ -24,7 +24,8 @@
   </div>
 
   <?php
-  
+  $day = [];
+  $shipments = [];  
   $con = new mysqli('localhost','root','','pe2');
   $query = $con->query("
   SELECT ShipmentDate,COUNT(ShipmentDate) AS sales FROM shipments
@@ -40,6 +41,7 @@
 </div>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
   <script>
+
   // setup 
   const data = {
     labels: <?php echo json_encode($day) ?>,

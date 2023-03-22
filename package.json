@@ -15,6 +15,9 @@
         "vite": "^4.1.4"
     },
     "dependencies": {
+        "chart": "^0.1.2",
+        "chart.js": "^4.2.1",
+        "chartjs": "^0.3.24",
         "mysqli": "^3.1.4"
     }
 }
