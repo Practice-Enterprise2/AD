@@ -61,5 +61,10 @@ class DatabaseSeeder extends Seeder
         Pickup::factory()
         ->count(50)
         ->create();
+        // Use factories from models (\App\Models) to fill database.
+
+        $this->call([
+            RoleTableSeeder::class,
+        ]);
     }
 }
