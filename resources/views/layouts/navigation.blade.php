@@ -34,8 +34,6 @@
                             </x-nav-link>
                         @endif
                     @endguest
-                    
-
                 </div>
             </div>
 

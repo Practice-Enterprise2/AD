@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PickupController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -30,7 +31,21 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return View::make('app');
 })->name('home');
- 
+
+
+Route::get('/page2', function () {
+    return view('page2');
+});
+
+Route::get(
+    '/pickup/create', 
+    [PickupController::class, 'create']
+)->middleware(['auth', 'verified'])->name('create-pickup');
+
+Route::get('/dashboard/my-pickups', function () {
+    return view('dashboard.my_pickups');
+})->middleware(['auth', 'verified'])->name('my-pickups');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
