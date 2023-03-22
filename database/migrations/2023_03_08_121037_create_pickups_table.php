@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTimeTz('time');
             $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
