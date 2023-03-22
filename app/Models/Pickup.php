@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Pickup extends Model
 {
     // Never delete records, add `deleted_at` column instead.
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     // By adding this and a `public function prunable(): Builder`, the
     // corresponding table can be pruned periodically, by returning the no
@@ -54,15 +56,20 @@ class Pickup extends Model
 
     // Mass assignable attributes.
     protected $fillable = [
-        'street',
-        'house_number',
-        'postal_code',
-        'city',
-        'region',
-        'country',
         'time',
         'status',
     ];
+
+    public function address(): BelongsTo {
+        return $this->belongsTo(Address::class);
+    }
+
+    /*
+     * The shipment for which this is a pickup.
+     */
+    public function shipment(): BelongsTo {
+        return $this->belongsTo(Shipment::class);
+    }
 
     // Guarded attributes.
     // protected $guarded = []

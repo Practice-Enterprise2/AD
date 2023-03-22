@@ -18,12 +18,16 @@ class MyPickupsList extends Component
         $pickup = Pickup::find($pickup_id);
         $pickup->status = 'canceled';
         $pickup->save();
-        $this->pickups = Pickup::where('user_id', Auth::id())->get();
+        $this->pickups = Pickup::whereHas('shipment', function ($query) {
+            return $query->where('id', Auth::id());
+        })->get();
     }
 
     public function mount()
     {
-        $this->pickups = Pickup::where('user_id', Auth::id())->get();
+        $this->pickups = Pickup::whereHas('shipment', function ($query) {
+            return $query->where('id', Auth::id());
+        })->get();
     }
 
     public function render()

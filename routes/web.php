@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -32,9 +33,10 @@ Route::get('/page2', function () {
     return view('page2');
 });
 
-Route::get('create-pickup', function () {
-    return view('create-pickup');
-})->middleware(['auth', 'verified'])->name('create-pickup');
+Route::get(
+    '/pickup/create', 
+    [PickupController::class, 'create']
+)->middleware(['auth', 'verified'])->name('create-pickup');
 
 Route::get('/dashboard/my-pickups', function () {
     return view('dashboard.my_pickups');
