@@ -1,7 +1,7 @@
 @extends('layouts.header')
 @section('content')
 <!-- example -->
-<div>
+<div style="display:flex; align-items:baseline; width:80%">
 
     <table>
         <thead>
