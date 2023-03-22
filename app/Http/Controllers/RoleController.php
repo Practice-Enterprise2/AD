@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -20,11 +21,27 @@ class RoleController extends Controller
         return response()->json(['name' => $role->name]);
     }
 
-    public function destroy($id){
-        $role = Role::findOrFail($id);
-        $role->delete();
-        return redirect()->back()->with('success', 'Role deleted successfully!');
+    public function destroy($id)
+{
+    $role = Role::findOrFail($id);
+
+    // Find the "user" role
+    $userRole = Role::where('name', 'user')->first();
+
+    // Get the users with the deleted role
+    $users = $role->users;
+
+    // Reassign the users to the "user" role
+    foreach ($users as $user) {
+        $user->roles()->detach($role->id);
+        $user->roles()->attach($userRole->id);
     }
+
+    // Delete the role
+    $role->delete();
+
+    return redirect()->back()->with('success', 'Role deleted successfully!');
+}
 
     public function store(Request $request){
         $data = $request->validate([
