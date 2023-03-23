@@ -1,5 +1,4 @@
-@extends('layouts.header')
-@section('content')
+<x-app-layout>
 <div>
 
     <h1>Ticket submitted successfully</h1>
@@ -12,4 +11,4 @@
     </ul>
     
 </div>
-@endsection
+</x-app-layout>

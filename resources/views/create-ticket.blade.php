@@ -1,5 +1,4 @@
-@extends('layouts.header')
-@section('content')
+<x-app-layout>
 <div>
 
     <form method="POST" action="{{ route('submitted-ticket') }}">
@@ -17,4 +16,4 @@
     </form>
     
 </div>
-@endsection
+</x-app-layout>
