@@ -70,4 +70,8 @@ Route::get('/customer/{custID}', [CustomerOvervieuw::class, 'show'])->name('cust
 Route::get('/customer/{custID}/edit', [CustomerOvervieuw::class, 'edit'])->name('customer.edit');
 Route::put('/customer/{custID}', [CustomerOvervieuw::class, 'update'])->name('customer.update');
 
+route::get("/respond", function(){
+    return view("respond");
+});
+
 require __DIR__ . '/auth.php';

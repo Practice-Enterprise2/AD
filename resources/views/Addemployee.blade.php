@@ -12,6 +12,7 @@ div#everything {
 }
 form {
     text-align: center;
+    padding-top: 50px;
 }
 
 input {
@@ -20,7 +21,7 @@ input {
 form button {
     border-radius: 250px;
     color: darkgoldenrod;
-    font-size: x-large;
+    font-size: large;
     margin: 50px;
     padding: 15px;
     width: 200px;

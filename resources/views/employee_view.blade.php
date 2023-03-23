@@ -10,9 +10,8 @@
 }
 a#newemployee{
    color: cadetblue;
-   border: 2px solid black;
    padding:5px;
-   margin-top: 20px;
+   margin-top: 50px;
 }
 a#newemployee:hover{
    background-color: purple;
