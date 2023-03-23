@@ -8,7 +8,7 @@ class ShipmentController extends Controller
 {
     public function index()
     {
-        $shipments = Shipment::where('CustomerID', auth()->id())->get();
+        $shipments = Shipment::where('user_id', auth()->id())->get();
         return view('shipments.index', compact('shipments'));
     }
 
@@ -30,10 +30,10 @@ class ShipmentController extends Controller
             'type' => 'required',
         ]);
 
-        $CustomerID = auth()->id();
+        $userID = auth()->id();
         $id = Shipment::max('id') + 1;
         $CustomerName = auth()->user()->name;
-        $request->merge(['id' => $id, 'CustomerID' => $CustomerID, 'name' => $CustomerName]);
+        $request->merge(['id' => $id, 'user_id' => $userID, 'name' => $CustomerName]);
 
         Shipment::create($request->all());
 

@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Shipment extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     public function users()
     {
@@ -22,7 +21,7 @@ class Shipment extends Model
     protected $fillable = [ 
         'id',
         'name',
-        'CustomerID',
+        'user_id',
         'source_address_id',
         'destination_address_id',
         'shipment_date',

@@ -19,7 +19,7 @@
                     <thead>
                         <tr style="border-bottom:1pt solid black;" >
                             <th>ShipmentID</th>
-                            <th>CustomerID</th>
+                            <th>UserID</th>
                             <th>CustomerName</th>
                             <th>SourceAddressID</th>
                             <th>DestinationAddressID</th>
@@ -35,7 +35,7 @@
                         @foreach ($shipments as $shipment)
                             <tr style="border-bottom:1pt solid black;">
                                 <td>{{ $shipment->id }}</td>
-                                <td>{{ $shipment->CustomerID }}</td>
+                                <td>{{ $shipment->user_id }}</td>
                                 <td>{{ $shipment->name }}</td>
                                 <td>{{ $shipment->source_address_id }}</td>
                                 <td>{{ $shipment->destination_address_id }}</td>
