@@ -112,7 +112,7 @@ Route::get('/overview_employee', function ()
     // dd($tickets);
 
     // return redirect()->route('dump');
-    return view('overview', ['tickets' => $tickets]);
+    return view('employee_view', ['tickets' => $tickets]);
 });
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
