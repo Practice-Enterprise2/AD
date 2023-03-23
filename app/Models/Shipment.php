@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 class Shipment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function users()
     {
@@ -43,4 +47,12 @@ class Shipment extends Model
         'weight' => 'integer',
         'type' => 'string',
     ];
+    
+    public function source_address(): BelongsTo {
+        return $this->belongsTo(Address::class);
+    }
+
+    public function destination_address(): BelongsTo {
+        return $this->belongsTo(Address::class);
+    }
 }
