@@ -56,4 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('plaats', [testcontroller::class, 'plaats']);
+Route::get('test', [testcontroller::class, 'dropdown']);
+
 require __DIR__ . '/auth.php';
