@@ -20,19 +20,23 @@
                                 <input id="edit-name-{{ $role->id }}" class="hidden edit-name-input" type="text" value="{{ $role->name }}">
                             </td>
                             <td class="px-4 py-2">
+                            @if($role->name !== 'user')
                                 <button data-id="{{ $role->id }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button">
                                     Edit
                                 </button>
                                 <button data-id="{{ $role->id }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden save-button">
                                     Save
                                 </button>
+                            @endif
                             </td>
                             <td class="px-4 py-2">
+                            @if($role->name !== 'user')
                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                 </form>
+                            @endif
                             </td>
                         </tr>
                         @endforeach
