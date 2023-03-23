@@ -1,41 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="{{url('css/airportManagement.css')}}" rel="stylesheet" type="text/css" >
+@extends('layouts.header')
+@section('content')
 
-
-    <title>Airport Management</title>
-</head>
-<body>
-
-<div class="header">
-    <ul>
-        <a href="/"><li>Home</li></a>
-        <li class="hovor">Management
-            <ul class="dropdown">
-                <li><a href="/airport-management">Airports</a></li>
-                <li><a href="/depot-management">Depots</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-
-<div class="clear"></div>
-
-<div class="container">
+<div class="containerMngmt">
     <a href="/addAirport"><div class="addDiv">
         Add new Airport
     </div></a>
     <div class="legendDiv">
-        <div class="legend_name">Name</div>
-        <div class="legend_location">Location</div>
+   
+        <div class="legend_name">IATA</div>
+        <div class="legend_size">Name</div>
+{{--         <div class="legend_location">Location</div> --}}
         <div class="legend_size">Size</div>
-        <div class="legend_owner">Owner</div>
+        <div class="legend_owner">Tracks</div>
         <div class="legend_buttons">Buttons</div>
     </div>
 
@@ -44,10 +20,11 @@
         @foreach($airports as $data)
         <div class="airportCard">
             <div class="dataCard">        
+                <div class="iata">{{$data->IATA}}</div>
                 <div class="name">{{$data->name}}</div>
-                <div class="location">{{$data->location}}</div>
+               {{--  <div class="location">{{$data->location}}</div> --}}
                 <div class="size">{{$data->size}}</div>
-                <div class="owner">{{$data->owner}}</div>
+                <div class="owner">{{$data->tracks}}</div>
             </div>
 
             <div class="relButtons">
@@ -64,5 +41,4 @@
 </div>
 
 
-</body>
-</html>
+@endsection

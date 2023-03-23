@@ -36,11 +36,6 @@ class DepotController extends Controller
 
     }
     public function updateDepot(Request $request, $id) {
-        $depot = Depots::find($id);
-        $depot->Code = $request->code;
-        $depot->Location = $request->location;
-        $depot->Size = $request->size;
-        $depot->save();
 
         $code = $request->code;
         $location = $request->location;

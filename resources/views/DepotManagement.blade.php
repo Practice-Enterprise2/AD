@@ -1,33 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="{{url('css/airportManagement.css')}}" rel="stylesheet" type="text/css" >
-
-
-    <title>Depot Management</title>
-</head>
-<body>
-
-<div class="header">
-    <ul>
-        <a href="/"><li>Home</li></a>
-        <li class="hovor">Management
-            <ul class="dropdown">
-                <li><a href="/airport-management">Airports</a></li>
-                <li><a href="/depot-management">Depots</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
+@extends('layouts.header')
+@section('content')
 
 <div class="clear"></div>
 
-<div class="container">
+<div class="containerMngmt">
     <a href="/addDepot"><div class="addDiv">
         Add new Depot
     </div></a>
@@ -61,6 +37,4 @@
 
 </div>
 
-
-</body>
-</html>
+@endsection

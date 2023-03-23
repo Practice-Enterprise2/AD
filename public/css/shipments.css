@@ -1,0 +1,14 @@
+.containerShip {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.containerShip button {
+    border: 2px solid black;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: rgb(200, 200, 200);
+     cursor: pointer;
+}
+
+

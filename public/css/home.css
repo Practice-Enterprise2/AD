@@ -40,3 +40,8 @@ h1 {
     margin-top: 210px ;
     text-align: center;
 }
+
+a {
+    text-decoration: none;
+    color: black;
+}

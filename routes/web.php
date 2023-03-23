@@ -6,6 +6,7 @@ use App\Http\Controllers\DepotController;
 use App\Http\Controllers\addAirportController;
 use App\Http\Controllers\addDepotController;
 use App\Http\Controllers\editAirportController;
+use App\Http\Controllers\shipmentController;
 use App\Models\Airports;
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +36,9 @@ Route::get('/airport-management', function () {
 Route::get('/depot-management', function () {
     return view('DepotManagement');
 }); 
+Route::get('shipments', function() {
+    return view('Shipments');
+});
 
 // Airport DB Routes
 Route::get('airports',[AirportController::class, 'oldindex']);
@@ -64,6 +68,8 @@ Route::get('editDepot/{id}', [DepotController::class, 'showDepotData']);
 Route::post('editDepot/{id}',[DepotController::class, 'updateDepot']);
 
 
-
+// Shipmnet routes
+// create static shipment
+Route::get('addShip',[shipmentController::class, 'addStaticSchip']);
 
 
