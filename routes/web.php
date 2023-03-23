@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AirportController;
+use App\Http\Controllers\contractController;
 use App\Models\Role;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,7 @@ Route::get('/page2', function () {
 });
 
 Route::get(
-    '/pickup/create', 
+    '/pickup/create',
     [PickupController::class, 'create']
 )->middleware(['auth', 'verified'])->name('create-pickup');
 
@@ -52,7 +54,7 @@ Route::get('/dashboard', function () {
 
 //roles() method gives an error but it still works (I have no idea how or why)
 Route::get('/employee', function(){
-    return Auth::user()->roles()->first()->name == 'employee' || 
+    return Auth::user()->roles()->first()->name == 'employee' ||
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(404);
 })->middleware(['auth', 'verified'])->name('employee');
 
@@ -84,5 +86,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+// contracts edit page
+Route::get('contract', [contractController::class, 'simpleIndex']);
+Route::get('edit',[contractController::class, 'alter']);
+Route::get('contractGet',[contractController::class, 'simpleIndex']);
+Route::get('specif', function() {
+    return view('specific-contracts');
+});
+Route::get('test', [contractController::class, 'index']);
 require __DIR__ . '/auth.php';
