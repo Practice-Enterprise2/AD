@@ -8,6 +8,10 @@ use App\Http\Controllers\UserController;
 use App\Models\Role;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TicketController;
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -85,4 +89,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+
+
+Route::get('/overview', function ()
+{
+    $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
+
+    // dd($tickets);
+
+    // return redirect()->route('dump');
+    return view('overview', ['tickets' => $tickets]);
+});
+
+// Route::get('/dump', 'ticket_overview@dump')->name('dump');
+
+Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
+Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+
+
+
+require __DIR__.'/auth.php';
+

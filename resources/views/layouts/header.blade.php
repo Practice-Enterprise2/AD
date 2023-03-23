@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Sky</title>
     @vite('resources/css/app.css')
-    @livewireStyles
 </head>
 
 <body class="bg-gray-200">
@@ -78,7 +77,6 @@
     <div class="flex items-center justify-center">
         @yield('content')
     </div>
-    @livewireScripts
 </body>
 
 </html>
