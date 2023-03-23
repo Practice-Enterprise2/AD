@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/overview', function ()
+Route::get('/overview2', function ()
 {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
