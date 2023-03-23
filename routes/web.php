@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Role;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
@@ -24,18 +25,13 @@ Route::get('/home', [App\Http\Controllers\ProfileController::class, 'checkUser']
 
 Route::get('/', function () {
     return redirect('/home');
-
 });
 
 
 Route::get('/home', function () {
     return View::make('app');
 })->name('home');
-
-Route::get('/page2', function () {
-    return view('page2');
-});
-
+ 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
