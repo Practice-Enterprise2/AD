@@ -33,6 +33,9 @@ run the following commands in different terminals (!)
 
 password: letmein
 
+## General
+
+- put <x-app-layout> </x-app-layout> around your HTML code
 
  
 
