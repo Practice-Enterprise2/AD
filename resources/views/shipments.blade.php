@@ -1,7 +1,16 @@
 @extends('layouts.navigation')
 <x-app-layout>
+
+    <script type="text/javascript">
+        function setLink(elRow) {
+        var elLink = document.getElementById('link');
+        elLink.href = 'shipments_details/' + elRow.rowIndex;
+        }
+    </script>
+
 <div class="bg-white h-screen text-center">
 <h1 class="text-2xl">Shipment Tracking</h1>
+<a id="link">
 <table class="text-center table-sortable">
     <thead>
         <tr>
@@ -13,7 +22,7 @@
     <tbody>
       
         @foreach ($shipments as $shipment)
-        <tr class="hover:bg-white hover:shadow-lg">
+        <tr class="hover:bg-white hover:shadow-lg" onclick="setLink(this);">
             <td class="p-3">{{$shipment->ShipmentName}}</td>
             <td>{{$shipment->ShipmentDate}}</td>
             <td class=
@@ -35,5 +44,6 @@
        @endforeach
    </tbody>
   </table>
+   </a>
 </div>
 </x-app-layout>

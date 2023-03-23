@@ -57,6 +57,7 @@ Route::get('/shipments', function () {
     return view('shipments');
 })->name('shipments');
 
+Route::get('/shipments_details/{ShipmentID}',[App\Http\Controllers\ShipmentController::class,'showShipments_details'])->name('shipments_details');
 Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('index');
 
 require __DIR__ . '/auth.php';
