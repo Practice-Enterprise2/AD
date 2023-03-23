@@ -20,8 +20,8 @@ class contractController extends Controller
      */
    public function index()
     {
-       $contracts = DB::select('select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1');
-       return view('contract',['contracts'=>$contracts]);
+       $contracts = DB::select('select * from contracts c INNER JOIN airports a ON c.depart_airport = a.iataCode INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1');
+       return view('test',['contracts'=>$contracts]);
     }
 
     public function alter()

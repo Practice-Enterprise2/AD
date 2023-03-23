@@ -21,6 +21,17 @@ if (!isset($_GET["q"]))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="">
     <title>view records</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
+
+</script>
+<script>
+    $(document).ready(function() {
+$('.chosen-select').chosen();
+});
+
+</script>
     <style>
 
 .x
@@ -94,24 +105,23 @@ table
                     -->
                     <tr>
                         <td colspan="2">
-                            <script>
-                    (function($) {
-                    'use strict';
-                     $(document).ready(function() {
-                       $('#standard').chosen();
-                                 });
-                        })(window.jQuery);
-                            </script>
-                            <select id="standard" class="chosen-select">
+
+                            <select class="chosen-select" name="departure_airport">
                                 @foreach ($airports as $airport )
-                                <option value="{{ $airport->iataCode }}">{{ $airport->airportName}} | {{$airport->name}}</option>
+                                <option value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
                                 @endforeach
                             </select>
                         </td>
                     </tr>
-                        <tr>
-                            <td>Destination airport:</td> <td><input type="text" name="destination_airport" value="{{ $contract->destination_airport }}" required></td>
-                        </tr>
+                    <tr>
+                        <td colspan="2">
+                            <select  class="chosen-select" name="destination_airport">
+                                @foreach ($airports as $airport )
+                                <option value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                    </tr>
                         <tr>
                             <td><input type="submit" name="submit" value="Save Changes"></td> <td><input type="submit" name="remove" value="delete contract"></td>
                         </tr>
