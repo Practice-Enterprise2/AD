@@ -16,6 +16,42 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('shipment.index')" :active="request()->routeIs('shipment.index')">
+                        {{ __('Shipments') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('shipment.create')" :active="request()->routeIs('shipment.create')">
+                        {{ __('Add Shipment') }}
+                    </x-nav-link>
+                </div>
+                @if(Auth::user()->role == 1)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link >
+                        {{ __('Shipment Manager') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">
+                        {{ __('Customer\'s contact') }}
+                    </x-nav-link>
+                </div>
+                @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('profile.edit')">profile </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-nav-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-nav-link>
+                        </form>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

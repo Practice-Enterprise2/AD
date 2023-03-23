@@ -22,6 +22,12 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        
+        <div>
+            <x-input-label for="phone" :value="__('Phone')" />
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="phone" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -46,7 +52,29 @@
                 </div>
             @endif
         </div>
-
+        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            {{ __('Address') }}
+        </h2>
+        <div>
+            <x-input-label for="address" :value="__('Address')" />
+            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address', $user->address)" required autofocus autocomplete="address" />
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+        <div>
+            <x-input-label for="postalcode" :value="__('Postal Code')" />
+            <x-text-input id="postalcode" name="postalcode" type="text" class="mt-1 block w-full" :value="old('postalcode', $user->postalcode)" required autofocus autocomplete="postalcode" />
+            <x-input-error class="mt-2" :messages="$errors->get('postalcode')" />
+        </div>
+        <div>
+            <x-input-label for="city" :value="__('City')" />
+            <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $user->city)" required autofocus autocomplete="city" />
+            <x-input-error class="mt-2" :messages="$errors->get('city')" />
+        </div>
+        <div>
+            <x-input-label for="country" :value="__('Country')" />
+            <x-text-input id="country" name="country" type="text" class="mt-1 block w-full" :value="old('country', $user->country)" required autofocus autocomplete="country" />
+            <x-input-error class="mt-2" :messages="$errors->get('country')" />
+        </div>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
