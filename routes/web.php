@@ -65,10 +65,6 @@ Route::get('/new_employee', function () {
 });
 Route::post('employee_add',[employeeViewController::class, 'save']);
 
-Route::get('/CustomerOvervieuw', [CustomerOvervieuw::class,"index"]);  
-Route::get('/customer/{custID}', [CustomerOvervieuw::class, 'show'])->name('customer.show');
-Route::get('/customer/{custID}/edit', [CustomerOvervieuw::class, 'edit'])->name('customer.edit');
-Route::put('/customer/{custID}', [CustomerOvervieuw::class, 'update'])->name('customer.update');
 
 route::get("/respond", function(){
     return view("respond");
