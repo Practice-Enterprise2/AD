@@ -20,10 +20,10 @@
                         <input class = "text-gray-700 rounded-lg px-4" type="text" name="destination_address_id" id="destination_address_id" value="{{ $shipment->destination_address_id }}">
                         <br>    
                         <label for="shipment_date">Shipment Date</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="shipment_date" id="shipment_date" value="{{ $shipment->shipment_date }}">
+                        <input class = "text-gray-700 rounded-lg px-4" type="date" name="shipment_date" id="shipment_date" value="{{ $shipment->shipment_date }}">
                         <br>
                         <label for="delivery_date">Delivery Date</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="delivery_date" id="delivery_date" value="{{ $shipment->delivery_date }}">
+                        <input class = "text-gray-700 rounded-lg px-4" type="date" name="delivery_date" id="delivery_date" value="{{ $shipment->delivery_date }}">
                         <br>
                         <label for="status">Status</label>
                         <input class = "text-gray-700 rounded-lg px-4" type="text" name="status" id="status" value="{{ $shipment->status }}">

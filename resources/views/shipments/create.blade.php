@@ -12,25 +12,25 @@
                     @csrf
                     <label for="source_address_id">Source Address</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="source_address_id" id="source_address_id" value="{{ old('source_address_id') }}">
-
+                    <br>
                     <label for="destination_address_id">Destination Address</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="destination_address_id" id="destination_address_id" value="{{ old('destination_address_id') }}">
-
+                    <br>
                     <label for="shipment_date">Shipment Date</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="shipment_date" id="shipment_date" value="{{ old('shipment_date') }}">
-
+                    <input class = "text-gray-700 rounded-lg px-4" type = "date" name="shipment_date" id="shipment_date" value="{{ old('shipment_date') }}">
+                    <br>
                     <label for="delivery_date">Delivery Date</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="delivery_date" id="delivery_date" value="{{ old('delivery_date') }}">
-
+                    <input class = "text-gray-700 rounded-lg px-4" type = "date" name="shipment_date" id="shipment_date" value="{{ old('shipment_date') }}">
+                    <br>
                     <label for="status">Status</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="status" id="status" value="{{ old('status') }}">
-
+                    <br>
                     <label for="expense">Expense</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="expense" id="expense" value="{{ old('expense') }}">
-
+                    <br>
                     <label for="weight">Weight</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="weight" id="weight" value="{{ old('weight') }}">
-
+                    <br>
                     <label for="type">Type</label>
                     <input class = "text-gray-700 rounded-lg px-4" type="text" name="type" id="type" value="{{ old('type') }}">
                     <br>
