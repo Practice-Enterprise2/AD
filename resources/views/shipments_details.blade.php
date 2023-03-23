@@ -3,7 +3,7 @@
 
     @if(count($shipments) > 0)
     @foreach($shipments as $shipment)
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white h-screen">
         <h1 class="text-2xl font-semibold mb-4">{{ __('Shipment Tracking') }}</h1>
         <div class="flex justify-between mb-8">
           <div>
@@ -29,10 +29,11 @@
             <p class="text-gray-700 mb-2"><span class="font-medium">{{ __('Name') }}:</span> {{ $shipment->ShipmentName }}</p>
           </div>
         </div>
-    </div>
-    <div class="text-center pt-6">
+        <div class="text-center pt-6 bg-white">
         <a href="../shipments"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Back</button></a>
     </div>
+    </div>
+    
     @endforeach
     @endif
 </x-app-layout>

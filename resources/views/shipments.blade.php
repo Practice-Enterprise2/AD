@@ -7,43 +7,52 @@
         elLink.href = 'shipments_details/' + elRow.rowIndex;
         }
     </script>
+<div class="flex justify-center">
+    <div class="w-full max-w-4xl">
+        <h1 class="text-3xl font-semibold mb-4 text-center">Shipment Tracking</h1>
 
-<div class="bg-white h-screen text-center">
-<h1 class="text-2xl">Shipment Tracking</h1>
-<a id="link">
-<table class="text-center table-sortable">
-    <thead>
-        <tr>
-            <th class="px-6 py-3 hover:bg-white hover:shadow-lg data-sort" id="id">ShipmentName</th>
-            <th class="px-6 py-3 hover:bg-white hover:shadow-lg data-sort" id="delDate">DeliveryDate</th>
-            <th class="px-6 py-3 hover:bg-white hover:shadow-lg data-sort" id="status">ShipmentStatus</th>
-        </tr>
-    </thead>
-    <tbody>
-      
-        @foreach ($shipments as $shipment)
-        <tr class="hover:bg-white hover:shadow-lg" onclick="setLink(this);">
-            <td class="p-3">{{$shipment->ShipmentName}}</td>
-            <td>{{$shipment->ShipmentDate}}</td>
-            <td class=
-            "@if ($shipment->Name == 'On hold')
-                    bg-red
-                @elseif ($shipment->Name == 'In progress')
-                    bg-orange
-                @elseif ($shipment->Name == 'In Transit')
-                    bg-yellow
-                @elseif ($shipment->Name == 'Delivered')
-                    bg-lime
-                @elseif ($shipment->Name == 'Completed')
-                    bg-green
-                @else
-                    bg-white
-                @endif
-            ">{{$shipment->Name}}</td>
-        </tr>
-       @endforeach
-   </tbody>
-  </table>
-   </a>
+        <div class="overflow-x-auto">
+            <a id="link">
+            <table class="table-auto w-full border-collapse border border-gray-400">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentName</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentDate</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">DeliveryDate</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentStatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @foreach($shipments as $shipment)
+                        <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}" onclick="setLink(this);">
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->ShipmentName }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->ShipmentDate }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->DeliveryDate }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400
+                            @if ($shipment->Name == 'On hold')
+                            bg-red
+                            @elseif ($shipment->Name == 'In progress')
+                                bg-orange
+                            @elseif ($shipment->Name == 'In Transit')
+                                bg-yellow
+                            @elseif ($shipment->Name == 'Delivered')
+                                bg-lime
+                            @elseif ($shipment->Name == 'Completed')
+                                bg-green
+                            @else
+                                bg-white
+                            @endif">{{ $shipment->Name }}</td>
+                            
+                        </tr>
+                    @endforeach
+                    </a>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
+
 </x-app-layout>
