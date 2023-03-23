@@ -1,5 +1,6 @@
-@extends('layouts.header')
-@section('content')
+<x-app-layout>
+
+
 <!-- example -->
 <div style="display:flex; align-items:baseline; width:80%">
 
@@ -31,6 +32,6 @@
             @endforeach
         </tbody>
     </table>
-    
 </div>
-@endsection
+
+</x-app-layout>

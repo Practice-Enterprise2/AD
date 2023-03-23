@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<x-app-layout>
 <html>
     <head>
         <title>Ticket Data Dump</title>
@@ -10,3 +10,4 @@
         </pre>
     </body>
 </html>
+</x-app-layout>

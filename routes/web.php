@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
 
 Route::get('/overview', function ()
 {
@@ -106,4 +106,8 @@ Route::get('/overview', function ()
 Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
 Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
-require __DIR__ . '/auth.php';
+
+
+
+require __DIR__.'/auth.php';
+
