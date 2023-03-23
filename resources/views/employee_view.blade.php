@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('content')
+<x-app-layout>
 <style>
 .userpanel{
     width: 350px;
@@ -31,4 +31,4 @@ a#newemployee:hover{
             <p>province: {{ $user->province }}</p>
 </div>
          @endforeach
-@endsection
+</x-app-layout>

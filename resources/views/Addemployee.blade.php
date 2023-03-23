@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('content') 
+<x-app-layout>
 <style>
 h1 {
     padding-top: 50px;
@@ -74,4 +74,4 @@ form button:hover {
             <button type="reset">reset</button>
             <button type="submit">New</button>
         </form>
-@endsection
+</x-app-layout>

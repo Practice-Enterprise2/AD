@@ -1,6 +1,6 @@
 @extends('layouts.header')
 
-@section('content')
+<x-app-layout>
     <h1>Complaint Response</h1>
 
     <p><strong>Customer Name:</strong> {{ $complaint->customer_name }}</p>
@@ -17,4 +17,4 @@
 
         <button type="submit" class="btn btn-primary">Submit Response</button>
     </form>
-@endsection
+</x-app-layout>
