@@ -7,35 +7,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Role;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
-    
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany(Role::class);
     }
 
-    public function checkRoles($roles){
-        if(!is_array($roles)){
+    public function checkRoles($roles)
+    {
+        if (! is_array($roles)) {
             $roles = [$roles];
         }
-        if(!$this->hasAnyRole($roles)){
+        if (! $this->hasAnyRole($roles)) {
             auth()->logout();
             abort(404);
         }
     }
 
-    public function hasAnyRole($roles): bool{
+    public function hasAnyRole($roles): bool
+    {
         return (bool) $this->roles()->whereIn('name', $roles)->first();
     }
 
-    public function hasRole($role): bool{
+    public function hasRole($role): bool
+    {
         return (bool) $this->roles()->where('name', $role)->first();
     }
-
 
     /**
      * The attributes that are mass assignable.
@@ -66,5 +69,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
 }

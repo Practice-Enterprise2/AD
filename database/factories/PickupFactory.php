@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Address;
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
