@@ -42,7 +42,7 @@ Route::get('/page2', function () {
 });
 
 Route::get(
-    '/pickup/create', 
+    '/pickup/create',
     [PickupController::class, 'create']
 )->middleware(['auth', 'verified'])->name('create-pickup');
 
@@ -55,19 +55,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //roles() method gives an error but it still works (I have no idea how or why)
-Route::get('/employee', function(){
-    return Auth::user()->roles()->first()->name == 'employee' || 
+Route::get('/employee', function () {
+    return Auth::user()->roles()->first()->name == 'employee' ||
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(404);
 })->middleware(['auth', 'verified'])->name('employee');
 
 
 //admin page
-Route::get('/admin', function(){
+Route::get('/admin', function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin') : abort(404);
 })->middleware(['auth', 'verified'])->name('admin');
 
 //user page
-Route::get('/admin/users', [UserController::class, 'show'], function(){
+Route::get('/admin/users', [UserController::class, 'show'], function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.users') : abort(404);
 })->middleware(['auth', 'verified'])->name('users');
 Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('users.update');
@@ -75,7 +75,7 @@ Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('us
 Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
 
 //roles page
-Route::get('/admin/roles', [RoleController::class, 'show'],  function(){
+Route::get('/admin/roles', [RoleController::class, 'show'],  function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.roles') : abort(404);
 })->middleware(['auth', 'verified'])->name('roles');
 Route::put('/admin/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
@@ -91,8 +91,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/overview', function ()
-{
+Route::get('/overview', function () {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
     // dd($tickets);
@@ -108,6 +107,10 @@ Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('sub
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
 
+//email verification
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
-require __DIR__.'/auth.php';
 
+require __DIR__ . '/auth.php';
