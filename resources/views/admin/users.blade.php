@@ -18,7 +18,7 @@
                         </thead>
                         <tbody>
                         @foreach($users as $user)
-                            <tr>
+                            <tr class="{{ $user->is_locked ? 'bg-red-500 text-white' : '' }}">
                                 <td class="px-4 py-2 text-center">{{ $user->id }}</td>
                                 <td class="px-4 py-2 text-center">
                                     <span id="name-{{ $user->id }}" class="name-span">{{ $user->name }}</span>
@@ -31,9 +31,9 @@
                                 <td class="px-4 py-2 text-center">
                                     <span id="role-{{ $user->id }}" class="role-span">{{ $user->roles->first()->name }}</span>
                                     <select id="edit-role-{{ $user->id }}" class="hidden edit-role-input" type="text" value="{{ $user->roles->first()->name}}">
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role }}">{{$role}}</option>
-                                    @endforeach
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role }}" {{ $role == $user->roles->first()->name ? 'selected' : '' }}>{{$role}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td class="px-4 py-2">
@@ -44,6 +44,20 @@
                                         Save
                                     </button>
                                 </td>
+                                <!--button to lock/ unlock accounts-->
+                                <td class="px-4 py-2">    
+                                    <form action="{{ route('users.toggle-lock', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                            @if ($user->is_locked)
+                                                Unlock
+                                            @else
+                                                Lock
+                                            @endif
+                                        </button>
+                                    </form>
+                                </td>
                                 <td class="px-4 py-2">
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                         @csrf
@@ -53,6 +67,7 @@
                                 </td>
                             </tr>
                         @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -152,6 +167,39 @@
             } else {
                 nameSpan.closest('tr').classList.add('hidden');
             }
+        });
+    });
+</script>
+
+<!-- Add the following JavaScript code to your view or a separate JavaScript file -->
+<script>
+    // Attach a click event handler to the lock/unlock button
+    document.querySelectorAll('.lock-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Get the user ID and current locked state from the button's data attributes
+            var userId = button.dataset.id;
+            var isLocked = button.dataset.locked === 'true';
+            
+            // Send an AJAX request to toggle the locked state in the database
+            fetch('/users/' + userId + '/toggle-locked', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ is_locked: !isLocked })
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    // Toggle the locked state in the button's data attributes and text
+                    button.dataset.locked = !isLocked;
+                    button.textContent = isLocked ? 'Lock' : 'Unlock';
+                    
+                    // Toggle the background color of the user row
+                    var userRow = document.querySelector('#user-' + userId);
+                    userRow.classList.toggle('bg-red-200');
+                }
+            });
         });
     });
 </script>

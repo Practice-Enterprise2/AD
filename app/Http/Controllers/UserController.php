@@ -61,4 +61,13 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User created successfully!');
     }
+
+    // locke or unlock account
+    public function toggleLock(User $user)
+    {
+        $user->is_locked = !$user->is_locked;
+        $user->save();
+    
+        return redirect()->back();
+    }
 }

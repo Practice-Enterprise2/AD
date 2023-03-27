@@ -111,3 +111,6 @@ Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket']
 
 require __DIR__.'/auth.php';
 
+// locke account and unlock
+Route::put('/users/{user}/toggle-lock', [UserController::class, 'toggleLock'])->name('users.toggle-lock');
+
