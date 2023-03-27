@@ -60,5 +60,5 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'User created successfully!');
-    }
+    } 
 }
