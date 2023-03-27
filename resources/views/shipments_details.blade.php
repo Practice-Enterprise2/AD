@@ -1,4 +1,3 @@
-@extends('layouts.navigation')
 <x-app-layout>
 
     @if(count($shipments) > 0)

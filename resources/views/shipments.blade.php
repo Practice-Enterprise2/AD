@@ -1,4 +1,3 @@
-@extends('layouts.navigation')
 <x-app-layout>
 
     <script type="text/javascript">
