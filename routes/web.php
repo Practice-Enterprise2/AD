@@ -15,6 +15,9 @@ use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\employeeViewController;
+use App\Http\Controllers\CustomerOvervieuw;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,16 +92,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('employee_overview',[employeeViewController::class, 'index']);
+Route::get('/new_employee', function () {
+    return view('Addemployee');
+});
+Route::post('employee_add',[employeeViewController::class, 'save']);
 
 
-Route::get('/overview', function ()
+route::get("/respond", function(){
+    return view("respond");
+});
+
+
+
+Route::get('/overview_employee', function ()
 {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
     // dd($tickets);
 
     // return redirect()->route('dump');
-    return view('overview', ['tickets' => $tickets]);
+    return view('employee_view', ['tickets' => $tickets]);
 });
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
