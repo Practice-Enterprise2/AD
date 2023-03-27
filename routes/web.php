@@ -85,4 +85,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Shipment Pages
+Route::get('/shipment', function() {
+    return view('shipment');
+});
+Route::get('/createShipment', function () {
+    return view('createShipment');
+})->middleware(['auth', 'verified'])->name('createShipment');
+
+// Invoice
+//Route::get('payment','App\Http\Controllers\Controller@insertform');
+Route::post('payment', 'App\Http\Controllers\ShipmentController@insert');
+Route::get('/payment', function () {
+    return view('payment');     
+})->middleware(['auth', 'verified'])->name('payment');
+Route::get('/paymentSuccess', function () {
+    return view('paymentSuccess');
+})->middleware(['auth', 'verified'])->name('paymentSuccess');
+
+
 require __DIR__ . '/auth.php';
