@@ -36,12 +36,13 @@
 </div>
 @endforeach -->
 </div>
-    <div id="chatbot-container">
-        <div id="chatbot-messages">
-            <div class="chatbot-message">Welcome To the help Page! How can we help?</div>
+    <div>
+        <div>
+            <div>Welcome To the help Page! How can we help?</div>
         </div>
-        <form id="chatbot-form" action="#" method="post">
-            <input type="text" id="chatbot-input" name="chatbot-input" placeholder="Enter your question...">
+        <form id="chatbot-form" action="event(new complaintNot(userinput))" method="post">
+            @csrf
+            <input type="text" id="userinput" name="userinput" placeholder="Enter your question...">
             <button type="submit">submit</button>
         </form>
     </div>
