@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post;
-use App\Http\Controllers\Ticket;
 
 class PostController extends Controller
 {
-    //
     public function ticketsubmit()
     {
         return view('ticketsubmit');
@@ -20,11 +16,11 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'cstID' => 'required',
             'issue' => 'required|max:64',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
         // create ticket
-        $ticket = new Ticket;
+        $ticket = new Ticket();
         $ticket->cstID = $validatedData['cstID'];
         $ticket->issue = $validatedData['issue'];
         $ticket->description = $validatedData['description'];
