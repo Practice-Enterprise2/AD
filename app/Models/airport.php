@@ -12,22 +12,21 @@ class airport extends Model
     // if your key name is not 'id'
     // you can also set this to null if you don't have a primary key
     protected $table = 'airports';
-    protected $primaryKey = 'iataCode';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
     // In Laravel 6.0+ make sure to also set $keyType
-    protected $keyType = 'string';
+
 
 
     protected $fillable = [
-        'airportName',
-        'iataCode',
-        'stateCode',
-        'countryCode',
-        'countryName',
+        'id',
+        'name',
+        'land',
+        'address_id'
     ];
-    
+
     // old DB with int as key
     // protected $primaryKey ="airportID";
     // // protected $fillable = ['name', 'code', 'stateCode', 'countryCode', 'countryName'];

@@ -82,12 +82,12 @@ table
                 <form action="/edit" method="GET">
                     <table>
                         <tr>
-                        <td>Contract ID:</td> <td><input type="number"  value="{{ $contract->contract_ID }}" disabled required>
-                        <input type="number" name="id" value="{{ $contract->contract_ID }}" hidden></td>
+                        <td>Contract ID:</td> <td><input type="number"  value="{{ $contract->id }}" disabled required>
+                        <input type="number" name="id" value="{{ $contract->id }}" hidden></td>
                         </tr>
                         <tr>
                             <td>Airline name:</td> <td><input type="text"  value="{{ $contract->Airline }}"  required disabled>
-                            <input type="number"  value="{{ $contract->airline_ID }}" name="airline"  hidden></td>
+                            <input type="number"  value="{{ $contract->airline_id }}" name="airline"  hidden></td>
                         </tr>
                         <tr>
                             <td>Start date:</td>
@@ -100,6 +100,22 @@ table
                         <tr>
                             <td>Price/kg:</td> <td><input type="number" name="price" value="{{ $contract->price }}" required></td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                airport:
+
+                                <select class="chosen-select" name="airportID">
+                                    @foreach ($airports as $airport )
+                                    <option <?php
+                                        if ($contracts[0]->depart_location == $airport->id)
+                                        {
+                                            echo " selected ";
+                                        }
+                                    ?> value="{{ $airport->id }}"> {{$airport->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                          </tr>
                      <!--   <tr>
                             <td>Departure airport:</td> <td><input type="text" name="departure_airport" value="{{ $contract->depart_airport }}" required></td>
                       </tr>
@@ -108,38 +124,41 @@ table
                             <td>Destination airport:</td> <td><input type="text" name="destination_airport" value="{{ $contract->destination_airport }}" required></td>
                         </tr>
                     -->
+
                     <tr>
                         <td colspan="2">
+                            Departure location:
 
-                            <select class="chosen-select" name="departure_airport" id="departure_airport_select">
+                            <select class="chosen-select" name="departure_location" id="departure_airport_select">
                                 @foreach ($airports as $airport )
                                 <option <?php
-                                    if ($contracts[0]->depart_airport == $airport->iataCode)
+                                    if ($contracts[0]->depart_location == $airport->id)
                                     {
                                         echo " selected ";
                                     }
-                                ?> value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
+                                ?> value="{{ $airport->id }}"> {{$airport->name}}</option>
                                 @endforeach
                             </select>
                         </td>
                       </tr>
                     <tr>
                         <td colspan="2">
-                            <select  class="chosen-select" name="destination_airport" id="destination_airport_select">
+                            Destination location:
+                            <select  class="chosen-select" name="destination_location" id="destination_airport_select">
                                 @foreach ($airports as $airport )
                                 <option <?php
-                                    if ($contracts[0]->destination_airport  == $airport->iataCode)
+                                    if ($contracts[0]->destination_location  == $airport->id)
                                     {
                                         echo " selected ";
                                     }
-                                ?>value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
+                                ?>value="{{ $airport->id }}"> {{$airport->name}}</option>
                                 @endforeach
                             </select>
                         </td>
                       </tr>
                         <tr>
                             <td><input type="submit" name="submit" value="Save Changes"></td> <td><?php
-                                if ($contracts[0]->active == 1)
+                              /*  if ($contracts[0]->active == 1)
                                 {
                                     ?>
                                     <input type="submit" name="remove" value="delete contract">
@@ -149,9 +168,9 @@ table
                                     ?>
                                      <input type="submit" name="reactivate" value="reactivate contract">
                                     <?php
-                                }
+                                } */
 
-                                ?> </td>
+                                ?>  reactivate/delete currently broken due to current database structure</td>
                         </tr>
                     </table>
                 </form>

@@ -11,17 +11,19 @@ class Contract extends Model
 
 
     protected $table = 'contracts';
-    protected $primaryKey = 'contract_ID';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'contract_ID',
-        'airline_ID',
+        'id',
+        'airline_id',
         'start_date',
         'end_date',
         'price',
-        'depart_airport',
-        'destination_airport',
-        'active',
+        'airport_id',
+        'depart_location',
+        'destination_location',
+        'created_at',
+        'updated_at'
     ];
 public $timestamps = false;
 }

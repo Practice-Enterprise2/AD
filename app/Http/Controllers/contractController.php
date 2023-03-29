@@ -26,25 +26,26 @@ class contractController extends Controller
     public function alter()
     {
         $id = $_GET["id"];
-        $airlineCode = $_GET["airline"];
+        $airlineID = $_GET["airline"];
         $start_date = $_GET["start_date"];
         $end_date = $_GET["end_date"];
         $price = $_GET["price"];
-        $departure = $_GET["departure_airport"];
-        $destination = $_GET["destination_airport"];
+        $airportID = $_GET["airportID"];
+        $departure = $_GET["departure_location"];
+        $destination = $_GET["destination_location"];
 
-        $affected = DB::table('contracts')->where('contract_ID',$id)->update(
-            ['airline_ID'=> $airlineCode,'start_date' => $start_date, 'end_date' => $end_date, 'price'=>$price,'depart_airport'=>$departure,'destination_airport'=>$destination]);
-            if (isset($_GET["remove"]))
+        $affected = DB::table('contracts')->where('id',$id)->update(
+            ['airline_id'=> $airlineID,'start_date' => $start_date, 'end_date' => $end_date, 'price'=>$price,'airport_id' =>$airportID,'depart_location'=>$departure,'destination_location'=>$destination]);
+          /*  if (isset($_GET["remove"]))
             {
-                $affected = DB::table('contracts')->where('contract_ID',$id)->update(
+                $affected = DB::table('contracts')->where('id',$id)->update(
                     ['active'=> 0]);
             }
             elseif (isset($_GET["reactivate"]))
             {
                 $affected = DB::table('contracts')->where('contract_ID',$id)->update(
                     ['active'=> 1]);
-            }
+            } */
            unset($_GET);
            ?>
            <script>
@@ -65,12 +66,12 @@ class contractController extends Controller
             {
                 $id = $_GET["q"];
             }
-            $contracts = Contract::where('contract_ID',$id)->get();
+            $contracts = Contract::where('id',$id)->get();
             $airports = airport::all();
             return view('contract',compact('contracts','airports'));
 
     }
-    public function simpleIndex()
+  /*  public function simpleIndex()
     {
         $id = 1;
         $contracts = null;
@@ -112,17 +113,8 @@ class contractController extends Controller
             return view('contract',compact('contracts','airports'));
                // return  view('contract',['contracts'=>$contracts]);
         }
+        */
 
 
-        public function specificContract($id)
-        {
-        $contracts = DB::select("SELECT ap.name, c1.contract_ID, c2.contract_ID
-        FROM airports ap INNER JOIN
-        contracts c1 ON ap.iataCode = c1.depart_airport INNER JOIN
-        conctracts c2 ON ap.iataCode = c2.destination_airport
-        GROUP BY ap.name
-        HAVING ap.iataCode IN (SELECT c3.depart_airport as code FROM contracts c3 UNION SELECT c4.destination_airport as code FROM contracts c4)
-                ");
-        }
 }
 

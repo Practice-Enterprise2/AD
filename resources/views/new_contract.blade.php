@@ -13,7 +13,7 @@
     <body>
         <div class="container">
             <h1>Create new contract:</h1>
-        
+
                 <form action="plaats" method="post">
                     @csrf
                     <select>
