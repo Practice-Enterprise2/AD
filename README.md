@@ -1,5 +1,5 @@
 # AD
-TEST
+
 ## Branches
 Create a seperate branch for every feature you are working on.
 For example you are working on database connection, call your branch `db-connection`
@@ -26,16 +26,26 @@ run the following commands in different terminals (!)
 1. npm run dev
 2. php artisan serve
 
+## Automatic Style Fixes
+To preserve a consistent style accross the codebase, it is recommended to run [Laravel
+Pint](https://laravel.com/docs/10.x/pint) before every pull request or other upstream merge. To do
+this, run the following from the project root:
+
+```sh
+./vendor/bin/pint
+```
+
+To check whether the code in the current directory follows the style, you can add the `--test` flag
+to the command. That will prevent changes to the code and only report files that aren't following
+the correct style.
+
 ## Basic user accounts
 - admin@local.test
 - employee@local.test
 - user@local.test
 
-password: letmein
+password: `letmein`
 
 ## General
-
-- put <x-app-layout> </x-app-layout> around your HTML code
-
- 
+- put \<x-app-layout>\</x-app-layout> around your HTML code
 
