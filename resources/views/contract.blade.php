@@ -28,10 +28,9 @@ if (!isset($_GET["q"]))
 </script>
 <script>
     $(document).ready(function() {
-$('.chosen-select').chosen();
-});
-
-</script>
+      $('.chosen-select').chosen();
+    });
+    </script>
     <style>
 
 .x
@@ -55,6 +54,7 @@ table
 </head>
 
 <body>
+    @include('layouts.header')
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
 <script src="{{ asset('js/chosen.jquery.js') }}"></script>
 <script src="{{asset('js/chosen-initialization.js')}}"></script>
@@ -99,17 +99,21 @@ table
                         <tr>
                             <td>Price/kg:</td> <td><input type="number" name="price" value="{{ $contract->price }}" required></td>
                         </tr>
-                      <!--  <tr>
+                     <!--   <tr>
                             <td>Departure airport:</td> <td><input type="text" name="departure_airport" value="{{ $contract->depart_airport }}" required></td>
+                      </tr>
+                    -->
+                     <!--   <tr>
+                            <td>Destination airport:</td> <td><input type="text" name="destination_airport" value="{{ $contract->destination_airport }}" required></td>
                         </tr>
                     -->
                     <tr>
                         <td colspan="2">
 
-                            <select class="chosen-select" name="departure_airport">
+                            <select class="chosen-select" name="departure_airport" id="departure_airport_select">
                                 @foreach ($airports as $airport )
                                 <option <?php
-                                    if ($contract->depart_airport == $airport->iataCode)
+                                    if ($contracts[0]->depart_airport == $airport->iataCode)
                                     {
                                         echo "selected";
                                     }
@@ -117,14 +121,13 @@ table
                                 @endforeach
                             </select>
                         </td>
-                    </tr>
+                      </tr>
                     <tr>
                         <td colspan="2">
-                            <select  class="chosen-select" name="destination_airport">
+                            <select  class="chosen-select" name="destination_airport" id="destination_airport_select">
                                 @foreach ($airports as $airport )
-                                <option
-                                <?php
-                                    if ($contract->destination_airport == $airport->iataCode)
+                                <option <?php
+                                     if ($contract[0]->destination_airport  == $airport->iataCode)
                                     {
                                         echo "selected";
                                     }
@@ -132,7 +135,7 @@ table
                                 @endforeach
                             </select>
                         </td>
-                    </tr>
+                      </tr>
                         <tr>
                             <td><input type="submit" name="submit" value="Save Changes"></td> <td><input type="submit" name="remove" value="delete contract"></td>
                         </tr>

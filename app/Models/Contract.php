@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
+    use HasFactory;
+
+
     protected $table = 'contracts';
     protected $primaryKey = 'contract_ID';
-    
-    public function test()
-    {
-        echo "test";
-    }
-    use HasFactory;
+
+    protected $fillable = [
+        'contract_ID',
+        'airline_ID',
+        'start_date',
+        'end_date',
+        'price',
+        'depart_airport',
+        'destination_airport',
+        'active',
+    ];
+public $timestamps = false;
 }
+?>

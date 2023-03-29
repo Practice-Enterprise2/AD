@@ -9,7 +9,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Models\airport;
 use App\Models\Contract;
 use Illuminate\View\View;
 
@@ -47,13 +47,32 @@ class contractController extends Controller
            </script>
            <?php
     }
+    public function simpleV2()
+    {
+        $id = 1;
+        $contracts = null;
+        if (!isset($_GET["q"]))
+        {
+            $_GET["q"] = 1;
+        }
+
+            if (is_numeric($_GET["q"]))
+            {
+                $id = $_GET["q"];
+            }
+            $contracts = Contract::where('contract_ID',$id)->get();
+            $airports = airport::all();
+            return view('contract',compact('contracts','airports'));
+
+    }
     public function simpleIndex()
     {
         $id = 1;
         $contracts = null;
         if (!isset($_GET["q"]))
         {
-           // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 limit 1");
+
+                                    // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 limit 1");
            $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.iataCode INNER JOIN airports a2 ON c.destination_airport = a2.iataCode
            INNER JOIN airlines al on c.airline_ID = al.id where c.active = 1 limit 1");
         }
@@ -74,12 +93,12 @@ class contractController extends Controller
                 $id = htmlspecialchars($id);
                 $id = int($id);
             }
-           // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 and contract_ID = $id");
+                                        // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 and contract_ID = $id");
            $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.iataCode INNER JOIN airports a2 ON c.destination_airport = a2.iataCode
            INNER JOIN airlines al on c.airline_ID = al.id where c.active = 1 and c.contract_ID = $id");
            if (count($contracts) != 1)
             {
-               // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 limit 1");
+                                             // $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1 limit 1");
                $contracts = DB::select("select * from contracts c INNER JOIN airports a ON c.depart_airport = a.iataCode INNER JOIN airports a2 ON c.destination_airport = a2.iataCode
                INNER JOIN airlines al on c.airline_ID = al.id where c.active = 1 limit 1");
             }
@@ -87,8 +106,9 @@ class contractController extends Controller
             $airports = AirportController::getAirports();
             return view('contract',compact('contracts','airports'));
                // return  view('contract',['contracts'=>$contracts]);
-
         }
+
+
         public function specificContract($id)
         {
         $contracts = DB::select("SELECT ap.name, c1.contract_ID, c2.contract_ID

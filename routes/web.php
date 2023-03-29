@@ -109,7 +109,7 @@ Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('sub
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
 //  contracts view
-Route::get('contract', [contractController::class, 'simpleIndex']);
+Route::get('contract', [contractController::class, 'simpleV2']);
 Route::get('edit',[contractController::class, 'alter']);
 Route::get('contractGet',[contractController::class, 'simpleIndex']);
 Route::get('specif', function() {
