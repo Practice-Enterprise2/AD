@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TicketController;
-
+use App\Http\Controllers\contractController;
+use App\Http\Controllers\AirportController;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ Route::get('/page2', function () {
 });
 
 Route::get(
-    '/pickup/create', 
+    '/pickup/create',
     [PickupController::class, 'create']
 )->middleware(['auth', 'verified'])->name('create-pickup');
 
@@ -56,7 +57,7 @@ Route::get('/dashboard', function () {
 
 //roles() method gives an error but it still works (I have no idea how or why)
 Route::get('/employee', function(){
-    return Auth::user()->roles()->first()->name == 'employee' || 
+    return Auth::user()->roles()->first()->name == 'employee' ||
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(404);
 })->middleware(['auth', 'verified'])->name('employee');
 
@@ -107,7 +108,13 @@ Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('creat
 Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
-
+//  contracts view
+Route::get('contract', [contractController::class, 'simpleIndex']);
+Route::get('edit',[contractController::class, 'alter']);
+Route::get('contractGet',[contractController::class, 'simpleIndex']);
+Route::get('specif', function() {
+    return view('specific-contracts');
+});
 
 require __DIR__.'/auth.php';
 
