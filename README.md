@@ -32,7 +32,7 @@ Pint](https://laravel.com/docs/10.x/pint) before every pull request or other ups
 this, run the following from the project root:
 
 ```sh
-./vendor/bin/pint
+./artisan format
 ```
 
 To check whether the code in the current directory follows the style, you can add the `--test` flag
