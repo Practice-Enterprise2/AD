@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employeeViewController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -82,13 +83,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/overview', function () {
+Route::get('employee_overview', [employeeViewController::class, 'index']);
+Route::get('/new_employee', function () {
+    return view('Addemployee');
+});
+Route::post('employee_add', [employeeViewController::class, 'save']);
+
+route::get('/respond', function () {
+    return view('respond');
+});
+
+Route::get('/overview_employee', function () {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
     // dd($tickets);
 
     // return redirect()->route('dump');
-    return view('overview', ['tickets' => $tickets]);
+    return view('employee_view', ['tickets' => $tickets]);
 });
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
