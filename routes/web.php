@@ -108,4 +108,9 @@ Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('creat
 Route::post('/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
-require __DIR__.'/auth.php';
+//email verification
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+require __DIR__ . '/auth.php';
