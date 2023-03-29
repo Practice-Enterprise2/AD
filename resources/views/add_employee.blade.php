@@ -70,7 +70,7 @@ form button:hover {
             </select>
             </div>
             <br>
-            <a href="/">Back</a>
+            <a href="{{ route('home'); }}">Back</a>
             <button type="reset">reset</button>
             <button type="submit">New</button>
         </form>

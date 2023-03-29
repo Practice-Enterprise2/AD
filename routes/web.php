@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee');
+    Route::view('/new_employee', 'add_employee')->name('employee.create');
     Route::view('/respond', 'respond');
 
     /*
@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee', 'employee_page')->name('employee');
-        Route::get('/overview_employee', 'employees')->name('employee');
+        Route::get('/overview_employee', 'employees')->name('employee-overview');
     });
 
     Route::controller(EmployeeViewController::class)->group(function () {

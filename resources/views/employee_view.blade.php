@@ -20,7 +20,7 @@ a#newemployee:hover{
 
 </style>
 <div>
-   <a id="newemployee" href="/new_employee">new employee</a>
+   <a id="newemployee" href="{{ route('employee.create'); }}">new employee</a>
          @foreach ($users as $user)
          <div class="userpanel">
 

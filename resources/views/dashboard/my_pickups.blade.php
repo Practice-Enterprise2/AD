@@ -1,8 +1,7 @@
-@extends('layouts.header')
-@section('content')
-<!-- example -->
-<div>
+<x-app-layout>
+  <div>
     <livewire:my-pickups-list />
-</div>
-@endsection
-
+  </div>
+</x-app-layout>
+<!-- vim: ft=html
+-->
