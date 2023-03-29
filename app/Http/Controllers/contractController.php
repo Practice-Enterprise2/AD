@@ -40,6 +40,11 @@ class contractController extends Controller
                 $affected = DB::table('contracts')->where('contract_ID',$id)->update(
                     ['active'=> 0]);
             }
+            elseif (isset($_GET["reactivate"]))
+            {
+                $affected = DB::table('contracts')->where('contract_ID',$id)->update(
+                    ['active'=> 1]);
+            }
            unset($_GET);
            ?>
            <script>
@@ -120,3 +125,4 @@ class contractController extends Controller
                 ");
         }
 }
+

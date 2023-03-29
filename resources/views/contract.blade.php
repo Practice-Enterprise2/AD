@@ -78,7 +78,7 @@ table
             ?>
             @foreach ($contracts as $contract)
             <td>
-                {{$contract->destination_airport}}
+
                 <form action="/edit" method="GET">
                     <table>
                         <tr>
@@ -116,7 +116,7 @@ table
                                 <option <?php
                                     if ($contracts[0]->depart_airport == $airport->iataCode)
                                     {
-                                        echo "selected";
+                                        echo " selected ";
                                     }
                                 ?> value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
                                 @endforeach
@@ -128,9 +128,9 @@ table
                             <select  class="chosen-select" name="destination_airport" id="destination_airport_select">
                                 @foreach ($airports as $airport )
                                 <option <?php
-                                     if ($contracts[0]->depart_airport  == $airport->iataCode)
+                                    if ($contracts[0]->destination_airport  == $airport->iataCode)
                                     {
-                                        echo "selected";
+                                        echo " selected ";
                                     }
                                 ?>value="{{ $airport->iataCode }}"> {{$airport->name}}</option>
                                 @endforeach
@@ -138,7 +138,20 @@ table
                         </td>
                       </tr>
                         <tr>
-                            <td><input type="submit" name="submit" value="Save Changes"></td> <td><input type="submit" name="remove" value="delete contract"></td>
+                            <td><input type="submit" name="submit" value="Save Changes"></td> <td><?php
+                                if ($contracts[0]->active == 1)
+                                {
+                                    ?>
+                                    <input type="submit" name="remove" value="delete contract">
+                                    <?php
+                                }
+                                else {
+                                    ?>
+                                     <input type="submit" name="reactivate" value="reactivate contract">
+                                    <?php
+                                }
+
+                                ?> </td>
                         </tr>
                     </table>
                 </form>
