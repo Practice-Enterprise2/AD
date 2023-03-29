@@ -31,7 +31,7 @@ class complaint implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('complaintNot'),
+            new Channel('EventsComplaint'),
         ];
     }
 }

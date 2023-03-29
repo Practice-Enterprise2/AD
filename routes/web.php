@@ -1,10 +1,14 @@
 <?php
 
+use App\Events\complaint as EventsComplaint;
+use App\Http\Controllers\complaintscontroller;
 use App\Http\Controllers\contactController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\shipmentController;
+use App\Models\contact;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App\Events\complaint;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +45,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
+    route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
+    route::post('/sendcomplaint', function(){
+        event(new EventsComplaint("broadcasts message"));
+        view('contact.index');
+    });
 });
 
 require __DIR__.'/auth.php';
