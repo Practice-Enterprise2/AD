@@ -16,6 +16,7 @@ use App\Http\Controllers\AirportController;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\newcontractcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -117,4 +118,7 @@ Route::get('specif', function() {
 });
 
 require __DIR__.'/auth.php';
+
+Route::post('plaats', [newcontractcontroller::class, 'plaats']);
+Route::get('new_contract', [newcontractcontroller::class, 'dropdown']);
 
