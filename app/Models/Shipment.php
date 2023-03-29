@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shipment extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -21,11 +22,13 @@ class Shipment extends Model
         'type',
     ];
 
-    public function source_address(): BelongsTo {
+    public function source_address(): BelongsTo
+    {
         return $this->belongsTo(Address::class);
     }
 
-    public function destination_address(): BelongsTo {
+    public function destination_address(): BelongsTo
+    {
         return $this->belongsTo(Address::class);
     }
 }

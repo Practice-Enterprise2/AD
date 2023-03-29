@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('isActive');
             $table->string('jobTitle');
             $table->integer('salary');
-            $table->string("Iban");
+            $table->string('Iban');
             $table->string('password');
             $table->timestamps();
         });

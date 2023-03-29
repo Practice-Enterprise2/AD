@@ -9,7 +9,6 @@ use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,22 +25,22 @@ class DatabaseSeeder extends Seeder
             RoleTableSeeder::class,
         ]);
 
-        $admin = new User;
-        $admin->name = "Administrator";
+        $admin = new User();
+        $admin->name = 'Administrator';
         $admin->email = 'admin@local.test';
         $admin->password = Hash::make('letmein');
         $admin->save();
         $admin->roles()->attach(Role::where('name', 'admin')->first());
 
-        $employee = new User;
-        $employee->name = "Employee";
+        $employee = new User();
+        $employee->name = 'Employee';
         $employee->email = 'employee@local.test';
         $employee->password = Hash::make('letmein');
         $employee->save();
         $employee->roles()->attach(Role::where('name', 'employee')->first());
 
-        $user = new User;
-        $user->name = "User";
+        $user = new User();
+        $user->name = 'User';
         $user->email = 'user@local.test';
         $user->password = Hash::make('letmein');
         $user->save();
@@ -59,6 +58,5 @@ class DatabaseSeeder extends Seeder
         Pickup::factory()
         ->count(50)
         ->create();
-
     }
 }

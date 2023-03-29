@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
 
 class employee extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'employees';
+
     public $timestamps = true;
 
     /**
@@ -36,7 +36,7 @@ class employee extends Model
         'password',
         'Iban',
         'created_at',
-        'updated_at'
+        'updated_at',
 
     ];
 }
