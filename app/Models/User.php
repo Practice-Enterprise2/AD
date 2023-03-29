@@ -21,10 +21,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function checkRoles($roles)
     {
-        if (!is_array($roles)) {
+        if (! is_array($roles)) {
             $roles = [$roles];
         }
-        if (!$this->hasAnyRole($roles)) {
+        if (! $this->hasAnyRole($roles)) {
             auth()->logout();
             abort(404);
         }
