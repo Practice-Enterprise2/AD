@@ -5,7 +5,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\employeeViewController;
+use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/overview_employee', 'employees')->name('employee');
     });
 
-    Route::controller(employeeViewController::class)->group(function () {
+    Route::controller(EmployeeViewController::class)->group(function () {
         Route::get('/employee_overview', 'index');
         Route::post('/employee_add', 'save');
     });

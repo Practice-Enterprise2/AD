@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\employee;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
-class employeeViewController extends Controller
+class EmployeeViewController extends Controller
 {
     public function index()
     {
@@ -42,7 +42,7 @@ class employeeViewController extends Controller
                 $numericIBAN .= $rearrangedArray[$key];
             }
             if (bcmod($numericIBAN, '97') == 1) {
-                $user = new employee();
+                $user = new Employee();
                 $user->firstName = $req->firstName;
                 $user->lastName = $req->lastName;
                 $user->street = $req->street;

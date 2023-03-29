@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class employee extends Model
+class Employee extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
