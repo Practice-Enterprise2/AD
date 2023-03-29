@@ -78,6 +78,7 @@ table
             ?>
             @foreach ($contracts as $contract)
             <td>
+                {{$contract->destination_airport}}
                 <form action="/edit" method="GET">
                     <table>
                         <tr>
@@ -127,7 +128,7 @@ table
                             <select  class="chosen-select" name="destination_airport" id="destination_airport_select">
                                 @foreach ($airports as $airport )
                                 <option <?php
-                                     if ($contract[0]->destination_airport  == $airport->iataCode)
+                                     if ($contracts[0]->depart_airport  == $airport->iataCode)
                                     {
                                         echo "selected";
                                     }
