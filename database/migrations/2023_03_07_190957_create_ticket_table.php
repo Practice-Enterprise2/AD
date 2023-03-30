@@ -17,8 +17,8 @@ return new class extends Migration
             $table->tinyInteger('employeeID');
             $table->string('issue', 64);
             $table->longText('description');
-            $table->longText('solution');
-            $table->set('status', ['solved', 'unsolved']);
+            $table->longText('solution')->nullable();
+            $table->set('status', ['solved', 'unsolved'])->default('unsolved');
         });
     }
 

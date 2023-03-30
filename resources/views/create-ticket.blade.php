@@ -1,7 +1,7 @@
 <x-app-layout>
 <div>
 
-    <form method="POST" action="{{ route('submitted-ticket') }}">
+    <form method="POST" action="{{ route('submitted-ticket') }}" class="text-stone-50">
         @csrf
         <label for="cstID">Cst ID</label>
         <input type="text" name="cstID" id="cstID" value="{{ old('CstID') }}" required>

@@ -2,7 +2,7 @@
 
 
 <!-- example -->
-<div style="display:flex; align-items:baseline; width:80%">
+<div style="display:flex; align-items:baseline; width:80%" class="text-stone-50">
 
     <table>
         <thead>

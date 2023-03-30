@@ -91,14 +91,14 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/overview', function ()
+Route::get('/overview-ticket', function ()
 {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
     // dd($tickets);
 
     // return redirect()->route('dump');
-    return view('overview', ['tickets' => $tickets]);
+    return view('overview-ticket', ['tickets' => $tickets]);
 });
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
