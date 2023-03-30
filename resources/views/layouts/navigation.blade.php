@@ -26,6 +26,11 @@
                         {{ __('Add Shipment') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('contact.create')" :active="request()->routeIs('contact.create')">
+                        {{ __('Contact Us') }}
+                    </x-nav-link>
+                </div>
                 @if(Auth::user()->role == 0)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('complaints.messages')" :active="request()->routeIs('complaints.messages')">
