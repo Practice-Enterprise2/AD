@@ -15,7 +15,7 @@ class shipment extends Model
     // if your key name is not 'id'
     // you can also set this to null if you don't have a primary key
     protected $table = 'shipments';
-    protected $primaryKey = 'ShipmentID';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
@@ -24,20 +24,20 @@ class shipment extends Model
 
 
     protected $fillable = [
-        'ShipmentName',
-        'ShipmentDate',
-        'DeliveryDate',
-        'ShipmentWeight',
-        'ShipmentStatus',
+        'name',
+        'shipment_date',
+        'delivery_date',
+        'weight',
+        'status',
     ];
     
     public $sortable = [
-        'ShipmentID',
-        'ShipmentName',
-        'ShipmentDate',
-        'DeliveryDate',
-        'ShipmentWeight',
-        'ShipmentStatus',
+        'id',
+        'name',
+        'shipment_date',
+        'delivery_date',
+        'weight',
+        'status',
     ];
 
     public $timestamps = false;

@@ -14,7 +14,7 @@
 
   <div class="shadow-lg"> 
       <p class="text-center font-bold">Shipments</p>
-      <a href="./shipments"><img class="object-cover h-48 w-96" src="{{url('/images/shipments.jpg')}}" style="border: 0;"></a>
+      <a href="./shipmentsOverview"><img class="object-cover h-48 w-96" src="{{url('/images/shipments.jpg')}}" style="border: 0;"></a>
   </div>
 </div>
 @endsection

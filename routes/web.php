@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/shipmentsOverview', function(){
+Route::get('/shipmentsMenu', function(){
     return view('overview');
 });
 
@@ -34,12 +34,12 @@ Route::get('/graphs', function(){
     return view('graphs');
 });
 
-Route::get('/shipments', function(){
-    return view('shipments');
+Route::get('/shipmentsOverview', function(){
+    return view('shipmentsOverview');
 });
 
-Route::get('/shipments','App\Http\Controllers\Controller@showShipments');
-Route::get('/shipments_details/{ShipmentID}','App\Http\Controllers\Controller@showShipments_details');
+Route::get('/shipmentsOverview','App\Http\Controllers\Controller@showShipments');
+Route::get('/shipments_details_overview/{ShipmentID}','App\Http\Controllers\Controller@showShipments_details');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,6 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('shipments', 'App\Http\Controllers\Controller@indexSorting');
+Route::get('shipmentsOverview', 'App\Http\Controllers\Controller@indexSorting');
 
 require __DIR__.'/auth.php';

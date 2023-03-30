@@ -16,19 +16,19 @@ class Controller extends BaseController
 
     public function showShipments(){
         $shipments = DB::select('select * from shipments');
-        return view('shipments',['shipments'=>$shipments]);
+        return view('shipmentsOverview',['shipments'=>$shipments]);
     }
 
     public function showShipments_details($id){
-        $shipments = DB::select("select * from shipments WHERE ShipmentID = '$id'");
-        return view('shipments_details',['shipments'=>$shipments]);
+        $shipments = DB::select("select * from shipments WHERE id = '$id'");
+        return view('shipments_details_overview',['shipments'=>$shipments]);
     }
 
     public function indexSorting()
 {
     $shipments = shipment::sortable()->paginate(20);
 
-    return view('shipments')->with('shipments', $shipments);
+    return view('shipmentsOverview')->with('shipments', $shipments);
 }
 }
 
