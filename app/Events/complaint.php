@@ -28,11 +28,10 @@ class complaint implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new Channel('public.playground.1'),
-        ];
+        return new Channel('public.playground.1');
+        
     }
     public function broadcastAs(){
         return 'test';

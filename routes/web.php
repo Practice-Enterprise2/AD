@@ -45,9 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
-    route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
-    route::get('/playground', function(){
-        event(new App\Events\complaint());
+    Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
+    Route::get('/playground', function(){
+        event(new \App\Events\complaint());
         return null;
         
     });
