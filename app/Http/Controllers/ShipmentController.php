@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MyPostmarkEmail;
 use App\Mail\invoice;
 
-class Controller extends BaseController
+class ShipmentController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     public function insertform()
@@ -50,10 +50,9 @@ class Controller extends BaseController
         $email = new MyPostmarkEmail();
         $email->to('r0902507@student.thomasmore.be')
               ->subject('New shipment')
-              ->htmlBody('<p>A new shipment has been created. This is the invoice.</p>');
+              ->html('<p>A new shipment has been created. This is the invoice.</p>');
         Mail::send($email);
 
-        return view('payment');
     }
 
 }

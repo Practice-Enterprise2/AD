@@ -77,8 +77,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/createShipment', function () {
     return view('createShipment');
 })->middleware(['auth', 'verified'])->name('createShipment');
-//Route::get('payment','App\Http\Controllers\Controller@insertform');
-Route::post('payment', 'App\Http\Controllers\Controller@insert');
+//Route::get('payment','App\Http\Controllers\ShipmentController@insertform');
+Route::post('payment', 'App\Http\Controllers\ShipmentController@insert');
 
 Route::get('/payment', function () {
     return view('payment');
