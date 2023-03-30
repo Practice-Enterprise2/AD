@@ -29,6 +29,7 @@ class Controller extends BaseController
     $shipments = shipment::sortable()->paginate(20);
 
     return view('shipmentsOverview')->with('shipments', $shipments);
+
 }
 }
 
