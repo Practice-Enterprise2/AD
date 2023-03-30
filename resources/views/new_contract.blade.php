@@ -18,7 +18,7 @@
                     @csrf
                     <select>
                         @foreach($data as $row)
-                        <option value="{{$row->id}}">{{$row->Airline}}</option>
+                        <option value="{{$row->id}}">{{$row->Airport}}</option>
                         @endforeach
                     </select>
 
