@@ -7,15 +7,15 @@
         <div class="flex justify-between mb-8">
           <div>
             <p class="text-sm font-medium text-gray-500">{{ __('Shipment Date') }}</p>
-            <p class="text-lg font-semibold">{{ $shipment->ShipmentDate }}</p>
+            <p class="text-lg font-semibold">{{ $shipment->shipment_date }}</p>
           </div>
           <div>
             <p class="text-sm font-medium text-gray-500">{{ __('Estimated Delivery') }}</p>
-            <p class="text-lg font-semibold">{{ $shipment->DeliveryDate }}</p>
+            <p class="text-lg font-semibold">{{ $shipment->delivery_date }}</p>
           </div>
           <div>
             <p class="text-sm font-medium text-gray-500">{{ __('Shipment Weight') }}</p>
-            <p class="text-lg font-semibold">{{ $shipment->ShipmentWeight }} kg</p>
+            <p class="text-lg font-semibold">{{ $shipment->weight }} kg</p>
           </div>
           <div>
             <p class="text-sm font-medium text-gray-500">{{ __('Status') }}</p>
@@ -25,7 +25,7 @@
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <div class="px-6 py-4">
             <h2 class="text-xl font-semibold mb-4">{{ __('Sender Information') }}</h2>
-            <p class="text-gray-700 mb-2"><span class="font-medium">{{ __('Name') }}:</span> {{ $shipment->ShipmentName }}</p>
+            <p class="text-gray-700 mb-2"><span class="font-medium">{{ __('Name') }}:</span> {{ $shipment->name }}</p>
           </div>
         </div>
         <div class="text-center pt-6 bg-white">

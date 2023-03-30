@@ -25,9 +25,9 @@
                     
                     @foreach($shipments as $shipment)
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}" onclick="setLink(this);">
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->ShipmentName }}</td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->ShipmentDate }}</td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->DeliveryDate }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->name }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->shipment_date }}</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->delivery_date }}</td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400
                             @if ($shipment->Name == 'On hold')
                             bg-red
