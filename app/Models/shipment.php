@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 class Shipment extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Sortable;
+    protected $primaryKey = 'id';
     protected $table='shipments';
-    protected $sortable = [
+    public $sortable = [
         'id',
         'name',
         'shipment_date',
