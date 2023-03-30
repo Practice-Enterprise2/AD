@@ -20,6 +20,7 @@ class Shipment extends Model
         'name',
         'shipment_date',
         'delivery_date',
+        'weight',
         'status',
     ];
 
