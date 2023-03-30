@@ -119,6 +119,21 @@ Route::get('specif', function() {
 
 require __DIR__.'/auth.php';
 
+
+//contractmenu
+Route::get('/contractsMenu', function (){
+    return view('contractsMenu');
+});
+//airportlist
+Route::get('airportList', [AirportController::class, 'airportFiltering']);
+
+
+// Add, delete and edit airportList
+Route::post('airportList', [AirportController::class, 'addAirport']);
+Route::get('deleteAirport/{iataCode}', [AirportController::class, 'deleteAirport']);
+Route::get('editAirport/{iataCode}', [AirportController::class, 'editAirport']);
+Route::post('editAirport', [AirportController::class, 'updateAirport']);
+
 Route::post('plaats', [newcontractcontroller::class, 'plaats']);
 Route::get('new_contract', [newcontractcontroller::class, 'dropdown']);
 

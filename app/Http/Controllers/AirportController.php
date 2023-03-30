@@ -8,11 +8,26 @@ use App\Models\airport;
 
 class AirportController extends Controller
 {
-    function show()
+    public function airportFiltering(Request $request)
     {
-        $data = \App\Models\airport::paginate(10);
-        return view('airportList', ['airports' => $data]);
+        $filter = $request->query('filter');
+    
+        if (!empty($filter)) {
+            $airports = airport::sortable()
+                ->where('name', 'like', '%'.$filter.'%')
+                ->paginate(15);
+        } else {
+            $airports = airport::sortable()
+                ->paginate(15);
+        }
+        
+        return view('airportList', ['airports' => $airports]);
     }
+    // function show()
+    // {
+    //     $data = \App\Models\airport::paginate(10);
+    //     return view('airportList', ['airports' => $data]);
+    // }
     public static function getAirports()
     {
        $airports = airport::all();
