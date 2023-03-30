@@ -12,6 +12,14 @@ class Shipment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $sortable = [
+        'id',
+        'name',
+        'shipment_date',
+        'delivery_date',
+        'status',
+    ];
+
     protected $fillable = [
         'name',
         'shipment_date',

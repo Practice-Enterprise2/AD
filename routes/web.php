@@ -84,7 +84,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/shipmentsMenu', function(){
-    return view('overview');
+    return view('overviewShipments');
 });
 
 Route::get('/graphs', function(){
