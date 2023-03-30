@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::view('employeeComplaints', 'employeeComplaints');
 Route::post('sendComplaint', [employeeComplaintsController::class, 'sendComplaint'])->name('sendComplaint.employee');
 
 require __DIR__ . '/auth.php';

@@ -38,6 +38,7 @@ class employeeComplaintsController extends Controller
             {
                 $message->text("Location of the incident:\n".$location."\n\nDiscription of the incident:\n".$discription);
             }
+            $message->from('complaints@BlueSky.com');
         });
 
         return redirect()->back();
