@@ -109,5 +109,10 @@ Route::get('/paymentSuccess', function () {
     return view('paymentSuccess');
 })->middleware(['auth', 'verified'])->name('paymentSuccess');
 
+// Airport Routes
+
+// Depot routes
+
+
 
 require __DIR__ . '/auth.php';

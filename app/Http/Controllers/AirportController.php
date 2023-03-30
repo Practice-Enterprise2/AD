@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Airport;
+use App\Models\Address;
+
 
 
 class AirportController extends Controller
@@ -34,7 +36,7 @@ class AirportController extends Controller
         $size = $request->size;
         $tracks = $request->tracks;
 
-        DB:update("UPDATE `airports` SET `IATA` = 'BRU', `name` = 'Brussel airports', `address_id` = '14', `created_at` = NULL, `updated_at` = NULL WHERE `airports`.`id` = 1");
+        DB::update("UPDATE `airports` SET `IATA` = '$iata', `name` = '$name', `address_id` = '14', `created_at` = NULL, `updated_at` = NULL WHERE `airports`.`id` = 1");
         DB::update("UPDATE `airports` SET `IATA` = '$iata', `name` = '$name', `size` = '$size', `tracks` = '$tracks' WHERE `airports`.`ID` = ?",[$id]);    
         return redirect('airport-management');
     }
