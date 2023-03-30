@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class newcontractcontroller extends Controller
 {
     function plaats(Request $request){
-        
+
         $request->validate([
             'airlineid' => 'required',
             'creationdate' => 'required',
