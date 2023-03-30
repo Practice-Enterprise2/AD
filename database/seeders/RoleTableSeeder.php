@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Role;
+use Illuminate\Database\Seeder;
 
 class RoleTableSeeder extends Seeder
 {
@@ -13,15 +12,15 @@ class RoleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $role_regular_user = new Role;
+        $role_regular_user = new Role();
         $role_regular_user->name = 'user';
         $role_regular_user->save();
 
-        $role_regular_user = new Role;
+        $role_regular_user = new Role();
         $role_regular_user->name = 'employee';
         $role_regular_user->save();
 
-        $role_regular_user = new Role;
+        $role_regular_user = new Role();
         $role_regular_user->name = 'admin';
         $role_regular_user->save();
     }

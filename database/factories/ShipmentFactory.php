@@ -19,6 +19,7 @@ class ShipmentFactory extends Factory
     public function definition(): array
     {
         $addresses = Address::all()->random(2);
+
         return [
             'name' => fake()->word(),
             'source_address_id' => $addresses[0],

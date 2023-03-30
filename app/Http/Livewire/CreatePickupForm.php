@@ -15,8 +15,11 @@ use Livewire\Component;
 class CreatePickupForm extends Component
 {
     public $shipments_without_pending_pickup;
+
     public Pickup $pickup;
+
     public Address $address;
+
     public $date_time;
 
     protected $rules = [
@@ -45,6 +48,7 @@ class CreatePickupForm extends Component
         $this->address->save();
         $this->pickup->address()->associate($this->address);
         $this->pickup->save();
+
         return redirect()->to('/');
     }
 

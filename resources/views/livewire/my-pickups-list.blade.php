@@ -1,5 +1,5 @@
 <div>
-    <table>
+    <table class="dark:text-white">
         <tr class="border-2 border-black">
             <th class="border-2 border-black">Date/time</th>
             <th class="border-2 border-black">Street</th>
