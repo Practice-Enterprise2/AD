@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Shipment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public function users()
     {
@@ -32,26 +33,13 @@ class Shipment extends Model
         'type',
     ];
 
-    protected $primaryKey = 'id';
-
-    protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'source_address_id' => 'integer',
-        'destination_address_id' => 'integer',
-        'shipment_date' => 'datetime',
-        'delivery_date' => 'datetime',
-        'status' => 'integer',
-        'expense' => 'integer',
-        'weight' => 'integer',
-        'type' => 'string',
-    ];
-    
-    public function source_address(): BelongsTo {
+    public function source_address(): BelongsTo
+    {
         return $this->belongsTo(Address::class);
     }
 
-    public function destination_address(): BelongsTo {
+    public function destination_address(): BelongsTo
+    {
         return $this->belongsTo(Address::class);
     }
 }
