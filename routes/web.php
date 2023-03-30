@@ -48,8 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::resource('pickup', PickupController::class)
-    ->only(['create', 'index'])
-    ->names(['create' => 'create-pickup', 'index' => 'my-pickups']);
+        ->only(['create', 'index'])
+        ->names(['create' => 'create-pickup', 'index' => 'my-pickups']);
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -178,4 +178,9 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+//email verification
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+require __DIR__ . '/auth.php';
