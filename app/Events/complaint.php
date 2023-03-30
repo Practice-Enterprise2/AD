@@ -18,9 +18,9 @@ class complaint implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct()
     {
-        $this->message = $message;
+        
     }
 
     /**
@@ -31,7 +31,10 @@ class complaint implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('EventsComplaint'),
+            new Channel('public.playground.1'),
         ];
+    }
+    public function broadcastAs(){
+        return 'test';
     }
 }

@@ -46,9 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
     route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
-    route::post('/sendcomplaint', function(){
-        event(new EventsComplaint("broadcasts message"));
-        view('contact.index');
+    route::get('/playground', function(){
+        event(new App\Events\complaint());
+        return null;
+        
     });
 });
 
