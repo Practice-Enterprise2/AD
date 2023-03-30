@@ -1,4 +1,5 @@
-<div>
+<!-- TODO: Fix text color. It should either be black or white. -->
+<div class="dark:text-gray-500">
   <form wire:submit.prevent="submit">
     <label for="street">Street</label><br>
     <input id="street" name="street" wire:model.defer="address.street" type="text"><br>

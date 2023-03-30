@@ -1,7 +1,5 @@
-{{-- A view for customers to create a package home pickup order. --}}
-@extends('layouts.header')
-@section('content')
+<x-app-layout>
 <div>
     <livewire:create-pickup-form />
 </div>
-@endsection
+</x-app-layout>
