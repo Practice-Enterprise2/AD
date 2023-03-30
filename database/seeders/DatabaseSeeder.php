@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
          \App\Models\User::factory()->create([
-            'name' => 'staf',
+            'name' => 'customer',
             'email' => 'customer@example.com',
             'address' => 'street',
             'city' => 'city',
@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
             'role' => '0'
          ]);
          \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'user@example.com',
+            'name' => 'staf',
+            'email' => 'staf@example.com',
             'address' => 'street',
             'city' => 'city',
             'postalcode' => 'postalcode',

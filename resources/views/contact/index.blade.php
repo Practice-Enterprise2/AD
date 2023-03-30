@@ -3,7 +3,7 @@
 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Customer\'s contact Page') }}
         </h2>
-<!-- @foreach($contacts as $contact)
+@foreach($contacts as $contact)
 <div class="w-10/12 py-10 bg-slate-800 my-8 px-8 rounded flex flex-col items-center">
 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 -mt-8">
            @if($contact->subject == 'request-cancel')
@@ -34,7 +34,7 @@
     </div>
 </div>
 </div>
-@endforeach -->
+@endforeach 
 </div>
     <div>
         <div>
