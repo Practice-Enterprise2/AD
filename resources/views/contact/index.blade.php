@@ -36,7 +36,7 @@
 </div>
 @endforeach 
 </div>
-    <div>
+    <div class="text-stone-50">
         <div>
             <div>Welcome To the help Page! How can we help?</div>
         </div>
