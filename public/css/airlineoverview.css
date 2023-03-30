@@ -1,0 +1,52 @@
+*{
+    color: white;
+}
+table {
+    margin: auto;
+}
+th,td {
+    width: 100px;
+    text-align: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper div:first-of-type{
+    vertical-align: middle;
+    height: 100px;
+    text-align: center;
+    line-height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.greeting{
+    line-height:100px;
+}
+
+ name{
+    color:lightblue;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+  }
+
+.clickable {
+    color: lightblue;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+
+#chart {
+    padding-bottom: 100px;
+}

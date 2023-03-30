@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\DepotoverviewController;
+use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -45,5 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/airlineoverview',[AirlineController::class, 'Airlineoverview']);
+
+Route::get('airlineoverview/{key}',[AirlineController::class, 'overviewperAirline']);
+
+Route::get('/depotoverview',[DepotoverviewController::class, 'Depotoverview']);
+
+Route::get('depotoverview/{key}',[DepotoverviewController::class, 'overviewperDepot']);
 
 require __DIR__ . '/auth.php';
