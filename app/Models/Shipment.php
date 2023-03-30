@@ -11,7 +11,7 @@ class Shipment extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
+    protected $table='shipments';
     protected $sortable = [
         'id',
         'name',
