@@ -4,41 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class shipment extends Model
+class Shipment extends Model
 {
     use HasFactory;
-    use Sortable;
-
-    // if your key name is not 'id'
-    // you can also set this to null if you don't have a primary key
-    protected $table = 'shipments';
-    protected $primaryKey = 'id';
-
-    public $incrementing = false;
-
-    // In Laravel 6.0+ make sure to also set $keyType
-    protected $keyType = 'string';
-
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
         'shipment_date',
         'delivery_date',
-        'weight',
         'status',
-    ];
-    
-    public $sortable = [
-        'id',
-        'name',
-        'shipment_date',
-        'delivery_date',
+        'expense',
         'weight',
-        'status',
+        'type',
     ];
 
-    public $timestamps = false;
+    public function source_address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
+
+    public function destination_address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
 }
