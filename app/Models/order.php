@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class order extends Model
+class Order extends Model
 {
     use HasFactory;
 
@@ -27,29 +27,13 @@ class order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'OrderID',
-        'CustomerID',
-        'CustomerName',
-        'Item',
-        'Quantity',
-        'PurchaseDate',
-        'Price',
+        'order_id',
+        'user_id',
+        'customer_name',
+        'item',
+        'quantity',
+        'purchase_date',
+        'price',
     ];
 
-    protected $primaryKey = 'OrderID';
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'OrderID' => 'integer',
-        'CustomerID' => 'integer',
-        'CustomerName' => 'string',
-        'Item' => 'string',
-        'Quantity' => 'integer',
-        'PurchaseDate' => 'datetime',
-        'Price' => 'float',
-    ];
 }

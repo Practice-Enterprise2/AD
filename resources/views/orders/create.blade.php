@@ -10,17 +10,17 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form action="{{ route('orders.store') }}" method="POST">
                     @csrf
-                    <label for="Item">Item</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="Item" id="Item" value="{{ old('Item') }}">
+                    <label for="item">Item</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="item" id="item" value="{{ old('item') }}">
                     <br>
-                    <label for="Quantity">Quantity</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="Quantity" id="Quantity" value="{{ old('Quantity') }}">
+                    <label for="quantity">Quantity</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="quantity" id="quantity" value="{{ old('quantity') }}">
                     <br>
-                    <label for="PurchaseDate">PurchaseDate</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="PurchaseDate" id="PurchaseDate" value="{{ old('PurchaseDate') }}">
+                    <label for="purchase_date">Purchase Date</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="date" name="purchase_date" id="purchase_date" value="{{ old('purchase_date') }}">
                     <br>
-                    <label for="Price">Price</label>
-                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="Price" id="Price" value="{{ old('Price') }}">
+                    <label for="price">Price</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="price" id="price" value="{{ old('price') }}">
                     <br>
                     <br>
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add Order</button>

@@ -19,7 +19,7 @@
                     <thead>
                         <tr style="border-bottom:1pt solid black;" >
                             <th>OrderID</th>
-                            <th>CustomerID</th>
+                            <th>UserID</th>
                             <th>CustomerName</th>
                             <th>Item</th>
                             <th>Quantity</th>
@@ -30,19 +30,19 @@
                     <tbody>
                         @foreach ($orders as $order)
                             <tr style="border-bottom:1pt solid black;">
-                                <td>{{ $order->OrderID }}</td>
-                                <td>{{ $order->CustomerID }}</td>
-                                <td>{{ $order->CustomerName }}</td>
-                                <td>{{ $order->Item }}</td>
-                                <td>{{ $order->Quantity }}</td>
-                                <td>{{ $order->PurchaseDate }}</td>
-                                <td>{{ $order->Price }}</td>
+                                <td>{{ $order->order_id }}</td>
+                                <td>{{ $order->user_id }}</td>
+                                <td>{{ $order->customer_name }}</td>
+                                <td>{{ $order->item }}</td>
+                                <td>{{ $order->quantity }}</td>
+                                <td>{{ $order->purchase_date }}</td>
+                                <td>{{ $order->price }}</td>
                                 <td>
-                                    <form action="{{ route('orders.edit', $order->OrderID) }}" method="GET">
+                                    <form action="{{ route('orders.edit', $order->order_id) }}" method="GET">
                                         @csrf
                                         <button style = "border-radius:10px; width:100% ;color:white; text-decoration: none; background-color: blue; cursor: pointer;" type="submit">Edit</button>
                                     </form>
-                                    <form action="{{ route('orders.destroy', $order->OrderID) }}" method="POST">
+                                    <form action="{{ route('orders.destroy', $order->order_id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button style = "border-radius:10px; width:100% ;color: white; text-decoration: none; background-color: red; cursor: pointer;" type="submit">Delete</button>

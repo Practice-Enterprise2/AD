@@ -8,7 +8,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('CustomerID', auth()->id())->get();
+        $orders = Order::where('user_id', auth()->id())->get();
         return view('orders.index', compact('orders'));
     }
 
@@ -20,16 +20,16 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Item' => 'required',
-            'Quantity' => 'required',
-            'PurchaseDate' => 'required',
-            'Price' => 'required',
+            'item' => 'required',
+            'quantity' => 'required',
+            'purchase_date' => 'required',
+            'price' => 'required',
         ]);
 
-        $OrderID = Order::max('OrderID') + 1;
-        $CustomerID = auth()->id();
+        $OrderID = Order::max('order_id') + 1;
+        $UserID = auth()->id();
         $CustomerName = auth()->user()->name;
-        $request->merge(['OrderID' => $OrderID, 'CustomerID' => $CustomerID, 'CustomerName' => $CustomerName]);
+        $request->merge(['order_id' => $OrderID, 'user_id' => $UserID, 'customer_name' => $CustomerName]);
 
         Order::create($request->all());
 
@@ -50,10 +50,10 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->validate([
-            'Item' => 'required',
-            'Quantity' => 'required',
-            'PurchaseDate' => 'required',
-            'Price' => 'required',
+            'item' => 'required',
+            'quantity' => 'required',
+            'purchase_date' => 'required',
+            'price' => 'required',
         ]);
         $order->update($request->all());
 

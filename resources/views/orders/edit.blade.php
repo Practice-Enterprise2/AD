@@ -12,19 +12,19 @@
 
                         @csrf
                         @method('PATCH')
-                        <label for="Item">Item</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="Item" id="Item" value="{{ $order->Item }}">
-                        <br>
-                        <label for="Quantity">Quantity</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="Quantity" id="Quantity" value="{{ $order->Quantity }}">
-                        <br>
-                        <label for="PurchaseDate">PurchaseDate</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="PurchaseDate" id="PurchaseDate" value="{{ $order->PurchaseDate }}">
-                        <br>
-                        <label for="Price">Price</label>
-                        <input class = "text-gray-700 rounded-lg px-4" type="text" name="Price" id="Price" value="{{ $order->Price }}">
-                        <br>
-                        <br>
+                        <label for="item">Item</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="item" id="item" value="{{ $order->item }}">
+                    <br>
+                    <label for="quantity">Quantity</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="quantity" id="quantity" value= "{{ $order->quantity }}">
+                    <br>
+                    <label for="purchase_date">Purchase Date</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="date" name="purchase_date" id="purchase_date" value="{{ $order->purchase_date }}">
+                    <br>
+                    <label for="price">Price</label>
+                    <input class = "text-gray-700 rounded-lg px-4" type="text" name="price" id="price" value="{{ $order->price }}">
+                    <br>
+                    <br>
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
                     </form>
                 </div>
