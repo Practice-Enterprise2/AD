@@ -91,4 +91,4 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
