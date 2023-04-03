@@ -20,7 +20,6 @@
                         <tr style="border-bottom:1pt solid black;" >
                             <th>ShipmentID</th>
                             <th>UserID</th>
-                            <th>CustomerName</th>
                             <th>SourceAddressID</th>
                             <th>DestinationAddressID</th>
                             <th>ShipmentDate</th>
@@ -36,7 +35,6 @@
                             <tr style="border-bottom:1pt solid black;">
                                 <td>{{ $shipment->id }}</td>
                                 <td>{{ $shipment->user_id }}</td>
-                                <td>{{ $shipment->name }}</td>
                                 <td>{{ $shipment->source_address_id }}</td>
                                 <td>{{ $shipment->destination_address_id }}</td>
                                 <td>{{ $shipment->shipment_date }}</td>

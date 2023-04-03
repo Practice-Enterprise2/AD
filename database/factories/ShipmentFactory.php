@@ -21,7 +21,7 @@ class ShipmentFactory extends Factory
         $addresses = Address::all()->random(2);
 
         return [
-            'name' => fake()->word(),
+            //'name' => fake()->word(),
             'source_address_id' => $addresses[0],
             'destination_address_id' => $addresses[1],
             'shipment_date' => fake()->dateTimeBetween('now', '+1 week'),
