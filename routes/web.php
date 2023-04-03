@@ -6,7 +6,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
-use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
@@ -27,14 +26,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::view('/new_employee', 'add_employee')->name('employee.create');
     Route::view('/respond', 'respond');
-
-    /*
-     * Resource controllers.
-     */
-
-    Route::resource('pickup', PickupController::class)
-        ->only(['create', 'index'])
-        ->names(['create' => 'create-pickup', 'index' => 'my-pickups']);
 
     /*
      * Controllers that require custom code to be run for a request.

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
-use App\Models\Pickup;
 use App\Models\Shipment;
 use Illuminate\Database\Seeder;
 
@@ -24,10 +23,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Shipment::factory()
-        ->count(50)
-        ->create();
-
-        Pickup::factory()
         ->count(50)
         ->create();
     }
