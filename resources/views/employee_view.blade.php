@@ -1,4 +1,3 @@
-@extends('layouts.header')
 <x-app-layout>
 <style>
 .userpanel{
