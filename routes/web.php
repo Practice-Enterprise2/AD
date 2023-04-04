@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::controller(PickupController::class)->group(function () {
-        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create'); 
+        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
         Route::get('/pickups', 'index')->name('pickups.index');
     });
 
@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/admin/users/{id}', 'update')->name('users.update');
         Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
         Route::post('/admin/users', 'store')->name('users.store');
+        Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
     });
 
     Route::controller(RoleController::class)->group(function () {
@@ -74,12 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
-    Route::middleware(['auth', 'verified'])->group(function () {      
-        Route::put('/users/{user}/toggle-lock', [UserController::class, 'toggleLock'])
-            ->name('users.toggle-lock');
- 
-    });
-
 });
 
 // Routes that require an authenticated session.
@@ -98,9 +93,4 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-
-
-
-require __DIR__ . '/auth.php';
-
-
+require __DIR__.'/auth.php';
