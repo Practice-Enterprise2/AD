@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    @apply dark:text-white
+}
+
+input, select {
+    @apply dark:bg-slate-700 rounded p-1.5 border dark:border-white border-black
+}
