@@ -15,6 +15,7 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+
                     @guest
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -34,6 +35,7 @@
                             </x-nav-link>
                         @endif
                     @endguest
+
                 </div>
             </div>
 
@@ -74,6 +76,7 @@
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                         clip-rule="evenodd" />
                                 </svg>
+                                
                             </div>
                         </button>
                     </x-slot>
