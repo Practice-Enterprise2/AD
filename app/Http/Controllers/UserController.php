@@ -66,9 +66,9 @@ class UserController extends Controller
     // locke or unlock account
     public function toggleLock(User $user)
     {
-        $user->is_locked = !$user->is_locked;
+        $user->is_locked = ! $user->is_locked;
         $user->save();
-    
+
         return redirect()->back();
     }
 }

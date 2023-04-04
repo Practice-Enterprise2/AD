@@ -45,7 +45,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
         'guest' => [
-            
+
             \App\Http\Middleware\RedirectIfAuthenticated::class,
         ],
     ];

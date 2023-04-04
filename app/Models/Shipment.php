@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shipment extends Model
@@ -21,6 +22,11 @@ class Shipment extends Model
         'weight',
         'type',
     ];
+
+    public function pickups(): HasMany
+    {
+        return $this->hasMany(Pickup::class);
+    }
 
     public function source_address(): BelongsTo
     {

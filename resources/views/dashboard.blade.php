@@ -10,6 +10,8 @@
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <ol>
+            <li><a href="{{ route('pickups.create'); }}">New Pickup ></a></li>
+            <li><a href="{{ route('pickups.index'); }}">My Pickups ></a></li>
           </ol>
         </div>
       </div>
