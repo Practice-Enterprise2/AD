@@ -44,9 +44,11 @@ class PickupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): string
+    public function edit(int $pickup_id): View|Factory
     {
-        return "Form to Edit Pickup $id";
+        return view('pickup_edit', [
+            'pickup_id' => $pickup_id,
+        ]);
     }
 
     /**

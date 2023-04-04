@@ -31,6 +31,8 @@ class Create extends Component
 
     public string $country;
 
+    public $time;
+
     protected $rules = [
         'pickup_shipment_id' => ['required', 'exists:shipments,id'],
         'street' => Address::VALIDATION_RULE_STREET,
@@ -39,6 +41,7 @@ class Create extends Component
         'city' => Address::VALIDATION_RULE_CITY,
         'region' => Address::VALIDATION_RULE_REGION,
         'country' => Address::VALIDATION_RULE_COUNTRY,
+        'time' => Pickup::VALIDATION_RULE_TIME,
     ];
 
     public function mount(int|null $shipment_id): void
@@ -73,7 +76,7 @@ class Create extends Component
         ]);
 
         $pickup = new Pickup([
-            'time' => date('Y-m-d H:i:s'),
+            'time' => $this->time,
             'status' => 'pending',
         ]);
 
