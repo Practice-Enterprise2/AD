@@ -45,7 +45,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
         'guest' => [
-            \App\Http\Middleware\LockUserAccount::class,
+            
             \App\Http\Middleware\RedirectIfAuthenticated::class,
         ],
     ];
@@ -68,6 +68,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'LockUserAccount' => \App\Http\Middleware\LockUserAccount::class,
+        'unlocked' => \App\Http\Middleware\unlocked::class,
     ];
 }
