@@ -73,6 +73,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
+    Route::middleware(['auth', 'verified'])->group(function () {      
+        Route::put('/users/{user}/toggle-lock', [UserController::class, 'toggleLock'])
+            ->name('users.toggle-lock');
+ 
+    });
+
 });
 
 // Routes that require an authenticated session.
@@ -91,4 +97,9 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-require __DIR__.'/auth.php';
+
+
+
+require __DIR__ . '/auth.php';
+
+
