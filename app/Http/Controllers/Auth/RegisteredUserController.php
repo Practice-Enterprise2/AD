@@ -34,23 +34,33 @@ class RegisteredUserController extends Controller
         // dd($request);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // dd($request);
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // HACK: This solves the fact that the `unique` validation rule doesn't
+        // take soft deletion into account.
+        if (! User::where('email', $request->email)->get()->first()) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        event(new Registered($user));
+            // TODO: Enable this once the mail server is up and running.
+            /* event(new Registered($user)); */
 
-        Auth::login($user);
+            Auth::login($user);
 
-        $user->roles()->attach(Role::where('name', 'user')->first());
+            $user->roles()->attach(Role::where('name', 'user')->first());
 
-        return redirect(RouteServiceProvider::HOME);
+            return redirect(RouteServiceProvider::HOME);
+        } else {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:App\Models\User'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+        }
     }
 }
