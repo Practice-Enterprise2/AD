@@ -35,4 +35,9 @@ class Address extends Model
     {
         return $this->hasMany(Pickup::class);
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }
