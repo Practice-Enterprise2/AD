@@ -43,9 +43,10 @@
         <thead>
             <tr>
                 <th>name</th>
+                <th>last_name</th>
                 <th>email</th>
                 <th>phone</th>
-                <th>role</th>
+                <th>adres</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -53,9 +54,15 @@
         @foreach($users as $user)
         <tr>
             <td>{{ $user->name }}</td>
+            <td>{{ $user->last_name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone }}</td>
-            <td>{{ $user->role }}</td>
+            
+            <td>{{ $user->address->street}} {{ $user->address->house_number }},{{ $user->address->postal_code }} {{ $user->address->city }}</td>
+            <td>{{ $user->address->region }}</td>
+            <td>{{ $user->address->country }}</td>
+           
+            
             <td>
             <a href="{{ route('customer.edit', $user->id) }}"><button>Edit</button></a>
 

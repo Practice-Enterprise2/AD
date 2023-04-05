@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Address;
+use Livewire\Components\CustomerForm;
+
 class CustomerController extends Controller
 {
     public function getCustomers()
@@ -12,30 +15,47 @@ class CustomerController extends Controller
                 $query->select('user_id')
                       ->from('employees');
             })->get();
+
+        foreach ($users as $user) {
+            $address = Address::find($user->address_id);
+            $user->address = $address;
+        }
+
         return view('customers', ['users' => $users]);
     }
+
     public function edit($id)
     {
-        // Retrieve the customer data from the database
         $customer = User::find($id);
+        $address = Address::find($customer->address_id);
 
-        // Return the edit view with the customer data
-        return view('customers_edit', ['customer' => $customer]);
+        return view('customers_edit', [
+            'customer' => $customer,
+            'address' => $address,
+            'component' => app()->make(CustomerForm::class, ['id' => $id]),
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        // Retrieve the customer data from the database
         $customer = User::find($id);
+        $address = Address::find($customer->address_id);
 
-        // Update the customer data with the new values
         $customer->name = $request->input('name');
+        $customer->last_name = $request->input('last_name');
         $customer->email = $request->input('email');
         $customer->phone = $request->input('phone');
-        $customer->role = $request->input('role');
-        $customer->save();
 
-        // Redirect to the customer list
+        $address->street = $request->input('street');
+        $address->house_number = $request->input('house_number');
+        $address->postal_code = $request->input('postal_code');
+        $address->city = $request->input('city');
+        $address->region = $request->input('region');
+        $address->country = $request->input('country');
+
+        $customer->save();
+        $address->save();
+
         return redirect('/customers');
     }
 }
