@@ -13,6 +13,8 @@ class Pickup extends Model
 {
     use SoftDeletes;
 
+    public const VALIDATION_RULE_TIME = ['required'];
+
     protected $fillable = [
         'time',
         'status',

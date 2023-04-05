@@ -10,6 +10,7 @@
             <th class="border-2 border-black dark:border-white">Region</th>
             <th class="border-2 border-black dark:border-white">Country</th>
             <th class="border-2 border-black dark:border-white">Status</th>
+            <th class="border-2 border-black dark:border-white">Edit</th>
             <th class="border-2 border-black dark:border-white">Cancel</th>
         </tr>
         @foreach($pickups as $pickup)
@@ -23,6 +24,7 @@
             <td class="border-2 border-black dark:border-white">{{ $pickup->address->region }}</td>
             <td class="border-2 border-black dark:border-white">{{ $pickup->address->country }}</td>
             <td class="border-2 border-black dark:border-white">{{ $pickup->status }}</td>
+            <td><a href="{{ route('pickups.edit', ['pickup' => $pickup->id]) }}">Edit</a></td>
             <td class="border-2 border-black dark:border-white h-full"><button class="bg-red-500 h-full w-full" wire:click="cancel_pickup({{ $pickup->id }})">Cancel</button></td>
         </tr>
         @endforeach

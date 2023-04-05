@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -26,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         if (! $this->hasAnyRole($roles)) {
             auth()->logout();
-            abort(404);
+            abort(Response::HTTP_NOT_FOUND);
         }
     }
 
