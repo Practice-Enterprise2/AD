@@ -47,6 +47,9 @@
                 <th>email</th>
                 <th>phone</th>
                 <th>adres</th>
+                <th>region</th>
+                <th>country</th>
+
                 <th>Action</th>
             </tr>
         </thead>
@@ -64,7 +67,7 @@
            
             
             <td>
-            <a href="{{ route('customer.edit', $user->id) }}"><button>Edit</button></a>
+            <a href="{{ route('customer.edit', $user->id) }}"><button style="border: solid 2px grey ;padding: 5px">Edit</button></a>
 
 
             </td>

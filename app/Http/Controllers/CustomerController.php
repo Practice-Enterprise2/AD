@@ -5,36 +5,57 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
-use Livewire\Components;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class CustomerController extends Controller
 {
     public function getCustomers()
-{
-    $users = User::whereNotIn('id', function ($query) {
-            $query->select('user_id')
-                  ->from('employees');
-        })->get();
-
-    foreach ($users as $user) {
-        $address = Address::find($user->address_id);
-        $user->address = $address;
+    {
+        if ('employee' != Auth::user()->roles()->first()->name) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+    
+        $users = User::whereIn('id', function ($query) {
+                $query->select('user_id')
+                      ->from('employees');
+            })->get();
+    
+        foreach ($users as $user) {
+            $address = Address::find($user->address_id);
+            $user->address = $address;
+        }
+    
+        return view('customers', ['users' => $users]);
     }
+    
 
-    return view('customers', ['users' => $users]);
-}
-public function edit($id)
-{
-
-    $customer = User::find($id);
-    $address = Address::find($customer->address_id);
-
-    return view('customers_edit', ['customer' => $customer, 'address' => $address]);
-}
+    public function edit($id)
+    {
+        $user = Auth::user();
+        if ($user->roles()->first()->name !== 'employee') {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+        
+        $customer = User::whereNotIn('id', function ($query) {
+                $query->select('user_id')
+                      ->from('employees');
+            })
+            ->where('id', $id)
+            ->firstOrFail();
+        $address = Address::find($customer->address_id);
+    
+        return view('customers_edit', ['customer' => $customer, 'address' => $address]);
+    }
+    
 
 public function update(Request $request, $id)
 {
+    $user = Auth::user();
+    if ($user->roles()->first()->name !== 'employee') {
+        abort(Response::HTTP_FORBIDDEN);
+    }
     $customer = User::find($id);
     $address = Address::find($customer->address_id);
 
