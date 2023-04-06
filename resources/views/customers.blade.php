@@ -8,12 +8,14 @@
 
     h1 {
         text-align: center;
+        font-size: 30px;
     }
 
     .tableContainer {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 20px;
     }
 
     .tableCust {
@@ -42,14 +44,14 @@
     <table class="tableCust">
         <thead>
             <tr>
-                <th>name</th>
-                <th>last_name</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>adres</th>
-                <th>region</th>
-                <th>country</th>
-
+                <th>Name</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Adres</th>
+                <th>Region</th>
+                <th>Country</th>
+                <th>Vat-number</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -64,6 +66,15 @@
             <td>{{ $user->address->street}} {{ $user->address->house_number }},{{ $user->address->postal_code }} {{ $user->address->city }}</td>
             <td>{{ $user->address->region }}</td>
             <td>{{ $user->address->country }}</td>
+            
+            <td>
+                @if ($user->businessCustomer)
+                    {{ $user->businessCustomer->vat_number }}
+                @else
+                    
+                @endif
+            </td>
+
            
             
             <td>

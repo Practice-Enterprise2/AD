@@ -18,6 +18,7 @@
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+  
 
 }
 
@@ -73,7 +74,7 @@ tr{
 </tr>
 <tr>
     <td><label for="email">Email</label></td>
-    <td><input type="email" name="email" id="email" value="{{ $customer->email }}" readonly></td>
+    <td><input type="email" name="email" id="email" value="{{ $customer->email }}" readonly style="background-color: darkgrey;" ></td>
 </tr>
 <tr>
     <td><label for="phone">Phone</label></td>
@@ -139,6 +140,19 @@ tr{
     </td>
 </tr>
 
+
+
+<tr id="vat_number_row">
+    <td><label for="vat_number">VAT Number</label></td>
+    <td>
+        <input type="text" name="vat_number" id="vat_number" readonly style="background-color: darkgrey;" value="{{ $customer->businessCustomer ? $customer->businessCustomer->vat_number : '' }}" {{ $customer->businessCustomer && $customer->businessCustomer->vat_number ? 'required' : '' }}>
+
+    </td>
+</tr>
+
+
+
+
 <tr>
     <td colspan="2" style="text-align: center;background-color: var(--lgrey);"><button type="submit">Update</button></td>
 </tr>
@@ -148,4 +162,24 @@ tr{
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Hide the VAT Number <tr> initially if "Single" is selected
+        if ($('#single').prop('checked')) {
+            $('#vat_number_row').hide();
+        }
+
+        // Add an event listener to the radio buttons
+        $('input[name="customer_type"]').change(function() {
+            if ($('#single').prop('checked')) {
+                // If "Single" is selected, hide the VAT Number <tr>
+                $('#vat_number_row').hide();
+            } else {
+                // If "Business" is selected, show the VAT Number <tr>
+                $('#vat_number_row').show();
+            }
+        });
+    });
+</script>
 </x-app-layout>

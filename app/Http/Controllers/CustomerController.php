@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\BusinessCustomer;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
@@ -17,24 +19,33 @@ class CustomerController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
     
-        $users = User::whereIn('id', function ($query) {
+        $users = User::whereNotIn('id', function ($query) {
                 $query->select('user_id')
                       ->from('employees');
-            })->get();
-    
+            })
+            ->get();
+            
         foreach ($users as $user) {
             $address = Address::find($user->address_id);
             $user->address = $address;
+    
+            $business_customer = BusinessCustomer::where('user_id', $user->id)->first();
+            if ($business_customer) {
+                $user->vat_number = $business_customer->vat_number;
+            } else {
+                $user->vat_number = null;
+            }
         }
     
         return view('customers', ['users' => $users]);
     }
     
+    
+    
 
     public function edit($id)
     {
-        $user = Auth::user();
-        if ($user->roles()->first()->name !== 'employee') {
+        if ('employee' != Auth::user()->roles()->first()->name) {
             abort(Response::HTTP_FORBIDDEN);
         }
         
@@ -44,10 +55,12 @@ class CustomerController extends Controller
             })
             ->where('id', $id)
             ->firstOrFail();
+            
         $address = Address::find($customer->address_id);
     
         return view('customers_edit', ['customer' => $customer, 'address' => $address]);
     }
+    
     
 
 public function update(Request $request, $id)
