@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -76,6 +77,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
+
+
+    Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
+    Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
+    Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
+
+
+
 });
 
 // Routes that require an authenticated session.
@@ -88,6 +97,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
 });
+
 
 //email verification
 Route::get('/email/verify', function () {
