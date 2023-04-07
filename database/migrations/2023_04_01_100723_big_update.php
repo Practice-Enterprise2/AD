@@ -62,7 +62,7 @@ return new class extends Migration
         });
 
         Schema::table('shipments', function (Blueprint $table) {
-            $table->dropColumn('name');
+            // $table->dropColumn('name');
         });
 
         Schema::create('positions', function (Blueprint $table) {

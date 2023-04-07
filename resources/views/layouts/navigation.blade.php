@@ -34,6 +34,17 @@
                                 {{ __('Employee') }}
                             </x-nav-link>
                         @endif
+
+                        {{-- Validations needed for later. --}}
+                        <x-nav-link :href="route('shipments.create')">
+                            {{ __('Request Shipment') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('shipments.requests')">
+                            {{ __('Evaluate Shipment Requests') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('shipments.index')">
+                            {{ __('Show Confirmed Shipments') }}
+                        </x-nav-link>
                     @endguest
 
                 </div>
@@ -60,10 +71,10 @@
                                             href="{{ route('login') }}">{{ __('Login') }}</a>
                                 @endif
                                 @if (Route::has('register'))
-                            
+
                                         <a class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                             href="{{ route('register') }}">{{ __('Register') }}</a>
-                                
+
                                 @endif
                             @else
                                 <div>
@@ -76,7 +87,7 @@
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                
+
                             </div>
                         </button>
                     </x-slot>

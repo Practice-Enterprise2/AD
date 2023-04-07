@@ -21,6 +21,8 @@ class Shipment extends Model
         'expense',
         'weight',
         'type',
+        'receiver_name',
+        'receiver_email',
     ];
 
     public function pickups(): HasMany
@@ -28,13 +30,30 @@ class Shipment extends Model
         return $this->hasMany(Pickup::class);
     }
 
-    public function source_address(): BelongsTo
+
+    // public function source_address(): BelongsTo
+    // {
+    //     return $this->belongsTo(Address::class);
+    // }
+
+    // public function destination_address(): BelongsTo
+    // {
+    //     return $this->belongsTo(Address::class);
+    // }
+
+    public function source_address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->hasOne(Address::class, 'id', 'source_address_id');
     }
 
-    public function destination_address(): BelongsTo
+    public function destination_address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->hasOne(Address::class, 'id', 'destination_address_id');
+    }
+
+
+    public function waypoints()
+    {
+        return $this->hasMany(Waypoint::class);
     }
 }
