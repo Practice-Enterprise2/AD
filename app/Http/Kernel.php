@@ -2,10 +2,25 @@
 
 namespace App\Http;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Routing\Router;
 
 class Kernel extends HttpKernel
 {
+    public function __construct(Application $app, Router $router)
+    {
+        // Disable encrypted cookies for debugging purposes when we're not
+        // running in a production environment.
+        $app_config = include __DIR__.'/../../config/app.php';
+
+        if ($app_config['env'] === 'production') {
+            array_unshift($this->middlewareGroups['web'], \App\Http\Middleware\EncryptCookies::class);
+        }
+
+        parent::__construct($app, $router);
+    }
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -30,18 +45,23 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \App\Http\Middleware\EncryptCookies::class,
+            /* \App\Http\Middleware\EncryptCookies::class, */
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LockUserAccount::class,
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+        'guest' => [
+
+            \App\Http\Middleware\RedirectIfAuthenticated::class,
         ],
     ];
 
@@ -63,5 +83,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'unlocked' => \App\Http\Middleware\unlocked::class,
     ];
 }

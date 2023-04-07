@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\View;
@@ -44,12 +45,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/respond', 'respond');
 
     /*
-     * Resource controllers.
+     * Routes that offer functionality for resources.
      */
 
-    Route::resource('pickup', PickupController::class)
-        ->only(['create', 'index'])
-        ->names(['create' => 'create-pickup', 'index' => 'my-pickups']);
+    Route::controller(PickupController::class)->group(function () {
+        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
+        Route::get('/pickups', 'index')->name('pickups.index');
+        Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
+    });
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -74,6 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/admin/users/{id}', 'update')->name('users.update');
         Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
         Route::post('/admin/users', 'store')->name('users.store');
+        Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
     });
 
     Route::controller(RoleController::class)->group(function () {
@@ -88,6 +92,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
+
+
+    Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
+    Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
+    Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
+
+
+
 });
 
 Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth', 'verified'])->name('orders.index');
@@ -177,6 +189,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
 });
+
 
 //email verification
 Route::get('/email/verify', function () {
