@@ -112,3 +112,4 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+Route::get('/api-call', 'ApiController@apiCall');

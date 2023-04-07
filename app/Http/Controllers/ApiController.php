@@ -16,8 +16,10 @@ class ApiController extends Controller{
   }
     $search = request()->query('query');
  
+    $airlabsKey = getenv('AIRLAPS_KEY');
+
     $response = Http::get('https://airlabs.co/api/v9/suggest', [
-      'api_key' => '5d4af27c-aa83-440d-93bc-edf75b85a639',
+      'api_key' => $airlabsKey,
       'query' => $search
       
 
