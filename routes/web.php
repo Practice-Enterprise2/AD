@@ -12,6 +12,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -105,3 +106,9 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 require __DIR__.'/auth.php';
+
+
+
+
+
+Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
