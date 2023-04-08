@@ -3,25 +3,25 @@
     <input class="border border-gray-400 p-2 w-3/5 rounded-md" type="text" id="receiver_name" name="receiver_name">
 </div> --}}
 <x-app-layout>
-    <div class="h-screen flex items-center justify-center">
+    <div class="flex items-center justify-center my-4">
         <div class="w-3/5 mx-auto bg-white p-6 rounded-md shadow-md">
             {{-- Current user --}}
-            <h2 class="text-sm font-medium mb-4">
+            <h2 class="text-sm font-medium mb-4 text-black">
                 Username: {{ auth()->user()->name }}
                 Id: {{ auth()->user()->id }}
                 Address: {{ auth()->user()->address }}
 
             </h2>
-            <h2 class="text-lg font-medium mb-4">Shipment for: <b>{{ $shipment->receiver_name }}</b></h2>
-            <h2 class="text-lg font-medium mb-4">Source Address: <b>{{ $shipment->source_address }}</b></h2>
-            <h2 class="text-lg font-medium mb-4">Destination address: <b>{{ $shipment->destination_address }}</b></h2>
+            <h2 class="text-lg font-medium mb-4 text-black">Shipment for: <b class="text-black">{{ $shipment->receiver_name }}</b></h2>
+            <h2 class="text-lg font-medium mb-4 text-black">Source Address: <b class="text-black">{{ $shipment->source_address }}</b></h2>
+            <h2 class="text-lg font-medium mb-4 text-black">Destination address: <b class="text-black">{{ $shipment->destination_address }}</b></h2>
             {{-- {{ route('shipments.store') }} --}}
             {{-- {{ route('shipments.requests.evaluate.set.store') }} --}}
             <form action="{{ route('shipments.requests.evaluate.set.store', ['shipment' => $shipment]) }}" method="POST">
                 @csrf
-                <h1 class="text-xl mb-2 underline font-bold">Set Waypoints</h1>
+                <h1 class="text-xl mb-2 underline font-bold text-black">Set Waypoints</h1>
 
-                <div class="space-y-2" id="waypoints-container">
+                <div class="space-y-2 text-black" id="waypoints-container">
                     {{-- ORIGINAL INPUT BELOW: --}}
                     {{-- <div class="waypoint">
                         <label class="block text-gray-700 font-medium mb-2" for="waypoint_1"> <b>Waypoint 1</b> Branch Address:</label>
@@ -89,13 +89,13 @@
         });
 
         var label = $('<label/>', {
-            'class': 'block text-gray-700 font-medium mb-2',
+            'class': 'block text-gray-700 font-medium mb-2 text-black',
             'for': 'waypoint_' + count,
-            html: '<b>Waypoint ' + count + ':</b> '
+            html: '<b class="text-black">Waypoint ' + count + ':</b> '
         });
 
         var streetInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][street]',
             'id': 'waypoint_' + count + '_street',
@@ -103,7 +103,7 @@
         });
 
         var houseNumberInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][house_number]',
             'id': 'waypoint_' + count + '_house_number',
@@ -111,7 +111,7 @@
         });
 
         var postalCodeInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][postal_code]',
             'id': 'waypoint_' + count + '_postal_code',
@@ -119,7 +119,7 @@
         });
 
         var cityInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][city]',
             'id': 'waypoint_' + count + '_city',
@@ -127,7 +127,7 @@
         });
 
         var regionInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][region]',
             'id': 'waypoint_' + count + '_region',
@@ -135,7 +135,7 @@
         });
 
         var countryInput = $('<input/>', {
-            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1',
+            'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
             'type': 'text',
             'name': 'waypoints[' + count + '][country]',
             'id': 'waypoint_' + count + '_country',

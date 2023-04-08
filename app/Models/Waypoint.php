@@ -17,4 +17,14 @@ class Waypoint extends Model
     {
         return $this->belongsTo(Shipment::class);
     }
+
+    public function current_address()
+    {
+        return $this->belongsTo(Address::class, 'current_address_id', 'id');
+    }
+
+    public function next_address()
+    {
+        return $this->belongsTo(Address::class, 'next_address_id', 'id');
+    }
 }

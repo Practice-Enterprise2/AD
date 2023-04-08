@@ -3,34 +3,34 @@
     <div class="flex items-center justify-center my-4">
         <div class="w-3/5 mx-auto bg-white p-6 rounded-md shadow-md space-y-6" >
             {{-- Current user --}}
-            <h2 class="text-sm font-medium mb-4">
+            <h2 class="text-sm font-medium mb-4 text-black">
                 Username: {{ auth()->user()->name }}
                 Id: {{ auth()->user()->id }}
                 Address: {{ auth()->user()->address }}
             </h2>
-            <h2 class="text-lg font-medium mb-4">Evaluate Shipments</h2>
+            <h2 class="text-lg font-medium mb-4 text-black">Evaluate Shipments</h2>
 
             @foreach ($shipments as $shipment)
                 <div class="flex-row border border-gray-600 rounded-md p-4">
 
                     <div>
-                        <p class="text-sm"><span class="inline-block text-lg underline font-medium mb-4" > Shipment with id: </span> {{ $shipment->id }}</p>
-                        <p class="text-sm">
-                            <span class="inline-block text-lg underline font-medium mb-4" > Shipment Source Address:</span>
+                        <p class="text-sm text-black"><span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment with id: </span> {{ $shipment->id }}</p>
+                        <p class="text-sm text-black">
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Source Address:</span>
                             {{ $shipment->source_address }}
                         </p>
-                        <p class="text-sm">
-                            <span class="inline-block text-lg underline font-medium mb-4" > Shipment Destination Address:</span>
+                        <p class="text-sm text-black">
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Destination Address:</span>
                             {{ $shipment->destination_address }}
                         </p>
-                        <p class="text-sm">
-                            <span class="inline-block text-lg underline font-medium mb-4" > Shipment Receiver Name:</span>  {{ $shipment->receiver_name }}
+                        <p class="text-sm text-black">
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Receiver Name:</span>  {{ $shipment->receiver_name }}
                         </p>
-                        <p class="text-sm">
-                            <span class="inline-block text-lg underline font-medium mb-4" > Shipment Receiver Email:</span>  {{ $shipment->receiver_email }}
+                        <p class="text-sm text-black">
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Receiver Email:</span>  {{ $shipment->receiver_email }}
                         </p>
-                        <p class="text-sm">
-                            <span class="inline-block text-lg underline font-medium mb-4" > Shipment Handling Type:</span>  {{ $shipment->handling_type }}
+                        <p class="text-sm text-black">
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Handling Type:</span>  {{ $shipment->handling_type }}
                         </p>
                     </div>
                     <div>
