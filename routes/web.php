@@ -4,20 +4,17 @@
 // group.
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CustomerController;
-use Illuminate\Support\Facades\Route;
-
-use App\Models\Waypoint;
-
-use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\WaypointController;
+use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -83,12 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
-
     Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
     Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
     Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
-
-
 
 });
 
@@ -103,28 +97,17 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-
 //email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
-
-
-
-
-
-
-
-
-
-
 
 Route::middleware('auth')->group(function () {
     //ShipmentController
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
-    Route::post('shipments/requests/evaluate/{shipment}', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
+    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments/show', [ShipmentController::class, 'index'])->name('shipments.index');
 
     //WaypointController
@@ -132,18 +115,5 @@ Route::middleware('auth')->group(function () {
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 require __DIR__.'/auth.php';

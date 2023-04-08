@@ -193,7 +193,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
         // QR Code
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ],

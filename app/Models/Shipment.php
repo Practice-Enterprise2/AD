@@ -30,7 +30,6 @@ class Shipment extends Model
         return $this->hasMany(Pickup::class);
     }
 
-
     // public function source_address(): BelongsTo
     // {
     //     return $this->belongsTo(Address::class);
@@ -50,7 +49,6 @@ class Shipment extends Model
     {
         return $this->hasOne(Address::class, 'id', 'destination_address_id');
     }
-
 
     public function waypoints()
     {
