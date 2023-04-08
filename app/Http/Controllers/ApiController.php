@@ -25,8 +25,9 @@ class ApiController extends Controller{
 
   ]);
    
-  return collect($response["response"]["airports"])->map(function ($airport) { return collect($airport)->only(['name', 'iata_code']); });
-  }
+  return collect($response["response"]["airports"])
+  ->filter(function ($airport) { return array_key_exists("iata_code", $airport); })
+  ->map(function ($airport) { return collect($airport)->only(['name', 'iata_code']); });  }
 }
 
 ?>
