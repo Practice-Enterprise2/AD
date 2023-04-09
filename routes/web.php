@@ -95,14 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/profile', 'update')->name('profile.update');
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
-});
 
-//email verification
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::middleware('auth')->group(function () {
     //ShipmentController
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
@@ -115,5 +108,10 @@ Route::middleware('auth')->group(function () {
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 });
+
+//email verification
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
 require __DIR__.'/auth.php';

@@ -12,25 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->foreignId('sender_id');
-            $table->string('receiver_name');
-            $table->string('receiver_email');
-            $table->dropColumn('user_id');
+            // nullable to prevent breaking existing code.
+            $table->string('receiver_name')->nullable();
+            $table->string('receiver_email')->nullable();
+            // Requires drop and recreation as there is a bug with changing the
+            // type of a column to enum in DBAL.
             $table->dropColumn('status');
-            $table->enum('new_status', [
+        });
+
+        Schema::table('shipments', function (Blueprint $table) {
+            $table->enum('status', [
                 'Awaiting Confirmation',
                 'Awaiting Pickup',
                 'In Transit',
                 'Out For Delivery',
                 'Delivered',
                 'Exception',
-                'Held At Location'
-            ])->nullable();
-
-        });
-
-        Schema::table('shipments', function (Blueprint $table) {
-            $table->renameColumn('new_status', 'status');
+                'Held At Location',
+            ]);
         });
     }
 
@@ -40,7 +39,14 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'receiver_name',
+                'receiver_email',
+                'status',
+            ]);
+        });
+        Schema::table('shipments', function (Blueprint $table) {
+            $table->integer('status')->after('delivery_date');
         });
     }
 };

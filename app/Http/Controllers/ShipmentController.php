@@ -68,17 +68,15 @@ class ShipmentController extends Controller
         }
 
         $shipment = new Shipment();
-        $shipment->sender_id = request()->sender_id;
+        $shipment->user_id = request()->sender_id;
         $shipment->receiver_name = request()->receiver_name;
         $shipment->receiver_email = request()->receiver_email;
         $shipment->source_address_id = $source_address->id;
         $shipment->destination_address_id = $destination_address->id;
         $shipment->type = request()->handling_type[0];
 
-
-
         // (!) ATTENTION OF SHIPMENT GROUP. Attributes below need to be added to the form later on.
-        $shipment->status = "Awaiting Confirmation";
+        $shipment->status = 'Awaiting Confirmation';
         $shipment->shipment_date = date('Y-m-d');
         $shipment->delivery_date = date('Y-m-d');
         $shipment->expense = 0;
