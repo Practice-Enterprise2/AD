@@ -20,7 +20,7 @@ return new class() extends Migration
             $table->foreignId('destination_address_id')->constrained('addresses'); //
             $table->date('shipment_date'); //
             $table->date('delivery_date'); //
-            $table->string('status'); // Awaiting Confirmation, Awaiting Pickup, In Transit, Out For Delivery, Delivered, Exception, Held At Location;
+            $table->integer('status');
             $table->integer('expense');
             $table->integer('weight');
             $table->string('type', 50); // Fragile, Liquid, Hazardous(Lighter, Battery etc..)

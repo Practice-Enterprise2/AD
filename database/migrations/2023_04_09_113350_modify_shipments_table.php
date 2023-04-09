@@ -16,6 +16,21 @@ return new class extends Migration
             $table->string('receiver_name');
             $table->string('receiver_email');
             $table->dropColumn('user_id');
+            $table->dropColumn('status');
+            $table->enum('new_status', [
+                'Awaiting Confirmation',
+                'Awaiting Pickup',
+                'In Transit',
+                'Out For Delivery',
+                'Delivered',
+                'Exception',
+                'Held At Location'
+            ])->nullable();
+
+        });
+
+        Schema::table('shipments', function (Blueprint $table) {
+            $table->renameColumn('new_status', 'status');
         });
     }
 

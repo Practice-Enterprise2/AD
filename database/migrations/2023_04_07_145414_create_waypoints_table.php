@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('waypoints', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shipment_id');
-            $table->string('status')->default('In Transit'); // 'In Transit', 'Out For Delivery', 'Delivered', 'Exception'
+            $table->enum('status', [
+                'In Transit',
+                'Out For Delivery',
+                'Delivered',
+                'Exception'
+            ]); // 'In Transit', 'Out For Delivery', 'Delivered', 'Exception'
             $table->string('current_address_id');
             $table->string('next_address_id');
             //$table->string('employee_notes'); //can be implemented later on.
