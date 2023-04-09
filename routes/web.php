@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/employee', 'employee_page')->name('employee');
+        Route::get('/employee', 'employee_page')->name('employee')->middleware('role:employee|admin');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
     });
 
@@ -56,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(AdminController::class)->group(function () {
-        Route::get('/admin', 'admin_page')->name('admin');
+        Route::get('/admin', 'admin_page')->name('admin')->middleware('role:admin');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -80,9 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
-    Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
-    Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
-    Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
+    Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers')->middleware('role:employee|admin');
+    Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit')->middleware('role:employee|admin');
+    Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update')->middleware('role:employee|admin');
 });
 
 // Routes that require an authenticated session.

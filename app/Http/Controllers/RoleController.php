@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -24,20 +24,23 @@ class RoleController extends Controller
         return response()->json(['name' => $role->name]);
     }
 
+    // Delete the role with the given id.
     public function destroy($id)
     {
         $role = Role::findOrFail($id);
-
-        // Find the "user" role
-        $userRole = Role::where('name', 'user')->first();
+        $role_name = $role->name;
 
         // Get the users with the deleted role
-        $users = $role->users;
+        $users_with_role = User::role($name)->get();
 
         // Reassign the users to the "user" role
-        foreach ($users as $user) {
-            $user->roles()->detach($role->id);
-            $user->roles()->attach($userRole->id);
+        foreach ($users_with_role as $user) {
+            $user->removeRole($role_name);
+            if ($user->roles->isEmpty()) {
+                // Every user deserves a role I guess...
+                // I'm just translating code, I don't make the rules :p
+                $user->assignRole('user');
+            }
         }
 
         // Delete the role
