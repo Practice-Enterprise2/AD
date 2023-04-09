@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,10 @@ return new class() extends Migration
     public function up(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->foreignId('user_id');
-            $table->softDeletes();
+            $table->foreignId('sender_id');
+            $table->string('receiver_name');
+            $table->string('receiver_email');
+            $table->dropColumn('user_id');
         });
     }
 
@@ -23,7 +25,7 @@ return new class() extends Migration
     public function down(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->dropColumn(['user_id', 'deleted_at']);
+            //
         });
     }
 };

@@ -33,7 +33,7 @@
                             <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Receiver Email:</span>  <b class="text-black">{{ $shipment->receiver_email }}</b>
                         </p>
                         <p class="text-sm text-black">
-                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Handling Type:</span>  <b class="text-black">{{ $shipment->handling_type }}</b>
+                            <span class="inline-block text-lg underline font-medium mb-4 text-black" > Shipment Handling Type:</span>  <b class="text-black">{{ $shipment->type }}</b>
                         </p>
 
                         <div class="px-2 space-y-2">
