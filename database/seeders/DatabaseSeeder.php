@@ -13,17 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Address::factory()
-        ->count(50)
-        ->create();
+        // Address::factory()
+        // ->count(50)
+        // ->create();
 
         $this->call([
             RoleTableSeeder::class,
             UserTableSeeder::class,
         ]);
 
-        Shipment::factory()
-        ->count(50)
-        ->create();
+        // Shipment::factory()
+        // ->count(50)
+        // ->create();
     }
 }

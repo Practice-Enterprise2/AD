@@ -4,14 +4,16 @@
 // group.
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\WaypointController;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -78,12 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
-
     Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
     Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
     Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
-
-
 
 });
 
@@ -96,8 +95,19 @@ Route::middleware('auth')->group(function () {
         Route::patch('/profile', 'update')->name('profile.update');
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
-});
 
+    //ShipmentController
+    Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
+    Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
+    Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
+    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
+    Route::get('/shipments/show', [ShipmentController::class, 'index'])->name('shipments.index');
+
+    //WaypointController
+    Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
+    Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
+    Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+});
 
 //email verification
 Route::get('/email/verify', function () {
