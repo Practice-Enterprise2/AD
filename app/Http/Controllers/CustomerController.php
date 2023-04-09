@@ -19,9 +19,9 @@ class CustomerController extends Controller
         }
 
         $users = User::whereNotIn('id', function ($query) {
-                $query->select('user_id')
-                      ->from('employees');
-            })
+            $query->select('user_id')
+                  ->from('employees');
+        })
             ->get();
 
         foreach ($users as $user) {
@@ -46,9 +46,9 @@ class CustomerController extends Controller
         }
 
         $customer = User::whereNotIn('id', function ($query) {
-                $query->select('user_id')
-                      ->from('employees');
-            })
+            $query->select('user_id')
+                  ->from('employees');
+        })
             ->where('id', $id)
             ->firstOrFail();
 
@@ -98,6 +98,5 @@ public function update(Request $request, $id)
     $address->save();
 
     return redirect()->route('customer.edit', $id)->with('success', 'Customer updated successfully.');
-
 }
 }

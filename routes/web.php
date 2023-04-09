@@ -83,7 +83,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
     Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
     Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
-
 });
 
 // Routes that require an authenticated session.
