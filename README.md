@@ -33,18 +33,26 @@ run the following commands in different terminals (!)
 1. npm run dev
 2. php artisan serve
 
-## Automatic Style Fixes
-To preserve a consistent style accross the codebase, it is recommended to run [Laravel
-Pint](https://laravel.com/docs/10.x/pint) before every pull request or other upstream merge. To do
-this, run the following from the project root:
+## Code Formatting
+Code formatting is required before a pull request can be merged, to make merging easier for
+everyone. The tools required for formatting are automatically installed by npm and Composer.
+Currently the following formatters are used:
+- Laravel Pint for PHP (Composer)
+- Prettier for HTML/JS/CSS/JSON (npm)
+- blade-formatter for Blade Templates (npm)
+
+Run the following command to automatically format all code:
 
 ```sh
 ./artisan format
 ```
 
 To check whether the code in the current directory follows the style, you can add the `--test` flag
-to the command. That will prevent changes to the code and only report files that aren't following
+to the command, which will prevent changes to the code and only report files that aren't following
 the correct style.
+
+> It is possible to install the formatters globally and change the path through environment
+> variables (`LARAVEL_PINT_PATH`, `PRETTIER_PATH` and `BLADE_FORMATTER_PATH`).
 
 ## Basic user accounts
 - admin@local.test
