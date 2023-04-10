@@ -14,9 +14,6 @@
         </x-nav-link>
       </div>
     </div>
-    <div>
-    <x-airport-selector inputName="des" />
-  </div>
   </x-content-layout>
 </x-app-layout>
 <!-- vim: ft=html
