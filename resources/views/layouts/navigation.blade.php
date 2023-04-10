@@ -18,11 +18,11 @@
           <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
-          @hasanyrole(['employee', 'admin'])
+          @can('view_general_employee_content')
           <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
             {{ __('Employee') }}
           </x-nav-link>
-          @endhasanyrole
+          @endcan
           @role('admin')
           <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
             {{ __('Admin') }}

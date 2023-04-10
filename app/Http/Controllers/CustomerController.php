@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\BusinessCustomer;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
-    public function getCustomers()
+    public function getCustomers(): View|Factory
     {
         $users = User::whereNotIn('id', function ($query) {
             $query->select('user_id')
@@ -33,8 +36,13 @@ class CustomerController extends Controller
         return view('customers', ['users' => $users]);
     }
 
-    public function edit($id)
+    /**
+     * @param  mixed  $id
+     */
+    public function edit($id): View|Factory
     {
+        $this->authorize('update', User::findOrFail($id));
+
         $customer = User::whereNotIn('id', function ($query) {
             $query->select('user_id')
             ->from('employees');
@@ -47,7 +55,10 @@ class CustomerController extends Controller
         return view('customers_edit', ['customer' => $customer, 'address' => $address]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param  mixed  $id
+     */
+    public function update(Request $request, $id): RedirectResponse
     {
         $customer = User::find($id);
         $address = Address::find($customer->address_id);

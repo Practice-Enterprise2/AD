@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function show()
+    public function index(): View|Factory
     {
         $data = Role::all();
 
         return view('admin.roles', ['roles' => $data]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param  mixed  $id The id of the role to update
+     */
+    public function update(Request $request, $id): JsonResponse
     {
         $role = Role::find($id);
         $role->name = $request->input('name');
@@ -24,14 +31,16 @@ class RoleController extends Controller
         return response()->json(['name' => $role->name]);
     }
 
-    // Delete the role with the given id.
-    public function destroy($id)
+    /**
+     * @param  mixed  $id The id of the role to delete
+     */
+    public function destroy($id): RedirectResponse
     {
         $role = Role::findOrFail($id);
         $role_name = $role->name;
 
         // Get the users with the deleted role
-        $users_with_role = User::role($name)->get();
+        $users_with_role = User::role($role_name)->get();
 
         // Reassign the users to the "user" role
         foreach ($users_with_role as $user) {
@@ -49,7 +58,7 @@ class RoleController extends Controller
         return redirect()->back()->with('success', 'Role deleted successfully!');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',

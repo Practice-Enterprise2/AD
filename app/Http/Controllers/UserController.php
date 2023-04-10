@@ -14,6 +14,9 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    /**
+     * Return a view showing all users.
+     */
     public function show(): View|Factory
     {
         $users = User::with('roles')->get();
