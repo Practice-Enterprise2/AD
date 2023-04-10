@@ -17,7 +17,6 @@ class AirportSelector extends Component
     {
         //
         $this->inputName = $inputName;
-        
     }
 
     /**

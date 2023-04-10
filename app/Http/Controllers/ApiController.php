@@ -1,33 +1,35 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Response;
 
-class ApiController extends Controller{
+class ApiController extends Controller
+{
+    public function apiCall()
+    {
+        if (! request()->has('query') || strlen(request()->query('query')) < 3) {
+            //throw error
+            //intentional error
+            return Response::json(['error' => 'Bad Request'], 400);
+        }
+        $search = request()->query('query');
 
-  public function apiCall() {
+        $airlabsKey = getenv('AIRLAPS_KEY');
 
-    if(!request()->has("query") || strlen(request()->query("query")) < 3){
-      //throw error
-      //intentional error 
-      return Response::json(['error' => "Bad Request"],400);
-  }
-    $search = request()->query('query');
- 
-    $airlabsKey = getenv('AIRLAPS_KEY');
+        $response = Http::get('https://airlabs.co/api/v9/suggest', [
+            'api_key' => $airlabsKey,
+            'query' => $search,
 
-    $response = Http::get('https://airlabs.co/api/v9/suggest', [
-      'api_key' => $airlabsKey,
-      'query' => $search
-      
+        ]);
 
-  ]);
-   
-  return collect($response["response"]["airports"])
-  ->filter(function ($airport) { return array_key_exists("iata_code", $airport); })
-  ->map(function ($airport) { return collect($airport)->only(['name', 'iata_code']); });  }
+        return collect($response['response']['airports'])
+        ->filter(function ($airport) {
+        return array_key_exists('iata_code', $airport);
+        })
+        ->map(function ($airport) {
+        return collect($airport)->only(['name', 'iata_code']);
+        });
+    }
 }
-
-?>
