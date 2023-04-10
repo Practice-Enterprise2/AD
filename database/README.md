@@ -1,3 +1,6 @@
+# Database
+Only MariaDB is supported.
+
 ## ./factories
 Factories can be used to easily seed the database (fill it with random data for testing). The
 factories are linked to their corresponding model in \App\Models.
