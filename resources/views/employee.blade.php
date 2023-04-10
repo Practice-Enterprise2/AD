@@ -9,13 +9,5 @@
     </div>
 
 
-    <div>
-        <x-airport-selector inputName="desitinationAirport" />
-        <x-airport-selector inputName="startAirport" />
-    </div>
-
-    
-
-
 
 </x-app-layout>
