@@ -50,6 +50,15 @@
                         <div class="flex justify-end border p-2">
                             {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
                         </div>
+                        <form action="{{ route('shipments.edit', $shipment->id) }}" method="GET">
+                                        @csrf
+                                        <button style = "border-radius:10px; width:100% ;color:white; text-decoration: none; background-color: blue; cursor: pointer;" type="submit">Edit</button>
+                                    </form>
+                                    <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button style = "border-radius:10px; width:100% ;color: white; text-decoration: none; background-color: red; cursor: pointer;" type="submit">Delete</button>
+                                    </form>
                     </div>
 
                 </div>

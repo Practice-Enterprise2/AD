@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ShipmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -12,7 +12,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.12",
-        "simplesoftwareio/simple-qrcode": "^4.2",
+        "simplesoftwareio/simple-qrcode": "*",
         "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {

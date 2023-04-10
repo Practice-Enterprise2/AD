@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 
 class Shipment extends Model
 {
@@ -40,16 +38,6 @@ class Shipment extends Model
     {
         return $this->hasMany(Pickup::class);
     }
-
-    // public function source_address(): BelongsTo
-    // {
-    //     return $this->belongsTo(Address::class);
-    // }
-
-    // public function destination_address(): BelongsTo
-    // {
-    //     return $this->belongsTo(Address::class);
-    // }
 
     public function source_address()
     {

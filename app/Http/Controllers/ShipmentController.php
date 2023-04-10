@@ -112,4 +112,35 @@ class ShipmentController extends Controller
             dd('Something gone wrong, refer Route with URI => [shipments/requests/evaluate/{shipment}]');
         }
     }
+
+    public function edit(Shipment $shipment)
+    {
+        return view('shipments.edit', compact('shipment'));
+    }
+    
+    public function update(Request $request, Shipment $shipment)
+    {
+        $request->validate([
+            'source_address_id' => 'required',
+            'destination_address_id' => 'required',
+            'shipment_date' => 'required',
+            'delivery_date' => 'required',
+            'status' => 'required',
+            'expense' => 'required',
+            'weight' => 'required',
+            'type' => 'required',
+        ]);
+        $shipment->update($request->all());
+
+        return redirect()->route('shipments.index')
+            ->with('success', 'Shipment updated successfully');
+    }
+
+    public function destroy(Shipment $shipment)
+    {
+        $shipment->delete();
+
+        return redirect()->route('shipments.index')
+            ->with('success', 'Shipment deleted successfully');
+    }
 }

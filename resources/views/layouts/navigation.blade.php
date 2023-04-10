@@ -17,6 +17,12 @@
           </x-nav-link>
           <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
+          <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+            {{ __('Orders') }}
+          </x-nav-link>
+          <x-nav-link :href="route('shipments.index')" :active="request()->routeIs('shipments.index')">
+            {{ __('Shipments') }}
+          </x-nav-link>
           </x-nav-link>
           @can('view_general_employee_content')
           <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
