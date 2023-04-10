@@ -1,6 +1,7 @@
 <x-app-layout>
   <x-slot:header>
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <h2
+      class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
       {{ __('Edit Pickup') }}
     </h2>
   </x-slot:header>

@@ -73,7 +73,7 @@
       </select>
     </div>
     <br>
-    <a href="{{ route('home'); }}">Back</a>
+    <a href="{{ route('home') }}">Back</a>
     <button type="reset">reset</button>
     <button type="submit">New</button>
   </form>
