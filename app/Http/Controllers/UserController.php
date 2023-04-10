@@ -2,31 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function show()
+    /**
+     * Return a view showing all users.
+     */
+    public function show(): View|Factory
     {
         $users = User::with('roles')->get();
-        $roles = Role::pluck('name')->unique();
+        $roles = Role::all()->pluck('name');
 
         return view('admin.users', ['users' => $users, 'roles' => $roles]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param  mixed  $id
+     */
+    public function update(Request $request, $id): JsonResponse
     {
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
-        $role = Role::where('name', $request->role)->first();
-        $user->roles()->sync([$role->id]);
+        $user->syncRoles([$request->role]);
 
         return response()->json([
             'name' => $user->name,
@@ -35,7 +43,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    /**
+     * @param  mixed  $id
+     */
+    public function destroy($id): RedirectResponse
     {
         $user = User::findOrFail($id);
         $user->delete();
@@ -43,7 +54,7 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User deleted successfully!');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -63,7 +74,7 @@ class UserController extends Controller
             // TODO: Enable this once the mail server is up and running.
             /* event(new Registered($user)); */
 
-            $user->roles()->attach(Role::where('name', 'user')->first());
+            $user->assignRole('user');
 
             return redirect()->back()->with('success', 'User created successfully!');
         } else {
@@ -76,7 +87,7 @@ class UserController extends Controller
     }
 
     // locke or unlock account
-    public function toggleLock(User $user)
+    public function toggleLock(User $user): RedirectResponse
     {
         $user->is_locked = ! $user->is_locked;
         $user->save();

@@ -12,6 +12,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -26,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee')->name('employee.create');
+    Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
     Route::view('/respond', 'respond');
 
     /*
@@ -44,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/employee', 'employee_page')->name('employee');
+        Route::get('/employee', 'employee_page')->name('employee')->middleware('can:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
     });
 
@@ -54,11 +56,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(AdminController::class)->group(function () {
-        Route::get('/admin', 'admin_page')->name('admin');
+        Route::get('/admin', 'admin_page')->name('admin')->middleware('role:admin');
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('/admin/users', 'show')->name('users');
+        Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
         Route::put('/admin/users/{id}', 'update')->name('users.update');
         Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
         Route::post('/admin/users', 'store')->name('users.store');
@@ -66,9 +68,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(RoleController::class)->group(function () {
-        Route::get('/admin/roles', 'show')->name('roles');
+        Route::get('/admin/roles', 'index')->name('roles');
         Route::put('/admin/roles/{id}', 'update')->name('roles.update');
-        Route::delete('admin/roles/{id}', 'destroy')->name('roles.destroy');
+        Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
         Route::post('/admin/roles', 'store')->name('roles.store');
     });
 
@@ -78,10 +80,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
-
-    Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
-    Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
-    Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/customers', 'getCustomers')->name('customers')->middleware('can:view_all_users');
+        Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
+        Route::put('/customers/{id}', 'update')->name('customer.update')->middleware('role:employee|admin');
+    });
 });
 
 // Routes that require an authenticated session.
@@ -107,8 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 });
 
-
-//email verification
+// Email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');

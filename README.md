@@ -15,11 +15,18 @@ github will tell you that your branch has no conflicts. Wait for someone to acce
 
 ## Cloning the project
 After cloning the project, put the following commands in your CLI:
-1. composer install
-2. npm ci
-2. cp .env.example .env
-3. php artisan key:generate
-4. php artisan migrate --seed
+```sh
+composer install
+npm ci
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+./artisan bootstrap
+```
+
+Running `./artisan bootstrap` is done automatically when seeding the database, so it's only required
+when not seeding the database (like when deploying the project). Running it multiple times has no
+bad effects.
 
 ## Running the project
 run the following commands in different terminals (!)
