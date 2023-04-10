@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // A gate that allows anything for users with the admin role.
+        Gate::after(function ($user, $ability) {
+            return $user->hasRole('admin'); // note this returns boolean
+        });
     }
 
     /**
