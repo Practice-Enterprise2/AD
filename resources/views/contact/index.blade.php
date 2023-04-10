@@ -35,15 +35,5 @@
 </div>
 </div>
 @endforeach 
-</div>
-    <div class="text-stone-50">
-        <div>
-            <div>Welcome To the help Page! How can we help?</div>
-        </div>
-        <form id="chatbot-form" action="/sendcomplaint" method="post">
-            @csrf
-            <input type="text" id="userinput" name="userinput" placeholder="Enter your question...">
-            <button type="submit">submit</button>
-        </form>
-    </div>
+
 </x-app-layout>
