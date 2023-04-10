@@ -43,13 +43,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(BusinessCustomer::class);
     }
 
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
-
     /**
-     * @param  mixed  $roles
+     * @param mixed $roles
      */
     public function checkRoles($roles): void
     {
@@ -61,17 +61,15 @@ class User extends Authenticatable implements MustVerifyEmail
             abort(Response::HTTP_NOT_FOUND);
         }
     }
-
     /**
-     * @param  mixed  $roles
+     * @param mixed $roles
      */
     public function hasAnyRole($roles): bool
     {
         return (bool) $this->roles()->whereIn('name', $roles)->first();
     }
-
     /**
-     * @param  mixed  $role
+     * @param mixed $role
      */
     public function hasRole($role): bool
     {

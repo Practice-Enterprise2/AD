@@ -4,8 +4,6 @@
 // group.
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CustomerController;
-
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\PickupController;
@@ -14,7 +12,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WaypointController;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -81,10 +78,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
+
     Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
     Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
     Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
-
 });
 
 // Routes that require an authenticated session.
@@ -110,12 +107,17 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 });
 
+
 //email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 require __DIR__.'/auth.php';
+
+
+
+
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 Route::get('/api-call', 'ApiController@apiCall');

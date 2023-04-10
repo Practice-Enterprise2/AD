@@ -6,12 +6,9 @@ use App\Models\Address;
 use App\Models\BusinessCustomer;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class CustomerController extends Controller
 {
@@ -23,9 +20,9 @@ class CustomerController extends Controller
 
 
         $users = User::whereNotIn('id', function ($query) {
-            $query->select('user_id')
-                  ->from('employees');
-        })
+                $query->select('user_id')
+                      ->from('employees');
+            })
             ->get();
 
 
@@ -45,6 +42,9 @@ class CustomerController extends Controller
 
         return view('customers', ['users' => $users]);
     }
+    
+    
+    
 
     public function edit($id)
     {
@@ -54,9 +54,9 @@ class CustomerController extends Controller
 
 
         $customer = User::whereNotIn('id', function ($query) {
-            $query->select('user_id')
-                  ->from('employees');
-        })
+                $query->select('user_id')
+                      ->from('employees');
+            })
             ->where('id', $id)
             ->firstOrFail();
 
@@ -66,6 +66,8 @@ class CustomerController extends Controller
 
         return view('customers_edit', ['customer' => $customer, 'address' => $address]);
     }
+    
+    
 
 
 public function update(Request $request, $id)
@@ -76,7 +78,6 @@ public function update(Request $request, $id)
     }
     $customer = User::find($id);
     $address = Address::find($customer->address_id);
-
 
     $validator = Validator::make($request->all(), [
         'name' => 'required',
@@ -115,6 +116,8 @@ public function update(Request $request, $id)
 
 
     return redirect()->route('customer.edit', $id)->with('success', 'Customer updated successfully.');
+    
+
 }
 }
 
