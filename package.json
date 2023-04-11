@@ -16,6 +16,11 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "gunzip": "^1.2.2",
         "tw-elements": "^1.0.0-beta1"
+    },
+    "optionalDependencies": {
+        "blade-formatter": "^1.32.12",
+        "prettier": "^2.8.7"
     }
 }
