@@ -9,6 +9,7 @@ use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::view('/home', 'app')->name('home');
 Route::redirect('/', 'home');
 
 // Routes that require an authenticated session with a verified email.
-Route::middleware(['auth', 'verified'])->group(function () {
+/* Route::middleware(['auth', 'verified'])->group(function () { */
     /*
      * Normal views, that can optionally take extra data.
      */
@@ -73,7 +74,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
-});
+
+/* }); */
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
@@ -87,28 +89,38 @@ Route::middleware('auth')->group(function () {
 });
 
 //email verification
+/*
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+}); ->middleware('auth')->name('verification.notice'); 
+*/
 
 // Shipment Pages
+// Add verification when code is finished TODO
 Route::get('/shipment', function() {
     return view('shipment');
 });
 Route::get('/createShipment', function () {
     return view('createShipment');
-})->middleware(['auth', 'verified'])->name('createShipment');
+});
+Route::get('/shipmentOverview', function() {
+    return view('shipmentOverview');
+});
+Route::get('/shipmentOverview/{id}',[ShipmentController::class, 'getShipmentInfo']);
+Route::post('shipment', 'App\Http\Controllers\ShipmentController@insert');
+
+
 
 // Invoice
 //Route::get('payment','App\Http\Controllers\Controller@insertform');
-Route::post('payment', 'App\Http\Controllers\ShipmentController@insert');
+/* 
 Route::get('/payment', function () {
     return view('payment');     
 })->middleware(['auth', 'verified'])->name('payment');
 Route::get('/paymentSuccess', function () {
     return view('paymentSuccess');
 })->middleware(['auth', 'verified'])->name('paymentSuccess');
-
+ */
 // Airport Routes
 
 // Depot routes
