@@ -1,6 +1,5 @@
 <x-app-layout>
 
-
   <!-- example -->
   <div style="display:flex; align-items:baseline; width:80%">
 

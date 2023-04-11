@@ -15,7 +15,6 @@
         <input type="hidden" name="sender_id" value="{{ auth()->user()->id }}">
         <input type="hidden" name="sender_address" value="Hello!!">
 
-
         {{-- User address attributes needs to be fetched here
             <input type="hidden"  name="sender_address_id" value="{{ auth()->user()->adress_id }}"> --}}
 
@@ -86,7 +85,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="my-10">
           <div class="mb-4">

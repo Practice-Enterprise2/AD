@@ -74,7 +74,6 @@
           </x-slot>
         </x-dropdown>
 
-
       @endguest
       <!-- Settings Dropdown -->
       <div class="hidden sm:ml-6 sm:flex sm:items-center">

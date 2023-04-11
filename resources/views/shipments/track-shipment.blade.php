@@ -18,7 +18,6 @@
   </div>
 </x-app-layout>
 
-
 {{-- BING Maps API --}}
 <script type='text/javascript'>
   var myStyle = {
