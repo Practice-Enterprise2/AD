@@ -19,7 +19,7 @@ Route::view('/home', 'app')->name('home');
 Route::redirect('/', 'home');
 
 // Routes that require an authenticated session with a verified email.
-Route::middleware(['auth', 'verified'])->group(function () {
+/*Route::middleware(['auth', 'verified'])->group(function () {*/
     /*
      * Normal views, that can optionally take extra data.
      */
@@ -73,7 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
-});
+/*});*/
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
@@ -94,8 +94,8 @@ Route::get('/shipments', function () {
 Route::get('/shipments_details/{ShipmentID}',[App\Http\Controllers\ShipmentController::class,'showShipments_details'])->name('shipments_details');
 Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('index');
 //email verification
-Route::get('/email/verify', function () {
+/*-Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+})>middleware('auth')->name('verification.notice');*/
 
 require __DIR__ . '/auth.php';
