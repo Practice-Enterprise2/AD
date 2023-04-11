@@ -22,8 +22,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @if(Auth::user()->roles()->first()->name == 'admin' || Auth::user()->roles()->first()->name == 'employee')
                     @foreach($shipments as $shipment)
+                    
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}" onclick="setLink(this);">
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->name }}</td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->shipment_date }}</td>
@@ -44,11 +45,17 @@
                             @endif">{{ $shipment->Name }}</td>
                             
                         </tr>
+                    
                     @endforeach
+                    @elseif(Auth::user()->roles()->first()->name == 'user')
+                        user zicht
+                    @endif
                     </a>
                 </tbody>
             </table>
         </div>
+        
+        
     </div>
 </div>
 
