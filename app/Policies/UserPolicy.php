@@ -35,7 +35,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->can('edit_own_user_info');
+        return ($user->can('edit_own_user_info') && $user->id === $model->id) || ($user->can('edit_any_user_info'));
     }
 
     /**

@@ -4,6 +4,7 @@
 // group.
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::view('/home', 'app')->name('home');
 
 Route::redirect('/', 'home');
+
+Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -48,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/employee', 'employee_page')->name('employee')->middleware('can:view_general_employee_content');
+        Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
     });
 
@@ -58,7 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(AdminController::class)->group(function () {
-        Route::get('/admin', 'admin_page')->name('admin')->middleware('role:admin');
+        Route::get('/admin', 'admin_page')->name('admin')->middleware('permission:view_all_users|view_basic_server_info|view_all_roles');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -83,9 +86,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(CustomerController::class)->group(function () {
-        Route::get('/customers', 'getCustomers')->name('customers')->middleware('can:view_all_users');
+        Route::get('/customers', 'getCustomers')->name('customers')->middleware('permission:view_all_users');
         Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
-        Route::put('/customers/{id}', 'update')->name('customer.update')->middleware('role:employee|admin');
+        Route::put('/customers/{id}', 'update')->name('customer.update');
+    });
+
+    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info')->prefix('/control-panel')->group(function () {
+        Route::view('/', 'control-panel.index')->name('control-panel');
+        Route::name('control-panel.')->group(function () {
+            Route::view('/general', 'control-panel.general')->name('general');
+            Route::view('/security', 'control-panel.security')->name('security');
+            Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
+            Route::view('/groups', 'control-panel.groups')->name('groups')->middleware('permission:view_all_roles');
+            Route::view('/permissions', 'control-panel.permissions')->name('permissions')->middleware('permission:view_all_permissions');
+            Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info');
+        });
     });
 });
 
@@ -118,6 +133,3 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 require __DIR__.'/auth.php';
-
-Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
-Route::get('/api-call', 'ApiController@apiCall');

@@ -23,6 +23,16 @@
               </x-nav-link>
             </div>
           </div>
+          <div
+            class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+              {{ __('Control Panel') }}
+              <x-nav-link class="ml-2 rounded bg-gray-200 text-black"
+                :href="route('control-panel')" :active="request()->routeIs('control-panel')">
+                {{ __('Go >') }}
+              </x-nav-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

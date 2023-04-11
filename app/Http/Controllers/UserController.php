@@ -31,6 +31,9 @@ class UserController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $user = User::findOrFail($id);
+
+        $this->authorize('update', $user);
+
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
@@ -86,7 +89,7 @@ class UserController extends Controller
         }
     }
 
-    // locke or unlock account
+    // Lock or unlock account
     public function toggleLock(User $user): RedirectResponse
     {
         $user->is_locked = ! $user->is_locked;

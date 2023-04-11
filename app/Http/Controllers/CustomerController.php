@@ -60,6 +60,8 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+        $this->authorize('update', User::findOrFail($id));
+
         $customer = User::find($id);
         $address = Address::find($customer->address_id);
 
