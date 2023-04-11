@@ -49,6 +49,46 @@ table
 {
     margin-left: 10px;
 }
+            body {
+        background-color: #fbfbfb;
+        }
+        @media (min-width: 991.98px) {
+        main {
+            padding-left: 240px;
+        }
+        }
+
+         /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 48px;
+            bottom: 0;
+            left: 0;
+            padding: 58px 0 0; /* Height of navbar */
+            box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+            width: 240px;
+            z-index: 600;
+        }
+
+        @media (max-width: 991.98px) {
+        .sidebar {
+            width: 100%;
+        }
+        }
+        .sidebar .active {
+        border-radius: 5px;
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+        }
+
+        .sidebar-sticky {
+        position: relative;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: 0.5rem;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        }
+</style>
     </style>
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
 </head>
@@ -58,6 +98,39 @@ table
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
 <script src="{{ asset('js/chosen.jquery.js') }}"></script>
 <script src="{{asset('js/chosen-initialization.js')}}"></script>
+<nav
+       id="sidebarMenu"
+       class=" d-lg-block sidebar bg-white"
+       >
+       <a href="page2"><h1><b>Contracts</b></h1></a>
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <ul>
+            <li><a
+           href="contract_list"
+           class="list-group-item list-group-item-action py-2 ripple "
+           >
+          <span>contract list</span>
+        </a></li>
+        <li><a
+           href="/new_contract"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><span>new contract</span></a
+          ></li>
+
+          <li><a
+           href="/contract"
+           class="list-group-item list-group-item-action py-2 ripple"
+           >
+          <span>edit contract</span>
+        </a></li>
+        <li>        <a
+           href="airportList"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><span>airport list</span></a
+          ></li>
+        </ul>
+    </div>
+  </nav>
     <form action="contract" method="GET">
     <table>
     <tr>

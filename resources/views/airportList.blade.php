@@ -52,13 +52,13 @@
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a
-           href=""
+           href="contract_list"
            class="list-group-item list-group-item-action py-2 ripple "
            >
           <span>contract list</span>
         </a></li>
         <li><a
-           href="/test"
+           href="/new_contract"
            class="list-group-item list-group-item-action py-2 ripple"
            ><span>new contract</span></a
           ></li>
