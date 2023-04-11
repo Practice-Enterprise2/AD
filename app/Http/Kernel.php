@@ -21,6 +21,11 @@ class Kernel extends HttpKernel
         parent::__construct($app, $router);
     }
 
+    public function encrypted_cookies(): bool
+    {
+        return in_array(\App\Http\Middleware\EncryptCookies::class, $this->middlewareGroups['web']);
+    }
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -45,7 +50,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            /* \App\Http\Middleware\EncryptCookies::class, */
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,

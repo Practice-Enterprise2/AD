@@ -3,7 +3,6 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -60,10 +59,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_add', 'save');
     });
 
-    Route::controller(AdminController::class)->group(function () {
-        Route::get('/admin', 'admin_page')->name('admin')->middleware('permission:view_all_users|view_basic_server_info|view_all_roles');
-    });
-
     Route::controller(UserController::class)->group(function () {
         Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
         Route::put('/admin/users/{id}', 'update')->name('users.update');
@@ -91,15 +86,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/customers/{id}', 'update')->name('customer.update');
     });
 
-    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info')->prefix('/control-panel')->group(function () {
-        Route::view('/', 'control-panel.index')->name('control-panel');
+    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
+        Route::get('/', ControlPanelController::class)->name('control-panel');
         Route::name('control-panel.')->group(function () {
-            Route::view('/general', 'control-panel.general')->name('general');
-            Route::view('/security', 'control-panel.security')->name('security');
+            Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
-            Route::view('/groups', 'control-panel.groups')->name('groups')->middleware('permission:view_all_roles');
-            Route::view('/permissions', 'control-panel.permissions')->name('permissions')->middleware('permission:view_all_permissions');
+            Route::get('/groups', 'groups')->name('groups')->middleware('permission:view_all_roles');
+            Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
             Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info');
+            Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
         });
     });
 });

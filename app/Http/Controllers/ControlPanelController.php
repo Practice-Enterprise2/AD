@@ -4,20 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 
 class ControlPanelController extends Controller
 {
+    public function __invoke(): View|Factory
+    {
+        return $this->view('index');
+    }
+
+    public function security(): View|Factory
+    {
+        return $this->view('security');
+    }
+
     public function users(): View|Factory
     {
-        Log::debug(str_starts_with(request()->route()->getName(), 'control-panel'));
-
         return $this->view('users');
+    }
+
+    public function groups(): View|Factory
+    {
+        return $this->view('groups');
+    }
+
+    public function permissions(): View|Factory
+    {
+        return $this->view('permissions');
     }
 
     public function info(): View|Factory
     {
         return $this->view('info');
+    }
+
+    public function log(): View|Factory
+    {
+        return $this->view('log');
     }
 
     /**

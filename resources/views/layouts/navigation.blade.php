@@ -27,16 +27,15 @@
               {{ __('Employee') }}
             </x-nav-link>
           @endcan
-          @canany(['view_basic_server_info', 'view_all_users',
-            'view_all_roles'])
-            <x-nav-link :href="route('admin')" :active="request()->routeIs('admin') ||
-                str_starts_with(
-                    request()
-                        ->route()
-                        ->getName(),
-                    'control-panel',
-                )">
-              {{ __('Admin') }}
+          @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
+            'view_detailed_server_info', 'edit_roles'])
+            <x-nav-link :href="route('control-panel')" :active="str_starts_with(
+                request()
+                    ->route()
+                    ->getName(),
+                'control-panel',
+            )">
+              {{ __('Control Panel') }}
             </x-nav-link>
           @endrole
         </div>
