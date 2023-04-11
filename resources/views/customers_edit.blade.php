@@ -2,7 +2,6 @@
   <style>
     :root {
       --lgrey: #e0e0e0;
-
       --eLgrey: #f9f9f9;
     }
 
@@ -18,8 +17,6 @@
       width: 100%;
       padding: 20px;
       box-sizing: border-box;
-
-
     }
 
     @media (max-width: 767px) {
@@ -43,7 +40,6 @@
     }
 
     tr {
-
       height: 50px;
     }
   </style>
@@ -154,8 +150,6 @@
             </td>
           </tr>
 
-
-
           <tr id="vat_number_row">
             <td><label for="vat_number">VAT Number</label></td>
             <td>
@@ -167,15 +161,11 @@
             </td>
           </tr>
 
-
-
-
           <tr>
             <td colspan="2"
               style="text-align: center;background-color: var(--lgrey);"><button
                 type="submit">Update</button></td>
           </tr>
-
 
         </table>
       </form>

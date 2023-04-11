@@ -2,7 +2,6 @@
   <style>
     :root {
       --lgrey: #e0e0e0;
-
       --eLgrey: #f9f9f9;
     }
 
@@ -33,7 +32,6 @@
     th {
       background-color: var(--lgrey);
       font-size: 20px;
-
     }
 
     tr:hover {
@@ -161,10 +159,5 @@
       }
     }
   </script>
-
-
-
-
-
 
 </x-app-layout>

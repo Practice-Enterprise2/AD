@@ -7,6 +7,6 @@
     "useTabs": false,
     "sortTailwindcssClasses": true,
     "sortHtmlAttributes": "none",
-    "noMultipleEmptyLines": false,
+    "noMultipleEmptyLines": true,
     "noPhpSyntaxCheck": false
 }
