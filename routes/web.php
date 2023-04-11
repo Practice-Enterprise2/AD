@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/shipment', [shipmentController::class, 'store'])->name('shipment.store');
     Route::get('/shipment/{id}', [shipmentController::class , 'show'])->name('shipment.show');
     Route::delete("/shipment/{id}", [shipmentController::class, 'destroy'])->name('shipment.destroy');
-    Route::get('/shipment/ajax', [shipmentController::class, 'AjaxShipment'])->name('shipment.ajax');
+    Route::get('/shipment/status/{status}', [shipmentController::class, 'AjaxShipment'])->name('shipment.ajax');
     Route::get('/contact', [contactController::class, 'create'])->name('contact.create');
     Route::post('/contact', [contactController::class, 'store'])->name('contact.store');
     Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');

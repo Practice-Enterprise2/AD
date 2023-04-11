@@ -22,11 +22,12 @@ class shipmentController extends Controller
         ]);
     }
 
-    public function AjaxShipment(Request $request)
+    public function AjaxShipment($status)
     {   
-        return view('shipment.ajax-shipment', [
-            'shipments' => Shipment::where('customer_id', Auth::user()->id)->where('status', $request->status)->get()
-        ]);
+
+        $shipment = Shipment::where('customer_id', Auth::user()->id)->where('status', $status)->get();
+
+        return response()->json($shipment);
     }
     /**
      * Show the form for creating a new resource.
@@ -76,7 +77,7 @@ class shipmentController extends Controller
             'to_country' => $request->to_country,
             'weight' => $request->weight,
             'package_num' => $request->package_num,
-            'price' => 100,
+            'price' => 100
         ]);
         return Redirect(route('shipment.index'));
     }
