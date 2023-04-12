@@ -16,6 +16,8 @@ class Kernel extends HttpKernel
 
         if ($app_config['env'] === 'production') {
             array_unshift($this->middlewareGroups['web'], \App\Http\Middleware\EncryptCookies::class);
+        } else {
+            array_unshift($this->middleware, \App\Http\Middleware\LogRequests::class);
         }
 
         parent::__construct($app, $router);
@@ -27,6 +29,14 @@ class Kernel extends HttpKernel
     }
 
     /**
+     * @return array<int,class-string|string>
+     */
+    public function middleware(): array
+    {
+        return $this->middleware;
+    }
+
+    /**
      * The application's global HTTP middleware stack.
      *
      * These middleware are run during every request to your application.
@@ -34,7 +44,6 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
-        // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
