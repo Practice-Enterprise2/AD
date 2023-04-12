@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $user = User::findOrFail($id);
+        $user = User::query()->findOrFail($id);
 
         $this->authorize('update', $user);
 
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        $user = User::findOrFail($id);
+        $user = User::query()->findOrFail($id);
         $user->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully!');
@@ -67,8 +67,8 @@ class UserController extends Controller
 
         // HACK: This solves the fact that the `unique` validation rule doesn't
         // take soft deletion into account.
-        if (! User::where('email', $request->email)->get()->first()) {
-            $user = User::create([
+        if (! User::query()->where('email', $request->email)->first()) {
+            $user = User::query()->create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),

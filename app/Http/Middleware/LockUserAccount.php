@@ -11,7 +11,7 @@ class LockUserAccount
     /**
      * Handle an incoming request.
      *
-     * @param  callable  $next
+     * @param  \Closure  $next The closure to call the next middleware
      */
     public function handle(Request $request, Closure $next): Response
     {

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Shipment;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ShipmentController extends Controller
 {
-    public function index()
+    public function index(): View|Factory
     {
-        $shipments = Shipment::whereNot('status', 'Awaiting Confirmation')
+        $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
                             ->whereNot('status', 'Declined')
                             ->with('waypoints')
                             ->get();
@@ -18,16 +21,16 @@ class ShipmentController extends Controller
     }
 
     //create
-    public function create()
+    public function create(): View|Factory
     {
         return view('shipments.create');
     }
 
     //store
-    public function store()
+    public function store(): string
     {
 
-        $source_address = Address::where([
+        $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
             'postal_code' => request()->source_postalcode,
@@ -47,7 +50,7 @@ class ShipmentController extends Controller
             $source_address->push();
         }
 
-        $destination_address = Address::where([
+        $destination_address = Address::query()->where([
             'street' => request()->destination_street,
             'house_number' => request()->destination_housenumber,
             'postal_code' => request()->destination_postalcode,
@@ -90,16 +93,16 @@ class ShipmentController extends Controller
         return 'Tracking Number: '.$shipment->id;
     }
 
-    public function requests()
+    public function requests(): View|Factory
     {
         // dd("Catch");
-        $shipments = Shipment::where('status', 'Awaiting Confirmation')->get();
+        $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
         // dd("Catch");
         // dd($shipments);
         return view('/shipments.requests', compact('shipments'));
     }
 
-    public function evaluate(Shipment $shipment)
+    public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
             $shipment->status = 'Declined';

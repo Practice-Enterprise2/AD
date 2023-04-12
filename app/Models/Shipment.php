@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shipment extends Model
@@ -40,17 +40,17 @@ class Shipment extends Model
     //     return $this->belongsTo(Address::class);
     // }
 
-    public function source_address()
+    public function source_address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'source_address_id');
     }
 
-    public function destination_address()
+    public function destination_address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'destination_address_id');
     }
 
-    public function waypoints()
+    public function waypoints(): HasOne
     {
         return $this->hasMany(Waypoint::class);
     }

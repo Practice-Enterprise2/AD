@@ -15,17 +15,17 @@ class CustomerController extends Controller
 {
     public function getCustomers(): View|Factory
     {
-        $users = User::whereNotIn('id', function ($query) {
+        $users = User::query()->whereNotIn('id', function ($query) {
             $query->select('user_id')
             ->from('employees');
         })
         ->get();
 
         foreach ($users as $user) {
-            $address = Address::find($user->address_id);
+            $address = Address::query()->find($user->address_id);
             $user->address = $address;
 
-            $business_customer = BusinessCustomer::where('user_id', $user->id)->first();
+            $business_customer = BusinessCustomer::query()->where('user_id', $user->id)->first();
             if ($business_customer) {
                 $user->vat_number = $business_customer->vat_number;
             } else {
@@ -41,16 +41,16 @@ class CustomerController extends Controller
      */
     public function edit($id): View|Factory
     {
-        $this->authorize('update', User::findOrFail($id));
+        $this->authorize('update', User::query()->findOrFail($id));
 
-        $customer = User::whereNotIn('id', function ($query) {
+        $customer = User::query()->whereNotIn('id', function ($query) {
             $query->select('user_id')
             ->from('employees');
         })
         ->where('id', $id)
         ->firstOrFail();
 
-        $address = Address::find($customer->address_id);
+        $address = Address::query()->find($customer->address_id);
 
         return view('customers_edit', ['customer' => $customer, 'address' => $address]);
     }
@@ -60,10 +60,10 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        $this->authorize('update', User::findOrFail($id));
+        $this->authorize('update', User::query()->findOrFail($id));
 
-        $customer = User::find($id);
-        $address = Address::find($customer->address_id);
+        $customer = User::query()->find($id);
+        $address = Address::query()->find($customer->address_id);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',

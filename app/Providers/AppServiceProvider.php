@@ -73,8 +73,8 @@ class AppServiceProvider extends ServiceProvider
         $role_user->givePermissionTo('delete_own_user_account');
 
         // Create the minimum required users.
-        if (! User::where('email', 'admin@local.test')->first()) {
-            $admin_user = User::create([
+        if (! User::query()->where('email', 'admin@local.test')->first()) {
+            $admin_user = User::query()->create([
                 'name' => 'Administrator',
                 'email' => 'admin@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -82,8 +82,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'employee-it@local.test')->first()) {
-            $employee_user = User::create([
+        if (! User::query()->where('email', 'employee-it@local.test')->first()) {
+            $employee_user = User::query()->create([
                 'name' => 'Employee IT',
                 'email' => 'employee-it@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -91,8 +91,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'employee-hr@local.test')->first()) {
-            $employee_user = User::create([
+        if (! User::query()->where('email', 'employee-hr@local.test')->first()) {
+            $employee_user = User::query()->create([
                 'name' => 'Employee HR',
                 'email' => 'employee-hr@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -100,8 +100,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'employee@local.test')->first()) {
-            $employee_user = User::create([
+        if (! User::query()->where('email', 'employee@local.test')->first()) {
+            $employee_user = User::query()->create([
                 'name' => 'Employee',
                 'email' => 'employee@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -109,8 +109,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'user@local.test')->first()) {
-            $regular_user = User::create([
+        if (! User::query()->where('email', 'user@local.test')->first()) {
+            $regular_user = User::query()->create([
                 'name' => 'User',
                 'email' => 'user@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -118,11 +118,11 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        $admin_user = User::where('email', 'admin@local.test')->first();
-        $employee_user = User::where('email', 'employee@local.test')->first();
-        $employee_hr_user = User::where('email', 'employee-hr@local.test')->first();
-        $employee_it_user = User::where('email', 'employee-it@local.test')->first();
-        $regular_user = User::where('email', 'user@local.test')->first();
+        $admin_user = User::query()->where('email', 'admin@local.test')->first();
+        $employee_user = User::query()->where('email', 'employee@local.test')->first();
+        $employee_hr_user = User::query()->where('email', 'employee-hr@local.test')->first();
+        $employee_it_user = User::query()->where('email', 'employee-it@local.test')->first();
+        $regular_user = User::query()->where('email', 'user@local.test')->first();
 
         // Assign each required user their required roles.
         $admin_user->assignRole('admin'); // Admin user automatically gets all permissions!
@@ -144,7 +144,7 @@ class AppServiceProvider extends ServiceProvider
     // If a permission with the given name doesn't exist, create it.
     public static function bootstrap_role(string $name, null|string $description = null): Role
     {
-        if (! Role::where('name', $name)->first()) {
+        if (! Role::query()->where('name', $name)->first()) {
             return Role::create([
                 'name' => $name,
                 'description' => $description,
@@ -157,7 +157,7 @@ class AppServiceProvider extends ServiceProvider
     // If a permission with the given name doesn't exist, create it.
     public static function bootstrap_permission(string $name, null|string $description = null): Permission
     {
-        if (! Permission::where('name', $name)->first()) {
+        if (! Permission::query()->where('name', $name)->first()) {
             return Permission::create([
                 'name' => $name,
                 'description' => $description,

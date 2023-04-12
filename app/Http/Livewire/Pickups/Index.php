@@ -17,17 +17,17 @@ class Index extends Component
 
     public function cancel_pickup(int $pickup_id): void
     {
-        $pickup = Pickup::find($pickup_id);
+        $pickup = Pickup::query()->find($pickup_id);
         $pickup->status = 'canceled';
         $pickup->save();
-        $this->pickups = Pickup::whereHas('shipment', function ($query) {
+        $this->pickups = Pickup::query()->whereHas('shipment', function ($query) {
             return $query->where('user_id', Auth::id());
         })->get();
     }
 
     public function mount(): void
     {
-        $this->pickups = Pickup::whereHas('shipment', function ($query) {
+        $this->pickups = Pickup::query()->whereHas('shipment', function ($query) {
             return $query->where('user_id', Auth::id());
         })->get();
     }
