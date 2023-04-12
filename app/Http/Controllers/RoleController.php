@@ -12,6 +12,11 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function create(): View|Factory
+    {
+        return view('control-panel.groups.create');
+    }
+
     public function index(): View|Factory
     {
         $data = Role::all();

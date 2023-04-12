@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Create the required permissions.
         static::bootstrap_permission('add_employee', 'Promote a regular user to employee.');
+        static::bootstrap_permission('create_role', 'Create authorization roles.');
         static::bootstrap_permission('delete_own_user_account', 'Delete the currently logged in user\'s account.');
         static::bootstrap_permission('edit_own_user_info', 'Edit the currently logged in user\'s info.');
         static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');

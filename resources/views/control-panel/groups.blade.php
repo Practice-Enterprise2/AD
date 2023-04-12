@@ -22,6 +22,13 @@
           </tr>
         @endforeach
       </table>
+
+      <div class="mt-10">
+        @can('create_role')
+          <a class="mt-" href="{{ route('control-panel.groups.create') }}">New
+            Group</a>
+        @endcan
+      </div>
     </div>
   </x-sidebar-layout>
 </x-app-layout>

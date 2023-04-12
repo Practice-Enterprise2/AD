@@ -93,6 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/groups', 'groups')->name('groups')->middleware('permission:view_all_roles');
+            Route::get('/groups/create', [RoleController::class, 'create'])->name('groups.create')->middleware('permission:edit_permissions');
             Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
             Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
             Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info');
