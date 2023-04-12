@@ -65,5 +65,5 @@
       class="mt-4 rounded bg-blue-500 p-2 text-white lg:col-span-2 lg:col-start-4">Save</button>
   </form>
 </div>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

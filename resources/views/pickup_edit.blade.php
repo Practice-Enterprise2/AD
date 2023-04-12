@@ -10,5 +10,5 @@
     <livewire:pickups.edit :pickup_id=$pickup_id>
   </x-content-layout>
 </x-app-layout>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

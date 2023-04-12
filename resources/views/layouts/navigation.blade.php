@@ -203,5 +203,5 @@
     </div>
   </div>
 </nav>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

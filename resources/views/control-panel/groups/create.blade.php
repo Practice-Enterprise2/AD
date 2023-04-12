@@ -14,5 +14,5 @@
     @livewire('role.create')
   </x-sidebar-layout>
 </x-app-layout>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

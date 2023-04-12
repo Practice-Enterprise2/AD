@@ -10,5 +10,5 @@
     <livewire:pickups.index>
   </x-content-layout>
 </x-app-layout>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

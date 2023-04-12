@@ -25,7 +25,5 @@
     @endif
   </form>
 </div>
-{{--
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
 --}}

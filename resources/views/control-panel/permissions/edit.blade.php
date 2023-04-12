@@ -14,5 +14,5 @@
     @livewire('permission.edit', ['permission' => $permission])
   </x-sidebar-layout>
 </x-app-layout>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

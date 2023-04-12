@@ -53,5 +53,5 @@
     </div>
   @endcanany
 </div>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

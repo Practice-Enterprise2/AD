@@ -62,5 +62,5 @@ Slots:
 </body>
 
 </html>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}
