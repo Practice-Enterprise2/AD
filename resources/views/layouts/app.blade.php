@@ -1,3 +1,11 @@
+{{--
+Slots:
+- (?string) $title: Set the page title, or null for the default title
+- (?html) $head: Extra head elements
+- (?html) $header: An optional header for the page
+- (?html) #body: The body of the page
+--}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -6,7 +14,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>
+    {{ config('app.name', 'Laravel') . ($title ?? false ? " - $title" : '') }}
+  </title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net">
@@ -21,6 +31,10 @@
   <script src="https://code.jquery.com/jquery-3.6.4.js"
     integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
     crossorigin="anonymous"></script>
+
+  @isset($head)
+    {{ $head }}
+  @endisset
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])

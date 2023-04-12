@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('delete_own_user_account', 'Delete the currently logged in user\'s account.');
         static::bootstrap_permission('edit_own_user_info', 'Edit the currently logged in user\'s info.');
         static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');
+        static::bootstrap_permission('edit_permissions', 'Edit all the authorization permissions.');
         static::bootstrap_permission('edit_roles', 'Edit all the authorization roles.');
         static::bootstrap_permission('view_all_roles', 'View all the roles.');
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');

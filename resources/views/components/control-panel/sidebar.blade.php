@@ -26,7 +26,12 @@
   @canany(['view_all_permissions'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
-        :href="route('control-panel.permissions')" :active="request()->routeIs('control-panel.permissions')">
+        :href="route('control-panel.permissions')" :active="str_starts_with(
+            request()
+                ->route()
+                ->getName(),
+            'control-panel.permissions',
+        )">
         {{ __('Permissions') }}
       </x-nav-link>
     </div>

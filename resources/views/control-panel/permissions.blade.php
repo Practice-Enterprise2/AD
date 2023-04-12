@@ -9,7 +9,8 @@
       <table class="w-full">
         <colgroup>
           <col span="1" class="w-3/12">
-          <col span="1" class="w-9/12">
+          <col span="1" class="w-8/12">
+          <col span="1" class="w-1/12">
         </colgroup>
         <tr class="text-left">
           <th>{{ __('Name') }}</th>
@@ -19,6 +20,12 @@
           <tr>
             <td>{{ $permission->name }}</td>
             <td>{{ $permission->description }}</td>
+            <td class="text-right">
+              @can('edit_permissions')
+                <a
+                  href="{{ route('control-panel.permissions.edit', $permission->id) }}">Edit</a>
+              @endcan
+            </td>
           </tr>
         @endforeach
       </table>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -93,6 +94,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/groups', 'groups')->name('groups')->middleware('permission:view_all_roles');
             Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
+            Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
             Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info');
             Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
         });
