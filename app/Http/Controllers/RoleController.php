@@ -12,6 +12,11 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function create(): View|Factory
+    {
+        return view('control-panel.groups.create');
+    }
+
     public function index(): View|Factory
     {
         $data = Role::all();
@@ -24,7 +29,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $role = Role::find($id);
+        $role = Role::query()->find($id);
         $role->name = $request->input('name');
         $role->save();
 
@@ -36,11 +41,15 @@ class RoleController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        $role = Role::findOrFail($id);
+        $role = Role::query()->findOrFail($id);
         $role_name = $role->name;
 
         // Get the users with the deleted role
-        $users_with_role = User::role($role_name)->get();
+        $users_with_role = User::query()->whereHas(
+            'roles', function ($query) {
+                $query->where('name', $role_name);
+            }
+        )->get();
 
         // Reassign the users to the "user" role
         foreach ($users_with_role as $user) {
@@ -64,7 +73,7 @@ class RoleController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $newId = Role::max('id') + 1;
+        $newId = Role::query()->max('id') + 1;
 
         $role = new Role();
         $role->id = $newId;

@@ -3,10 +3,17 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class LockUserAccount
 {
-    public function handle($request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure  $next The closure to call the next middleware
+     */
+    public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 

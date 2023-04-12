@@ -28,7 +28,7 @@ class Edit extends Component
 
     public function mount(int $pickup_id): void
     {
-        $pickup = Pickup::find($pickup_id);
+        $pickup = Pickup::query()->find($pickup_id);
 
         if ($pickup === null) {
             abort(Response::HTTP_NOT_FOUND);
@@ -47,7 +47,7 @@ class Edit extends Component
     {
         $this->validate();
 
-        $pickup_address = Address::firstOrCreate([
+        $pickup_address = Address::query()->firstOrCreate([
             'street' => $this->pickup_address->street,
             'house_number' => $this->pickup_address->house_number,
             'city' => $this->pickup_address->city,

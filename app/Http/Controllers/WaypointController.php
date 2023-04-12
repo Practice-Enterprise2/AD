@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\Waypoint;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class WaypointController extends Controller
 {
-    public function create(Shipment $shipment)
+    public function create(Shipment $shipment): View|Factory
     {
         // dd($shipment);
         return view('shipments.set', compact('shipment'));
     }
 
-    public function store(Shipment $shipment)
+    public function store(Shipment $shipment): View|Factory
     {
 
         $waypoints = collect(request()->waypoints);
@@ -22,7 +24,7 @@ class WaypointController extends Controller
         for ($i = 0; $i < $waypoints->count(); $i++) {
             if ($i == 0) {
                 // $current_address = $shipment->source_address;
-                $current_address = Address::where([
+                $current_address = Address::query()->where([
                     'street' => $shipment->source_address->street,
                     'house_number' => $shipment->source_address->house_number,
                     'postal_code' => $shipment->source_address->postal_code,
@@ -49,7 +51,7 @@ class WaypointController extends Controller
                 }
 
                 // $next_address = $waypoints[$i];
-                $next_address = Address::where([
+                $next_address = Address::query()->where([
                     'street' => $waypoints[$i]['street'],
                     'house_number' => $waypoints[$i]['house_number'],
                     'postal_code' => $waypoints[$i]['postal_code'],
@@ -74,7 +76,7 @@ class WaypointController extends Controller
                 $status = 'Out For Delivery'; // presents this is the current waypoint.
             } else {
                 // $current_address = $waypoints[$i - 1];
-                $current_address = Address::where([
+                $current_address = Address::query()->where([
                     'street' => $waypoints[$i - 1]['street'],
                     'house_number' => $waypoints[$i - 1]['house_number'],
                     'postal_code' => $waypoints[$i - 1]['postal_code'],
@@ -96,7 +98,7 @@ class WaypointController extends Controller
 
                 // $next_address = $waypoints[$i];
 
-                $next_address = Address::where([
+                $next_address = Address::query()->where([
                     'street' => $waypoints[$i]['street'],
                     'house_number' => $waypoints[$i]['house_number'],
                     'postal_code' => $waypoints[$i]['postal_code'],
@@ -131,7 +133,7 @@ class WaypointController extends Controller
         }
 
         // Last Waypoint
-        $current_address = Address::where([
+        $current_address = Address::query()->where([
             'street' => $waypoints[$waypoints->count() - 1]['street'],
             'house_number' => $waypoints[$waypoints->count() - 1]['house_number'],
             'postal_code' => $waypoints[$waypoints->count() - 1]['postal_code'],
@@ -151,7 +153,7 @@ class WaypointController extends Controller
             $current_address->save();
         }
 
-        $next_address = Address::where([
+        $next_address = Address::query()->where([
             'street' => $shipment->destination_address->street,
             'house_number' => $shipment->destination_address->house_number,
             'postal_code' => $shipment->destination_address->postal_code,
@@ -186,7 +188,7 @@ class WaypointController extends Controller
         dd('Check Waypoints Table');
     }
 
-    public function update(Shipment $shipment)
+    public function update(Shipment $shipment): void
     {
 
         if ($shipment->status == 'Delivered') {

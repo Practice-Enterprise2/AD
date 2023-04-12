@@ -17,24 +17,31 @@
           <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             {{ __('Home') }}
           </x-nav-link>
-          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Dashboard') }}
-          </x-nav-link>
+          @auth
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+              {{ __('Dashboard') }}
+            </x-nav-link>
+          @endauth
           @can('view_general_employee_content')
             <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
               {{ __('Employee') }}
             </x-nav-link>
           @endcan
-          @role('admin')
-            <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
-              {{ __('Admin') }}
+          @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
+            'view_detailed_server_info', 'edit_roles'])
+            <x-nav-link :href="route('control-panel')" :active="str_starts_with(
+                request()
+                    ->route()
+                    ->getName(),
+                'control-panel',
+            )">
+              {{ __('Control Panel') }}
             </x-nav-link>
           @endrole
         </div>
       </div>
 
-      @guest
-      @else
+      @auth
         {{-- Validations needed for later. --}}
         {{-- <x-nav-link :href="route('shipments.create')">
         {{ __('Request Shipment') }}
@@ -48,7 +55,7 @@
         <x-dropdown>
           <x-slot name="trigger">
             <button
-              class="mt-4 inline-flex items-center rounded-md border border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+              class="mt-4 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
               Shipments
               <div class="ml-1">
                 <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
@@ -73,8 +80,8 @@
             </x-dropdown-link>
           </x-slot>
         </x-dropdown>
+      @endauth
 
-      @endguest
       <!-- Settings Dropdown -->
       <div class="hidden sm:ml-6 sm:flex sm:items-center">
 
@@ -196,5 +203,5 @@
     </div>
   </div>
 </nav>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

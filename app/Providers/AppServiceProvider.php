@@ -40,29 +40,43 @@ class AppServiceProvider extends ServiceProvider
     public static function bootstrap_database(): void
     {
         // Create the required permissions.
-        static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
-        static::bootstrap_permission('view_all_users', 'View all the users.');
-        static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
-        static::bootstrap_permission('edit_own_user_info', 'Edit the currently logged in user\'s info.');
         static::bootstrap_permission('add_employee', 'Promote a regular user to employee.');
+        static::bootstrap_permission('create_role', 'Create authorization roles.');
         static::bootstrap_permission('delete_own_user_account', 'Delete the currently logged in user\'s account.');
+        static::bootstrap_permission('edit_own_user_info', 'Edit the currently logged in user\'s info.');
+        static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');
+        static::bootstrap_permission('edit_permissions', 'Edit all the authorization permissions.');
+        static::bootstrap_permission('edit_roles', 'Edit all the authorization roles.');
+        static::bootstrap_permission('view_all_roles', 'View all the roles.');
+        static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
+        static::bootstrap_permission('view_all_users', 'View all the users.');
+        static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
+        static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.');
+        static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
+        static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
 
         // Create the minimum required roles (user groups).
-        $role_admin = static::bootstrap_role('admin');
+        $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
         $role_employee = static::bootstrap_role('employee');
         $role_employee_hr = static::bootstrap_role('employee_hr');
+        $role_employee_it = static::bootstrap_role('employee_it');
         $role_user = static::bootstrap_role('user');
 
         $role_employee->givePermissionTo('view_general_employee_content');
 
         $role_employee_hr->givePermissionTo('view_all_users');
+        $role_employee_hr->givePermissionTo('view_all_roles');
+        $role_employee_hr->givePermissionTo('edit_any_user_info');
+
+        $role_employee_it->givePermissionTo('view_basic_server_info');
+        $role_employee_it->givePermissionTo('view_all_permissions');
 
         $role_user->givePermissionTo('edit_own_user_info');
         $role_user->givePermissionTo('delete_own_user_account');
 
         // Create the minimum required users.
-        if (! User::where('email', 'admin@local.test')->first()) {
-            $admin_user = User::create([
+        if (! User::query()->where('email', 'admin@local.test')->first()) {
+            $admin_user = User::query()->create([
                 'name' => 'Administrator',
                 'email' => 'admin@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -70,8 +84,26 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'employee@local.test')->first()) {
-            $employee_user = User::create([
+        if (! User::query()->where('email', 'employee-it@local.test')->first()) {
+            $employee_user = User::query()->create([
+                'name' => 'Employee IT',
+                'email' => 'employee-it@local.test',
+                'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
+                'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
+            ]);
+        }
+
+        if (! User::query()->where('email', 'employee-hr@local.test')->first()) {
+            $employee_user = User::query()->create([
+                'name' => 'Employee HR',
+                'email' => 'employee-hr@local.test',
+                'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
+                'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
+            ]);
+        }
+
+        if (! User::query()->where('email', 'employee@local.test')->first()) {
+            $employee_user = User::query()->create([
                 'name' => 'Employee',
                 'email' => 'employee@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -79,8 +111,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        if (! User::where('email', 'user@local.test')->first()) {
-            $regular_user = User::create([
+        if (! User::query()->where('email', 'user@local.test')->first()) {
+            $regular_user = User::query()->create([
                 'name' => 'User',
                 'email' => 'user@local.test',
                 'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
@@ -88,15 +120,24 @@ class AppServiceProvider extends ServiceProvider
             ]);
         }
 
-        $admin_user = User::where('email', 'admin@local.test')->first();
-        $employee_user = User::where('email', 'employee@local.test')->first();
-        $regular_user = User::where('email', 'user@local.test')->first();
+        $admin_user = User::query()->where('email', 'admin@local.test')->first();
+        $employee_user = User::query()->where('email', 'employee@local.test')->first();
+        $employee_hr_user = User::query()->where('email', 'employee-hr@local.test')->first();
+        $employee_it_user = User::query()->where('email', 'employee-it@local.test')->first();
+        $regular_user = User::query()->where('email', 'user@local.test')->first();
 
         // Assign each required user their required roles.
         $admin_user->assignRole('admin'); // Admin user automatically gets all permissions!
 
+        $employee_hr_user->assignRole('employee_hr');
+        $employee_hr_user->assignRole('employee');
+        $employee_hr_user->assignRole('user');
+
+        $employee_it_user->assignRole('employee_it');
+        $employee_it_user->assignRole('employee');
+        $employee_it_user->assignRole('user');
+
         $employee_user->assignRole('employee');
-        $employee_user->assignRole('employee_hr');
         $employee_user->assignRole('user');
 
         $regular_user->assignRole('user');
@@ -105,7 +146,7 @@ class AppServiceProvider extends ServiceProvider
     // If a permission with the given name doesn't exist, create it.
     public static function bootstrap_role(string $name, null|string $description = null): Role
     {
-        if (! Role::where('name', $name)->first()) {
+        if (! Role::query()->where('name', $name)->first()) {
             return Role::create([
                 'name' => $name,
                 'description' => $description,
@@ -118,7 +159,7 @@ class AppServiceProvider extends ServiceProvider
     // If a permission with the given name doesn't exist, create it.
     public static function bootstrap_permission(string $name, null|string $description = null): Permission
     {
-        if (! Permission::where('name', $name)->first()) {
+        if (! Permission::query()->where('name', $name)->first()) {
             return Permission::create([
                 'name' => $name,
                 'description' => $description,

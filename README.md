@@ -66,6 +66,8 @@ the correct style.
 
 -   admin@local.test
 -   employee@local.test
+-   employee-hr@local.test
+-   employee-it@local.test
 -   user@local.test
 
 password: `letmein`

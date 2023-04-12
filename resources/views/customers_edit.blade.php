@@ -92,7 +92,7 @@
             <td><label for="street">Street</label></td>
             <td>
               <input type="text" name="street" id="street"
-                value="{{ $customer->address->street }}" required>
+                value="{{ $customer->address->street ?? '' }}" required>
               @error('street')
                 <div class="text-danger">{{ $message }}</div>
               @enderror
@@ -102,8 +102,8 @@
             <td><label for="house_number">House Number</label></td>
             <td>
               <input type="text" name="house_number" id="house_number"
-                value="{{ $customer->address->house_number }}" pattern="[0-9]+"
-                required>
+                value="{{ $customer->address->house_number ?? '' }}"
+                pattern="[0-9]+" required>
               @error('house_number')
                 <div class="text-danger">{{ $message }}</div>
               @enderror
@@ -113,7 +113,7 @@
             <td><label for="postal_code">Postal Code</label></td>
             <td>
               <input type="text" name="postal_code" id="postal_code"
-                value="{{ $customer->address->postal_code }}" required>
+                value="{{ $customer->address->postal_code ?? '' }}" required>
               @error('postal_code')
                 <div class="text-danger">{{ $message }}</div>
               @enderror
@@ -123,7 +123,7 @@
             <td><label for="city">City</label></td>
             <td>
               <input type="text" name="city" id="city"
-                value="{{ $customer->address->city }}" required>
+                value="{{ $customer->address->city ?? '' }}" required>
               @error('city')
                 <div class="text-danger">{{ $message }}</div>
               @enderror
@@ -133,7 +133,7 @@
             <td><label for="region">Region</label></td>
             <td>
               <input type="text" name="region" id="region"
-                value="{{ $customer->address->region }}" required>
+                value="{{ $customer->address->region ?? '' }}" required>
               @error('region')
                 <div class="text-danger">{{ $message }}</div>
               @enderror
@@ -143,7 +143,7 @@
             <td><label for="country">Country</label></td>
             <td>
               <input type="text" name="country" id="country"
-                value="{{ $customer->address->country }}" required>
+                value="{{ $customer->address->country ?? '' }}" required>
               @error('region')
                 <div class="text-danger">{{ $message }}</div>
               @enderror

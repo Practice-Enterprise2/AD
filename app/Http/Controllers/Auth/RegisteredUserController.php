@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,8 +38,8 @@ class RegisteredUserController extends Controller
 
         // HACK: This solves the fact that the `unique` validation rule doesn't
         // take soft deletion into account.
-        if (! User::where('email', $request->email)->get()->first()) {
-            $user = User::create([
+        if (! User::query()->where('email', $request->email)->first()) {
+            $user = User::query()->create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),

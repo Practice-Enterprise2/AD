@@ -13,5 +13,5 @@
     </div>
   </div>
 </x-app-layout>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}

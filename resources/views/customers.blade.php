@@ -46,9 +46,11 @@
           <th>Lastname</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>Address</th>
-          <th>Region</th>
-          <th>Country</th>
+          @isset($user->address)
+            <th>Address</th>
+            <th>Region</th>
+            <th>Country</th>
+          @endisset
           <th>Vat-number</th>
           <th>Action</th>
         </tr>
@@ -56,17 +58,22 @@
           <th><input type="text" id="searchInputName" onkeyup="filterTable()"
               placeholder="Search by name..."></th>
           <th><input type="text" id="searchInputLastName"
-              onkeyup="filterTable()" placeholder="Search by last name..."></th>
+              onkeyup="filterTable()" placeholder="Search by last name...">
+          </th>
           <th><input type="text" id="searchInputEmail"
               onkeyup="filterTable()" placeholder="Search by email..."></th>
           <th><input type="text" id="searchInputPhone"
               onkeyup="filterTable()" placeholder="Search by phone..."></th>
-          <th><input type="text" id="searchInputAddress"
-              onkeyup="filterTable()" placeholder="Search by address..."></th>
-          <th><input type="text" id="searchInputRegion"
-              onkeyup="filterTable()" placeholder="Search by region..."></th>
-          <th><input type="text" id="searchInputCountry"
-              onkeyup="filterTable()" placeholder="Search by country..."></th>
+          @isset($user->address)
+            <th><input type="text" id="searchInputAddress"
+                onkeyup="filterTable()" placeholder="Search by address...">
+            </th>
+            <th><input type="text" id="searchInputRegion"
+                onkeyup="filterTable()" placeholder="Search by region..."></th>
+            <th><input type="text" id="searchInputCountry"
+                onkeyup="filterTable()" placeholder="Search by country...">
+            </th>
+          @endisset
           <th><input type="text" id="searchInputVatNumber"
               onkeyup="filterTable()" placeholder="Search by VAT number...">
           </th>
@@ -80,11 +87,13 @@
             <td>{{ $user->last_name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone }}</td>
-            <td>{{ $user->address->street }}
-              {{ $user->address->house_number }},{{ $user->address->postal_code }}
-              {{ $user->address->city }}</td>
-            <td>{{ $user->address->region }}</td>
-            <td>{{ $user->address->country }}</td>
+            @isset($user->address)
+              <td>{{ $user->address->street }}
+                {{ $user->address->house_number }},{{ $user->address->postal_code }}
+                {{ $user->address->city }}</td>
+              <td>{{ $user->address->region }}</td>
+              <td>{{ $user->address->country }}</td>
+            @endisset
             <td>
               @if ($user->businessCustomer)
                 {{ $user->businessCustomer->vat_number }}
@@ -161,3 +170,5 @@
   </script>
 
 </x-app-layout>
+{{-- vim: ft=html
+--}}

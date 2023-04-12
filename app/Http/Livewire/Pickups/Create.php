@@ -46,13 +46,13 @@ class Create extends Component
 
     public function mount(int|null $shipment_id): void
     {
-        $this->shipments_eligible_for_pickup_creation = Shipment::whereHas('pickups', function ($query) {
+        $this->shipments_eligible_for_pickup_creation = Shipment::query()->whereHas('pickups', function ($query) {
             $query->where('status', '=', 'pending');
         }, '=', 0)->whereHas('pickups', function ($query) {
             $query->where('status', '=', 'completed');
         }, '=', 0)->where('user_id', '=', Auth::id())->get();
 
-        if ($shipment_id != null && Shipment::where('user_id', '=', Auth::id())->find($shipment_id) !== null && ! $this->shipments_eligible_for_pickup_creation->contains('id', '=', $shipment_id)) {
+        if ($shipment_id != null && Shipment::query()->where('user_id', '=', Auth::id())->find($shipment_id) !== null && ! $this->shipments_eligible_for_pickup_creation->contains('id', '=', $shipment_id)) {
             $this->pickup_shipment_id = $shipment_id;
         }
     }
@@ -64,9 +64,9 @@ class Create extends Component
     {
         $this->validate();
 
-        $pickup_shipment = Shipment::find($this->pickup_shipment_id);
+        $pickup_shipment = Shipment::query()->find($this->pickup_shipment_id);
 
-        $pickup_address = Address::firstOrCreate([
+        $pickup_address = Address::query()->firstOrCreate([
             'street' => $this->street,
             'house_number' => $this->house_number,
             'postal_code' => $this->postal_code,

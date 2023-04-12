@@ -8,5 +8,5 @@
     </div>
   </div>
 </div>
-<!-- vim: ft=html
--->
+{{-- vim: ft=html
+--}}
