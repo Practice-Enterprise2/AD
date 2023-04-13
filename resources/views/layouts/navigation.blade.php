@@ -21,9 +21,6 @@
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
               {{ __('Dashboard') }}
             </x-nav-link>
-            <x-nav-link href="/shipments">
-              {{ __('Shipments') }}
-          </x-nav-link>
           @endauth
           @can('view_general_employee_content')
             <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
@@ -81,6 +78,14 @@
             <x-dropdown-link :href="route('shipments.index')">
               {{ __('Show Confirmed Shipments') }}
             </x-dropdown-link>
+            <x-dropdown-link href="/shipments">
+              {{ __('Show Shipments') }}
+            </x-dropdown-link>
+            @if(Auth::user()->roles()->first()->name == 'admin' || Auth::user()->roles()->first()->name == 'employee')
+            <x-dropdown-link href="">
+              {{ __('Shipments overview page') }}
+            </x-dropdown-link>
+            @endif
           </x-slot>
         </x-dropdown>
       @endauth

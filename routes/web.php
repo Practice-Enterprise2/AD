@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments/show', [ShipmentController::class, 'index'])->name('shipments.index');
 
+    Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
+    Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
@@ -126,8 +128,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Email verification
-Route::get('/email/verify', function () {
+/*Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})>middleware('auth')->name('verification.notice');
+})>middleware('auth')->name('verification.notice');*/
 
 require __DIR__.'/auth.php';
