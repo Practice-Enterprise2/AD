@@ -18,63 +18,231 @@
             <p class="text-sm text-black">
               <span
                 class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment with id: </span> <b
-                class="text-black">{{ $shipment->id }}</b>
+                Shipment with id: </span>
+                <span class="text-black">{{ $shipment->id }}</span>
             </p>
             <p class="text-sm text-black">
               <span
                 class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment status: </span> <b
-                class="text-black">{{ $shipment->status }}</b>
+                Shipment status: </span>
+                <b class="text-black">{{ $shipment->status }}</b>
+            </p>
+            <p class="text-sm text-black">
+              <span
+                class="mb-2 inline-block text-lg font-medium text-black underline">
+                Shipment Source Address:</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Street:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->street }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    House Number:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->house_number }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Postal Code:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->postal_code }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    City:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->city }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Region:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->region }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-4 inline-block text-black">
+                    Country:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->source_address->country }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <span class="mb-2 inline-block text-lg font-medium text-black underline">
+                    Shipment Destination Address:
+                </span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Street:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->street }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    House Number:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->house_number }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Postal Code:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->postal_code }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    City:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->city }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-2 inline-block text-black">
+                    Region:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->region }}</span>
+            </p>
+            <p class="text-sm text-black">
+                <b class="mb-4 inline-block text-black">
+                    Country:
+                </b>
+                <span class="text-black font-medium">{{ $shipment->destination_address->country }}</span>
             </p>
             <p class="text-sm text-black">
               <span
                 class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment Source Address:</span> <b
-                class="text-black">{{ $shipment->source_address }}</b>
+                Receiver Name:</span>
+                <span class="text-black">{{ $shipment->receiver_name }}</span>
             </p>
             <p class="text-sm text-black">
               <span
                 class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment Destination Address:</span> <b
-                class="text-black">{{ $shipment->destination_address }}</b>
+                Receiver Email:</span>
+                <span class="text-black">{{ $shipment->receiver_email }}</span>
             </p>
             <p class="text-sm text-black">
               <span
                 class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment Receiver Name:</span> <b
-                class="text-black">{{ $shipment->receiver_name }}</b>
+                Handling Type:</span>
+                <span class="text-black">{{ $shipment->type }}</span>
             </p>
-            <p class="text-sm text-black">
-              <span
-                class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment Receiver Email:</span> <b
-                class="text-black">{{ $shipment->receiver_email }}</b>
-            </p>
-            <p class="text-sm text-black">
-              <span
-                class="mb-4 inline-block text-lg font-medium text-black underline">
-                Shipment Handling Type:</span> <b
-                class="text-black">{{ $shipment->type }}</b>
-            </p>
-
             <div class="space-y-2 px-2">
               <hr class="my-4 border border-gray-500">
               @foreach ($shipment->waypoints as $waypoint)
                 <div>
-                  <p class="text-black">Waypoint State: <b
-                      class="text-black">{{ $waypoint->status }}</b></p>
-                  <p class="text-black">Waypoint Current Address: <b
-                      class="text-black">{{ $waypoint->current_address }}</b>
-                  </p>
-                  <p class="text-black">Waypoint Next Address: <b
-                      class="text-black">{{ $waypoint->next_address }}</b></p>
+                <p class="text-sm text-black">
+                  <span class="mb-4 inline-block text-lg font-medium text-black underline">
+                    Waypoint with id:
+                  </span>
+                  <span class="text-black">{{ $waypoint->id }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <span class="mb-4 inline-block text-lg font-medium text-black underline">
+                    Waypoint status:
+                  </span>
+                  <b class="text-black">{{ $waypoint->status }}</b>
+                </p>
+                <p class="text-sm text-black">
+                  <span class="mb-2 inline-block text-lg font-medium text-black underline">
+                    Current Address:
+                  </span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Street:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->street }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    House Number:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->house_number }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Postal Code:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->postal_code }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    City:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->city }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Region:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->region }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-4 inline-block text-black">
+                    Country:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->current_address->country }}</span>
+                </p>
+
+                <p class="text-sm text-black">
+                  <span class="mb-2 inline-block text-lg font-medium text-black underline">
+                    Next Address:
+                  </span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Street:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->street }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    House Number:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->house_number }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Postal Code:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->postal_code }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    City:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->city }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-2 inline-block text-black">
+                    Region:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->region }}</span>
+                </p>
+                <p class="text-sm text-black">
+                  <b class="mb-4 inline-block text-black">
+                    Country:
+                  </b>
+                  <span class="text-black font-medium">{{ $waypoint->next_address->country }}</span>
+                </p>
                   <hr class="my-4 border border-gray-500">
                 </div>
               @endforeach
             </div>
             <div class="flex justify-end border p-2">
               {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
+            </div>
+            <div class="flex justify-end">
+              <form action="{{ route('shipments.edit', $shipment->id) }}" method="GET">
+                @csrf
+                <button style = "margin-right:20px; margin-top:10px; border-radius:10px; width:100% ;color:white; text-decoration: none; background-color: blue; cursor: pointer;" type="submit">Edit</button>
+              </form>
+              <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button style = "margin-right: 20px; margin-top:10px; border-radius:10px; width:100% ;color: white; text-decoration: none; background-color: red; cursor: pointer;" type="submit">Delete</button>
+              </form>
             </div>
           </div>
 

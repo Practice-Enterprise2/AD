@@ -118,6 +118,10 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments/show', [ShipmentController::class, 'index'])->name('shipments.index');
+    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->middleware(['auth', 'verified'])->name('shipments.edit');
+    Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->middleware(['auth', 'verified'])->name('shipments.update');
+    Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->middleware(['auth', 'verified'])->name('shipments.destroy');
+
 
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
