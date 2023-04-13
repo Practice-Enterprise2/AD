@@ -89,7 +89,7 @@ class shipmentController extends Controller
     {
         //
         $shipment = Shipment::where('id', $id)->first();
-        if(Shipment::where('id', $id)->exists() && $shipment->customer_id == Auth::user()->id)
+        if(Shipment::where('id', $id)->exists() && $shipment->customer_id == Auth::user()->id || Auth::user()->role == 1)
         {
         return view('shipment.show', [
             'shipment' => $shipment
@@ -109,9 +109,9 @@ class shipmentController extends Controller
     {
         //
         $shipment = Shipment::where('id', $id)->first();
-        if(Shipment::where('id', $id)->exists() && $shipment->customer_id ==  Auth::user()->id)
+        if(Shipment::where('id', $id)->exists() && $shipment->customer_id == Auth::user()->id && $shipment->status == 0)
         {
-        return view('shipment.show', [
+        return view('shipment.edit', [
             'shipment' => $shipment
         ]);
         }
@@ -127,6 +127,46 @@ class shipmentController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $shipment = Shipment::where('id', $id)->first();
+        if(Shipment::where('id', $id)->exists() && $shipment->customer_id == Auth::user()->id && $shipment->status == 0)
+        {
+        $request->validate([
+            'from_name' => 'required',
+            'from_phone' => 'required|min:8|max:11|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'from_address' => 'required',
+            'from_postalcode' => 'required|numeric',
+            'from_city'=>'required',
+            'from_country' => 'required',
+            'to_name' => 'required',
+            'to_phone' => 'required|min:8|max:11|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'to_address' =>'required',
+            'to_postalcode' => 'required|numeric',
+            'to_city'=>'required',
+            'to_country' => 'required',
+            'weight' => 'required|numeric',
+            'package_num' => 'required|numeric',
+        ]);
+
+        Shipment::where('id', $id)
+                        ->update([
+                            'from_name' => $request->from_name,
+                            'from_phone' => $request->from_phone,
+                            'from_address' => $request->from_address,
+                            'from_postalcode' => $request->from_postalcode,
+                            'from_city'=>$request->from_city,
+                            'from_country' => $request->from_country,
+                            'to_name' => $request->to_name,
+                            'to_phone' => $request->to_phone,
+                            'to_address' => $request->to_address,
+                            'to_postalcode' => $request->to_postalcode,
+                            'to_city'=>$request->to_city,
+                            'to_country' => $request->to_country,
+                            'weight' => $request->weight,
+                            'package_num' => $request->package_num,
+            'price' => 100
+                        ]);
+                    }
+        return Redirect(route('shipment.index'));
     }
 
     /**

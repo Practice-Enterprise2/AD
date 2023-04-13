@@ -67,7 +67,8 @@
                                                                                                     <div class="flex items-center gap-4">
                                                                                                         <button class="bg-red-500 rounded px-3 py-2 my-2">{{ __('Delete') }}</button>
                                                                                                     </div>
-                                                                                                </form>` :
+                                                                                                </form>
+                                                                                                <a href="{{route('shipment.edit', '')}}/${shipments[i].id}" class="text-blue-500 px-1 mx-4">Edit</a>` :
                                                                                                 (shipments[i].status === 1) ? `<a href="{{route('contact.create')}}" class="text-red-500 px-1 mx-4">Request cancel</a>` :
                                                                                                 `<form action="{{route('shipment.destroy', '')}}/${shipments[i].id}" method="POST"> 
                                                                                                     @csrf

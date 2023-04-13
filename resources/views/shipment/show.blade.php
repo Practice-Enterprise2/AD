@@ -45,6 +45,8 @@
         </div>
 
                     </form>
+            <a href="{{route('shipment.edit', $shipment->id)}}" class="text-blue-500 px-1 mx-4">Edit</a>
+
             
         @elseif($shipment->status == 1)
             <a href="{{route('contact.create')}}" class="text-red-500 px-1 mx-4">Request cancel</a>
