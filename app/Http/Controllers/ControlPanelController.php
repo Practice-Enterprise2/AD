@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
@@ -22,9 +23,19 @@ class ControlPanelController extends Controller
         return $this->view('users');
     }
 
+    public function users_edit(int $user): View|Factory
+    {
+        return $this->view('users.edit', ['user' => $user]);
+    }
+
     public function groups(): View|Factory
     {
         return $this->view('groups');
+    }
+
+    public function groups_edit(int $group): View|Factory
+    {
+        return $this->view('groups.edit', ['group' => $group]);
     }
 
     public function permissions(): View|Factory
@@ -47,10 +58,11 @@ class ControlPanelController extends Controller
      * panel, when given the name of the subcategory.
      *
      * @param  string  $name The name of the panel
+     * @param  Arrayable|array  $data
      * @return View|Factory The view corresponding to the panel name
      */
-    public function view(string $name): View|Factory
+    public function view(string $name, $data = []): View|Factory
     {
-        return view('control-panel.'.$name);
+        return view('control-panel.'.$name, $data);
     }
 }

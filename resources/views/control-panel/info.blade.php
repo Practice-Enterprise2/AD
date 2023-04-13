@@ -21,10 +21,12 @@
           <td>{{ __('Server Architecture') }}</td>
           <td>{{ php_uname('m') }}</td>
         </tr>
-        <tr>
-          <td>{{ __('Temporary Path') }}</td>
-          <td>{{ sys_get_temp_dir() }}</td>
-        </tr>
+        @can('view_detailed_server_info')
+          <tr>
+            <td>{{ __('Temporary Path') }}</td>
+            <td>{{ sys_get_temp_dir() }}</td>
+          </tr>
+        @endcan
       </table>
     </div>
     @can('view_detailed_server_info')

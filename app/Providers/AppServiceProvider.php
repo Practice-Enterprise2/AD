@@ -65,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee->givePermissionTo('view_general_employee_content');
 
         $role_employee_hr->givePermissionTo('view_all_users');
+        $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
 
