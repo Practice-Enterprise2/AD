@@ -1,12 +1,8 @@
 <x-app-layout>
-  <x-sidebar-layout>
-    <x-slot:sidebar>
-      <x-control-panel.sidebar />
-    </x-slot:sidebar>
-
+  <x-control-panel-layout>
     <h1 class="text-3xl font-extrabold">Log</h1>
     @livewire('log')
-  </x-sidebar-layout>
+  </x-control-panel-layout>
 </x-app-layout>
 {{-- vim: ft=html
 --}}

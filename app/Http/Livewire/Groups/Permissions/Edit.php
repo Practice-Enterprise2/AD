@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Groups\Permissions;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -25,13 +24,14 @@ class Edit extends Component
     public function add_permission(): void
     {
         $this->role->givePermissionTo($this->permission_to_add);
+        $this->emit('role_permission_changed');
         $this->mount();
     }
 
     public function remove_permission(string $permission_name): void
     {
-        Log::debug("here with $permission_name");
         $this->role->revokePermissionTo($permission_name);
+        $this->emit('role_permission_changed');
         $this->mount();
     }
 }
