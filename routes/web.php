@@ -102,8 +102,6 @@ Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('air
             Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
         });
     });
-});
-
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
     Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
@@ -130,6 +128,6 @@ Route::middleware('auth')->group(function () {
 // Email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
-})>middleware('auth')->name('verification.notice');*/
+})>middleware('auth')->name('verification.notice');
 
 require __DIR__.'/auth.php';
