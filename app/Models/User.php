@@ -16,6 +16,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
+    public const VALIDATION_RULE_NAME = 'required|min:2';
+
+    public const VALIDATION_RULE_LAST_NAME = 'required|min:2';
+
+    public const VALIDATION_RULE_EMAIL = 'required|email';
+
     protected $fillable = [
         'name',
         'last_name',

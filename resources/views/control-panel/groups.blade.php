@@ -19,6 +19,9 @@
           <tr>
             <td>{{ $role->name }}</td>
             <td>{{ $role->description }}</td>
+            <td class="text-right"><a
+                href="{{ route('control-panel.groups.edit', ['group' => $role->id]) }}">Edit</a>
+            </td>
           </tr>
         @endforeach
       </table>
