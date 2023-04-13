@@ -106,7 +106,7 @@
                   @endif
                 @else
                   <div>
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->name . ' ' . Auth::user()->last_name }}
                   </div>
                 @endguest
                 <div class="ml-1">
@@ -172,15 +172,14 @@
 
     <!-- Responsive Settings Options -->
     <div class="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
-      @guest
-      @else
+      @auth
         <div class="px-4">
           <div class="text-base font-medium text-gray-800 dark:text-gray-200">
             {{ Auth::user()->name }}</div>
           <div class="text-sm font-medium text-gray-500">
             {{ Auth::user()->email }}</div>
         </div>
-      @endguest
+      @endauth
       <div class="mt-3 space-y-1">
         <x-responsive-nav-link :href="route('profile.edit')">
           {{ __('Profile') }}

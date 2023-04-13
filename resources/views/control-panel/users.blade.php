@@ -1,17 +1,18 @@
 <x-app-layout>
   <x-sidebar-layout>
+    @vite(['resources/css/control_panel/main.css'])
+
     <x-slot:sidebar>
       <x-control-panel.sidebar />
     </x-slot:sidebar>
 
     <h1 class="text-3xl font-extrabold">{{ __('Users') }}</h1>
+
     @canany(['view_all_users', 'view_all_roles', 'edit_any_user_info'])
       <div class="mt-5">
-        @foreach (\App\Models\User::all() as $user)
-          {{ $user->name }}<br>
-        @endforeach
+        @livewire('users')
       </div>
-      <div class="my-5">
+      <div class="mt-5">
         <h2 class="text-xl font-bold">{{ __('User Management Pages') }}</h2>
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <ol>
@@ -28,6 +29,7 @@
         </div>
       </div>
     @endcanany
+
   </x-sidebar-layout>
 </x-app-layout>
 {{-- vim: ft=html

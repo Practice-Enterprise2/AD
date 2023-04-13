@@ -10,7 +10,12 @@
   @canany(['view_all_users'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
-        :href="route('control-panel.users')" :active="request()->routeIs('control-panel.users')">
+        :href="route('control-panel.users')" :active="str_starts_with(
+            request()
+                ->route()
+                ->getName(),
+            'control-panel.users',
+        )">
         {{ __('Users') }}
       </x-nav-link>
     </div>
@@ -18,7 +23,12 @@
   @canany(['view_all_roles'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
-        :href="route('control-panel.groups')" :active="request()->routeIs('control-panel.groups')">
+        :href="route('control-panel.groups')" :active="str_starts_with(
+            request()
+                ->route()
+                ->getName(),
+            'control-panel.groups',
+        )">
         {{ __('Groups') }}
       </x-nav-link>
     </div>
@@ -36,7 +46,7 @@
       </x-nav-link>
     </div>
   @endcanany
-  @canany(['view_basic_server_info'])
+  @canany(['view_basic_server_info', 'view_detailed_server_info'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
         :href="route('control-panel.info')" :active="request()->routeIs('control-panel.info')">
