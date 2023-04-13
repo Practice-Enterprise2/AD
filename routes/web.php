@@ -54,6 +54,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::view('employeeComplaints', 'employeeComplaints');
-Route::post('sendComplaint', [employeeComplaintsController::class, 'sendComplaint'])->name('sendComplaint.employee');
+Route::post('sendEmployeeComplaint', [employeeComplaintsController::class, 'sendComplaint'])->name('sendEmployeeComplaint.employee');
 
 require __DIR__ . '/auth.php';

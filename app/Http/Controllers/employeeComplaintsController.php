@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Mail;
 
 class employeeComplaintsController extends Controller
 {
+
     function sendComplaint(Request $req)
-    {   
+    {
         $firstname = $req->first_name;
         $lastname = $req->last_name;
         $email = $req->email;
@@ -16,6 +17,16 @@ class employeeComplaintsController extends Controller
         $location = $req->location;
         $shortDis = $req->shortDis;
         $discription = $req->discription;
+
+        $this->validate($req,[
+            'first_name' => ['nullable', 'alpha'],
+            'last_name' => ['nullable', 'alpha'],
+            'email' => ['nullable', 'email'],
+            'jobtitle' => ['nullable', 'alpha'],
+            'location' => ['nullable', 'string'],
+            'shortDis' => ['required', 'string'],
+            'discription' => ['required', 'string'],
+        ]);
 
         $data = [
             'firstname' => $firstname,
@@ -30,15 +41,8 @@ class employeeComplaintsController extends Controller
         Mail::send(['mail'=>'mail.test_mail'], $data, function($message) use ($firstname, $lastname, $email, $jobtitle, $location, $shortDis, $discription) {
             $message->to('hr-complaints@BlueSky.com')
                     ->subject('complaint - '.$shortDis);
-            if ($firstname != null || $lastname != null || $email != null || $jobtitle != null)
-            {
-                $message->text("Discription of the incident:\n".$discription."\n\nlocation of the incident:\n".$location."\n\n\nfirstname: ".$firstname."\nlastname: ".$lastname."\nemail: ".$email."\njobtitle: ".$jobtitle);
-            }
-            else
-            {
-                $message->text("Location of the incident:\n".$location."\n\nDiscription of the incident:\n".$discription);
-            }
-            $message->from('complaints@BlueSky.com');
+            $message->text("Discription of the incident:\n".$discription."\n\nlocation of the incident:\n".$location."\n\n\nfirstname: ".$firstname."\nlastname: ".$lastname."\nemail: ".$email."\njobtitle: ".$jobtitle);
+            $message->from('complaints@BlueSky.com', 'complaints');
         });
 
         return redirect()->back();
