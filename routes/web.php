@@ -124,7 +124,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->middleware(['auth', 'verified'])->name('shipments.update');
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->middleware(['auth', 'verified'])->name('shipments.destroy');
 
-
+    //Notification
+    Route::get('/markAsRead', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+    });
+    
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');

@@ -82,6 +82,55 @@
         </x-dropdown>
       @endauth
 
+      @auth
+      <x-dropdown>
+        <x-slot name="trigger">
+          <button
+            class="mt-4 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Notifications <span class="ml-1">{{ auth()->user()->unreadNotifications->count() }}</span>
+            <div class="ml-1">
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+
+            </div>
+          </button>
+        </x-slot>
+
+        <x-slot name="content">
+          @foreach (auth()->user()->unreadNotifications as $notification)
+            <x-dropdown-link :href="route('shipments.index')" onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
+              Shipment {{ $notification->data['shipment']['id'] }} has been updated.
+            </x-dropdown-link>
+          @endforeach
+          @if (auth()->user()->unreadNotifications->count() == 0)
+            <a href="#">
+              <x-dropdown-link>
+                No new notifications.
+              </x-dropdown-link>
+            </a>
+          @endif
+        </x-slot>
+      </x-dropdown>
+      @endauth
+
+      <script type="text/javascript">
+        function markNotificationsAsRead(notifications) {
+          if(notifications !== '0') {
+            $.ajax({
+            url: "{{ url('markAsRead') }}",
+            type: "GET",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            });    
+          }         
+        }
+
+      </script>
+
       <!-- Settings Dropdown -->
       <div class="hidden sm:ml-6 sm:flex sm:items-center">
 

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Shipment;
+use App\Models\User;
+use App\Notifications\ShipmentUpdated;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
@@ -123,17 +126,45 @@ class ShipmentController extends Controller
     
     public function update(Request $request, Shipment $shipment)
     {
-        $request->validate([
-            'source_address_id' => 'required',
-            'destination_address_id' => 'required',
-            'shipment_date' => 'required',
-            'delivery_date' => 'required',
-            'status' => 'required',
-            'expense' => 'required',
-            'weight' => 'required',
-            'type' => 'required',
+        $source_address = Address::query()->where([
+            'id' => $shipment->source_address_id,
+        ])->first();
+
+        $source_address->update([
+            'country' => request()->source_country,
+            'region' => request()->source_region,
+            'postal_code' => request()->source_postalcode,
+            'city' => request()->source_city,
+            'street' => request()->source_street,
+            'house_number' => request()->source_housenumber,
         ]);
-        $shipment->update($request->all());
+        
+        $destination_address = Address::query()->where([
+            'id' => $shipment->destination_address_id,
+        ])->first();
+
+        $destination_address->update([
+            'country' => request()->destination_country,
+            'region' => request()->destination_region,
+            'postal_code' => request()->destination_postalcode,
+            'city' => request()->destination_city,
+            'street' => request()->destination_street,
+            'house_number' => request()->destination_housenumber,
+        ]);
+
+        $shipment->update([
+            'receiver_name' => request()->receiver_name,
+            'receiver_email' => request()->receiver_email,
+            'status' => request()->status,
+            'type' => request()->handling_type[0],
+        ]);
+
+        if($shipment->wasChanged())
+        {
+            $shipmentChanges = $shipment->getChanges();
+            $source_user = User::query()->where('id', $shipment->user_id)->first();
+            $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        }
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment updated successfully');
