@@ -1,9 +1,5 @@
 <x-app-layout>
-  <x-sidebar-layout>
-    <x-slot:sidebar>
-      <x-control-panel.sidebar />
-    </x-slot:sidebar>
-
+  <x-control-panel-layout>
     <h1 class="text-3xl font-extrabold">{{ __('Groups') }}</h1>
     <div class="my-5">
       <table class="w-full">
@@ -28,12 +24,12 @@
 
       <div class="mt-10">
         @can('create_role')
-          <a class="mt-" href="{{ route('control-panel.groups.create') }}">New
+          <a class="mt-5" href="{{ route('control-panel.groups.create') }}">New
             Group</a>
         @endcan
       </div>
     </div>
-  </x-sidebar-layout>
+  </x-control-panel-layout>
 </x-app-layout>
 {{-- vim: ft=html
 --}}

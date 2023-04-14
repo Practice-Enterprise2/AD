@@ -32,5 +32,6 @@ class Edit extends Component
         $this->validate();
 
         $this->user->save();
+        $this->emit('username_changed');
     }
 }

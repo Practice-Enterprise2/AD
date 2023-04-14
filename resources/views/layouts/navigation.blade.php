@@ -106,7 +106,7 @@
                   @endif
                 @else
                   <div>
-                    {{ Auth::user()->name . ' ' . Auth::user()->last_name }}
+                    @livewire('username')
                   </div>
                 @endguest
                 <div class="ml-1">
