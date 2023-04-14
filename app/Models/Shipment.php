@@ -14,15 +14,17 @@ class Shipment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
         'shipment_date',
         'delivery_date',
-        'status',
         'expense',
         'weight',
         'type',
+        'created_at',
+        'updated_at',
+        'deleted_at',
         'receiver_name',
         'receiver_email',
+        'status',
     ];
 
     public function pickups(): HasMany
@@ -48,6 +50,11 @@ class Shipment extends Model
     public function destination_address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'destination_address_id');
+    }
+
+    public function user_id(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function waypoints(): HasOne

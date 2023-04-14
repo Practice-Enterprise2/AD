@@ -7,6 +7,7 @@ use App\Models\Shipment;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use DateTime;
 
 class ShipmentController extends Controller
 {
@@ -22,8 +23,21 @@ class ShipmentController extends Controller
 
     //create
     public function create(): View|Factory
-    {
-        return view('shipments.create');
+    {   
+        // $shippingDateStart = new DateTime();
+        // $shippingDateEnd = (new DateTime())->modify('+6 days');
+        // $shippingDates = [];
+        // for($i = $shippingDateStart; $i <= $shippingDateEnd; $i->modify('+1 day')){
+        //     $shippingDates[] = $i->format('Y-m-d');
+        // }
+        // Generate list of dates for the next 7 days
+        $deliveryDateStart = (new DateTime())->modify('+2 days');
+        $deliveryDateEnd = (new DateTime())->modify('+8 days');
+        $deliveryDates = [];
+        for($i = $deliveryDateStart; $i <= $deliveryDateEnd; $i->modify('+1 day')){
+            $deliveryDates[] = $i->format('Y-m-d');
+        }
+        return view('shipments.create', compact('deliveryDates'));
     }
 
     //store
@@ -78,12 +92,19 @@ class ShipmentController extends Controller
         $shipment->destination_address_id = $destination_address->id;
         $shipment->type = request()->handling_type[0];
 
-        // (!) ATTENTION OF SHIPMENT GROUP. Attributes below need to be added to the form later on.
-        $shipment->status = 'Awaiting Confirmation';
-        $shipment->shipment_date = date('Y-m-d');
-        $shipment->delivery_date = date('Y-m-d');
+        // Convert string to time and send selected dates to db
+        $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));;
+        $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
+
+        // Calculate shipping cost 
         $shipment->expense = 0;
-        $shipment->weight = 0;
+        $shipment->weight = request()->shipment_weight;
+        $shipment->status = 'Awaiting Confirmation';
+
+        // Shipment creation info - Joppe
+        $shipment->created_at = date('Y-m-d H:i:s');
+        $shipment->updated_at = date('Y-m-d H:i:s');
+        $shipment->deleted_at = date('Y-m-d H:i:s');
 
         $shipment->push();
 
