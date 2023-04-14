@@ -48,6 +48,7 @@
                     @endforeach
                     @else
                         <!-- Users can only see their own shipment -->
+                        <!-- -->
                         @foreach($shipments as $shipment)
                             @if($shipment->user_id == Auth::user()->id)
                             <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}">
