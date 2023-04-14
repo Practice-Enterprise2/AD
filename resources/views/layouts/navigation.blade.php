@@ -1,4 +1,3 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
 <nav x-data="{ open: false }"
   class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
   <!-- Primary Navigation Menu -->
@@ -17,9 +16,6 @@
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
           <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             {{ __('Home') }}
-            <x-nav-link :href="route('createShipment')" :active="request()->routeIs('createShipment')">
-              {{ __('Shipment') }}
-          </x-nav-link>
           </x-nav-link>
           @auth
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
