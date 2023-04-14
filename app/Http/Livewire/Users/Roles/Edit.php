@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Users\Roles;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -25,13 +24,14 @@ class Edit extends Component
     public function add_role(): void
     {
         $this->user->assignRole($this->role_to_add);
+        $this->emit('user_role_changed');
         $this->mount();
     }
 
     public function remove_role(string $role_name): void
     {
-        Log::debug("here with $role_name");
         $this->user->removeRole($role_name);
+        $this->emit('user_role_changed');
         $this->mount();
     }
 }
