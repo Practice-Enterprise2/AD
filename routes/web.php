@@ -49,7 +49,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
     Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
     Route::get('/playground', function(){
+<<<<<<< Updated upstream
         event(new \App\Events\complaint());
+=======
+        event(new App\Events\complaint());
+>>>>>>> Stashed changes
         return null;
         
     });
