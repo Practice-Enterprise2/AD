@@ -11,7 +11,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\CustomerController;
+=======
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\WaypointController;
+use App\Models\Employee;
+use App\Models\User;
+>>>>>>> Stashed changes
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
@@ -77,13 +84,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
+    Route::resource('/vehicle', VehicleController::class);
 
-
+<<<<<<< Updated upstream
     Route::get('/customers', [CustomerController::class, 'getCustomers'])->name('customers');
     Route::get('/customers/{id}/edit', 'App\Http\Controllers\CustomerController@edit')->name('customer.edit');
     Route::put('/customers/{id}', 'App\Http\Controllers\CustomerController@update')->name('customer.update');
 
 
+=======
+    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
+        Route::get('/', ControlPanelController::class)->name('control-panel');
+        Route::name('control-panel.')->group(function () {
+            Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
+            Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
+            Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+            Route::get('/groups', 'groups')->name('groups')->middleware('permission:view_all_roles');
+            Route::get('/groups/create', [RoleController::class, 'create'])->name('groups.create')->middleware('permission:create_role');
+            Route::get('/groups/{group}/edit', 'groups_edit')->name('groups.edit')->middleware('permission:edit_roles');
+            Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
+            Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
+            Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');
+            Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
+        });
+    });
+    
+>>>>>>> Stashed changes
 
 });
 
