@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\complaint as EventsComplaint;
 use App\Http\Controllers\complaintscontroller;
 use App\Http\Controllers\contactController;
 use App\Http\Controllers\ContactUsController;
@@ -8,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\shipmentController;
 use App\Models\contact;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App\Events\complaint;
+use App\Events\complaint;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
     Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
-    Route::get('/playground', function(){
-<<<<<<< Updated upstream
-        event(new \App\Events\complaint());
-=======
-        event(new App\Events\complaint());
->>>>>>> Stashed changes
+    Route::get('/playgrounds', function() {
+        event(new complaint());
         return null;
         
     });

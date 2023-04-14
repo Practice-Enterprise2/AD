@@ -36,11 +36,12 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
-                'host' => env('LARAVEL_WEBSOCKETS_HOST'),
-                'port' => env('LARAVEL_WEBSOCKETS_PORT'),
+                'host' => 6001,
+                'port' => '127.0.0.1',
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'scheme' => 'http',
                 'useTLS' => false,
+                'encrypted' => false, 
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,

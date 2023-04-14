@@ -36,4 +36,9 @@ class complaint implements ShouldBroadcast
     public function broadcastAs(){
         return 'test';
     }
+    public function broadcastWith(){
+        return [
+            'heya' => 123
+        ];
+    }
 }
