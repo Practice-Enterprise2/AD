@@ -13,15 +13,7 @@ class SocketsController extends Controller
 {
     public function connect(Request $request)
     {
-       $broadcaster = new PusherBroadcaster(
-            new Pusher(
-                env("PUSHER_KEY"),
-                env("PUSHER_SECRET"),
-                env("PUSHER_APP_ID"),
-                []
-            )
-            );
-            $broadcaster->validAuthenticationResponse($request, []);
+       dd("good");
            
     }
 }

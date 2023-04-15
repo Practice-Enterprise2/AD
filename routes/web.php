@@ -47,11 +47,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
     Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
-    Route::get('/playgrounds', function() {
-        event(new complaint());
-        return null;
-        
-    });
-});
 
+});
+Route::get('/playgrounds', function() {
+    event(new complaint());
+    return null;
+    
+});
+Route::get('/ws', function() {
+    return view('complaints.messages');
+});
 require __DIR__.'/auth.php';
