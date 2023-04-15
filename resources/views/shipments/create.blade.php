@@ -12,7 +12,7 @@
       <form action="{{ route('shipments.store') }}" method="POST">
         @csrf
         <input type="hidden" name="sender_id" value="{{ auth()->user()->id }}">
-        <input type="hidden" name="sender_address" value="Hello!!">
+        <input type="hidden" name="sender_address" value="{{ auth()->user()->address }}">
 
         {{-- User address attributes needs to be fetched here
             <input type="hidden"  name="sender_address_id" value="{{ auth()->user()->adress_id }}"> --}}
@@ -169,10 +169,31 @@
           <div class="flex w-1/2 flex-col">
             <div class="mb-2 flex">
               <label
-                class="inline-flex w-1/3 items-center text-black">Weight:</label>
+                class="inline-flex w-1/3 items-center text-black">Total weight:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_weight" id="shipment_weight">
+            </div>
+            <div class="mb-2 flex">
+              <label
+                class="inline-flex w-1/3 items-center text-black">Length:</label>
+              <input
+                class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
+                type="text" name="shipment_length" id="shipment_length">
+            </div>
+            <div class="mb-2 flex">
+              <label
+                class="inline-flex w-1/3 items-center text-black">Height:</label>
+              <input
+                class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
+                type="text" name="shipment_height" id="shipment_height">
+            </div>
+            <div class="mb-2 flex">
+              <label
+                class="inline-flex w-1/3 items-center text-black">Width:</label>
+              <input
+                class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
+                type="text" name="shipment_width" id="shipment_width">
             </div>
             <div class="mb-2 flex">
               <label
@@ -221,10 +242,10 @@
             </div>
           </div>
         </div>
-    </div>
-    <button
+        <button
       class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       type="submit">Submit</button>
+    </div>
     </form>
   </div>
   </div>

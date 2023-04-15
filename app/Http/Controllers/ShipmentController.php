@@ -101,6 +101,11 @@ class ShipmentController extends Controller
         $shipment->weight = request()->shipment_weight;
         $shipment->status = 'Awaiting Confirmation';
 
+        //Package dimensions(not implemented in database yet)
+        //$shipment->length = request()->shipment_length;
+        //$shipment->height = request()->shipment_height;
+        //$shipment->width = request()->shipment_width;
+
         // Shipment creation info - Joppe
         $shipment->created_at = date('Y-m-d H:i:s');
         $shipment->updated_at = date('Y-m-d H:i:s');
