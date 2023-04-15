@@ -11,7 +11,7 @@ class CreateLogsTable extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->string('session_id');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamp('date')->useCurrent();
             $table->string('path');
         });
