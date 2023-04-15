@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class ShipmentUpdated extends Notification
     use Queueable;
 
     protected $shipment;
+
     protected $shipmentChanges;
 
     /**
@@ -33,13 +33,11 @@ class ShipmentUpdated extends Notification
         return ['mail', 'database'];
     }
 
-
     /**
      * Get the database representation of the notification.
      *
      * @return array<string, mixed>
      */
-
     public function toDatabase(object $notifiable): array
     {
         return [
@@ -47,7 +45,6 @@ class ShipmentUpdated extends Notification
             'shipmentChanges' => $this->shipmentChanges,
         ];
     }
-
 
     /**
      * Get the mail representation of the notification.

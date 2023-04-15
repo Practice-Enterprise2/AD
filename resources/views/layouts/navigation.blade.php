@@ -86,8 +86,8 @@
       <x-dropdown>
         <x-slot name="trigger">
           <button
-            class="mt-4 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-            Notifications <span class="ml-1">{{ auth()->user()->unreadNotifications->count() }}</span>
+            class="mt-3 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+            Notifications   <span class="ml-1 inline-block whitespace-nowrap rounded-full bg-primary-500 px-2 py-1 text-center text-xs font-bold text-white">{{ auth()->user()->unreadNotifications->count() }}</span>
             <div class="ml-1">
               <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
@@ -101,7 +101,7 @@
 
         <x-slot name="content">
           @foreach (auth()->user()->unreadNotifications as $notification)
-            <x-dropdown-link :href="route('shipments.index')" onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
+            <x-dropdown-link :href="route('shipments.show', $notification->data['shipment']['id'])" onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
               Shipment {{ $notification->data['shipment']['id'] }} has been updated.
             </x-dropdown-link>
           @endforeach

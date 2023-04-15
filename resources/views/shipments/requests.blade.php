@@ -133,16 +133,14 @@
               method="POST">
               @csrf
               <div>
-                <button
-                  class="ml-1 mt-5 rounded-md bg-red-500 px-2 py-0.5 text-xs text-white hover:bg-blue-600"
-                  name="decline" type="submit"
-                  onclick="return confirm('Are you sure to Decline the Shipment?')">
-                  Decline
+              <button
+                  class="rounded-md me-2 bg-red-500 px-4 py-2 text-white hover:bg-red-600" name="decline" type="submit"
+                  onclick="return confirm('Are you sure to Decline the Shipment?')">Decline</button>
                 </button>
               </div>
               <div>
                 <button
-                  class="ml-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                   name="set" type="submit">Set</button>
               </div>
             </form>
