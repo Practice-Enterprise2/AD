@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit Shipment') }}
-        </h2>
-    </x-slot>
     <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">
       {{-- Current user --}}
@@ -11,7 +6,6 @@
         Username: {{ auth()->user()->name }}
         Id: {{ auth()->user()->id }}
         Address: {{ auth()->user()->address }}
-
       </h2>
       <h2 class="mb-4 text-lg font-medium text-black">Update Shipment</h2>
       <form action="{{ route('shipments.update', $shipment->id) }}" method="POST">
@@ -39,7 +33,7 @@
         <div class="mb-4">
         <div class="mb-2">
         <p class="font-medium text-black text-gray-700 underline">
-        Status</p>
+        Status:</p>
           </div></label>
           <div class="flex flex-col">
             <label class="inline-flex items-center">

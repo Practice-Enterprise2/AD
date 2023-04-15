@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\User;
+use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -123,7 +124,7 @@ class ShipmentController extends Controller
     {
         return view('shipments.edit', compact('shipment'));
     }
-    
+
     public function update(Request $request, Shipment $shipment)
     {
         $source_address = Address::query()->where([
@@ -138,7 +139,7 @@ class ShipmentController extends Controller
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
         ]);
-        
+
         $destination_address = Address::query()->where([
             'id' => $shipment->destination_address_id,
         ])->first();
@@ -159,8 +160,7 @@ class ShipmentController extends Controller
             'type' => request()->handling_type[0],
         ]);
 
-        if($shipment->wasChanged())
-        {
+        if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();
             $source_user = User::query()->where('id', $shipment->user_id)->first();
             $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
@@ -172,9 +172,30 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment)
     {
+        $source_address = Address::query()->where([
+            'id' => $shipment->source_address_id,
+        ])->first();
+
+        $destination_address = Address::query()->where([
+            'id' => $shipment->destination_address_id,
+        ])->first();
+
+        $waypoints = Waypoint::query()->where([
+            'shipment_id' => $shipment->id,
+        ])->get();
+
+        foreach ($waypoints as $waypoint) {
+            $waypoint->delete();
+        }
+
         $shipment->delete();
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment deleted successfully');
+    }
+
+    public function show(Shipment $shipment)
+    {
+        return view('shipments.show', compact('shipment'));
     }
 }
