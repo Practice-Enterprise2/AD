@@ -172,13 +172,25 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment)
     {
-        $source_address = Address::query()->where([
-            'id' => $shipment->source_address_id,
-        ])->first();
+        // We can't delete the shipment completely, because we are using SoftDeletes.
+        // Because of this we will have shipment data in the database, but we will not be able to see it.
+        // Also we will not be able to delete the addresses, because they are used in the shipment.
+        // If we remove the SoftDeletes from the Shipment model, we will be able to delete the shipment and the addresses.
+        // If you uncomment the lines below, you will be able to delete the shipment and the addresses after removing the SoftDeletes from the Shipment model.
 
-        $destination_address = Address::query()->where([
-            'id' => $shipment->destination_address_id,
-        ])->first();
+        // $source_address = Address::query()->where([
+        //     'id' => $shipment->source_address_id,
+        // ])->first();
+
+        // $destination_address = Address::query()->where([
+        //     'id' => $shipment->destination_address_id,
+        // ])->first();
+
+        // foreach ($waypoints as $waypoint) {
+        //     $waypoint_address[] = Address::query()->where([
+        //         'id' => $waypoint->current_address_id,
+        //     ])->first();
+        // }
 
         $waypoints = Waypoint::query()->where([
             'shipment_id' => $shipment->id,
@@ -189,6 +201,13 @@ class ShipmentController extends Controller
         }
 
         $shipment->delete();
+
+        // $source_address->delete();
+        // $destination_address->delete();
+
+        // foreach ($waypoint_address as $address) {
+        //     $address->delete();
+        // }
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment deleted successfully');
