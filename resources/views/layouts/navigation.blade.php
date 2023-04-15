@@ -82,8 +82,8 @@
               {{ __('Show Shipments') }}
             </x-dropdown-link>
             @if(Auth::user()->roles()->first()->name == 'admin' || Auth::user()->roles()->first()->name == 'employee')
-            <x-dropdown-link href="">
-              {{ __('Shipments overview page') }}
+            <x-dropdown-link href="/shipmentGraphs">
+              {{ __('Shipment graphs') }}
             </x-dropdown-link>
             @endif
           </x-slot>

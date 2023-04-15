@@ -5,7 +5,7 @@
 
     function GetMap() {
         var locations = [
-        new Microsoft.Maps.Location(51.070169, 4.530014),
+        new Microsoft.Maps.Location(50.853752, 4.380796),
         new Microsoft.Maps.Location(51.075579, 4.733860),
         new Microsoft.Maps.Location(51.160911, 4.666846),
         // add more locations here
