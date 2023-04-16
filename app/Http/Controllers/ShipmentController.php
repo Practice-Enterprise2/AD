@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Shipment;
+use App\Models\Dimensions;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -96,15 +97,32 @@ class ShipmentController extends Controller
         $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));;
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
-        // Calculate shipping cost 
-        $shipment->expense = 0;
+        //Dimensions
+        $dimensions = new Dimensions();
+        $dimensions->length = request()->shipment_length;
+        $dimensions->width = request()->shipment_width;
+        $dimensions->height = request()->shipment_height;
         $shipment->weight = request()->shipment_weight;
-        $shipment->status = 'Awaiting Confirmation';
+        $shipment->dimension_id = $dimensions->id;
 
-        //Package dimensions(not implemented in database yet)
-        //$shipment->length = request()->shipment_length;
-        //$shipment->height = request()->shipment_height;
-        //$shipment->width = request()->shipment_width;
+        // Calculate shipping cost
+        $volumetric_freight = 0;
+        $volumetric_freight_tarrif = 5;
+        $dense_cargo_tarrif = 4;
+        $expense_excl_VAT = 0;
+        $VAT_percentage = 0;
+        $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
+        if($volumetric_freight > $shipment->weight){
+            //Volumetric Air Freight rate
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif; 
+        }
+        else{
+            //Dense Cargo rate
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+        }
+        
+        
+        $shipment->status = 'Awaiting Confirmation';
 
         // Shipment creation info - Joppe
         $shipment->created_at = date('Y-m-d H:i:s');
