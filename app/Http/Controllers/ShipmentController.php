@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Shipment;
-
+use App\Models\Dimensions;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
