@@ -18,5 +18,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('private.chat.{id}', function($user, $id) {
-    return true;
+    
+    if($user->id == 1 || $user->id == 2)
+    {
+        return ['id' => $user->id];
+    }
 });

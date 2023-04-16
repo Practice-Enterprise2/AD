@@ -3,6 +3,7 @@ import './bootstrap';
 const form = document.getElementById('form');
 const inputMessage = document.getElementById('input-message');
 const listMessage = document.getElementById('list-message');
+const userId = document.getElementById('user-id').dataset.id;
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     const userInput = inputMessage.value;
@@ -11,7 +12,7 @@ form.addEventListener('submit', function(event) {
         message:userInput
     });
 });
-const channel = Echo.private('private.chat.1');
+const channel = Echo.private('private.chat.'+ userId);
 
 channel.subscribed( () => {
     console.log('subscribed');

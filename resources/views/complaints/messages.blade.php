@@ -1,5 +1,5 @@
 
-
+<div id="user-id" data-id="{{ Auth::user()->id }}"></div>
 <ul id="list-message">
 
 </ul>

@@ -34,7 +34,7 @@ class complaint implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new privateChannel('private.chat.1');
+        return new privateChannel('private.chat.' . $this->user->id);
         
     }
     public function broadcastAs(){
