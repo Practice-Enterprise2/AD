@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\Pickup;
+use App\Models\Shipment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +14,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Use factories from models (\App\Models) to fill database.
+        Address::factory()
+        ->count(50)
+        ->create();
+
+        $this->call([
+            RoleTableSeeder::class,
+            UserTableSeeder::class,
+        ]);
+
+        Shipment::factory()
+        ->count(50)
+        ->create();
+
+        Pickup::factory()
+        ->count(50)
+        ->create();
     }
 }
