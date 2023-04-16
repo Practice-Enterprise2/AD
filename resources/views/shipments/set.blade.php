@@ -12,12 +12,129 @@
         Address: {{ auth()->user()->address }}
 
       </h2>
-      <h2 class="mb-4 text-lg font-medium text-black">Shipment for: <b
-          class="text-black">{{ $shipment->receiver_name }}</b></h2>
-      <h2 class="mb-4 text-lg font-medium text-black">Source Address: <b
-          class="text-black">{{ $shipment->source_address }}</b></h2>
-      <h2 class="mb-4 text-lg font-medium text-black">Destination address: <b
-          class="text-black">{{ $shipment->destination_address }}</b></h2>
+      <p class="text-sm text-black">
+        <span class="mb-4 inline-block text-lg font-medium text-black underline">
+          Shipment with id: </span>
+        <span class="text-black">{{ $shipment->id }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <span class="mb-4 inline-block text-lg font-medium text-black underline">
+          Shipment status: </span>
+        <b class="text-black">{{ $shipment->status }}</b>
+      </p>
+      <p class="text-sm text-black">
+        <span
+          class="mb-2 inline-block text-lg font-medium text-black underline">
+          Shipment Source Address:</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Street:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->street }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          House Number:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->house_number }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Postal Code:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->postal_code }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          City:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->city }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Region:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->region }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-4 inline-block text-black">
+          Country:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->source_address->country }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <span
+          class="mb-2 inline-block text-lg font-medium text-black underline">
+          Shipment Destination Address:
+        </span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Street:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->street }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          House Number:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->house_number }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Postal Code:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->postal_code }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          City:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->city }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-2 inline-block text-black">
+          Region:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->region }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <b class="mb-4 inline-block text-black">
+          Country:
+        </b>
+        <span
+          class="font-medium text-black">{{ $shipment->destination_address->country }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <span
+          class="mb-4 inline-block text-lg font-medium text-black underline">
+          Receiver Name:</span>
+        <span class="text-black">{{ $shipment->receiver_name }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <span
+          class="mb-4 inline-block text-lg font-medium text-black underline">
+          Receiver Email:</span>
+        <span class="text-black">{{ $shipment->receiver_email }}</span>
+      </p>
+      <p class="text-sm text-black">
+        <span
+          class="mb-4 inline-block text-lg font-medium text-black underline">
+          Handling Type:</span>
+        <span class="text-black">{{ $shipment->type }}</span>
+      </p>
       {{-- {{ route('shipments.store') }} --}}
       {{-- {{ route('shipments.requests.evaluate.set.store') }} --}}
       <form

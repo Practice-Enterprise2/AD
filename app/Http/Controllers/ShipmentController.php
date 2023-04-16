@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Shipment;
-use App\Models\Dimensions;
+
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use DateTime;
+use App\Models\User;
+use App\Models\Waypoint;
+use App\Notifications\ShipmentUpdated;
+use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
@@ -159,5 +163,103 @@ class ShipmentController extends Controller
         } else {
             dd('Something gone wrong, refer Route with URI => [shipments/requests/evaluate/{shipment}]');
         }
+    }
+
+    public function edit(Shipment $shipment)
+    {
+        return view('shipments.edit', compact('shipment'));
+    }
+
+    public function update(Request $request, Shipment $shipment)
+    {
+        $source_address = Address::query()->where([
+            'id' => $shipment->source_address_id,
+        ])->first();
+
+        $source_address->update([
+            'country' => request()->source_country,
+            'region' => request()->source_region,
+            'postal_code' => request()->source_postalcode,
+            'city' => request()->source_city,
+            'street' => request()->source_street,
+            'house_number' => request()->source_housenumber,
+        ]);
+
+        $destination_address = Address::query()->where([
+            'id' => $shipment->destination_address_id,
+        ])->first();
+
+        $destination_address->update([
+            'country' => request()->destination_country,
+            'region' => request()->destination_region,
+            'postal_code' => request()->destination_postalcode,
+            'city' => request()->destination_city,
+            'street' => request()->destination_street,
+            'house_number' => request()->destination_housenumber,
+        ]);
+
+        $shipment->update([
+            'receiver_name' => request()->receiver_name,
+            'receiver_email' => request()->receiver_email,
+            'status' => request()->status,
+            'type' => request()->handling_type[0],
+        ]);
+
+        if ($shipment->wasChanged()) {
+            $shipmentChanges = $shipment->getChanges();
+            $source_user = User::query()->where('id', $shipment->user_id)->first();
+            $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        }
+
+        return redirect()->route('shipments.index')
+            ->with('success', 'Shipment updated successfully');
+    }
+
+    public function destroy(Shipment $shipment)
+    {
+        // We can't delete the shipment completely, because we are using SoftDeletes.
+        // Because of this we will have shipment data in the database, but we will not be able to see it.
+        // Also we will not be able to delete the addresses, because they are used in the shipment.
+        // If we remove the SoftDeletes from the Shipment model, we will be able to delete the shipment and the addresses.
+        // If you uncomment the lines below, you will be able to delete the shipment and the addresses after removing the SoftDeletes from the Shipment model.
+
+        // $source_address = Address::query()->where([
+        //     'id' => $shipment->source_address_id,
+        // ])->first();
+
+        // $destination_address = Address::query()->where([
+        //     'id' => $shipment->destination_address_id,
+        // ])->first();
+
+        // foreach ($waypoints as $waypoint) {
+        //     $waypoint_address[] = Address::query()->where([
+        //         'id' => $waypoint->current_address_id,
+        //     ])->first();
+        // }
+
+        $waypoints = Waypoint::query()->where([
+            'shipment_id' => $shipment->id,
+        ])->get();
+
+        foreach ($waypoints as $waypoint) {
+            $waypoint->delete();
+        }
+
+        $shipment->delete();
+
+        // $source_address->delete();
+        // $destination_address->delete();
+
+        // foreach ($waypoint_address as $address) {
+        //     $address->delete();
+        // }
+
+        return redirect()->route('shipments.index')
+            ->with('success', 'Shipment deleted successfully');
+    }
+
+    public function show(Shipment $shipment)
+    {
+        return view('shipments.show', compact('shipment'));
     }
 }

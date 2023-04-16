@@ -12,7 +12,7 @@
           <th>{{ __('Name') }}</th>
           <th>{{ __('Description') }}</th>
         </tr>
-        @foreach (\Spatie\Permission\Models\Permission::all() as $permission)
+        @foreach (App\Models\Permission::all() as $permission)
           <tr>
             <td>{{ $permission->name }}</td>
             <td>{{ $permission->description }}</td>
