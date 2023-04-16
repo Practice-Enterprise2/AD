@@ -46,7 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
     Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
     Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
+    Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create');
+
     Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
+    Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
     Route::post('/chat-message', function(\Illuminate\Http\Request $request) {
         event(new complaint($request->message, auth()->user()));
         return null;

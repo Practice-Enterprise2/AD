@@ -19,7 +19,7 @@ class contactController extends Controller
         if(Auth::user()->role == 1)
         {
             return view('contact.index', [
-                'contacts' => contact::get()
+                'contacts' => contact::where('is_handled', 0)->get()
             ]);
         }
         return Redirect(route('shipment.index'));
@@ -51,10 +51,12 @@ class contactController extends Controller
 
         $shipment_id = $request->filled('shipment_id') ? $request->shipment_id : 0;
         contact::create([
+            'customer_id' => Auth::user()->id,
             'email' => $request->email,
             'shipment_id' => $shipment_id,
             'subject' => $request->subject,
-            'message' => $request->message
+            'message' => $request->message,
+            'is_handled' => 0
         ]);
         return Redirect(route('shipment.index'));
     }

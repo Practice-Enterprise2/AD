@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('chat_boxes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->string('email');
-            $table->integer('shipment_id');
-            $table->string('subject');
-            $table->string('message');
-            $table->unsignedTinyInteger('is_handled')->default(0);
+            $table->unsignedBigInteger('employee_id');
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('chat_boxes');
     }
 };

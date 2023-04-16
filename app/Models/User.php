@@ -52,4 +52,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Shipment::class);
     }
+    public function chatBoxAsCustomer()
+    {
+        return $this->hasMany(chatBox::class, 'customer_id');
+    }
+
+    public function chatBoxAsEmployee() {
+        return $this->hasMany(chatBox::class, 'employee_id');
+    }
+    public function contact() {
+        return $this->hasMany(contact::class);
+    }
 }

@@ -24,6 +24,12 @@
         </div>
 
                     </form>
+                    @if($contact->is_handled == 0)
+        <form action="{{ route('chatbox.create', $contact->id) }}" method="POST">
+            @csrf
+            <button class="bg-yellow-500 rounded px-3 py-2 my-2">{{ __('Handle complaint') }}</button>
+                    @endif
+        </form>
     </div>
 
 </div>
