@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Groups;
 
+use App\Models\Role;
 use Livewire\Component;
-use Spatie\Permission\Models\Role;
 
 class Edit extends Component
 {

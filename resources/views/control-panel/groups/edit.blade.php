@@ -13,7 +13,7 @@
       @livewire('groups.edit', ['role_id' => $group])
     </div>
     <div class="my-5">
-      @livewire('groups.permissions.edit', ['role' => \Spatie\Permission\Models\Role::findOrFail($group)])
+      @livewire('groups.permissions.edit', ['role' => \App\Models\Role::findOrFail($group)])
     </div>
   </x-control-panel-layout>
 </x-app-layout>
