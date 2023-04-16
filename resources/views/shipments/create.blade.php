@@ -12,7 +12,8 @@
       <form action="{{ route('shipments.store') }}" method="POST">
         @csrf
         <input type="hidden" name="sender_id" value="{{ auth()->user()->id }}">
-        <input type="hidden" name="sender_address" value="{{ auth()->user()->address }}">
+        <input type="hidden" name="sender_address"
+          value="{{ auth()->user()->address }}">
 
         {{-- User address attributes needs to be fetched here
             <input type="hidden"  name="sender_address_id" value="{{ auth()->user()->adress_id }}"> --}}
@@ -168,8 +169,8 @@
             details</label>
           <div class="flex w-1/2 flex-col">
             <div class="mb-2 flex">
-              <label
-                class="inline-flex w-1/3 items-center text-black">Total weight:</label>
+              <label class="inline-flex w-1/3 items-center text-black">Total
+                weight:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_weight" id="shipment_weight">
@@ -210,41 +211,47 @@
                 type="text" name="shipment_status" id="shipment_status">
             </div>
             <div class="mb-2 flex">
-              <label class="inline-flex w-1/3 items-center text-black">Preferred date of
+              <label
+                class="inline-flex w-1/3 items-center text-black">Preferred
+                date of
                 delivery:</label>
-                <!-- Read out initialised delivery dates list of following 7 days -->
-                <select name="delivery_date" id="delivery_date">
-                  @foreach ($deliveryDates as $date)
-                    <option value="{{ $date }}">{{ $date }}
-                    </option>
-                  @endforeach
-                </select>
+              <!-- Read out initialised delivery dates list of following 7 days -->
+              <select name="delivery_date" id="delivery_date">
+                @foreach ($deliveryDates as $date)
+                  <option value="{{ $date }}">{{ $date }}
+                  </option>
+                @endforeach
+              </select>
             </div>
             <div class="mb-2 flex">
-              <label class="inline-flex w-1/3 items-center text-black">Estimated date of
+              <label
+                class="inline-flex w-1/3 items-center text-black">Estimated
+                date of
                 shipping: </label>
-                <input type="hidden" name="shipment_date" id="shipment_date">
-                <span id="shipment_date_display"></span>
-                <!-- Script to calculate estimated shipping date compared to selected preferred delivery date -->
-                <script>
-                  const deliveryDateSelected = document.getElementById('delivery_date');
-                  const estimatedShippingDateInput = document.getElementById('shipment_date');
-                  const estimatedShippingDateDisplay = document.getElementById('shipment_date_display');
-              
-                  deliveryDateSelected.addEventListener('change', function() {
-                      const selectedDate = new Date(this.value);
-                      const estimatedShippingDate = new Date(selectedDate.getTime() - 2 * 24 * 60 * 60 * 1000);
-                      const formattedDate = estimatedShippingDate.toISOString().split('T')[0];
-                      estimatedShippingDateInput.value = formattedDate;
-                      estimatedShippingDateDisplay.textContent = formattedDate;
-                  });
+              <input type="hidden" name="shipment_date" id="shipment_date">
+              <span id="shipment_date_display"></span>
+              <!-- Script to calculate estimated shipping date compared to selected preferred delivery date -->
+              <script>
+                const deliveryDateSelected = document.getElementById('delivery_date');
+                const estimatedShippingDateInput = document.getElementById('shipment_date');
+                const estimatedShippingDateDisplay = document.getElementById(
+                  'shipment_date_display');
+
+                deliveryDateSelected.addEventListener('change', function() {
+                  const selectedDate = new Date(this.value);
+                  const estimatedShippingDate = new Date(selectedDate.getTime() - 2 * 24 *
+                    60 * 60 * 1000);
+                  const formattedDate = estimatedShippingDate.toISOString().split('T')[0];
+                  estimatedShippingDateInput.value = formattedDate;
+                  estimatedShippingDateDisplay.textContent = formattedDate;
+                });
               </script>
             </div>
           </div>
         </div>
         <button
-      class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-      type="submit">Submit</button>
+          class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          type="submit">Submit</button>
     </div>
     </form>
   </div>

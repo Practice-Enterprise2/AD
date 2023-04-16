@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dimensions extends Model
 {
     use HasFactory;
+
     protected $fillable = ['length', 'width', 'height'];
 
     public function shipment()

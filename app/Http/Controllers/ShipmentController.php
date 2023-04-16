@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use App\Models\Shipment;
 use App\Models\Dimensions;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use DateTime;
+use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
+use DateTime;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
@@ -28,7 +28,7 @@ class ShipmentController extends Controller
 
     //create
     public function create(): View|Factory
-    {   
+    {
         // $shippingDateStart = new DateTime();
         // $shippingDateEnd = (new DateTime())->modify('+6 days');
         // $shippingDates = [];
@@ -39,9 +39,10 @@ class ShipmentController extends Controller
         $deliveryDateStart = (new DateTime())->modify('+2 days');
         $deliveryDateEnd = (new DateTime())->modify('+8 days');
         $deliveryDates = [];
-        for($i = $deliveryDateStart; $i <= $deliveryDateEnd; $i->modify('+1 day')){
+        for ($i = $deliveryDateStart; $i <= $deliveryDateEnd; $i->modify('+1 day')) {
             $deliveryDates[] = $i->format('Y-m-d');
         }
+
         return view('shipments.create', compact('deliveryDates'));
     }
 
@@ -98,7 +99,7 @@ class ShipmentController extends Controller
         $shipment->type = request()->handling_type[0];
 
         // Convert string to time and send selected dates to db
-        $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));;
+        $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
         //Dimensions
@@ -117,16 +118,14 @@ class ShipmentController extends Controller
         $expense_excl_VAT = 0;
         $VAT_percentage = 0;
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
-        if($volumetric_freight > $shipment->weight){
+        if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif; 
-        }
-        else{
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+        } else {
             //Dense Cargo rate
             $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
         }
-        
-        
+
         $shipment->status = 'Awaiting Confirmation';
 
         // Shipment creation info - Joppe
