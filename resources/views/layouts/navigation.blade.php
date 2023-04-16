@@ -101,12 +101,17 @@
           </x-slot>
 
           <x-slot name="content">
+            @if (auth()->user()->unreadNotifications->count() > 0)
+              <x-dropdown-link
+                onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
+                <b>Mark all as read</b>
+              </x-dropdown-link>
+            @endif
             @foreach (auth()->user()->unreadNotifications as $notification)
               <x-dropdown-link :href="route(
                   'shipments.show',
                   $notification->data['shipment']['id'],
-              )"
-                onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
+              )">
                 Shipment {{ $notification->data['shipment']['id'] }} has been
                 updated.
               </x-dropdown-link>
@@ -130,6 +135,10 @@
               type: "GET",
               headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data) {
+                reload = window.location.reload();
+                return reload;
               },
             });
           }
