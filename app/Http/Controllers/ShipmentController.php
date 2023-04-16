@@ -102,6 +102,7 @@ class ShipmentController extends Controller
         $dimensions->length = request()->shipment_length;
         $dimensions->width = request()->shipment_width;
         $dimensions->height = request()->shipment_height;
+        $dimensions->save();
         $shipment->weight = request()->shipment_weight;
         $shipment->dimension_id = $dimensions->id;
 

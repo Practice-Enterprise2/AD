@@ -24,8 +24,6 @@ return new class() extends Migration
             $table->integer('expense');
             $table->integer('weight');
             $table->string('type', 50); // Fragile, Liquid, Hazardous(Lighter, Battery etc..)
-            $table->unsignedBigInteger('dimension_id');
-            $table->foreignId('address_id')->nullable()->constrained();
             $table->timestamps();
             // new updates for the shipments table is at "modify_shipments" migration.
         });
