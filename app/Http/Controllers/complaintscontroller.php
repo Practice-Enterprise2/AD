@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Events\complaint;
 use Illuminate\Http\Request;
 use App\Models\chatBox;
 use App\Models\messages;
@@ -20,6 +20,27 @@ class complaintscontroller extends Controller
             'chatboxs' => $chatbox
         ]);
     }
+
+    public function sendMessage(Request $request)
+    {   
+        if (chatBox::where('id', $request->id)
+        ->where(function ($query) {
+            $query->where('customer_id', Auth::user()->id)
+                ->orWhere('employee_id', Auth::user()->id);
+        })->exists()) {
+
+        $chatbox = chatBox::where('id', $request->id)->get()->first();
+        $message = messages::create([
+            'chatbox_id' => $request->id,
+            'from_id' => Auth::user()->id,
+            'content' => $request->content
+        ]);
+        event(new complaint($request->content, $chatbox, Auth::user()));
+        return null;
+        }
+        
+    }
+
     public function createChat($id){
         if(Auth::user()->role == 1)
         {

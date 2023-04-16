@@ -3,6 +3,8 @@
 namespace App\Events;
 
 use App\Models\User;
+use App\Models\chatBox;
+
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,14 +18,16 @@ class complaint implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private string $message;
+    private chatBox $chatBox;
     private User $user;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(string $message, User $user)
+    public function __construct(string $message, chatBox $chatBox, User $user)
     {
         $this->message = $message;
+        $this->chatBox = $chatBox;
         $this->user = $user;
     }
 
@@ -34,7 +38,7 @@ class complaint implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new privateChannel('private.chat.' . $this->user->id);
+        return new privateChannel('private.chat.' . $this->chatBox->id);
         
     }
     public function broadcastAs(){
@@ -43,7 +47,11 @@ class complaint implements ShouldBroadcast
     public function broadcastWith(){
         return [
             'message' => $this->message,
-            'user' => $this->user->name
+            'name' => $this->user->name,
+            'userId' => $this->user->id,
+            'employee_id' =>$this->chatBox->employee_id,
+            'customer_id' => $this->chatBox->customer_id
+            
         ];
     }
 }

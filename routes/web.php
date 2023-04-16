@@ -50,10 +50,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
     Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
-    Route::post('/chat-message', function(\Illuminate\Http\Request $request) {
-        event(new complaint($request->message, auth()->user()));
-        return null;
-    });
+    // Route::post('/chat-message', function(\Illuminate\Http\Request $request) {
+    //     event(new complaint($request->message, auth()->user()));
+    //     return null;
+    // });
+    Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
 
 });
 
