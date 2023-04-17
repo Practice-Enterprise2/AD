@@ -13,9 +13,11 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Traits\Invoices; // Traits for invoices
 
 class ShipmentController extends Controller
 {
+    use Invoices;
     public function index(): View|Factory
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
@@ -123,9 +125,8 @@ class ShipmentController extends Controller
         $shipment->status = 'Awaiting Confirmation';
 
         $shipment->push();
-
-        dd($shipment->getAttributes(), $source_address->getAttributes(), $destination_address->getAttributes());
-
+        //After the shipment has been created, we will generate an invoice with the following Trait
+        $this->generateInvoice();
         // notify user with the shipment_id as Tracking Number
         return 'Tracking Number: '.$shipment->id;
     }
@@ -250,4 +251,5 @@ class ShipmentController extends Controller
     {
         return view('shipments.show', compact('shipment'));
     }
+    
 }
