@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\DepotController;
 use App\Http\Controllers\DepotoverviewController;
 use App\Http\Controllers\AirlineController;
 // All routes defined here are automatically assigned to the `web` middleware
@@ -93,10 +94,6 @@ Route::get('/airlineoverview',[AirlineController::class, 'Airlineoverview']);
 
 Route::get('airlineoverview/{key}',[AirlineController::class, 'overviewperAirline']);
 
-Route::get('/depotoverview',[DepotoverviewController::class, 'Depotoverview']);
-
-Route::get('depotoverview/{key}',[DepotoverviewController::class, 'overviewperDepot']);
-
 //email verification
 /*
 Route::get('/email/verify', function () {
@@ -133,6 +130,21 @@ Route::get('/paymentSuccess', function () {
 // Airport Routes
 
 // Depot routes
+
+Route::get('/DepotManagement',[DepotController::class, 'index']);
+
+Route::get('depotoverview/{key}',[DepotController::class, 'overviewperDepot']);
+
+Route::get('/addDepot',[DepotController::class, 'addDepotpage']);
+
+Route::post('addDepotform', [DepotController::class, 'addDepot']);
+
+Route::get('/editDepot/{key}',[DepotController::class, 'editDepotpage']);
+
+Route::post('/editDepotform/{key}', [DepotController::class, 'editDepot']);
+
+Route::get('deleteDepot/{key}', [DepotController::class, 'deleteDepot']);
+
 
 
 

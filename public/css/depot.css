@@ -1,0 +1,78 @@
+name{
+    color: lightblue;
+}
+.child {
+    margin-bottom: 50px;
+}
+
+*{
+    color: white;
+}
+.wrapper {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.legendDiv {
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+.dataCard,.relButtons {
+    display: flex;
+    flex-direction: row;
+}
+.addDiv {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.airportCard{
+    width: 35%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid lightblue;
+    border-top: 1px solid lightblue;
+}
+
+.dataCard div,.legendDiv div {
+    min-width: 250px;
+    text-align: center;
+}
+
+.legendDiv{
+    font-weight: bold;
+}
+
+.relButtons div {
+    margin: 10px;
+}
+
+.containerForm {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px !important;
+}
+
+input,select,textarea {
+    background-color: grey;
+}
+
+.wrap {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+}
