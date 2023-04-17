@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Dimensions;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
+use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,7 +29,21 @@ class ShipmentController extends Controller
     //create
     public function create(): View|Factory
     {
-        return view('shipments.create');
+        // $shippingDateStart = new DateTime();
+        // $shippingDateEnd = (new DateTime())->modify('+6 days');
+        // $shippingDates = [];
+        // for($i = $shippingDateStart; $i <= $shippingDateEnd; $i->modify('+1 day')){
+        //     $shippingDates[] = $i->format('Y-m-d');
+        // }
+        // Generate list of dates for the next 7 days
+        $deliveryDateStart = (new DateTime())->modify('+2 days');
+        $deliveryDateEnd = (new DateTime())->modify('+8 days');
+        $deliveryDates = [];
+        for ($i = $deliveryDateStart; $i <= $deliveryDateEnd; $i->modify('+1 day')) {
+            $deliveryDates[] = $i->format('Y-m-d');
+        }
+
+        return view('shipments.create', compact('deliveryDates'));
     }
 
     //store
@@ -82,12 +98,40 @@ class ShipmentController extends Controller
         $shipment->destination_address_id = $destination_address->id;
         $shipment->type = request()->handling_type[0];
 
-        // (!) ATTENTION OF SHIPMENT GROUP. Attributes below need to be added to the form later on.
+        // Convert string to time and send selected dates to db
+        $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
+        $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
+
+        //Dimensions
+        $dimensions = new Dimensions();
+        $dimensions->length = request()->shipment_length;
+        $dimensions->width = request()->shipment_width;
+        $dimensions->height = request()->shipment_height;
+        $dimensions->save();
+        $shipment->weight = request()->shipment_weight;
+        $shipment->dimension_id = $dimensions->id;
+
+        // Calculate shipping cost
+        $volumetric_freight = 0;
+        $volumetric_freight_tarrif = 5;
+        $dense_cargo_tarrif = 4;
+        $expense_excl_VAT = 0;
+        $VAT_percentage = 0;
+        $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
+        if ($volumetric_freight > $shipment->weight) {
+            //Volumetric Air Freight rate
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+        } else {
+            //Dense Cargo rate
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+        }
+
         $shipment->status = 'Awaiting Confirmation';
-        $shipment->shipment_date = date('Y-m-d');
-        $shipment->delivery_date = date('Y-m-d');
-        $shipment->expense = 0;
-        $shipment->weight = 0;
+
+        // Shipment creation info
+        $shipment->created_at = date('Y-m-d H:i:s');
+        $shipment->updated_at = date('Y-m-d H:i:s');
+        $shipment->deleted_at = date('Y-m-d H:i:s');
 
         $shipment->push();
 
