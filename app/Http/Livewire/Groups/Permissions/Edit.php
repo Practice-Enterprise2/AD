@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Groups\Permissions;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class Edit extends Component
 {

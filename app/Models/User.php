@@ -39,6 +39,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function hasDirectPermission($permission): bool
+    {
+        $permission = $this->filterPermission($permission);
+
+        foreach ($this->permissions as $permission) {
+            if (collect($permission->flattened_up())->contains($permission->getKeyName(), $permission->getKey())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function hasPermissionViaRole(Permission $permission): bool
+    {
+        foreach ($permission->flattened_up() as $flat_permission) {
+            if ($this->hasRole($flat_permission->roles)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);

@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
         static::bootstrap_permission('view_all_users', 'View all the users.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
-        static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.');
+        static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
 
@@ -157,14 +157,25 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    // If a permission with the given name doesn't exist, create it.
-    public static function bootstrap_permission(string $name, null|string $description = null): Permission
+    /**
+     * If a permission with the given name doesn't exist yet, create it and
+     * attach the given dependencies.
+     *
+     * @param  array<string>  $dependencies
+     */
+    public static function bootstrap_permission(string $name, null|string $description = null, array $dependencies = []): Permission
     {
         if (! Permission::query()->where('name', $name)->first()) {
-            return Permission::create([
+            $new_permission = Permission::create([
                 'name' => $name,
                 'description' => $description,
             ]);
+
+            foreach ($dependencies as $dependency) {
+                $new_permission->grants()->attach(Permission::findByName($dependency));
+            }
+
+            return $new_permission;
         } else {
             return Permission::findByName($name);
         }

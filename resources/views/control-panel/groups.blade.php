@@ -11,7 +11,7 @@
           <th>{{ __('Name') }}</th>
           <th>{{ __('Description') }}</th>
         </tr>
-        @foreach (\Spatie\Permission\Models\Role::all() as $role)
+        @foreach (\App\Models\Role::all() as $role)
           <tr>
             <td>{{ $role->name }}</td>
             <td>{{ $role->description }}</td>

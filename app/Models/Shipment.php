@@ -51,7 +51,7 @@ class Shipment extends Model
         return $this->hasOne(Address::class, 'id', 'destination_address_id');
     }
 
-    public function waypoints(): HasOne
+    public function waypoints(): HasMany
     {
         return $this->hasMany(Waypoint::class);
     }

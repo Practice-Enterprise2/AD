@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Role;
 
+use App\Models\Role;
 use Livewire\Component;
 use Livewire\Redirector;
-use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
@@ -22,7 +22,7 @@ class Create extends Component
     }
 
     protected $rules = [
-        'role.name' => 'required|max:255|unique:\Spatie\Permission\Models\Role,name',
+        'role.name' => 'required|max:255|unique:\App\Models\Role,name',
         'role.description' => 'max:255',
     ];
 
