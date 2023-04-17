@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Airline;
 use App\Models\airport;
 use App\Models\Contract;
 use Illuminate\View\View;
@@ -68,7 +69,9 @@ class contractController extends Controller
             }
             $contracts = Contract::where('id',$id)->get();
             $airports = airport::all();
-            return view('contract',compact('contracts','airports'));
+          //  $airlines = Airline::with('contract')->where('id',$contracts[0]->airline_id)->get();
+            $airlines = Airline::all();
+            return view('contract',compact('contracts','airports','airlines'));
 
     }
     public function simpleIndex()

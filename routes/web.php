@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\newcontractcontroller;
+use App\Http\Controllers\contractlistcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,3 +138,10 @@ Route::post('editAirport', [AirportController::class, 'updateAirport']);
 Route::post('plaats', [newcontractcontroller::class, 'plaats']);
 Route::get('new_contract', [newcontractcontroller::class, 'dropdown']);
 
+//contract list
+Route::get('/contract_list', function () {
+    return view('contract_list');
+});
+//Route::get('contract_list','App\Http\Controllers\contractListController');
+Route::get('contract_list',[contractlistcontroller::class,'index']);
+Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering']);
