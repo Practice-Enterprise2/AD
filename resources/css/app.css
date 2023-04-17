@@ -2,24 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-red{
+.bg-red {
     background-color: red;
 }
-.bg-yellow{
+.bg-yellow {
     background-color: yellow;
 }
-.bg-green{
+.bg-green {
     background-color: green;
 }
-.bg-orange{
+.bg-orange {
     background-color: orange;
 }
-.bg-white{
+.bg-white {
     background-color: white;
 }
-.bg-lime{
+.bg-lime {
     background-color: lime;
-/* add the one's below to your own code. */
+    /* add the one's below to your own code. */
 }
 * {
     @apply dark:text-white;

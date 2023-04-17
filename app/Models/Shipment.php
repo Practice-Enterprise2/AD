@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Shipment extends Model
 {
     protected $table = 'shipments';
+
     use HasFactory;
     use SoftDeletes;
 

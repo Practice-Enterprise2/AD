@@ -130,7 +130,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
-    Route::get('/shipmentGraphs', function(){
+    Route::get('/shipmentGraphs', function () {
         return view('graphs');
     });
     //WaypointController

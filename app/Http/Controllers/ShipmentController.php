@@ -10,8 +10,8 @@ use App\Notifications\ShipmentUpdated;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
@@ -121,17 +121,21 @@ class ShipmentController extends Controller
         }
     }
 
-    function showshipments(){
+    public function showshipments()
+    {
         $shipments = DB::select('SELECT *
         FROM shipments
-        ORDER BY shipments.id ASC');  
-        return view('shipments',['shipments'=>$shipments]);
+        ORDER BY shipments.id ASC');
+
+        return view('shipments', ['shipments' => $shipments]);
     }
-    
-    public function showShipments_details($id){
+
+    public function showShipments_details($id)
+    {
         $shipments = DB::select("SELECT *
         FROM shipments WHERE id = '$id'");
-        return view('shipments_details',['shipments'=>$shipments]);
+
+        return view('shipments_details', ['shipments' => $shipments]);
     }
 
     public function edit(Shipment $shipment)
