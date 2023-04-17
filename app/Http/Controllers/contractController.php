@@ -71,7 +71,7 @@ class contractController extends Controller
             return view('contract',compact('contracts','airports'));
 
     }
-  /*  public function simpleIndex()
+    public function simpleIndex()
     {
         $id = 1;
         $contracts = null;
@@ -113,7 +113,7 @@ class contractController extends Controller
             return view('contract',compact('contracts','airports'));
                // return  view('contract',['contracts'=>$contracts]);
         }
-        */
+        
 
 
 }
