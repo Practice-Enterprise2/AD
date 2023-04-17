@@ -56,4 +56,9 @@ class Shipment extends Model
     {
         return $this->hasMany(Waypoint::class);
     }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }

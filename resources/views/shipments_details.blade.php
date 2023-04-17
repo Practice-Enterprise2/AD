@@ -4,6 +4,7 @@
   <script type='text/javascript'>
 
     function GetMap() {
+      
         var locations = [
         new Microsoft.Maps.Location(50.853752, 4.380796),
         new Microsoft.Maps.Location(51.075579, 4.733860),
@@ -19,7 +20,7 @@
     
         var map = new Microsoft.Maps.Map('#map', {
             credentials: 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S',
-            center: new Microsoft.Maps.Location(50.848720, 4.359745),
+            center: locations[0],
             zoom: 8
         });
         for (var i = 0; i < locations.length; i++) {

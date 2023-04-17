@@ -73,7 +73,7 @@
                                 @else
                                     bg-white
                                 @endif">{{ $shipment->status }}</td>
-                                
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400"><a href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Details</button></a></td> 
                             </tr>
                             @endif
                         @endforeach

@@ -133,6 +133,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipmentGraphs', function () {
         return view('graphs');
     });
+
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');

@@ -75,9 +75,7 @@
             <x-dropdown-link :href="route('shipments.requests')">
               {{ __('Evaluate Shipment Requests') }}
             </x-dropdown-link>
-            <x-dropdown-link :href="route('shipments.index')">
-              {{ __('Show Confirmed Shipments') }}
-            </x-dropdown-link>
+            
             <x-dropdown-link href="/shipments">
               {{ __('Show Shipments') }}
             </x-dropdown-link>
