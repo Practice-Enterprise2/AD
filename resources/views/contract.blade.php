@@ -3,6 +3,7 @@
 use App\Http\Controllers\contractController;
 use App\Http\Controllers\AirportController;
 
+
 if (!isset($_GET["q"]))
 {
     ?>
@@ -89,7 +90,6 @@ table
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         }
 </style>
-    </style>
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
 </head>
 
@@ -136,7 +136,7 @@ table
     <tr>
         <td>Contract number: </td>
         <td><input type="number" id="contNumber" name="q" autocomplete="off"></td>
-        <td><input type="submit" name="submit"></td>
+        <td><input type="submit" name="submit" style="background-color: darkgray"></td>
     </tr>
 </table>
     </form>
@@ -158,10 +158,27 @@ table
                         <td>Contract ID:</td> <td><input type="number"  value="{{ $contract->id }}" disabled required>
                         <input type="number" name="id" value="{{ $contract->id }}" hidden></td>
                         </tr>
-                        <tr>
-                            <td>Airline name:</td> <td><input type="text"  value="{{ $contract->Airline }}"  required disabled>
-                            <input type="number"  value="{{ $contract->airline_id }}" name="airline"  hidden></td>
+                      <!--  <tr>
+                            <td>Airline name:</td> <td><input type="number"  value="{ { $contract->airline_id }}"  required disabled hidden>
+                            <input type="text"  value="{ { $airlines[0]->name }}" name="airline"  ></td>
                         </tr>
+                    -->
+                    <tr>
+                        <td colspan="2">
+                            Airline:
+
+                            <select class="chosen-select" name="airline">
+                                @foreach ($airlines as $airline )
+                                <option <?php
+                                    if ($contracts[0]->airline_id == $airline->id)
+                                    {
+                                        echo " selected ";
+                                    }
+                                ?> value="{{ $airline->id }}"> {{$airline->name}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                      </tr>
                         <tr>
                             <td>Start date:</td>
                             <td><input type="date" name="start_date" value="{{ $contract->start_date }}" required></td>
@@ -230,7 +247,7 @@ table
                         </td>
                       </tr>
                         <tr>
-                            <td><input type="submit" name="submit" value="Save Changes"></td> <td><?php
+                            <td><input type="submit" name="submit" value="Save Changes" style="background-color: darkgray"></td> <td><?php
                               /*  if ($contracts[0]->active == 1)
                                 {
                                     ?>
