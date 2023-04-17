@@ -29,12 +29,6 @@ class ShipmentController extends Controller
     //create
     public function create(): View|Factory
     {
-        // $shippingDateStart = new DateTime();
-        // $shippingDateEnd = (new DateTime())->modify('+6 days');
-        // $shippingDates = [];
-        // for($i = $shippingDateStart; $i <= $shippingDateEnd; $i->modify('+1 day')){
-        //     $shippingDates[] = $i->format('Y-m-d');
-        // }
         // Generate list of dates for the next 7 days
         $deliveryDateStart = (new DateTime())->modify('+2 days');
         $deliveryDateEnd = (new DateTime())->modify('+8 days');
@@ -127,11 +121,6 @@ class ShipmentController extends Controller
         }
 
         $shipment->status = 'Awaiting Confirmation';
-
-        // Shipment creation info
-        $shipment->created_at = date('Y-m-d H:i:s');
-        $shipment->updated_at = date('Y-m-d H:i:s');
-        $shipment->deleted_at = date('Y-m-d H:i:s');
 
         $shipment->push();
 
