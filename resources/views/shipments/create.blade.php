@@ -88,7 +88,7 @@
 
         <div class="my-10">
           <div class="mb-4">
-            <p class="font-medium text-black text-gray-700 underline">
+            <p class="font-medium text-gray-700 underline">
               Destination Address Details:</p>
           </div>
           <div class="flex w-1/2 flex-col">
@@ -137,8 +137,7 @@
           </div>
         </div>
         <div class="mb-4">
-          <label
-            class="mb-2 block font-medium text-black text-gray-700">Handling
+          <label class="mb-2 block font-medium text-gray-700">Handling
             Type</label>
           <div class="flex flex-col">
             <label class="inline-flex items-center">
@@ -164,8 +163,7 @@
           </div>
         </div>
         <div class="mb-4">
-          <label
-            class="mb-2 block font-medium text-black text-gray-700">Package
+          <label class="mb-2 block font-medium text-gray-700">Package
             details</label>
           <div class="flex w-1/2 flex-col">
             <div class="mb-2 flex">
