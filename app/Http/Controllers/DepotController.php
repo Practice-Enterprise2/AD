@@ -44,9 +44,9 @@ class DepotController extends Controller
         return view('editDepot', ['depots'=>$depots]);
     }
 
-    public function editDepot(Request $request) {
+    public function editDepot(Request $request, int $id) {
         $updated_date_time = date('Y-m-d H:i:s');
-        DB::insert('UPDATE depots set code = ?, address = ?, size = ?, amountFilled = ?, updated_at = ? ', [$request->code, $request->location, $request->size, $request->filled, $updated_date_time]);
+        DB::insert('UPDATE depots set code = ?, address = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->location, $request->size, $request->filled, $updated_date_time, $id]);
     
         return $this->index();
     }

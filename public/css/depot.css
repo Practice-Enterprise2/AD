@@ -76,3 +76,10 @@ input,select,textarea {
     display:flex;
     flex-direction: column;
 }
+
+#myMap {
+    width: 30vw;
+    height: 30vh;
+    margin: 0 auto;
+    
+}
