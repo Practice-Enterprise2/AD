@@ -4,21 +4,45 @@
 
 .bg-red {
     background-color: red;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
 }
 .bg-yellow {
     background-color: yellow;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
 }
 .bg-green {
     background-color: green;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
 }
 .bg-orange {
     background-color: orange;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
 }
 .bg-white {
     background-color: white;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
 }
 .bg-lime {
     background-color: lime;
+    color: black;
+    border-width: 2px;
+    border-radius: 6px;
+    text-align: center;
     /* add the one's below to your own code. */
 }
 * {

@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 
+use Illuminate\Support\Facades\Log;
+
+use Illuminate\Support\Facades\Auth;
+
 class ShipmentController extends Controller
 {
     public function index(): View|Factory
@@ -124,20 +128,37 @@ class ShipmentController extends Controller
 
     public function showshipments()
     {
-        $shipments = DB::select('SELECT *
+       /*  $shipments = DB::select('SELECT *
         FROM shipments
-        ORDER BY shipments.id ASC');
+        ORDER BY shipments.id ASC'); */
+
+        // $id = Auth::user()->id;
+        
+        $shipments = DB::table('shipments')
+        ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')
+        // ->where('shipments.user_id', $id)
+        ->select('shipments.receiver_name','shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
+        ->get();
 
         return view('shipments', ['shipments' => $shipments]);
     }
 
+   
     public function showShipments_details($id)
     {
-        $shipments = DB::select("SELECT *
-        FROM shipments WHERE id = '$id'");
+        $shipments = DB::table('shipments')
+        ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')
+        ->where('shipments.id', $id)
+        ->select('*')
+        ->get();
 
-        return view('shipments_details', ['shipments' => $shipments]);
+
+        return view('shipments_details', [
+            'shipments' => $shipments
+        ]);
     }
+
+  
 
     public function edit(Shipment $shipment)
     {
@@ -236,4 +257,7 @@ class ShipmentController extends Controller
     {
         return view('shipments.show', compact('shipment'));
     }
+
+ 
+
 }
