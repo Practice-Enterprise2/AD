@@ -96,7 +96,6 @@ Route::get('/email/verify', function () {
 */
 
 // Shipment Pages
-// Add verification when code is finished TODO
 Route::get('/shipment', function() {
     return view('shipment');
 });
@@ -106,8 +105,14 @@ Route::get('/createShipment', function () {
 Route::get('/shipmentOverview', function() {
     return view('shipmentOverview');
 });
+
 Route::get('/shipmentOverview/{id}',[ShipmentController::class, 'getShipmentInfo']);
 Route::post('shipment', 'App\Http\Controllers\ShipmentController@insert');
+
+Route::get('/shipmentDashboard', function() {
+    return view('shipmentDashboard');
+});
+Route::get('/shipmentPerUser', [ShipmentController::class, 'getShipmentPerUser']);
 
 
 

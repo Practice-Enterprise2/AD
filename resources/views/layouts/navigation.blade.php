@@ -21,6 +21,9 @@
                         {{ __('Shipment') }}
                     </x-nav-link>
                      --}}
+                     <x-nav-link href="/shipmentDashboard">
+                        Shipment
+                     </x-nav-link>
    
                     @guest
                     @else
