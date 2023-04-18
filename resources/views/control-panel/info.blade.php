@@ -1,6 +1,8 @@
 <x-app-layout>
   <x-control-panel-layout>
-    <h1 class="text-3xl font-extrabold">{{ __('Info') }}</h1>
+    <x-slot:title>
+      {{ __('Info') }}
+    </x-slot:title>
 
     <div class="my-5">
       <h2 class="text-xl font-bold">Server Info</h2>

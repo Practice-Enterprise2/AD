@@ -1,6 +1,9 @@
 <x-app-layout>
   <x-control-panel-layout>
-    <h1 class="text-3xl font-extrabold">{{ __('Permissions') }}</h1>
+    <x-slot:title>
+      {{ __('Permissions') }}
+    </x-slot:title>
+
     <div class="my-5">
       <table class="w-full">
         <colgroup>
