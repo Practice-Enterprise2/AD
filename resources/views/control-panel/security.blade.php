@@ -1,6 +1,6 @@
 <x-app-layout>
   <x-control-panel-layout>
-    <h1 class="text-3xl font-extrabold">{{ __('Security') }}</h1>
+    <x-slot:title>{{ __('Security') }}</x-slot:title>
     <table class="mt-5 w-full">
       <colgroup>
         <col span="1" class="w-3/12">

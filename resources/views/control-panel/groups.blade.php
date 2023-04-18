@@ -1,6 +1,8 @@
 <x-app-layout>
   <x-control-panel-layout>
-    <h1 class="text-3xl font-extrabold">{{ __('Groups') }}</h1>
+    <x-slot:title>
+      {{ __('Groups') }}
+    </x-slot:title>
     <div class="my-5">
       <table class="w-full">
         <colgroup>

@@ -1,6 +1,6 @@
 <x-app-layout>
   <x-control-panel-layout>
-    <h1 class="text-3xl font-extrabold">{{ __('Users') }}</h1>
+    <x-slot:title>{{ __('Users') }}</x-slot:title>
 
     @canany(['view_all_users', 'view_all_roles', 'edit_any_user_info'])
       <div class="mt-5">
