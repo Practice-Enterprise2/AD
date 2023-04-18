@@ -10,6 +10,9 @@ use Illuminate\View\View;
 
 class contractlistcontroller extends Controller
 {
+    public function contract_pdf(){
+        
+    }
     public function contractFiltering(Request $request)
     {
         $filter = $request->query('filter');
