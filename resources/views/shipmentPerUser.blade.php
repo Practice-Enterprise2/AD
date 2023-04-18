@@ -52,6 +52,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button class="rounded-md border-2 border-red-600 px-3 text-white">Cancel</button>
+                <a href="{{ url('shipmentOverview/'.$data->id)}}"><button class="rounded-md border-2 border-blue-600 px-3 text-white">Info</button></a>
               </td>
             </tr>
             @endforeach

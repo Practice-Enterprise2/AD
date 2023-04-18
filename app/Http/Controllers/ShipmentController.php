@@ -73,13 +73,25 @@ class ShipmentController extends Controller
         $shipment = DB::table('shipments')
         ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')
         ->where('shipments.user_id', $id)
-        ->select('shipments.name', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
+        ->select('shipments.name','shipments.id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
         ->get();
 
 
 
         return view('shipmentPerUser', ['shipment' => $shipment], ['username' => $userName]);
         // return view('ShipmentPerUser', ['user' => $user]);
+    }
+
+    public function getShipmentInfo($id) 
+    {
+    
+        $data = Shipment::find($id); 
+        $address1 = Address::find($data->source_address_id);
+        $address2 = Address::find($data->destination_address_id);
+        
+        // Navigate to overview page of new shipment
+        // Add tracknTrace stuSff in it
+        return view('shipmentOverview', ['data' => $data], ['srcAddress' => $address1,'dstAddress' => $address2]);
     }
 
 }
