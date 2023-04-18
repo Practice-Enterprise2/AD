@@ -19,9 +19,9 @@ class ShipmentController extends Controller
     public function index(): View|Factory
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
-                            ->whereNot('status', 'Declined')
-                            ->with('waypoints')
-                            ->get();
+            ->whereNot('status', 'Declined')
+            ->with('waypoints')
+            ->get();
 
         return view('shipments.index', compact('shipments'));
     }
