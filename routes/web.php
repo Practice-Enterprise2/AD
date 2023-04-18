@@ -122,17 +122,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update');
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
-
+    
+    Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
+    Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
+    Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
+    Route::get('/shipmentGraphs', function () {
+            return view('graphs');
+    });
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
     });
 
-    Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
-    Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
-    Route::get('/shipmentGraphs', function () {
-        return view('graphs');
-    });
+    
 
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
