@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 class Shipment extends Model
 {
@@ -14,7 +15,17 @@ class Shipment extends Model
 
     use HasFactory;
     use SoftDeletes;
+    use Sortable;
 
+    protected $primaryKey = 'id';
+    public $sortable = [
+        'id',
+        'receiver_name',
+        'destination_address',
+        'shipment_date',
+        'delivery_date',
+        'status',
+    ];
     protected $fillable = [
         'name',
         'shipment_date',

@@ -1,17 +1,21 @@
+
 <x-app-layout>
+<script src="tablesort.min.js">
+    document.querySelector('.table-sortable').tsortable()
+</script> 
 <div class="flex justify-center">
     <div class="w-full">
         <h1 class="text-3xl font-semibold mb-4 text-center">Shipment Tracking</h1>
 
         <div class="overflow-x-auto">
-            <table class="table-auto border-collapse border border-gray-400 mx-auto">
+            <table class="table-auto table-sortable border-collapse border border-gray-400 mx-auto">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentName</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">Destination Address</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentDate</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">DeliveryDate</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400">ShipmentStatus</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="receiver_name">@sortablelink('receiver_name','ShipmentName')</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="destination_address">@sortablelink('street','Destination Address')</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="shipment_date">@sortablelink('shipment_date','ShipmentDate')</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="delivery_date">@sortablelink('delivery_date','DeliveryDate')</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="status">@sortablelink('status','ShipmentStatus')</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400"></th>
                     </tr>
                 </thead>
