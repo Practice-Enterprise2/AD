@@ -12,7 +12,6 @@
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="receiver_name">@sortablelink('receiver_name','ShipmentName')</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="destination_address">@sortablelink('street','Destination Address')</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="shipment_date">@sortablelink('shipment_date','ShipmentDate')</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="delivery_date">@sortablelink('delivery_date','DeliveryDate')</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-gray-600 uppercase border-b border-gray-400" id="status">@sortablelink('status','ShipmentStatus')</th>
@@ -25,7 +24,6 @@
                     
                         <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}">
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->receiver_name }}</td>
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{$shipment->street}} {{$shipment->house_number}}, &nbsp;&nbsp; {{$shipment->city}} {{$shipment->postal_code}} &nbsp;&nbsp;  {{$shipment->country}}  </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->shipment_date }}</td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->delivery_date }}</td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">
@@ -97,6 +95,7 @@
                     @endif
                 </tbody>
             </table>
+            {!! $shipments->appends(Request::except('page'))->render() !!}
         </div>
         
         

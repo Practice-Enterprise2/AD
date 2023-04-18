@@ -139,7 +139,7 @@ class ShipmentController extends Controller
         // ->where('shipments.user_id', $id)
         ->select('shipments.receiver_name','shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
         ->get();
-
+        $shipments = Shipment::sortable()->paginate(20);
         return view('shipments', ['shipments' => $shipments]);
     }
 
@@ -158,6 +158,8 @@ class ShipmentController extends Controller
         ]);
     }
 
+    
+
     // Cancel a shipment with modal
     public function cancel($id) 
     {            
@@ -169,6 +171,7 @@ class ShipmentController extends Controller
         ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')        
         ->select('shipments.receiver_name','shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
         ->get();
+        
         return view('shipments', ['shipments' => $shipments]);
     }
 

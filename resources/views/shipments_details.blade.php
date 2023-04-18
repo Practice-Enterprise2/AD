@@ -70,6 +70,7 @@
           <div class="px-6 py-4">
             <h2 class="text-xl font-semibold mb-4">{{ __('Sender Information') }}</h2>
             <p class="text-gray-700 mb-2"><span class="font-medium">{{ __('Name') }}:</span> {{ $shipment->receiver_name }}</p>
+            <p class="text-gray-700 mb-2"><span class="font-medium">{{ __('Destination addres') }}:</span> {{$shipment->street}} {{$shipment->house_number}}, {{$shipment->city}} {{$shipment->postal_code}} {{$shipment->country}}</p>
           </div>
         </div>
 

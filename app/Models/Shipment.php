@@ -19,9 +19,8 @@ class Shipment extends Model
 
     protected $primaryKey = 'id';
     public $sortable = [
-        'id',
         'receiver_name',
-        'destination_address',
+        
         'shipment_date',
         'delivery_date',
         'status',
