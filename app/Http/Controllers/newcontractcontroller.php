@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\testmodel;
+use App\Models\Contract;
 use Illuminate\Support\Facades\DB;
 
 class newcontractcontroller extends Controller
@@ -25,16 +25,25 @@ class newcontractcontroller extends Controller
             'airportid.required'=>'The AirportID field is required.',
 
         ]);
-        $test = new testmodel;
-        $test->airlineID = $request->airlineid;
+      /*  $test = new Contract;
+        $test->airline_id = $request->airlineid;
         $test->creationdate = $request->creationdate;
         $test->expirationdate = $request->expirationdate;
         $test->price = $request->price;
         $test->airportID = $request->airportid;
         $test->departlocation = $request->departlocation;
-        $test->destinationlocation = $request->destinationlocation;
+        $test->destinationlocation = $request->destinationlocation; */
+        $test = new Contract;
+        $test->airline_id = $request["airlineid"];
+        $test->start_date = $request["creationdate"];
+        $test->end_date = $request["expirationdate"];
+        $test->price = $request["price"];
+        $test->airport_id = $request["airportid"];
+        $test->depart_location = $request["departlocation"];
+        $test->destination_location = $request["destinationlocation"];
         $test->save();
-        return view('test');
+        $data = DB::select('select * from airlines');
+        return view('new_contract',['data' => $data]);
     }
     function dropdown(){
         $data = DB::select('select * from airlines');
