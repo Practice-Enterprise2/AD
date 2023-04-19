@@ -38,8 +38,12 @@ class Employee extends Model
         'Iban',
         'created_at',
         'updated_at',
-
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     //easily retrieve Employee associated with Shift by calling the employee method on a Shift instance.
     public function shifts()

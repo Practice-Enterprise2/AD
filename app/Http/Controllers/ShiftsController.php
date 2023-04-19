@@ -16,9 +16,10 @@ class ShiftsController extends Controller
      */
     public function index()
     {
-        $shifts = Shift::with('employee')->get();
-    
-        return view('shiftplanner/shiftplanner', compact('shifts'));
+        $date = now()->toDateString();
+        $employees = Employee::with('user')->get();
+        $shifts = Shift::whereDate('planned_start_time', $date)->get();
+        return view('shiftplanner/shiftplanner', compact('employees', 'shifts', 'date'));
     }
 
     public function showDayView($date)
