@@ -1,14 +1,42 @@
 <?php
 namespace App\Traits;
+
+use App\Mail\InvoiceMail;
 use App\Models\Invoice;
 use App\Models\Address;
 use App\Models\Dimensions;
 use App\Models\Shipment;
 use App\Models\User;
 use DateTime;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
+
+
 trait Invoices{
+    public function generateUniqueCode()
+    {
+    
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersNumber = strlen($characters);
+        $codeLength = 6;
+    
+        $code = '';
+    
+        while (strlen($code) < 6) {
+            $position = rand(0, $charactersNumber - 1);
+            $character = $characters[$position];
+            $code = $code.$character;
+        }
+    
+        $invoices = DB::table('invoices')->select('invoice_code')->value('invoice_code');
+        if($invoices != null){
+            if (in_array($code, $invoices)) {
+                $this->generateUniqueCode();
+            }
+        }
+        return $code;
+    }
 
     public function generateInvoice(){
         $lastShipment = Shipment::orderBy('id', 'desc')->first();       
@@ -37,8 +65,11 @@ trait Invoices{
             'weight' => $lastShipment->weight,
             'due_date' => $due_date,
             'total_price' => $total_price,
-            'total_price_excl_vat' => $total_price_excl_vat
+            'total_price_excl_vat' => $total_price_excl_vat,
+            'invoice_code' => $this->generateUniqueCode(),
         ]);
+
+        
     }
     
 }

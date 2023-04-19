@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('total_price_excl_vat');
             $table->boolean('is_paid')->default(0)->change(); 
             $table->timestamps();
+            $table->string('invoice_code');
         });
     }
 

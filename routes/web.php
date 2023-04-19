@@ -140,5 +140,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
+//Email for invoice
+Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->middleware('auth')->name('mail.invoices');
 
 require __DIR__.'/auth.php';

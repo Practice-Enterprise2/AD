@@ -15,5 +15,6 @@ class Invoice extends Model
         'due_date',
         'total_price',
         'total_price_excl_vat',
+        'invoice_code',
     ];
 }

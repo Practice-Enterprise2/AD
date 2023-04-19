@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceMail;
 use App\Models\Address;
 use App\Models\Dimensions;
+use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Waypoint;
@@ -14,6 +16,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Traits\Invoices; // Traits for invoices
+use Exception;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
@@ -43,7 +48,7 @@ class ShipmentController extends Controller
     }
 
     //store
-    public function store(): string
+    public function store(): View|RedirectResponse
     {
 
         $source_address = Address::query()->where([
@@ -119,7 +124,7 @@ class ShipmentController extends Controller
             $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
         } else {
             //Dense Cargo rate
-            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif; 
         }
 
         $shipment->status = 'Awaiting Confirmation';
@@ -127,8 +132,13 @@ class ShipmentController extends Controller
         $shipment->push();
         //After the shipment has been created, we will generate an invoice with the following Trait
         $this->generateInvoice();
+
+        $last_invoice = Invoice::orderBy('id', 'desc')->first();
+        $last_invoice_id = $last_invoice->id;
+        //Send mail
+        return redirect()->route('mail.invoices', ['invoice' => $last_invoice_id]);
         // notify user with the shipment_id as Tracking Number
-        return 'Tracking Number: '.$shipment->id;
+        // return 'Tracking Number: '.$shipment->id;
     }
 
     public function requests(): View|Factory
@@ -251,5 +261,33 @@ class ShipmentController extends Controller
     {
         return view('shipments.show', compact('shipment'));
     }
-    
+
+    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse{
+
+        $subject = 'Your invoice for your latest shipment.';
+        $user_id = auth()->user()->id;
+        $emailke = auth()->user()->email;
+        $name = auth()->user()->name;
+        $invoice_id = $invoice->id;
+        $shipment_id = DB::table('invoices')->select('shipment_id')->where('id', $invoice_id)->value('id');
+        $shipment_user_id = DB::table('shipments')->select('user_id')->where('id', $shipment_id)->value('id');
+
+        if($shipment_user_id != $user_id){
+            return redirect()->route('home');
+        }
+        $data = [
+            'subject'=> $subject,
+            'name' => $name,
+            'weight' => $invoice->weight,
+            'total_price' => $invoice->total_price,
+            'invoice_code' => $invoice->invoice_code,
+        ];
+        try{
+            Mail::to('r0902342@student.thomasmore.be')->send(new InvoiceMail($data));
+            return view('invoices.invoice_generated');
+        }
+        catch(Exception $th){
+            return response($th);
+        }
+    }
 }
