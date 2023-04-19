@@ -6,6 +6,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
+use App\Http\Controllers\InvoiceList;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::view('/new_employee', 'add_employee')->name('employee.create');
     Route::view('/respond', 'respond');
+    
 
     /*
      * Resource controllers.
@@ -73,6 +75,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
         Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
+
+    Route::controller(InvoiceList::class)->group(function(){
+        Route::get('/invoices_list', 'index')->name('invoices-list');
+    });
+
 });
 
 // Routes that require an authenticated session.
