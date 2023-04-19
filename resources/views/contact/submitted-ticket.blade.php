@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="text-stone-50">
+<div>
 
     <h1>Ticket submitted successfully</h1>
 
