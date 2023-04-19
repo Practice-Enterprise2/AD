@@ -83,27 +83,29 @@
   <div class="container pt-4">
   <div class="">
   <table border="1">
-    <thead> 
-        <th>@sortablelink('contract_ID', 'contract_ID')</th>
-        <th>@sortablelink('airline_ID', 'airline_ID')</th>
+    <thead>
+        <th>@sortablelink('contract_id', 'contract_id')</th>
+        <th>@sortablelink('airline_id', 'airline_id')</th>
         <th>@sortablelink('start_date', 'start_date')</th>
         <th>@sortablelink('end_date', 'end_date')</th>
         <th>@sortablelink('price', 'price')</th>
-        <th>@sortablelink('depart_airport', 'depart_airport')</th>
-        <th>@sortablelink('destination_airport', 'destination_airport')</th>
-        
+        <th>@sortablelink('airport_id', 'airport_id')</th>
+        <th>@sortablelink('depart_location', 'depart_location')</th>
+        <th>@sortablelink('destination_location', 'destination_location')</th>
+
     </thead>
     <tbody>
 
     @foreach ($contracts as $contract)
          <tr>
-            <td>{{ $contract->contract_ID }}</td>
-            <td>{{ $contract->airline_ID }}</td>
+            <td>{{ $contract->id }}</td>
+            <td>{{ $contract->airline_id }}</td>
             <td>{{ $contract->start_date }}</td>
             <td>{{$contract->end_date }}</td>
             <td>{{ $contract->price }}</td>
-            <td>{{ $contract->depart_airport }}</td>
-            <td>{{ $contract->destination_airport }}</td>
+            <td>{{ $contract->airport_id }}</td>
+            <td>{{ $contract->depart_location }}</td>
+            <td>{{ $contract->destination_location }}</td>
 
          </tr>
          @endforeach
@@ -122,6 +124,6 @@
 
 
 
-    
+
 
 
