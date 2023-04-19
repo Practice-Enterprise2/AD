@@ -148,6 +148,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('shifts', ShiftsController::class);
     Route::get('/shiftplanner', [ShiftsController::class, 'index']);
     Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
+    Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
+
+
+    
 });
 
 

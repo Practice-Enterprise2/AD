@@ -23,6 +23,12 @@ class ShiftsController extends Controller
         return view('shiftplanner/shiftplanner', compact('employees', 'shifts', 'date'));
     }
 
+    public function shiftsCount($date)
+    {
+        $shiftsCount = Shift::whereDate('planned_start_time', $date)->count();
+        return response()->json($shiftsCount);
+    }
+
     public function showDayView($date)
     {
         // Convert the date from the route parameter to a DateTime object
