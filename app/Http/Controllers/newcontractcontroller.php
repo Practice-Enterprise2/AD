@@ -40,4 +40,5 @@ class newcontractcontroller extends Controller
         $data = DB::select('select * from airlines');
         return view('new_contract',['data' => $data]);
     }
+
 }

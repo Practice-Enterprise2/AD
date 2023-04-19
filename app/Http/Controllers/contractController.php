@@ -19,6 +19,7 @@ class contractController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
        $contracts = DB::select('select * from contracts c INNER JOIN airports a ON c.depart_airport = a.code INNER JOIN airlines al ON c.airline_ID = al.id WHERE c.active = 1');

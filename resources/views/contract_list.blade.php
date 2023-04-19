@@ -83,8 +83,8 @@
   <div class="container pt-4">
   <div class="">
   <table border="1">
-    <thead>
-        <th>@sortablelink('contract_id', 'contract_id')</th>
+    <thead> 
+        <<th>@sortablelink('contract_id', 'contract_id')</th>
         <th>@sortablelink('airline_id', 'airline_id')</th>
         <th>@sortablelink('start_date', 'start_date')</th>
         <th>@sortablelink('end_date', 'end_date')</th>
@@ -98,7 +98,7 @@
 
     @foreach ($contracts as $contract)
          <tr>
-            <td>{{ $contract->id }}</td>
+         <td>{{ $contract->id }}</td>
             <td>{{ $contract->airline_id }}</td>
             <td>{{ $contract->start_date }}</td>
             <td>{{$contract->end_date }}</td>
@@ -106,6 +106,7 @@
             <td>{{ $contract->airport_id }}</td>
             <td>{{ $contract->depart_location }}</td>
             <td>{{ $contract->destination_location }}</td>
+            <td><a href="{{Route('contract_pdf')}}">PDF</a></td>
 
          </tr>
          @endforeach
@@ -124,6 +125,6 @@
 
 
 
-
+    
 
 
