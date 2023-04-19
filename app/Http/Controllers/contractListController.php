@@ -5,17 +5,17 @@ use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\contractList;
-use Barryvdh\DomPDF\Facade as PDF;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Contract;
 
 use Illuminate\View\View;
 
 class contractlistcontroller extends Controller
 {
-    public function contract_pdf(Request $request){
-        $data = [$request->contract_ID ,$request->airline_ID ,$request->start_date,$request->end_date,
-        $request->price,$request->depart_airport, $request->destination_airport];
-        $pdf = PDF::loadView('pdf', $data);
+    public function contract_pdf($id){
+        
+        $contract = Contract::find($id);
+        $pdf = Pdf::loadView('pdf', compact('contract'));
         return $pdf->download('contract.pdf');
     }
     public function contractFiltering(Request $request)

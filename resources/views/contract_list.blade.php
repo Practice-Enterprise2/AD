@@ -49,7 +49,7 @@
        id="sidebarMenu"
        class=" d-lg-block sidebar bg-white"
        >
-       <a href="contractsMenu"><h1><b>Contracts</b></h1></a>
+       <a href="page2"><h1><b>Contracts</b></h1></a>
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a
@@ -87,12 +87,8 @@
 <form action="contract_list" method="GET">
     @csrf
     <div>
-      <p><label for="filter">Search contract id:</label></p>
-      <p><input type="text" id="filter" name="filter" placeholder="contract id..."></p>
-      <p><label for="filter1">Search by depart location:</label></p>
-      <p><input type="text" id="filter1" name="filter1" placeholder="depart location..."></p>
-      <p><label for="filter2">Search by destination location:</label></p>
-      <p><input type="text" id="filter2" name="filter2" placeholder="destination location..."></p>
+      <p><label for="filter">Search contracts</label></p>
+      <p><input type="text" id="filter" name="filter" placeholder="contract name..."></p>
       <p><label for="active">active contracts:</label></p>
       <p><label for="c_active">active</label><input type="checkbox" id="c_active" name="c_active"><label for="c_inactive">inactive</label><input type="checkbox" id="c_inactive" name="c_inactive"></p>
       
@@ -100,8 +96,8 @@
     <button type="submit">Search</button>
 </form>
   <table border="1">
-    <thead>
-        <th>@sortablelink('contract_id', 'contract_id')</th>
+    <thead> 
+        <<th>@sortablelink('contract_id', 'contract_id')</th>
         <th>@sortablelink('airline_id', 'airline_id')</th>
         <th>@sortablelink('start_date', 'start_date')</th>
         <th>@sortablelink('end_date', 'end_date')</th>
@@ -115,14 +111,15 @@
 
     @foreach ($contracts as $contract)
          <tr>
-            <td>{{ $contract->id }}</td>
+         <td>{{ $contract->id }}</td>
             <td>{{ $contract->airline_id }}</td>
             <td>{{ $contract->start_date }}</td>
-            <td>{{$contract->end_date }}</td>
+            <td>{{ $contract->end_date }}</td>
             <td>{{ $contract->price }}</td>
             <td>{{ $contract->airport_id }}</td>
             <td>{{ $contract->depart_location }}</td>
             <td>{{ $contract->destination_location }}</td>
+            <td><a href="{{Route('contract_pdf', $contract->id)}}">PDF</a></td>
 
          </tr>
          @endforeach
@@ -141,6 +138,6 @@
 
 
 
-
+    
 
 

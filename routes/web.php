@@ -136,7 +136,7 @@ Route::post('editAirport', [AirportController::class, 'updateAirport']);
 
 Route::post('plaats', [newcontractcontroller::class, 'plaats']);
 Route::get('new_contract', [newcontractcontroller::class, 'dropdown']);
-Route::get('/contract_pdf',[contractlistcontroller::class,'contract_pdf']);
+Route::get('/contract_pdf/{id}',[contractlistcontroller::class,'contract_pdf'])->name('contract_pdf');
 
 //contract list
 Route::get('/contract_list', function () {
