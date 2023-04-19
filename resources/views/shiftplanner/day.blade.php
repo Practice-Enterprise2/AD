@@ -1,15 +1,15 @@
 <x-app-layout>
-    <div class="py-12">
+<div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <h2 class="font-bold text-2xl mb-4 m-3">Shifts for {{ $date }}</h2>
 
-                <div class="grid grid-cols-1 gap-4 justify-center">
-                    @foreach($employees as $employee)
-                        @php
-                            $shifts = $employee->shifts()->whereDate('planned_start_time', '=', $date)->get();
-                        @endphp
-                        @if(count($shifts) > 0)
+                @foreach($employees as $employee)
+                    @php
+                        $shifts = $employee->shifts()->whereDate('planned_start_time', '=', $date)->get();
+                    @endphp
+                    @if(count($shifts) > 0)
+                        <div class="grid grid-cols-1 gap-4 justify-center">
                             <div class="border p-4 rounded">
                                 <table class="table-auto w-full">
                                     <thead>
@@ -41,9 +41,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
         <input type="datetime-local" id="planned_end_time" name="planned_end_time" class="form-input block w-full appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4 flex justify-center">
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">Add Shift</button>
     </div>
 </form>
