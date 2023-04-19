@@ -101,12 +101,12 @@
          <td>{{ $contract->id }}</td>
             <td>{{ $contract->airline_id }}</td>
             <td>{{ $contract->start_date }}</td>
-            <td>{{$contract->end_date }}</td>
+            <td>{{ $contract->end_date }}</td>
             <td>{{ $contract->price }}</td>
             <td>{{ $contract->airport_id }}</td>
             <td>{{ $contract->depart_location }}</td>
             <td>{{ $contract->destination_location }}</td>
-            <td><a href="{{Route('contract_pdf')}}">PDF</a></td>
+            <td><a href="{{Route('contract_pdf', $contract->id)}}">PDF</a></td>
 
          </tr>
          @endforeach
