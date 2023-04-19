@@ -72,4 +72,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(BusinessCustomer::class);
     }
+
+    public function setNameAttribute($value)
+    {
+        if ($value !== $this->name) {
+            $this->attributes['name'] = $value;
+            $this->attributes['email_verified_at'] = null;
+            $this->sendEmailVerificationNotification();
+        } else {
+            $this->attributes['name'] = $value;
+        }
+    }
 }

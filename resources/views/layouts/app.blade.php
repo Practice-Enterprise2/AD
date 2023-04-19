@@ -41,23 +41,22 @@ Slots:
   @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-    @include('layouts.navigation')
-    <!-- Page Heading -->
-    @if (isset($header))
-      <header class="bg-white shadow dark:bg-gray-800">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          {{ $header }}
-        </div>
-      </header>
-    @endif
+<body
+  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
+  @include('layouts.navigation')
 
-    <!-- Page Content -->
-    <main>
-      {{ $slot }}
-    </main>
-  </div>
+  @if (isset($header))
+    <header class="bg-white shadow dark:bg-gray-800">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        {{ $header }}
+      </div>
+    </header>
+  @endif
+
+  <main class="contents">
+    {{ $slot }}
+  </main>
+
   @livewireScripts
 </body>
 
