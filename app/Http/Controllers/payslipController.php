@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-class payslipController extends Controller
+class PayslipController extends Controller
 {
     private function tax25($taxable)
     {
