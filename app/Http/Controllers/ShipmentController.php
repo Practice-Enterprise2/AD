@@ -284,7 +284,7 @@ class ShipmentController extends Controller
         ];
         try{
             Mail::to('r0902342@student.thomasmore.be')->send(new InvoiceMail($data));
-            return view('invoices.invoice_generated');
+            return view('invoices.invoice_generated', compact('data'));
         }
         catch(Exception $th){
             return response($th);

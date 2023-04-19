@@ -28,9 +28,8 @@ trait Invoices{
             $character = $characters[$position];
             $code = $code.$character;
         }
-    
-        $invoices = DB::table('invoices')->select('invoice_code')->value('invoice_code');
-        if($invoices != null){
+        $invoices = array(DB::table('invoices')->select('invoice_code')->value('invoice_code'));
+        if($invoices != null || count($invoices) <= 1){
             if (in_array($code, $invoices)) {
                 $this->generateUniqueCode();
             }
