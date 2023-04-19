@@ -37,7 +37,6 @@
     input {
       width: 100%;
       border: black solid 1px;
-      color: black;
     }
 
     tr {
