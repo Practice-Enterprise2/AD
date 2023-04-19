@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+
         Schema::dropIfExists('edits');
-        
+
         Schema::create('edits', function (Blueprint $table) {
             $table->id();
             $table->string('soortEdit', 24);

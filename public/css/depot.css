@@ -1,11 +1,11 @@
-name{
+name {
     color: lightblue;
 }
 .child {
     margin-bottom: 50px;
 }
 
-*{
+* {
     color: white;
 }
 .wrapper {
@@ -22,7 +22,8 @@ name{
     display: flex;
     flex-direction: row;
 }
-.dataCard,.relButtons {
+.dataCard,
+.relButtons {
     display: flex;
     flex-direction: row;
 }
@@ -31,7 +32,7 @@ name{
     font-weight: bold;
     margin-bottom: 50px;
 }
-.airportCard{
+.airportCard {
     width: 35%;
     margin: auto;
     justify-content: center;
@@ -42,12 +43,13 @@ name{
     border-top: 1px solid lightblue;
 }
 
-.dataCard div,.legendDiv div {
+.dataCard div,
+.legendDiv div {
     min-width: 250px;
     text-align: center;
 }
 
-.legendDiv{
+.legendDiv {
     font-weight: bold;
 }
 
@@ -65,7 +67,9 @@ h1 {
     font-size: 26px !important;
 }
 
-input,select,textarea {
+input,
+select,
+textarea {
     background-color: rgba(43, 43, 43, 0.969);
     border: 1px solid lightblue;
 }
@@ -74,7 +78,7 @@ input,select,textarea {
     margin: auto;
     width: 100%;
     text-align: center;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
@@ -82,7 +86,6 @@ input,select,textarea {
     width: 30vw;
     height: 30vh;
     margin: 0 auto;
-    
 }
 
 .wrapper {
@@ -91,8 +94,7 @@ input,select,textarea {
     text-align: center;
 }
 
-
-table{
+table {
     margin: 0 auto;
     width: 20%;
     text-align: center;
