@@ -93,9 +93,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
-            Route::get('/groups', 'groups')->name('groups')->middleware('permission:view_all_roles');
-            Route::get('/groups/create', [RoleController::class, 'create'])->name('groups.create')->middleware('permission:create_role');
-            Route::get('/groups/{group}/edit', 'groups_edit')->name('groups.edit')->middleware('permission:edit_roles');
+            Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
+            Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
+            Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
             Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
             Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
             Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');

@@ -28,14 +28,14 @@ class ControlPanelController extends Controller
         return $this->view('users.edit', ['user' => $user]);
     }
 
-    public function groups(): View|Factory
+    public function roles(): View|Factory
     {
-        return $this->view('groups');
+        return $this->view('roles');
     }
 
-    public function groups_edit(int $group): View|Factory
+    public function roles_edit(int $role): View|Factory
     {
-        return $this->view('groups.edit', ['group' => $group]);
+        return $this->view('roles.edit', ['role' => $role]);
     }
 
     public function permissions(): View|Factory

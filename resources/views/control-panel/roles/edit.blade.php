@@ -13,10 +13,10 @@
     </x-slot:sidebar>
 
     <div class="my-5">
-      @livewire('groups.edit', ['role_id' => $group])
+      @livewire('roles.edit', ['role_id' => $role])
     </div>
     <div class="my-5">
-      @livewire('groups.permissions.edit', ['role' => \App\Models\Role::findOrFail($group)])
+      @livewire('roles.permissions.edit', ['role' => \App\Models\Role::findOrFail($role)])
     </div>
   </x-control-panel-layout>
 </x-app-layout>
