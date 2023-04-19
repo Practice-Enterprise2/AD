@@ -40,4 +40,10 @@ class Employee extends Model
         'updated_at',
 
     ];
+
+    //easily retrieve Employee associated with Shift by calling the employee method on a Shift instance.
+    public function shifts()
+    {
+        return $this->hasMany(Shift::class);
+    }
 }

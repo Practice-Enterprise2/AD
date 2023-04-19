@@ -15,6 +15,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\ShiftsController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -134,7 +135,23 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+
+
+    //Shifts
+    Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts.index');
+    Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
+    Route::post('/shifts', [ShiftsController::class, 'store'])->name('shifts.store');
+    Route::get('/shifts/{shift}', [ShiftsController::class, 'show'])->name('shifts.show');
+    Route::get('/shifts/{shift}/edit', [ShiftsController::class, 'edit'])->name('shifts.edit');
+    Route::put('/shifts/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
+    Route::delete('/shifts/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
+    Route::resource('shifts', ShiftsController::class);
+    Route::get('/shiftplanner', [ShiftsController::class, 'index']);
+    Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
 });
+
+
+
 
 // Email verification
 Route::get('/email/verify', function () {

@@ -16,6 +16,10 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.5",
+        "@fullcalendar/daygrid": "^6.1.5",
+        "@fullcalendar/timegrid": "^6.1.5",
+        "fullcalendar": "^6.1.5",
         "gunzip": "^1.2.2",
         "tw-elements": "^1.0.0-beta1"
     },
