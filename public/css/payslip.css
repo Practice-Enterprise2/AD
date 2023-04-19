@@ -1,0 +1,42 @@
+.discription {
+    float: left;
+    width: 49.5%;
+    margin-bottom: 0px;
+    margin-left: 0.5%;
+}
+.amount {
+    float: left;
+    width: 49.5%;
+    margin-bottom: 0px;
+    margin-right: 0.5%;
+}
+.summary {
+    float: left;
+    width: 99%;
+    margin-bottom: 0px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+.summary p {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    margin: 5px 0px;
+}
+.iban {
+    text-align: center;
+}
+.earnings {
+    text-align: right;
+}
+div p {
+    margin: 10px;
+}
+div h3 {
+    background-color: gray;
+    padding: 5px;
+}
+div h4 {
+    font-weight: normal;
+    background-color: lightgray;
+}

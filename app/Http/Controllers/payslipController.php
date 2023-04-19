@@ -128,13 +128,12 @@ class PayslipController extends Controller
 
 
 
-    
+
     public function calculateSendPayslip(Request $req)
     {
         $employees = DB::select('SELECT * FROM employees WHERE deleted_at IS NULL');
 
-        foreach ($employees as $employee)
-        {
+        foreach ($employees as $employee) {
             $employee_id = $employee->id;
             $employeeContract = DB::table('employee_contracts')
                                 ->where('employee_id', $employee_id)
@@ -151,7 +150,7 @@ class PayslipController extends Controller
             $startYear = Carbon::now()->startOfYear();
 
             $takenAbsences = DB::table('absences')
-                                    ->where('contract_id', 2)//$contract_id)
+                                    ->where('contract_id', $contract_id)
                                     ->where('status', 'taken')
                                     ->where('approval_time', '<=', $lastdayForTaken)
                                     ->where('end_date', '>=', $startYear)
@@ -162,22 +161,19 @@ class PayslipController extends Controller
             $firstDate = Carbon::now()->startOfYear();
             $lastDate = Carbon::now()->endOfYear();
 
-            foreach ($takenAbsences as $takenAbsence)
-            {
+            foreach ($takenAbsences as $takenAbsence) {
                 if ($takenAbsence->type == 'holiday') {
                     $takenHolidays = $takenHolidays + $this->takenAbsence($takenAbsence, $firstDate, $lastDate);
                 } else {
                     $takenSickdays = $takenSickdays + $this->takenAbsence($takenAbsence, $firstDate, $lastDate);
                 }
             }
-            error_log('takenH: '.$takenHolidays);
-            error_log('takenS: '.$takenSickdays);
 
             $startMonth = Carbon::now()->startOfMonth();
-            $endMonth = Carbon::now()->endOfMonth()->toDateString();
+            $endMonth = Carbon::now()->endOfMonth();
             $absencesThisMonth = DB::table('absences')
-                                    ->where('contract_id', 2)//$contract_id)
-                                    ->where('start_date', '<=', $endMonth)
+                                    ->where('contract_id', $contract_id)
+                                    ->where('start_date', '<=', $endMonth->toDateString())
                                     ->where('end_date', '>', $lastdayForTaken->toDateString())
                                     ->where(function($query) {
                                         $query->where('status', 'taken')
@@ -190,8 +186,7 @@ class PayslipController extends Controller
             $holidays = 0;
             $sickdays = 0;
 
-            foreach ($absencesThisMonth as $absence)
-            {
+            foreach ($absencesThisMonth as $absence) {
                 if ($absence->start_date > $lastdayForTaken->toDateString() && $absence->start_date < $startMonth->toDateString() && $absence->approval_time > $lastdayForTaken)
                 {
                     if ($absence->type == 'holiday') {
@@ -215,8 +210,6 @@ class PayslipController extends Controller
                     }
                 }
             }
-            error_log('unaccountedH: '.$unaccountedHolidays."\tH: ".$holidays);
-            error_log('unaccountedS: '.$unaccountedSickdays."\tS: ".$sickdays);
 
             if (Carbon::now()->format('M') == 'Jan') {
                 $totalHolidays = $takenHolidays + $holidays;
@@ -225,28 +218,66 @@ class PayslipController extends Controller
                 $totalHolidays = $takenHolidays + $unaccountedHolidays + $holidays;
                 $totalSickdays = $takenSickdays + $unaccountedSickdays + $sickdays;
             }
-            error_log('totalH: '.$totalHolidays);
-            error_log('totalS: '.$totalSickdays);
+
+            //posible working days for this month and last month
+            $daysThis = $this->getDays($startMonth->toDateString(), $endMonth->toDateString());
+            $daysLast = $this->getDays($startMonth->subMonth()->toDateString(), $endMonth->subMonth()->toDateString());
+            
+            //pay per day for this month and last month
+            $payDayThis = $employee->salary / $daysThis;
+            $payDayLast = $employee->salary / $daysLast;
 
             $allowedAbsences = DB::table('holiday_saldos')
-                                    ->where('contract_id', 2)//$contract_id)
+                                    ->where('contract_id', $contract_id)
                                     ->where('year', Carbon::now()->format('Y'))
                                     ->get();
 
-            foreach ($allowedAbsences as $allowedAbsence)
-            {
+            $unpaidAbsence = 0;
+            foreach ($allowedAbsences as $allowedAbsence) {
                 if ($allowedAbsence->type == 'holiday') {
-                    $remainingHolidays = $allowedAbsence->allowed_days - $totalHolidays;
+                    if ($allowedAbsence->allowed_days < $totalHolidays) {
+                        if (($totalHolidays - $allowedAbsence->allowed_days) > ($holidays + $unaccountedHolidays)) {
+                            $unpaidHolidays = $holidays + $unaccountedHolidays;
+                            $paidHolidays = 0;
+                            $unpaidAbsence = $unpaidAbsence + ($holidays * $payDayThis) + ($unaccountedHolidays * $payDayLast);
+                        } elseif (($totalHolidays - $allowedAbsence->allowed_days) > $holidays) {
+                            $unpaidUnaccountedHolidays = $totalHolidays - $allowedAbsence->allowed_days - $holidays;
+                            $paidHolidays = $unaccountedHolidays - $unpaidUnaccountedHolidays;
+                            $unpaidAbsence = $unpaidAbsence + ($holidays * $payDayThis) + ($unpaidUnaccountedHolidays * $payDayLast);
+                        } else {
+                            $unpaidHolidays = $totalHolidays - $allowedAbsence->allowed_days;
+                            $paidHolidays = ($holidays + $unaccountedHolidays) - $unpaidHolidays;
+                            $unpaidAbsence = $unpaidAbsence + ($unpaidHolidays * $payDayThis);
+                        }
+                    } else {
+                        $unpaidHolidays = 0;
+                        $paidHolidays = $holidays + $unaccountedHolidays;
+                    }
                 } else {
-                    $remainingSickdays = $allowedAbsence->allowed_days - $totalSickdays;
+                    if ($allowedAbsence->allowed_days < $totalSickdays) {
+                        if (($totalSickdays - $allowedAbsence->allowed_days) > ($sickdays + $unaccountedSickdays)) {
+                            $unpaidSickdays = $sickdays + $unaccountedSickdays;
+                            $paidSickdays = 0;
+                            $unpaidAbsence = $unpaidAbsence + ($sickdays * $payDayThis) + ($unaccountedSickdays * $payDayLast);
+                        } elseif (($totalSickdays - $allowedAbsence->allowed_days) > $sickdays) {
+                            $unpaidUnaccountedSickdays = $totalSickdays - $allowedAbsence->allowed_days - $sickdays;
+                            $paidSickdays = $unaccountedSickdays - $unpaidUnaccountedSickdays;
+                            $unpaidAbsence = $unpaidAbsence + ($sickdays * $payDayThis) + ($unpaidUnaccountedSickdays * $payDayLast);
+                        } else {
+                            $unpaidSickdays = $totalSickdays - $allowedAbsence->allowed_days;
+                            $paidSickdays = ($sickdays + $unaccountedSickdays) - $unpaidSickdays;
+                            $unpaidAbsence = $unpaidAbsence + ($unpaidSickdays * $payDayThis);
+                        }
+                    } else {
+                        $unpaidSickdays = 0;
+                        $paidSickdays = $sickdays + $unaccountedSickdays;
+                    }
                 }
             }
-            error_log('remainingH: '.$remainingHolidays);
-            error_log('remainingS: '.$remainingSickdays);
 
-            return
-
-            $grossSalary = $employee->salary;
+            //employee gross salary minus all unpaid vaction from this month and the unaccounted from last month;
+            $wage = $employee->salary;
+            $grossSalary = $wage - $unpaidAbsence;
 
             //nss calculation -> rsz berekening         #-- https://www.jobat.be/nl/art/hoeveel-bedraagt-de-rsz --#
             $nss = $grossSalary * 1.08;
@@ -257,8 +288,8 @@ class PayslipController extends Controller
             $taxes =$this->taxes($taxableIncome);
             $netEarnings = $taxableIncome - $taxes;
 
-            //calculate working days and hours
-            $workingDays = $this->getWorkingDays();
+            //calculate days and hours worked
+            $workingDays = $daysThis - ($holidays + $sickdays);
             $workingHours = $workingDays * 7.0;
 
             //payslip in pdf
@@ -266,11 +297,17 @@ class PayslipController extends Controller
                 'payDate' => date('d/m/Y'),
                 'workingDays' => round($workingDays, 1),
                 'workingHours' => round($workingHours, 1),
-                'grossEarnings' => round($grossSalary, 2),
+                'paidHolidays' => round($paidHolidays,1),
+                'unpaidHolidays' => round($unpaidHolidays,1),
+                'paidSickdays' => round($paidSickdays,1),
+                'unpaidSickdays' => round($unpaidSickdays,1),
+                'wage' => round($wage, 2),
+                'unpaidAbsence' => round($unpaidAbsence, 2),
+                'grossSalary' => round($grossSalary, 2),
                 'nss' => round($nssToPay, 2),
                 'taxableIncome' => round($taxableIncome, 2),
                 'taxes' => round($taxes, 2),
-                'IBAN' => $employee->IBAN,
+                'IBAN' => $employee->Iban,
                 'netEarnings' => round($netEarnings, 2)
             ];
               
@@ -278,8 +315,11 @@ class PayslipController extends Controller
             Storage::put('storage/pdf/payslip'.date('m-Y').'.pdf', $pdf->output());
 
             //send mail with payslip
-            $mail = $employee->email;
-            $name = $employee->first_name.' '.$employee->last_name;
+            $user = DB::table('users')
+                    ->where('id', $employee->user_id)
+                    ->first();
+            $mail = $user->email;
+            $name = $user->name;
 
             $data = [
                 'email' => $mail,

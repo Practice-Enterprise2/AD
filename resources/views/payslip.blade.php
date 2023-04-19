@@ -22,14 +22,37 @@
                 <h3>Discription</h3>
                 <p>
                     Days worked</br>
-                    Hours worked
+                    Hours worked</br>
+                    <hr>
+                </p>
+                <h4>Absences</h4>
+                <p>
+                    Paid holidays</br>
+                    Unpaid holidays</br>
+                    <hr>
+                </p>
+                <p>
+                    Paid sickdays</br>
+                    Unpaid sickdays
                 </p>
             </div>
             <div class="amount">
                 <h3>Amount</h3>
                 <p>
                     {{ $workingDays }}</br>
-                    {{ $workingHours }}
+                    {{ $workingHours }}</br>
+                    <hr>
+                </p>
+                <h4 style="color: lightgray;">Absences</h4>
+                <p>
+                    {{ $paidHolidays }}</br>
+                    {{ $unpaidHolidays }}</br>
+                    <hr>
+                </p>
+                <p>
+                    {{ $paidSickdays }}</br>
+                    {{ $unpaidSickdays }}
+                </p>
                 </p>
             </div>
         </div>
@@ -38,7 +61,9 @@
             <div class="discription">
                 <h3>Discription</h3>
                 <p>
-                    Gross earnings</br>
+                    Wage</br>
+                    Unpaid absence</br></br>
+                    Gross salary subject to nss</br>
                     nss (National Social Security)</br>
                     <hr></br>
                     Taxable income</br>
@@ -50,7 +75,9 @@
             <div class="amount">
                 <h3>Amount</h3>
                 <p>
-                    ${{ $grossEarnings }}</br>
+                    ${{ $wage }}</br>
+                    -${{ $unpaidAbsence }}</br></br>
+                    ${{ $grossSalary }}</br>
                     -${{ $nss }}</br>
                     <hr></br>
                     ${{ $taxableIncome }}</br>
