@@ -1,19 +1,22 @@
 <div>
-  <label for="search">Search</label>
-  <input name="search" type="text" class="w-full" wire:model="search"
-    autocomplete="off">
+  <input name="search" type="text" wire:model="search" autocomplete="off"
+    placeholder="Search">
   <table class="w-full">
     <tr class="text-left">
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
+      <th wire:click="sort_by('name')"
+        class="border hover:cursor-pointer dark:border-white">First Name</th>
+      <th wire:click="sort_by('last_name')"
+        class="border hover:cursor-pointer dark:border-white">Last Name</th>
+      <th wire:click="sort_by('email')"
+        class="border hover:cursor-pointer dark:border-white">Email</th>
+      <th class="border dark:border-white"></th>
     </tr>
     @foreach ($users as $user)
       <tr>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->last_name }}</td>
-        <td>{{ $user->email }}</td>
-        <td class="text-right"><a
+        <td class="border dark:border-white">{{ $user->name }}</td>
+        <td class="border dark:border-white">{{ $user->last_name }}</td>
+        <td class="border dark:border-white">{{ $user->email }}</td>
+        <td class="border text-right dark:border-white"><a
             href="{{ route('control-panel.users.edit', ['user' => $user->id]) }}">Edit</a>
         </td>
       </tr>

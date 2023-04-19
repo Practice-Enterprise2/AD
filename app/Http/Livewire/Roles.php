@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Users extends Component
+class Roles extends Component
 {
     use WithPagination;
 
@@ -37,10 +37,9 @@ class Users extends Component
 
     public function render(): View|Factory
     {
-        $query = User::query()
-            ->where('name', 'LIKE', "%$this->search%")
-            ->orWhere('email', 'LIKE', "%$this->search%")
-            ->orWhere('last_name', 'LIKE', "%$this->search%");
+        $query = Role::query()
+            ->where('name', 'LIKE', "%$this->search%");
+
         if ($this->sort_field) {
             if ($this->sort_ascending) {
                 $query->orderBy($this->sort_field);
@@ -49,6 +48,6 @@ class Users extends Component
             }
         }
 
-        return view('livewire.users', ['users' => $query->paginate(10)]);
+        return view('livewire.roles', ['roles' => $query->paginate(10)]);
     }
 }
