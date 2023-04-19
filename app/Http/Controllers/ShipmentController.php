@@ -250,4 +250,44 @@ class ShipmentController extends Controller
     {
         return view('shipments.show', compact('shipment'));
     }
+
+    // Bing Maps Locations API
+    // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
+    public function track()
+    {
+        // baseURL to request conversion
+        $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
+
+        // (!) don't forget to add your bing maps key here.
+        $key = 'your_bing_maps_key';
+
+        // address should be converted here, which will be used with the baseURL to send a request.
+        $country = str_ireplace(' ', '%20', request()->country);
+        $street = str_ireplace(' ', '%20', request()->street);
+        $state = str_ireplace(' ', '%20', request()->state);
+        $locality = str_ireplace(' ', '%20', request()->city);
+        $postalCode = str_ireplace(' ', '%20', request()->zipcode);
+
+        //request URL is created here + response is retrieved with the DATA
+        $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
+        .$street.'?output=xml&key='.$key;
+        $output = file_get_contents($findURL);
+        $response = new \SimpleXMLElement($output);
+
+        // DATA == latitude, longitude
+        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
+        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+
+        // here is the implementation to reverse geocodes into address again.
+        // for debugging purposes.
+        $centerPoint = $latitude.','.$longitude;
+        $revGeocodeURL = $baseURL.'/'.$centerPoint.'?output=xml&key='.$key;
+        $rgOutput = file_get_contents($revGeocodeURL);
+        $rgResponse = new \SimpleXMLElement($rgOutput);
+        $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+
+        // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
+        // returnSomething...
+
+    }
 }
