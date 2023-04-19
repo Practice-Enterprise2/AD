@@ -82,13 +82,16 @@
 <main style="margin-top: 58px">
   <div class="container pt-4">
   <div class="">
-  <h1>Contract List</h1>
+  <h1 class="font-weight-bold"><b>Contract List</b></h1>
 
-<form action="contractList" method="GET">
+<form action="contract_list" method="GET">
     @csrf
     <div>
-      <label for="filter">Filter</label>
-      <input type="text" id="filter" name="filter" placeholder="contract name...">
+      <p><label for="filter">Search contracts</label></p>
+      <p><input type="text" id="filter" name="filter" placeholder="contract name..."></p>
+      <p><label for="active">active contracts:</label></p>
+      <p><label for="c_active">active</label><input type="checkbox" id="c_active" name="c_active"><label for="c_inactive">inactive</label><input type="checkbox" id="c_inactive" name="c_inactive"></p>
+      
     </div>
     <button type="submit">Search</button>
 </form>
