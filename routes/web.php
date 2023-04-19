@@ -125,6 +125,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->middleware('auth')->name('mail.invoices');
+
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
@@ -140,7 +143,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
-//Email for invoice
-Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->middleware('auth')->name('mail.invoices');
 
 require __DIR__.'/auth.php';

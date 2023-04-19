@@ -138,8 +138,6 @@ class ShipmentController extends Controller
         $last_invoice_id = $last_invoice->id;
         //Send mail
         return redirect()->route('mail.invoices', ['invoice' => $last_invoice_id]);
-        // notify user with the shipment_id as Tracking Number
-        // return 'Tracking Number: '.$shipment->id;
     }
 
     public function requests(): View|Factory

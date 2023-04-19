@@ -56,14 +56,14 @@ trait Invoices
         $total_price_excl_vat = $total_price * (1 - $VAT_percentage);
         $due_date = (new DateTime())->modify('+30 days');
 
-        $invoice = Invoice::create([
-            'shipment_id' => $lastShipment->id,
+        $invoice = new Invoice([
             'weight' => $lastShipment->weight,
             'due_date' => $due_date,
             'total_price' => $total_price,
             'total_price_excl_vat' => $total_price_excl_vat,
             'invoice_code' => $this->generateUniqueCode(),
         ]);
-
+        $invoice->shipment()->associate($lastShipment);
+        $invoice->save();
     }
 }

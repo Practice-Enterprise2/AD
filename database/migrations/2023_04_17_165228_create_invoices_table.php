@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shipment_id')->constrained('shipments');
-            $table->integer('weight'); // Is the weight
+            $table->string('invoice_code');
+            $table->integer('weight');
             $table->date('due_date');
             $table->float('total_price');
             $table->float('total_price_excl_vat');
-            $table->boolean('is_paid')->default(0)->change();
+            $table->boolean('is_paid')->default(0);
             $table->timestamps();
-            $table->string('invoice_code');
         });
     }
 
@@ -29,11 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices', function (Blueprint $table) {
-            $table->dropForeign(['shipment_id']);
-            $table->dropColumn([
-                'shipment_id',
-            ]);
-        });
+        Schema::dropIfExists('invoices');
     }
 };
