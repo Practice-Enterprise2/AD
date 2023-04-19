@@ -82,7 +82,16 @@
 <main style="margin-top: 58px">
   <div class="container pt-4">
   <div class="">
-    
+  <h1>Contract List</h1>
+
+<form action="contractList" method="GET">
+    @csrf
+    <div>
+      <label for="filter">Filter</label>
+      <input type="text" id="filter" name="filter" placeholder="contract name...">
+    </div>
+    <button type="submit">Search</button>
+</form>
   <table border="1">
     <thead>
         <th>@sortablelink('contract_id', 'contract_id')</th>
