@@ -1,8 +1,34 @@
 
 <x-app-layout>
-<script src="tablesort.min.js">
-    document.querySelector('.table-sortable').tsortable()
-</script> 
+<!-- Include needed for JQ -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- using a counter to make unique button id's -->
+<script>
+   var i = 0; 
+</script>
+
+<!-- Modal -->
+<div class="fixed z-10 inset-0 overflow-y-auto hidden" id="cancelModal">
+  <div class="flex items-center justify-center min-h-screen p-4 text-center">
+    <!-- Modal Background -->
+    <div class="fixed inset-0 bg-black opacity-75"></div>
+    <!-- Modal Content -->
+    <div class="bg-white w-full max-w-md mx-auto rounded shadow-lg p-6 relative">
+      <h1 class="text-2xl font-bold mb-4">Confirmation</h1>    
+      <p class="mb-4">Are you sure you want to cancel the shipment?</p>
+      <div class="flex justify-center  bottom-0 w-full pb-6 relative">
+        <a href="#"><button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2" id="confirmCancelButton">
+          Yes
+        </button></a>
+        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ml-2" id="cancelCancelButton">
+          No
+        </button>
+      </div>      
+    </div>
+  </div>
+</div>
+ 
 <div class="flex justify-center">
     <div class="w-full">
         <h1 class="text-3xl font-semibold mb-4 text-center">Shipment Tracking</h1>
@@ -49,7 +75,38 @@
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">
 {{--                                 <a href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Details</button></a> --}}                              
                                 <a href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button type="button" class="rounded-md border-2 border-blue-600 bg-blue-200 px-4 py-2 text-black hover:bg-blue-300">Details</button></a>
-                                <a href="{{ route('shipments.cancel', $shipment->id) }}"><button type="button" id="cancel-btn" class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300">Cancel</button></a>
+                                <button class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300" id="cancelButton">Cancel</button>
+
+                                <!--  Script that hides / unhides the modal -->
+                                    <script>
+                                        var button = document.getElementById('cancelButton');                  
+                                        button.id = 'cancelButton' + i;
+                                        button.dataset.id = i;
+                                        cancelButton = button.id;
+                                        console.log(cancelButton);
+                                        i++;
+                                        
+                                        var modal = document.getElementById('cancelModal');
+                                        var confirmCancelButton = document.getElementById('confirmCancelButton');
+                                        var cancelCancelButton = document.getElementById('cancelCancelButton');
+
+                                        button.addEventListener('click', function() {
+                                            console.log("Hello, cancel button!");
+                                            modal.classList.remove('hidden');
+                                        });                   
+                                        confirmCancelButton.addEventListener('click', function() {
+                                            // Add cancelation code to controller.
+                                            var shipmentId = {{ $shipment->id }};
+                                            var routeUrl = "{{ route('shipments.cancel', ':id') }}".replace(':id', shipmentId);
+                                            modal.classList.add('hidden');
+                                            
+                                            
+                                            window.location.href = routeUrl;
+                                        });
+                                        cancelCancelButton.addEventListener('click', function() {
+                                            modal.classList.add('hidden');
+                                        });
+                                    </script>
                             </td> 
                         </tr>
                     
@@ -61,7 +118,6 @@
                             @if($shipment->user_id == Auth::user()->id)
                             <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}">
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->receiver_name }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{$shipment->street}} {{$shipment->house_number}}, &nbsp;&nbsp; {{$shipment->city}} {{$shipment->postal_code}} &nbsp;&nbsp;  {{$shipment->country}}  </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->shipment_date }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">{{ $shipment->delivery_date }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">
@@ -87,7 +143,9 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-400">
                                     {{--<a href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Details</button></a> --}}                              
                                     <a href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button type="button" class="rounded-md border-2 border-blue-600 bg-blue-200 px-4 py-2 text-black hover:bg-blue-300">Details</button></a>
-                                    <a href="{{ route('shipments.cancel', $shipemnt->id) }} "><button type="button" class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300"  onclick="openModal()">Cancel</button></a>
+                                    <button class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300" id="cancelButton">Cancel</button>
+
+
                                 </td> 
                             </tr>
                             @endif
@@ -95,13 +153,12 @@
                     @endif
                 </tbody>
             </table>
-            {!! $shipments->appends(Request::except('page'))->render() !!}
+            
         </div>
         
         
     </div>
 </div>
-
 
 
 </x-app-layout>
