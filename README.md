@@ -1,23 +1,60 @@
 # AD
 
-## Branches
+## How to Add Code
 
-Create a seperate branch for every feature you are working on. For example you
-are working on database connection, call your branch `db-connection`
+1. Fork the project using the 'Fork' button on GitHub
+2. Clone the forked repository to your PC
+3. Create a new branch in the local repository on your PC
+4. Add commits to the branch until your feature/bugfix is done
+5. Go to your fork on GitHub or the upstream repository
+6. Click the notification that asks you to create a pull request
+7. **Request a review on the pull request's page**
 
-When you are done implementing the feature merge your branch with main.
+There are normal and draft pull requests. Normal pull requests should be
+finished and should be able to be merged after minimal changes requested in a
+review. Draft pull requests are nice to show what you're working on and don't
+need to be finished. They can later be changed into normal ones when the code is
+ready. It is possible to edit pull requests after they have been made. Just push
+new commits to the corresponding branch and the pull request will update with
+it.
 
-1. make sure to pull the latest changes to main
-2. merge main into your branch (not the other way around)
+## Pull Request Requirements
 
-If you want to save yourself a lot of merging work, merge with main occasionally
-if you are working on a branch for a while.
+-   Don't edit migration files
 
-When this is done create a pull request on github for your branch to be merged
-into main, if you completed the previous step correctly, github will tell you
-that your branch has no conflicts. Wait for someone to accept the pull request
+    > Editing migration files has the same effect as Git force pushing. It
+    > changes history, which won't be visible for others.
 
-## Cloning the project
+-   Format using the Artisan format command
+
+    > Formatting the code before every pull requests helps keep the codebase
+    > clean for everyone, and it also greatly simplifies merging, both from and
+    > to upstream.
+
+-   Don't update package/lock files
+
+    > Updating packages and lock files has to happen from time to time, but it's
+    > not a small change. It should always be done in separate commits with
+    > their own pull requests, not together with another change. Installing new
+    > packages however is fine.
+
+-   Write correct rollback implementations for migrations (`down()` method)
+
+    > Migrations that don't have a correct rollback implementation can't easily
+    > be undone, which prevents people from making an easy transition to new
+    > database versions.
+
+-   No commented code
+
+    > Commenting out code is nice during development, but has no meaning to
+    > other people. It should either be removed, or replaced by a single comment
+    > explaining a todo, like `// TODO: Implement put method for controller`.
+
+These requirements are hard rules. Pull requests that don't check these cannot
+be merged. They are meant to help everyone by keeping upstream functional and
+nice to work with.
+
+## Getting Started After Cloning
 
 After cloning the project, put the following commands in your CLI:
 
@@ -26,7 +63,7 @@ composer install
 npm ci
 cp .env.example .env
 php artisan key:generate
-php artisan migrate --seed
+php artisan migrate
 ./artisan bootstrap
 ```
 
@@ -36,10 +73,11 @@ project). Running it multiple times has no bad effects.
 
 ## Running the project
 
-run the following commands in different terminals (!)
-
-1. npm run dev
-2. php artisan serve
+```sh
+# Run these in different terminals
+npm run dev
+php artisan serve
+```
 
 ## Code Formatting
 
