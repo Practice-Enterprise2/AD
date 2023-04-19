@@ -22,20 +22,11 @@ class Employee extends Model
      * @var array
      */
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'street',
-        'province',
-        'city',
-        'postalCode',
-        'phoneNumber',
-        'mail',
+        'user_id',
         'dateOfBirth',
         'jobTitle',
         'salary',
-        'isActive',
-        'password',
-        'Iban',
+        'iban',
         'created_at',
         'updated_at',
 

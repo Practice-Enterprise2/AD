@@ -42,20 +42,25 @@
       <input type="text" id="firstName" name="firstName" required><br>
       <label for="lastName">Last name:</label>
       <input type="text" id="lastName" name="lastName" required><br>
+      <label for="mail">mail:</label>
+      <input type="email" id="mail" name="mail" required><br>
       <label for="street">street:</label>
       <input type="text" id="street" name="street" required><br>
+      <label for="houseNumber">house number:</label>
+      <input type="text" id="houseNumber" name="houseNumber" required><br>
       <label for="province">province:</label>
       <input type="text" id="province" name="province" required><br>
       <label for="city">city:</label>
       <input type="text" id="city" name="city" required><br>
       <label for="postalCode">postalcode:</label>
       <input type="number" id="postalCode" name="postalCode" required><br>
+      <label for="country">country:</label>
+      <input type="text" id="country" name="country" required><br>
       <label for="phonenumber">phonenumber:</label>
       <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
     </div>
     <div id="right">
-      <label for="mail">mail:</label>
-      <input type="email" id="mail" name="mail" required><br>
+      
       <label for="dateOfBirth">date of birth:</label>
       <input type="date" id="dateOfBirth" name="dateOfBirth" required><br>
       <label for="jobTitle">job title:</label>
@@ -67,13 +72,13 @@
       <label for="Iban">Iban:</label>
       <input type="int" id="Iban" name="Iban" required><br>
       <label for="isActive">active:</label>
-      <select name="isActive" id="isActive" value="yes">
+      <!-- <select name="isActive" id="isActive" value="yes">
         <option value="yes">yes</option>
         <option value="no">no</option>
-      </select>
+      </select> -->
     </div>
     <br>
-    <a href="{{ route('home') }}">Back</a>
+    <a href="{{ route('employee.overview') }}">Back</a>
     <button type="reset">reset</button>
     <button type="submit">New</button>
   </form>

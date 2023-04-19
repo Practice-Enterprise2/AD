@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
+    //Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
     Route::view('/respond', 'respond');
 
     /*
@@ -54,10 +54,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
     });
-
+    //deze
     Route::controller(EmployeeViewController::class)->group(function () {
-        Route::get('/employee_overview', 'index');
+        Route::get('/employee_overview', 'index')->name('employee.overview');
         Route::post('/employee_add', 'save');
+        route::get('/new_employee', 'showAdd')->name('employee.create');
     });
 
     Route::controller(UserController::class)->group(function () {

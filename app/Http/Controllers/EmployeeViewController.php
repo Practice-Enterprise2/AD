@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\User;
+use App\Models\Address;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -11,11 +13,31 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class EmployeeViewController extends Controller
 {
+    public function showAdd()
+    {
+        return view("add_employee");
+    }
     public function index(): View|Factory
     {
-        $users = FacadesDB::select('select * from employees');
+        $employees = FacadesDB::select('select * from employees');
+        $users = FacadesDB::select('select * from users');
+        $address = FacadesDB::select('select * from addresses');
 
-        return view('employee_view', ['users' => $users]);
+        $comboArray = array(array());
+        for($i = 0; $i<count($employees); $i++)
+        {
+            $comboArray[$i][0] = $employees[$i]->id;
+            $comboArray[$i][1] = $employees[$i]->user_id;
+            $temp = FacadesDB::table('users')->where('id', $employees[$i]->user_id)->first();
+            $comboArray[$i][2] = $temp->name;
+            $comboArray[$i][3] = $temp->last_name;
+            $comboArray[$i][4] = $temp->email;
+            $comboArray[$i][5] = $employees[$i]->dateOfBirth;
+            $comboArray[$i][6] = $employees[$i]->jobTitle;
+            $comboArray[$i][7] = $employees[$i]->salary;
+
+        }
+        return view('employee_view', ['employees' => $comboArray]);
     }
 
     public function save(Request $req): RedirectResponse
@@ -45,22 +67,36 @@ class EmployeeViewController extends Controller
             }
             if (bcmod($numericIBAN, '97') == 1) {
                 $user = new Employee();
-                $user->firstName = $req->firstName;
-                $user->lastName = $req->lastName;
-                $user->street = $req->street;
-                $user->province = $req->province;
-                $user->city = $req->city;
-                $user->postalCode = $req->postalCode;
-                $user->phoneNumber = $req->phoneNumber;
-                $user->mail = $req->mail;
+                $user2 = new User();
+                $address = new Address();
+                $user2->name = $req->firstName;
+                $user2->last_name = $req->lastName;
+                $address->street = $req->street;
+                $address->house_number = $req->houseNumber;
+                $address->region = $req->province;
+                $address->city = $req->city;
+                $address->postal_code = $req->postalCode;
+                $address->country = $req->country;
+                //$user->phoneNumber = $req->phoneNumber;
+                $user2->email = $req->mail;
                 $user->dateOfBirth = $req->dateOfBirth;
-                $user->isActive = $req->isActive;
+                //$user->isActive = $req->isActive;
                 $user->jobTitle = $req->jobTitle;
                 $user->salary = $req->salary;
-                $user->password = $req->password;
-                $user->Iban = $req->Iban;
+                $user2->password = $req->password;
+                $user->iban = $req->Iban;
+                
+                
+                $address->save();
+                $id1 = FacadesDB::table('addresses')->where('street', $req->street)->where('house_number', $req->houseNumber)->where('city', $req->city)->value('id');
+                
+                $user2->address_id = $id1;
+                $user2->save();
+                $id2 = FacadesDB::table('users')->where('email', $req->mail)->value('id');;
+                
+                $user->user_id = $id2;
+                
                 $user->save();
-
                 return redirect()->back()->with('alert', 'complete creation');
             }
         }
