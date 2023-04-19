@@ -120,9 +120,8 @@ Route::get('specif', function() {
 
 require __DIR__.'/auth.php';
 
-
 //contractmenu
-Route::get('/contractsMenu', function (){
+Route::get('contractsMenu', function (){
     return view('contractsMenu');
 });
 //airportlist

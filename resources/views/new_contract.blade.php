@@ -54,7 +54,7 @@
        id="sidebarMenu"
        class=" d-lg-block sidebar bg-white"
        >
-       <a href="page2"><h1><b>Contracts</b></h1></a>
+       <a href="contractsMenu"><h1><b>Contracts</b></h1></a>
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a

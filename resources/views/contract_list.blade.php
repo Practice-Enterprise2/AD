@@ -49,7 +49,7 @@
        id="sidebarMenu"
        class=" d-lg-block sidebar bg-white"
        >
-       <a href="page2"><h1><b>Contracts</b></h1></a>
+       <a href="contractsMenu"><h1><b>Contracts</b></h1></a>
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a
@@ -82,9 +82,10 @@
 <main style="margin-top: 58px">
   <div class="container pt-4">
   <div class="">
+    
   <table border="1">
-    <thead> 
-        <<th>@sortablelink('contract_id', 'contract_id')</th>
+    <thead>
+        <th>@sortablelink('contract_id', 'contract_id')</th>
         <th>@sortablelink('airline_id', 'airline_id')</th>
         <th>@sortablelink('start_date', 'start_date')</th>
         <th>@sortablelink('end_date', 'end_date')</th>
@@ -98,7 +99,7 @@
 
     @foreach ($contracts as $contract)
          <tr>
-         <td>{{ $contract->id }}</td>
+            <td>{{ $contract->id }}</td>
             <td>{{ $contract->airline_id }}</td>
             <td>{{ $contract->start_date }}</td>
             <td>{{$contract->end_date }}</td>
@@ -106,7 +107,6 @@
             <td>{{ $contract->airport_id }}</td>
             <td>{{ $contract->depart_location }}</td>
             <td>{{ $contract->destination_location }}</td>
-            <td><a href="{{Route('contract_pdf')}}">PDF</a></td>
 
          </tr>
          @endforeach
@@ -125,6 +125,6 @@
 
 
 
-    
+
 
 

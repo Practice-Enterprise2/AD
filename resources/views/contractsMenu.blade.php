@@ -1,39 +1,7 @@
-<?php
 
-use App\Http\Controllers\contractController;
-
-if (!isset($_GET["q"]))
-{
-    ?>
-    <script>
-        this.location.replace("/contract?q=1");
-    </script>
-    <?php
-}
-
-?>
 @extends('layouts.header')
 @section('content')
-<!-- example -->
-<style>
-                
-                .x
-                {
-                    
-                    width: 100%;
-                    border: 1px outset grey;
-                    margin-bottom: 50px;
-                }
-                table
-                {
-                        margin: 0 auto;
-                        border: 1px solid black;
-                }
-                .x td
-                {
-                    margin-left: 10px;
-                }
-    </style>
+
 <style>
             body {
         background-color: #fbfbfb;
@@ -81,17 +49,17 @@ if (!isset($_GET["q"]))
        id="sidebarMenu"
        class=" d-lg-block sidebar bg-white"
        >
-       <a href="page2"><h1><b>Contracts</b></h1></a>
+       <a href="contractsMenu"><h1><b>Contracts</b></h1></a>
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a
-           href="#"
+           href="contract_list"
            class="list-group-item list-group-item-action py-2 ripple "
            >
           <span>contract list</span>
         </a></li>
         <li><a
-           href="test"
+           href="new_contract"
            class="list-group-item list-group-item-action py-2 ripple"
            ><span>new contract</span></a
           ></li>
@@ -114,7 +82,9 @@ if (!isset($_GET["q"]))
 <main style="margin-top: 58px">
   <div class="container pt-4">
   <div class="">
-        @yield('content')
+        <h1>
+          Welcome to the contract page
+        </h1>
     </div>
   </div>
 </main>
@@ -127,6 +97,6 @@ if (!isset($_GET["q"]))
 
 
 
-    
+
 
 
