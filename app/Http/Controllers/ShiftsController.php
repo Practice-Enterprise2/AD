@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shift;
 use App\Models\Employee;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DateTime;
@@ -33,6 +34,9 @@ class ShiftsController extends Controller
         // Retrieve the shifts for the selected date
         $shifts = Shift::whereDate('planned_start_time', $dateTime->format('Y-m-d'))->get();
     
+        //Retrieve all users
+        $users = User::all(); // Retrieve all users
+
         // Create an empty array to hold the shifts for each employee
         $shiftsByEmployee = [];
     
@@ -58,23 +62,28 @@ class ShiftsController extends Controller
             'date' => $dateTime->format('Y-m-d'),
             'shiftsByEmployee' => $shiftsByEmployee,
             'employees' => $employees,
+            'users' => $users,
         ]);
     }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $shift = new Shift();
-        
-        $shift->planned_start_time = $request->input('planned_start_time');
-        $shift->planned_end_time = $request->input('planned_end_time');
-        $shift->employee_id = $request->input('employee_id');
-        
-        $shift->save();
-        
-        return redirect()->route('shifts.index');
-    }
+   public function store(Request $request)
+{
+    $data = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'planned_start_time' => 'required|date_format:Y-m-d\TH:i',
+        'planned_end_time' => 'required|date_format:Y-m-d\TH:i',
+    ]);
+
+    Shift::create([
+        'planned_start_time' => $data['planned_start_time'],
+        'planned_end_time' => $data['planned_end_time'],
+        'employee_id' => $data['user_id'],
+    ]);
+
+    return redirect()->route('shifts.index');
+}
 
     /**
      * Update the specified resource in storage.
