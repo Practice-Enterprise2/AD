@@ -5,7 +5,17 @@
         <title>Create contract</title>
         <!-- Fonts -->
         <link href="css/new_contract.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
 
+    </script>
+
+    <script>
+        $(document).ready(function() {
+          $('.chosen-select').chosen();
+        });
+        </script>
     </head>
 <style>
             body {
@@ -54,7 +64,7 @@
        id="sidebarMenu"
        class=" d-lg-block sidebar bg-white"
        >
-       <a href="page2"><h1><b>Contracts</b></h1></a>
+       <a href="contractsMenu"><h1><b>Contracts</b></h1></a>
       <div class="list-group list-group-flush mx-3 mt-4">
         <ul>
             <li><a
@@ -93,13 +103,14 @@
 
                 <form action="plaats" method="post">
                     @csrf
-                    <select>
+                    <select class="chosen-select" name="airlineid" id="airlineid">
+                        <option value="" selected disabled hidden>select the airline</option>
                         @foreach($data as $row)
                         <option value="{{$row->id}}">{{$row->name}}</option>
                         @endforeach
                     </select>
 
-                    <label for="airlineid">AirlineID:</label>
+                  <!--  <label for="airlineid">AirlineID:</label>
                     <span style="color:red">
                         @error('airlineid')
                         {{$message}}
@@ -112,7 +123,7 @@
                         @error('price')
                         {{$message}}
                         @enderror
-                    </span>
+                    </span> -->
                     <input type="text" id="price" name="price" placeholder="Price" >
                     <label for="creationdate">Creation date:</label>
                     <span style="color:red">
@@ -134,8 +145,14 @@
                         {{$message}}
                         @enderror
                     </span>
-                    <input type="text" id="airportid" name="airportid" placeholder="AirportID" >
-                    <label for="departlocation">Departlocation</label>
+                <!--    <input type="text" id="airportid" name="airportid" placeholder="AirportID" >
+                    <label for="departlocation">Departlocation</label> -->
+                    <select id="airportid" name="airportid" class="chosen-select">
+                        <option value="" selected hidden disabled>Select the airport</option>
+                    @foreach ($airports as $airport )
+                        <option value="{{$airport->id}}">{{$airport->name}} | {{$airport->land}}</option>
+                    @endforeach
+                    </select>
                     <span style="color:red">
                         @error('departlocation')
                         {{$message}}
@@ -149,8 +166,8 @@
                         @enderror
                     </span>
                     <input type="text" id="destinationlocation" name="destinationlocation" placeholder="Destinationlocation" >
-                    <button type="submit">Create</button>
-                    <button type="reset">Clear</button>
+                    <button style="background-color: darkcyan" type="submit">Create</button> <br>
+                    <button style="background-color: orange" type="reset">Clear</button>
             </form>
         </div>
     </div>

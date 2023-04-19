@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airline;
+use App\Models\airport;
 use Illuminate\Http\Request;
 use App\Models\Contract;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +34,8 @@ class newcontractcontroller extends Controller
         $test->price = $request->price;
         $test->airportID = $request->airportid;
         $test->departlocation = $request->departlocation;
-        $test->destinationlocation = $request->destinationlocation; */
+        $test->destinationlocation = $request->destinationlocation;
+        return view('new_contract',['data' => $data]);00 */
         $test = new Contract;
         $test->airline_id = $request["airlineid"];
         $test->start_date = $request["creationdate"];
@@ -43,11 +46,15 @@ class newcontractcontroller extends Controller
         $test->destination_location = $request["destinationlocation"];
         $test->save();
         $data = DB::select('select * from airlines');
-        return view('new_contract',['data' => $data]);
+        $airports = AirportController::getAirports();
+        $airlines = Airline::all();
+        return view('new_contract',compact('data','airports','airlines'));
+
     }
     function dropdown(){
         $data = DB::select('select * from airlines');
-        return view('new_contract',['data' => $data]);
+        $airports = AirportController::getAirports();
+        $airlines = Airline::all();
+        return view('new_contract',compact('data','airports','airlines'));
     }
-
 }
