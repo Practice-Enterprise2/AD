@@ -1,20 +1,21 @@
 <x-app-layout>
   <style>
-  .tableCust{
-    margin-top: 50px;
-  }
+    .tableCust {
+      margin-top: 50px;
+    }
 
     tr:hover {
       background-color: var(--lgrey);
       color: black;
     }
-    input{
+
+    input {
       color: black;
     }
   </style>
   <div class="tableContainer">
     <table class="tableCust">
-      <thead >
+      <thead>
         <tr>
           <th>Name</th>
           <th>Lastname</th>
@@ -24,7 +25,7 @@
           <th>Region</th>
           <th>Country</th>
           <th>Vat-number</th>
-          
+
           <th>Action</th>
         </tr>
         <tr>
@@ -37,16 +38,16 @@
               onkeyup="filterTable()" placeholder="Search email"></th>
           <th><input type="text" id="searchInputPhone"
               onkeyup="filterTable()" placeholder="Search phone"></th>
-          
-            <th><input type="text" id="searchInputAddress"
-                onkeyup="filterTable()" placeholder="Search address">
-            </th>
-            <th><input type="text" id="searchInputRegion"
-                onkeyup="filterTable()" placeholder="Search region"></th>
-            <th><input type="text" id="searchInputCountry"
-                onkeyup="filterTable()" placeholder="Search country">
-            </th>
-          
+
+          <th><input type="text" id="searchInputAddress"
+              onkeyup="filterTable()" placeholder="Search address">
+          </th>
+          <th><input type="text" id="searchInputRegion"
+              onkeyup="filterTable()" placeholder="Search region"></th>
+          <th><input type="text" id="searchInputCountry"
+              onkeyup="filterTable()" placeholder="Search country">
+          </th>
+
           <th><input type="text" id="searchInputVatNumber"
               onkeyup="filterTable()" placeholder="Search VAT number">
           </th>
