@@ -1,83 +1,56 @@
 <x-app-layout>
   <style>
-    :root {
-      --lgrey: #e0e0e0;
-      --eLgrey: #f9f9f9;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 30px;
-    }
-
-    .tableContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .tableCust {
-      border-collapse: collapse;
-      width: 80%;
-    }
-
-    th,
-    td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: var(--lgrey);
-      font-size: 20px;
-    }
+  .tableCust{
+    margin-top: 50px;
+  }
 
     tr:hover {
       background-color: var(--lgrey);
+      color: black;
+    }
+    input{
+      color: black;
     }
   </style>
   <div class="tableContainer">
     <table class="tableCust">
-      <thead>
+      <thead >
         <tr>
           <th>Name</th>
           <th>Lastname</th>
           <th>Email</th>
           <th>Phone</th>
-          @isset($user->address)
-            <th>Address</th>
-            <th>Region</th>
-            <th>Country</th>
-          @endisset
+          <th>Address</th>
+          <th>Region</th>
+          <th>Country</th>
           <th>Vat-number</th>
+          
           <th>Action</th>
         </tr>
         <tr>
           <th><input type="text" id="searchInputName" onkeyup="filterTable()"
-              placeholder="Search by name..."></th>
+              placeholder="Search name"></th>
           <th><input type="text" id="searchInputLastName"
-              onkeyup="filterTable()" placeholder="Search by last name...">
+              onkeyup="filterTable()" placeholder="Search last name">
           </th>
           <th><input type="text" id="searchInputEmail"
-              onkeyup="filterTable()" placeholder="Search by email..."></th>
+              onkeyup="filterTable()" placeholder="Search email"></th>
           <th><input type="text" id="searchInputPhone"
-              onkeyup="filterTable()" placeholder="Search by phone..."></th>
-          @isset($user->address)
+              onkeyup="filterTable()" placeholder="Search phone"></th>
+          
             <th><input type="text" id="searchInputAddress"
-                onkeyup="filterTable()" placeholder="Search by address...">
+                onkeyup="filterTable()" placeholder="Search address">
             </th>
             <th><input type="text" id="searchInputRegion"
-                onkeyup="filterTable()" placeholder="Search by region..."></th>
+                onkeyup="filterTable()" placeholder="Search region"></th>
             <th><input type="text" id="searchInputCountry"
-                onkeyup="filterTable()" placeholder="Search by country...">
+                onkeyup="filterTable()" placeholder="Search country">
             </th>
-          @endisset
+          
           <th><input type="text" id="searchInputVatNumber"
-              onkeyup="filterTable()" placeholder="Search by VAT number...">
+              onkeyup="filterTable()" placeholder="Search VAT number">
           </th>
-          <th>Action</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
