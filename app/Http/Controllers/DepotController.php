@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
+date_default_timezone_set('Europe/Brussels');
 
 class DepotController extends Controller
 {
@@ -21,7 +22,7 @@ class DepotController extends Controller
     }
 
     public function overviewperDepot(int $id) {
-        $data = DB::table('depots')->get();
+        $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
         
         return view('overviewperdepot', ['data' => $data, 'id' => $id]);
 
@@ -32,11 +33,15 @@ class DepotController extends Controller
     }
 
     public function addDepot(Request $request) {
+
         $current_date_time = date('Y-m-d H:i:s');
         $updated_date_time = null;
-        DB::insert('insert into depots values(?, ?, ?, ?, ?, ?, ?)', [null, $request->code, $request->location, $request->size, $request->filled, $current_date_time, $updated_date_time]);
+        DB::insert('insert into addresses values(?, ?, ?, ?, ?, ?, ?,?,?)', [null, $request->street, $request->house_number, $request->postal_code, $request->city, $request->region, $request->country, $current_date_time, $updated_date_time]);
+        $addressID = DB::getPdo()->lastInsertId();
+        DB::insert('insert into depots values(?, ?,?, ?, ?, ?, ?)', [null, $request->code, $addressID, $request->size, $request->filled, $current_date_time, $updated_date_time]);
     
-        return $this->index();
+        header("Location: /DepotManagement");
+        die();
     }
 
     public function editDepotpage(int $id) {
@@ -46,9 +51,10 @@ class DepotController extends Controller
 
     public function editDepot(Request $request, int $id) {
         $updated_date_time = date('Y-m-d H:i:s');
-        DB::insert('UPDATE depots set code = ?, address = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->location, $request->size, $request->filled, $updated_date_time, $id]);
+        DB::insert('UPDATE depots set code = ?, addressid = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code,$request->addressid, $request->size, $request->filled, $updated_date_time, $id]);
     
-        return $this->index();
+        header("Location: /DepotManagement");
+        die();
     }
 
     // POST depot 

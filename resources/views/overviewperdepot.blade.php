@@ -10,10 +10,13 @@
 <x-app-layout>
 @foreach ($data as $depot)
 @if ($depot->id == $id)
+@php
+        $address = (string)$depot->street . (string)' ' . (string)$depot->house_number . (string)' ' .(string)$depot->postal_code . (string)' ' . (string)$depot->city . (string)' ' . (string)$depot->region . (string)' ' . (string)$depot->country
+@endphp
 <div class="wrap">
     <span>ID: {{$depot->id}}</span>
     <span>Code: {{$depot->code}}</span>
-    <span>Address: {{$depot->address}}</span>
+    <span>Address: {{$address}}</span>
     <div id='myMap'></div>
     <span>size: {{$depot->size}}</span>
     <span>remaining spaces: {{$depot->size - $depot->amountFilled}}</span>
@@ -69,7 +72,7 @@
                var searchManager = new Microsoft.Maps.Search.SearchManager(map);
                var requestOptions = {
                   bounds: map.getBounds(),
-                  where: {!! json_encode($depot->address) !!},
+                  where: {!! json_encode($address) !!},
                   callback: function (answer, userData) {
                      map.setView({ bounds: answer.results[0].bestView });
                      map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));

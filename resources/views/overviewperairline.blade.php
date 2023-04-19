@@ -1,5 +1,5 @@
 <title>Overview per airline</title>
-<link rel="stylesheet" type="text/css" href="{{ asset('css/airlineoverview.css') }}" >
+<link rel="stylesheet" type="text/css" href="{{ asset('css/depot.css') }}" >
 <x-app-layout>
 @foreach ($data as $airline)
 @if ($airline->id == $id)

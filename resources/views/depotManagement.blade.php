@@ -4,7 +4,20 @@
 <div class="wrapper">
     <div class="child">
         <span >Hello <name>{{$name}}</name></span>
-        <p>Last time edited placeholder</p>
+        @php
+        $var = 0;
+        if($depots != NULL) {
+            foreach($depots as $data)
+            if ($data->created_at > $var) {
+                $var = $data->created_at;
+            }
+            if ($data->updated_at > $var) {
+                $var = $data->updated_at;
+            }
+        }
+        
+        @endphp
+        <p>Last time table was changed: {{ $var }}</p>
     </div>
     <div class="containerMngmt child">
         <a href="/addDepot"><div class="addDiv">
@@ -12,7 +25,7 @@
         </div></a>
         <div class="legendDiv">
             <div class="legend_name">Depot Code</div>
-            <div class="legend_location">Location</div>
+            <div class="legend_location">Address ID</div>
             <div class="legend_size">Size</div>
             <div class="legend_filled">amount filled</div>
             <div class="legend_details">Details</div>
@@ -24,7 +37,7 @@
             <div class="airportCard">
                 <div class="dataCard">        
                     <div class="name">{{$data->code}}</div>
-                    <div class="location">{{$data->address}}</div>
+                    <div class="location">{{$data->addressid}}</div>
                     <div class="size">{{$data->size}}</div>
                     <div class="size">{{$data->amountFilled}}</div>
                     <div><a href="{{ url('depotoverview/' . $data->id) }}">Details</a></div>

@@ -1,5 +1,5 @@
 <title>Airline Dashboard</title>
-<link rel="stylesheet" type="text/css" href="{{ asset('css/airlineoverview.css') }}" >
+<link rel="stylesheet" type="text/css" href="{{ asset('css/depot.css') }}" >
 <x-app-layout>
 <div class="wrapper">
     <div>

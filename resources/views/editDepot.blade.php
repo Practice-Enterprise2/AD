@@ -9,7 +9,7 @@
   <form action="{{ url('editDepotform/'.$depot->id)}}" method="POST">
     @csrf
     <input type="text" name="code" placeholder="Depot Code" value="{{ $depot->code }}"> <br> <br>
-    <input type="text" name="location" placeholder="Depot location" value="{{ $depot->address }}"> <br> <br>
+    <input type="text" name="addressid" placeholder="Depot address" value="{{ $depot->addressid }}"> <br> <br>
     <input type="text" name="size" placeholder="Depot size" value="{{ $depot->size }}"> <br> <br>
     <input type="text" name="filled" placeholder="amount filled" value="{{ $depot->amountFilled }}"> <br> <br>
     <button type="submit">Edit Depot</button>
