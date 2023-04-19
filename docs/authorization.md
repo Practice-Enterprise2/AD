@@ -27,6 +27,5 @@ run the Artisan `bootstrap` command** to add everything to the database.
 
 ## Extra Information
 
--   [How to use the authorization
-    functionality](https://spatie.be/docs/laravel-permission/v5/basic-usage/basic-usage)
+-   [How to use the authorization functionality](https://spatie.be/docs/laravel-permission/v5/basic-usage/basic-usage)
 -   [Laravel gates](https://laravel.com/docs/10.x/authorization#gates)
