@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call([PayslipController::class, 'calculateSendPayslip'])->monthlyOn(25, '2:00');
+        $schedule->call('App\Http\Controllers\PayslipController@calculateSendPayslip')->everyMinute();//->monthlyOn(25, '2:00');
     }
 
     /**

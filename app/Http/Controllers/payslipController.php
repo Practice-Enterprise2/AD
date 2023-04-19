@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -11,6 +12,64 @@ use Illuminate\Support\Facades\Storage;
 
 class PayslipController extends Controller
 {
+    private function getDays($startDate, $endDate){
+        // found: https://stackoverflow.com/questions/336127/calculate-business-days
+
+        $endDate = strtotime($endDate);
+        $startDate = strtotime($startDate);
+    
+        $days = ($endDate - $startDate) / 86400 + 1;
+    
+        $no_full_weeks = floor($days / 7);
+        $no_remaining_days = fmod($days, 7);
+    
+        $the_first_day_of_week = date("N", $startDate);
+        $the_last_day_of_week = date("N", $endDate);
+    
+        if ($the_first_day_of_week <= $the_last_day_of_week) {
+            if ($the_first_day_of_week <= 6 && 6 <= $the_last_day_of_week) $no_remaining_days--;
+            if ($the_first_day_of_week <= 7 && 7 <= $the_last_day_of_week) $no_remaining_days--;
+        }
+        else {
+            if ($the_first_day_of_week == 7) {
+                $no_remaining_days--;
+    
+                if ($the_last_day_of_week == 6) {
+                    $no_remaining_days--;
+                }
+            }
+            else {
+                $no_remaining_days -= 2;
+            }
+        }
+    
+       $days = $no_full_weeks * 5;
+        if ($no_remaining_days > 0 )
+        {
+          $days += $no_remaining_days;
+        }
+    
+        return $days;
+    }
+
+    private function takenAbsence($abcense, $firstDate, $lastDate)
+    {
+        $startDate = $abcense->start_date;
+        $endDate = $abcense->end_date;
+
+        if ($startDate < $firstDate)
+        {
+            $startDate = $firstDate;
+        }
+        if ($endDate > $lastDate)
+        {
+            $endDate = $lastDate;
+        }
+
+        $days = $this->getDays($startDate, $endDate);
+        return $days;
+    }
+
     private function tax25($taxable)
     {
         $taxes = $taxable * 0.25;
@@ -67,72 +126,126 @@ class PayslipController extends Controller
         return $taxes;
     }
 
-    private function getWorkingDays(){
-        $startDate = Carbon::now()->startOfMonth()->toDateString();
-        $endDate = Carbon::now()->endOfMonth()->toDateString();
 
-        // found: https://stackoverflow.com/questions/336127/calculate-business-days
 
-        // do strtotime calculations just once
-        $endDate = strtotime($endDate);
-        $startDate = strtotime($startDate);
     
-    
-        //The total number of days between the two dates. We compute the no. of seconds and divide it to 60*60*24
-        //We add one to inlude both dates in the interval.
-        $days = ($endDate - $startDate) / 86400 + 1;
-    
-        $no_full_weeks = floor($days / 7);
-        $no_remaining_days = fmod($days, 7);
-    
-        //It will return 1 if it's Monday,.. ,7 for Sunday
-        $the_first_day_of_week = date("N", $startDate);
-        $the_last_day_of_week = date("N", $endDate);
-    
-        //---->The two can be equal in leap years when february has 29 days, the equal sign is added here
-        //In the first case the whole interval is within a week, in the second case the interval falls in two weeks.
-        if ($the_first_day_of_week <= $the_last_day_of_week) {
-            if ($the_first_day_of_week <= 6 && 6 <= $the_last_day_of_week) $no_remaining_days--;
-            if ($the_first_day_of_week <= 7 && 7 <= $the_last_day_of_week) $no_remaining_days--;
-        }
-        else {
-            // (edit by Tokes to fix an edge case where the start day was a Sunday
-            // and the end day was NOT a Saturday)
-    
-            // the day of the week for start is later than the day of the week for end
-            if ($the_first_day_of_week == 7) {
-                // if the start date is a Sunday, then we definitely subtract 1 day
-                $no_remaining_days--;
-    
-                if ($the_last_day_of_week == 6) {
-                    // if the end date is a Saturday, then we subtract another day
-                    $no_remaining_days--;
-                }
-            }
-            else {
-                // the start date was a Saturday (or earlier), and the end date was (Mon..Fri)
-                // so we skip an entire weekend and subtract 2 days
-                $no_remaining_days -= 2;
-            }
-        }
-    
-        //The no. of business days is: (number of weeks between the two dates) * (5 working days) + the remainder
-    //---->february in none leap years gave a remainder of 0 but still calculated weekends between first and last day, this is one way to fix it
-       $workingDays = $no_full_weeks * 5;
-        if ($no_remaining_days > 0 )
-        {
-          $workingDays += $no_remaining_days;
-        }
-    
-        return $workingDays;
-    }
-
     public function calculateSendPayslip(Request $req)
     {
-        $employees = DB::select('select * from employees where is_active=1');
+        $employees = DB::select('SELECT * FROM employees WHERE deleted_at IS NULL');
 
         foreach ($employees as $employee)
         {
+            $employee_id = $employee->id;
+            $employeeContract = DB::table('employee_contracts')
+                                ->where('employee_id', $employee_id)
+                                ->where(function($query) {
+                                    $now = Carbon::now()->toDateString();
+
+                                    $query->WhereNull('end_date')
+                                    ->orwhereDate('end_date', '>=', $now);
+                                })
+                                ->first();
+            $contract_id = $employeeContract->id;
+
+            $lastdayForTaken = Carbon::now()->subMonthNoOverflow()->day(24)->endOfDay();
+            $startYear = Carbon::now()->startOfYear();
+
+            $takenAbsences = DB::table('absences')
+                                    ->where('contract_id', 2)//$contract_id)
+                                    ->where('status', 'taken')
+                                    ->where('approval_time', '<=', $lastdayForTaken)
+                                    ->where('end_date', '>=', $startYear)
+                                    ->get();
+
+            $takenHolidays = 0;
+            $takenSickdays = 0;
+            $firstDate = Carbon::now()->startOfYear();
+            $lastDate = Carbon::now()->endOfYear();
+
+            foreach ($takenAbsences as $takenAbsence)
+            {
+                if ($takenAbsence->type == 'holiday') {
+                    $takenHolidays = $takenHolidays + $this->takenAbsence($takenAbsence, $firstDate, $lastDate);
+                } else {
+                    $takenSickdays = $takenSickdays + $this->takenAbsence($takenAbsence, $firstDate, $lastDate);
+                }
+            }
+            error_log('takenH: '.$takenHolidays);
+            error_log('takenS: '.$takenSickdays);
+
+            $startMonth = Carbon::now()->startOfMonth();
+            $endMonth = Carbon::now()->endOfMonth()->toDateString();
+            $absencesThisMonth = DB::table('absences')
+                                    ->where('contract_id', 2)//$contract_id)
+                                    ->where('start_date', '<=', $endMonth)
+                                    ->where('end_date', '>', $lastdayForTaken->toDateString())
+                                    ->where(function($query) {
+                                        $query->where('status', 'taken')
+                                        ->orWhere('status', 'approved');
+                                    })
+                                    ->get();
+
+            $unaccountedHolidays = 0;
+            $unaccountedSickdays = 0;
+            $holidays = 0;
+            $sickdays = 0;
+
+            foreach ($absencesThisMonth as $absence)
+            {
+                if ($absence->start_date > $lastdayForTaken->toDateString() && $absence->start_date < $startMonth->toDateString() && $absence->approval_time > $lastdayForTaken)
+                {
+                    if ($absence->type == 'holiday') {
+                        $unaccountedHolidays = $unaccountedHolidays + $this->takenAbsence($absence, $firstDate, $startMonth->subDay()->toDateString());
+                        $holidays = $holidays - $unaccountedHolidays;
+                    } else {
+                        $unaccountedSickdays = $unaccountedSickdays + $this->takenAbsence($absence, $firstDate, $startMonth->subDay()->toDateString());
+                        $sickdays = $sickdays - $unaccountedSickdays;
+                    }
+
+                    if ($absence->type == 'holiday') {
+                        $holidays = $holidays + $this->takenAbsence($absence, $firstDate, $lastDate);
+                    } else {
+                        $sickdays = $sickdays + $this->takenAbsence($absence, $firstDate, $lastDate);
+                    }
+                } else {
+                    if ($absence->type == 'holiday') {
+                        $holidays = $holidays + $this->takenAbsence($absence, $firstDate, $lastDate);
+                    } else {
+                        $sickdays = $sickdays + $this->takenAbsence($absence, $firstDate, $lastDate);
+                    }
+                }
+            }
+            error_log('unaccountedH: '.$unaccountedHolidays."\tH: ".$holidays);
+            error_log('unaccountedS: '.$unaccountedSickdays."\tS: ".$sickdays);
+
+            if (Carbon::now()->format('M') == 'Jan') {
+                $totalHolidays = $takenHolidays + $holidays;
+                $totalSickdays = $takenSickdays + $sickdays;
+            } else {
+                $totalHolidays = $takenHolidays + $unaccountedHolidays + $holidays;
+                $totalSickdays = $takenSickdays + $unaccountedSickdays + $sickdays;
+            }
+            error_log('totalH: '.$totalHolidays);
+            error_log('totalS: '.$totalSickdays);
+
+            $allowedAbsences = DB::table('holiday_saldos')
+                                    ->where('contract_id', 2)//$contract_id)
+                                    ->where('year', Carbon::now()->format('Y'))
+                                    ->get();
+
+            foreach ($allowedAbsences as $allowedAbsence)
+            {
+                if ($allowedAbsence->type == 'holiday') {
+                    $remainingHolidays = $allowedAbsence->allowed_days - $totalHolidays;
+                } else {
+                    $remainingSickdays = $allowedAbsence->allowed_days - $totalSickdays;
+                }
+            }
+            error_log('remainingH: '.$remainingHolidays);
+            error_log('remainingS: '.$remainingSickdays);
+
+            return
+
             $grossSalary = $employee->salary;
 
             //nss calculation -> rsz berekening         #-- https://www.jobat.be/nl/art/hoeveel-bedraagt-de-rsz --#
