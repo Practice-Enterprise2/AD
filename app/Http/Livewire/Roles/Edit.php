@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Groups;
+namespace App\Http\Livewire\Roles;
 
 use App\Models\Role;
 use Livewire\Component;
