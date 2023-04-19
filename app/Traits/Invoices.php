@@ -1,44 +1,41 @@
 <?php
+
 namespace App\Traits;
 
-use App\Mail\InvoiceMail;
 use App\Models\Invoice;
-use App\Models\Address;
-use App\Models\Dimensions;
 use App\Models\Shipment;
-use App\Models\User;
 use DateTime;
-use Exception;
 use Illuminate\Support\Facades\DB;
 
-
-
-trait Invoices{
+trait Invoices
+{
     public function generateUniqueCode()
     {
-    
+
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersNumber = strlen($characters);
         $codeLength = 6;
-    
+
         $code = '';
-    
+
         while (strlen($code) < 6) {
             $position = rand(0, $charactersNumber - 1);
             $character = $characters[$position];
             $code = $code.$character;
         }
-        $invoices = array(DB::table('invoices')->select('invoice_code')->value('invoice_code'));
-        if($invoices != null || count($invoices) <= 1){
+        $invoices = [DB::table('invoices')->select('invoice_code')->value('invoice_code')];
+        if ($invoices != null || count($invoices) <= 1) {
             if (in_array($code, $invoices)) {
                 $this->generateUniqueCode();
             }
         }
+
         return $code;
     }
 
-    public function generateInvoice(){
-        $lastShipment = Shipment::orderBy('id', 'desc')->first();       
+    public function generateInvoice()
+    {
+        $lastShipment = Shipment::orderBy('id', 'desc')->first();
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -58,7 +55,7 @@ trait Invoices{
         $total_price = $lastShipment->expense;
         $total_price_excl_vat = $total_price * (1 - $VAT_percentage);
         $due_date = (new DateTime())->modify('+30 days');
-        
+
         $invoice = Invoice::create([
             'shipment_id' => $lastShipment->id,
             'weight' => $lastShipment->weight,
@@ -68,7 +65,5 @@ trait Invoices{
             'invoice_code' => $this->generateUniqueCode(),
         ]);
 
-        
     }
-    
 }

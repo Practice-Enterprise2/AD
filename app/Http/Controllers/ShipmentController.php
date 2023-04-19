@@ -10,19 +10,20 @@ use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
+use App\Traits\Invoices;
 use DateTime;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\RedirectResponse; // Traits for invoices
 use Illuminate\Http\Request;
-use App\Traits\Invoices; // Traits for invoices
-use Exception;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ShipmentController extends Controller
 {
     use Invoices;
+
     public function index(): View|Factory
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
@@ -124,7 +125,7 @@ class ShipmentController extends Controller
             $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
         } else {
             //Dense Cargo rate
-            $shipment->expense = $shipment->weight * $dense_cargo_tarrif; 
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
         }
 
         $shipment->status = 'Awaiting Confirmation';
@@ -262,7 +263,8 @@ class ShipmentController extends Controller
         return view('shipments.show', compact('shipment'));
     }
 
-    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse{
+    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse
+    {
 
         $subject = 'Your invoice for your latest shipment.';
         $user_id = auth()->user()->id;
@@ -272,21 +274,21 @@ class ShipmentController extends Controller
         $shipment_id = DB::table('invoices')->select('shipment_id')->where('id', $invoice_id)->value('id');
         $shipment_user_id = DB::table('shipments')->select('user_id')->where('id', $shipment_id)->value('id');
 
-        if($shipment_user_id != $user_id){
+        if ($shipment_user_id != $user_id) {
             return redirect()->route('home');
         }
         $data = [
-            'subject'=> $subject,
+            'subject' => $subject,
             'name' => $name,
             'weight' => $invoice->weight,
             'total_price' => $invoice->total_price,
             'invoice_code' => $invoice->invoice_code,
         ];
-        try{
+        try {
             Mail::to('r0902342@student.thomasmore.be')->send(new InvoiceMail($data));
+
             return view('invoices.invoice_generated', compact('data'));
-        }
-        catch(Exception $th){
+        } catch (Exception $th) {
             return response($th);
         }
     }
