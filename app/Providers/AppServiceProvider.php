@@ -76,6 +76,7 @@ class AppServiceProvider extends ServiceProvider
         $role_user->givePermissionTo('delete_own_user_account');
 
         // Create the minimum required users.
+        // Password is letmein
         if (! User::query()->where('email', 'admin@local.test')->first()) {
             $admin_user = User::query()->create([
                 'name' => 'Administrator',

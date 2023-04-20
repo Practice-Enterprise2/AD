@@ -138,9 +138,9 @@ Route::middleware('auth')->group(function () {
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
 
-Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
-Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
-Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+Route::post('/contact/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
+Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
 
 
