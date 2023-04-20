@@ -172,7 +172,7 @@ table
                                 <option <?php
                                     if ($contracts[0]->airline_id == $airline->id)
                                     {
-                                        echo " selected ";
+                                        echo " selected "; //twee spaties rondd selected zijn nodig voor het te laten werken
                                     }
                                 ?> value="{{ $airline->id }}"> {{$airline->name}}</option>
                                 @endforeach
