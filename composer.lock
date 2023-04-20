@@ -1491,6 +1491,15 @@
             },
             "dist": {
                 "type": "zip",
+            "name": "laravel/framework",
+            "version": "v10.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "317d7ccaeb1bbf4ac3035efe225ef2746c45f3a8"
+            },
+            "dist": {
+                "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/317d7ccaeb1bbf4ac3035efe225ef2746c45f3a8",
                 "reference": "317d7ccaeb1bbf4ac3035efe225ef2746c45f3a8",
                 "shasum": ""
@@ -3782,12 +3791,7 @@
             ],
             "description": "Eases the creation of beautiful and testable command line interfaces",
             "homepage": "https://symfony.com",
-            "keywords": [
-                "cli",
-                "command-line",
-                "console",
-                "terminal"
-            ],
+            "keywords": ["cli", "command-line", "console", "terminal"],
             "support": {
                 "source": "https://github.com/symfony/console/tree/v6.2.8"
             },

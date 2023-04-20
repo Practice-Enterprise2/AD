@@ -23,11 +23,11 @@
   @canany(['view_all_roles'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
-        :href="route('control-panel.groups')" :active="str_starts_with(
+        :href="route('control-panel.roles')" :active="str_starts_with(
             request()
                 ->route()
                 ->getName(),
-            'control-panel.groups',
+            'control-panel.roles',
         )">
         {{ __('Groups') }}
       </x-nav-link>

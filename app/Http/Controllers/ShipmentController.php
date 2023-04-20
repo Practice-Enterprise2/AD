@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Dimensions;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
+use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -23,9 +25,9 @@ class ShipmentController extends Controller
     public function index(): View|Factory
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
-                            ->whereNot('status', 'Declined')
-                            ->with('waypoints')
-                            ->get();
+            ->whereNot('status', 'Declined')
+            ->with('waypoints')
+            ->get();
 
         return view('shipments.index', compact('shipments'));
     }
@@ -33,7 +35,15 @@ class ShipmentController extends Controller
     //create
     public function create(): View|Factory
     {
-        return view('shipments.create');
+        // Generate list of dates for the next 7 days
+        $deliveryDateStart = (new DateTime())->modify('+2 days');
+        $deliveryDateEnd = (new DateTime())->modify('+8 days');
+        $deliveryDates = [];
+        for ($i = $deliveryDateStart; $i <= $deliveryDateEnd; $i->modify('+1 day')) {
+            $deliveryDates[] = $i->format('Y-m-d');
+        }
+
+        return view('shipments.create', compact('deliveryDates'));
     }
 
     //store
@@ -88,12 +98,35 @@ class ShipmentController extends Controller
         $shipment->destination_address_id = $destination_address->id;
         $shipment->type = request()->handling_type[0];
 
-        // (!) ATTENTION OF SHIPMENT GROUP. Attributes below need to be added to the form later on.
+        // Convert string to time and send selected dates to db
+        $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
+        $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
+
+        //Dimensions
+        $dimensions = new Dimensions();
+        $dimensions->length = request()->shipment_length;
+        $dimensions->width = request()->shipment_width;
+        $dimensions->height = request()->shipment_height;
+        $dimensions->save();
+        $shipment->weight = request()->shipment_weight;
+        $shipment->dimension_id = $dimensions->id;
+
+        // Calculate shipping cost
+        $volumetric_freight = 0;
+        $volumetric_freight_tarrif = 5;
+        $dense_cargo_tarrif = 4;
+        $expense_excl_VAT = 0;
+        $VAT_percentage = 0;
+        $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
+        if ($volumetric_freight > $shipment->weight) {
+            //Volumetric Air Freight rate
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+        } else {
+            //Dense Cargo rate
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+        }
+
         $shipment->status = 'Awaiting Confirmation';
-        $shipment->shipment_date = date('Y-m-d');
-        $shipment->delivery_date = date('Y-m-d');
-        $shipment->expense = 0;
-        $shipment->weight = 0;
 
         $shipment->push();
 
@@ -275,7 +308,43 @@ class ShipmentController extends Controller
         return view('shipments.show', compact('shipment'));
     }
 
+    // Bing Maps Locations API
+    // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
+    public function track()
+    {
+        // baseURL to request conversion
+        $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
 
- 
+        // (!) don't forget to add your bing maps key here.
+        $key = 'your_bing_maps_key';
 
+        // address should be converted here, which will be used with the baseURL to send a request.
+        $country = str_ireplace(' ', '%20', request()->country);
+        $street = str_ireplace(' ', '%20', request()->street);
+        $state = str_ireplace(' ', '%20', request()->state);
+        $locality = str_ireplace(' ', '%20', request()->city);
+        $postalCode = str_ireplace(' ', '%20', request()->zipcode);
+
+        //request URL is created here + response is retrieved with the DATA
+        $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
+        .$street.'?output=xml&key='.$key;
+        $output = file_get_contents($findURL);
+        $response = new \SimpleXMLElement($output);
+
+        // DATA == latitude, longitude
+        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
+        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+
+        // here is the implementation to reverse geocodes into address again.
+        // for debugging purposes.
+        $centerPoint = $latitude.','.$longitude;
+        $revGeocodeURL = $baseURL.'/'.$centerPoint.'?output=xml&key='.$key;
+        $rgOutput = file_get_contents($revGeocodeURL);
+        $rgResponse = new \SimpleXMLElement($rgOutput);
+        $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+
+        // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
+        // returnSomething...
+
+    }
 }

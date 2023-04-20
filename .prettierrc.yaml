@@ -4,7 +4,7 @@ arrowParens: 'always'
 requirePragma: false
 jsxSingleQuote: false
 insertPragma: false
-proseWrap: 'preserve'
+proseWrap: 'always'
 htmlWhitespaceSensitivity: 'css'
 embeddedLanguageFormatting: 'auto'
 singleAttributePerLine: true

@@ -17,9 +17,9 @@ class CustomerController extends Controller
     {
         $users = User::query()->whereNotIn('id', function ($query) {
             $query->select('user_id')
-            ->from('employees');
+                ->from('employees');
         })
-        ->get();
+            ->get();
 
         foreach ($users as $user) {
             $address = Address::query()->find($user->address_id);
@@ -45,10 +45,10 @@ class CustomerController extends Controller
 
         $customer = User::query()->whereNotIn('id', function ($query) {
             $query->select('user_id')
-            ->from('employees');
+                ->from('employees');
         })
-        ->where('id', $id)
-        ->firstOrFail();
+            ->where('id', $id)
+            ->firstOrFail();
 
         $address = Address::query()->find($customer->address_id);
 
