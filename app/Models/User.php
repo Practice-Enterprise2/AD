@@ -21,10 +21,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function checkRoles($roles)
     {
-        if (! is_array($roles)) {
+        if (!is_array($roles)) {
             $roles = [$roles];
         }
-        if (! $this->hasAnyRole($roles)) {
+        if (!$this->hasAnyRole($roles)) {
             auth()->logout();
             abort(404);
         }
@@ -70,4 +70,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //send a verification email when the user changes their email address
+    public function setNameAttribute($value)
+    {
+        if ($value !== $this->name) {
+            $this->attributes['name'] = $value;
+            $this->attributes['email_verified_at'] = null;
+            $this->sendEmailVerificationNotification();
+        } else {
+            $this->attributes['name'] = $value;
+        }
+    }
 }
