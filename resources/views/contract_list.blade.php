@@ -105,7 +105,7 @@
 </form>
   <table border="1">
     <thead> 
-        <<th>@sortablelink('contract_id', 'contract_id')</th>
+        <th>@sortablelink('contract_id', 'contract_id')</th>
         <th>@sortablelink('airline_id', 'airline_id')</th>
         <th>@sortablelink('start_date', 'start_date')</th>
         <th>@sortablelink('end_date', 'end_date')</th>
