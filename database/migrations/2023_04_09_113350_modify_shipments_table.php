@@ -29,6 +29,8 @@ return new class extends Migration
                 'Delivered',
                 'Exception',
                 'Held At Location',
+                'Declined',
+                'Deleted',
             ]);
         });
     }

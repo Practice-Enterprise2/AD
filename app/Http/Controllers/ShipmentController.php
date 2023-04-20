@@ -233,6 +233,8 @@ class ShipmentController extends Controller
             $waypoint->delete();
         }
 
+        $shipment->status = 'Deleted';
+        $shipment->update();
         $shipment->delete();
 
         // $source_address->delete();
