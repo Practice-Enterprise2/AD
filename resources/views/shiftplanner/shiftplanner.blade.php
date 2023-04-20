@@ -16,6 +16,6 @@
     </script>
   </head>
   <body>
-    <div id='calendar' class="h-3/4"></div>
+    <div id='calendar' class="h-3/4 m-5"></div>
   </body>
 </x-app-layout>
