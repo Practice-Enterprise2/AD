@@ -13,7 +13,6 @@
     class="mt-6 space-y-6">
     @csrf
     @method('put')
-
     <div>
       <x-input-label for="current_password" :value="__('Current Password')" />
       <x-text-input id="current_password" name="current_password" type="password"
@@ -46,4 +45,5 @@
       @endif
     </div>
   </form>
+
 </section>
