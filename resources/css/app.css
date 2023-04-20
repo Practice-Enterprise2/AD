@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* add the one's below to your own code. */
+
+* {
+    @apply dark:text-white;
+}
