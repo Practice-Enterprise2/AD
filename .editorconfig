@@ -1,18 +1,21 @@
 root = true
 
+# These are all the currently supported properties.
 [*]
 charset = utf-8
 end_of_line = lf
 indent_size = 4
 indent_style = space
 insert_final_newline = true
+tab_width = 4
 trim_trailing_whitespace = true
+max_line_length = 80
+
+[*.{html,blade.php}]
+indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
 
 [*.{yml,yaml}]
 indent_size = 2
-
-[docker-compose.yml]
-indent_size = 4

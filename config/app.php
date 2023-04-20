@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -155,7 +154,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -191,17 +189,18 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\PolicyMappingServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // QR Code
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ],
 
     /*
     |---+
-    
-    
+
+
     -----------------------------------------------------------------------
     | Class Aliases
     |--------------------------------------------------------------------------
@@ -215,6 +214,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'PDF' => Barryvdh\DomPDF\Facade::class
         // 'ExampleClass' => App\Example\ExampleClass::class,
-    ])->toArray(),
 
+        // QR Code
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    ])->toArray(),
 ];
