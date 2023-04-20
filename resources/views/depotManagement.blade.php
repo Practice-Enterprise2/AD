@@ -18,7 +18,7 @@
         }
         
       @endphp
-      <p>Last time table was changed: {{ $var }}</p>
+      <p>Last time the table was changed: {{ $var }}</p>
     </div>
     <div class="containerMngmt child">
       <a href="/addDepot">
