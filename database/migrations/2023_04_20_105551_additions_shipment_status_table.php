@@ -12,11 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            // nullable to prevent breaking existing code.
-            $table->string('receiver_name')->nullable();
-            $table->string('receiver_email')->nullable();
-            // Requires drop and recreation as there is a bug with changing the
-            // type of a column to enum in DBAL.
             $table->dropColumn('status');
         });
 
@@ -29,6 +24,8 @@ return new class extends Migration
                 'Delivered',
                 'Exception',
                 'Held At Location',
+                'Deleted',
+                'Declined',
             ]);
         });
     }
@@ -40,8 +37,6 @@ return new class extends Migration
     {
         Schema::table('shipments', function (Blueprint $table) {
             $table->dropColumn([
-                'receiver_name',
-                'receiver_email',
                 'status',
             ]);
         });
