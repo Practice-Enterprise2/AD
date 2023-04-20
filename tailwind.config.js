@@ -11,6 +11,7 @@ module.exports = {
         'darkTheme_gray': '#4F4F4F',
       },
       height: {
+        '2,5': '12px',
         '550': '550px', // add new height option
         '75': '24em',
       },

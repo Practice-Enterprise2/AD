@@ -113,7 +113,9 @@ Route::get('/shipmentDashboard', function() {
     return view('shipmentDashboard');
 });
 Route::get('/shipmentPerUser', [ShipmentController::class, 'getShipmentPerUser']);
-
+Route::get('/shipmentConfirm', function() {
+    return view('shipmentConfirm');
+});
 
 
 // Invoice
