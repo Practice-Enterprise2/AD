@@ -58,7 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(EmployeeViewController::class)->group(function () {
         Route::get('/employee_overview', 'index')->name('employee.overview');
         Route::post('/employee_add', 'save');
-        route::get('/new_employee', 'showAdd')->name('employee.create');
+        Route::get('/new_employee', 'showAdd')->name('employee.create');
+        Route::post('/employee_edit', 'employeeEdit');
     });
 
     Route::controller(UserController::class)->group(function () {

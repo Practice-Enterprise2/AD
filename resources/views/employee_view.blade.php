@@ -24,7 +24,11 @@
     @if ($employees[0])
     @foreach ($employees as $employee)
       <div class="userpanel">
-
+        <form method="post" action="employee_edit" accept-charset="UTF-8">
+          <input type="hidden" name="employeeId" value="{{ $employee[0] }}">
+          
+          <button type="submit">Edit</button>
+    @csrf</form>
         <p>ID: {{ $employee[0] }}</p>
         <p>User_id: {{ $employee[1] }}</p>
         <p>First name: {{ $employee[2] }}</p>

@@ -17,6 +17,12 @@ class EmployeeViewController extends Controller
     {
         return view("add_employee");
     }
+    public function employeeEdit(){
+        
+        $idforedit = $_POST["employeeId"];
+        return view("employee_edit", ['theid' => $idforedit]);
+
+    }
     public function index(): View|Factory
     {
         $employees = FacadesDB::select('select * from employees');
