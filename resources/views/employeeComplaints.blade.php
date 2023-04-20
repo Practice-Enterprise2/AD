@@ -24,7 +24,7 @@
                             <x-text-input id="shortDis" class="block mt-1 w-full p-[10px]" type="text" name="shortDis" :value="old('shortDis')" placeholder="short discription of the incident*" required />
                             <x-input-error :messages="$errors->get('shortDis')" class="mt-2" />
 
-                            <textarea id="discription" name="discription" rows="4" class="block mt-1 w-full p-[10px] rounded-lg bg-gray-900" placeholder="detailed discription of the incident*" required>{{{ old('discription') }}}</textarea>
+                            <textarea id="discription" name="discription" rows="4" class="block mt-1 w-full p-[10px] rounded-lg bg-gray-900" placeholder="detailed discription of the incident*" required>{{ old('discription') }}</textarea>
                             <x-input-error :messages="$errors->get('discription')" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">

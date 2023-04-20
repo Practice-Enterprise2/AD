@@ -88,7 +88,7 @@ return new class extends Migration
 
         Schema::create('holiday_saldos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contract_id')->constrained();
+            $table->foreignId('contract_id')->references('id')->on('employee_contracts')->constrained();
             $table->unsignedInteger('allowed_days');
             $table->year('year');
             $table->set('type', ['holiday', 'sickness']);
@@ -97,7 +97,7 @@ return new class extends Migration
 
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contract_id')->constrained();
+            $table->foreignId('contract_id')->references('id')->on('employee_contracts')->constrained();
             $table->date('start_date');
             $table->date('end_date');
             $table->set('status', ['taken', 'canceled', 'awaiting_approval', 'approved']);
