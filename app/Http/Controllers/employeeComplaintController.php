@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 
 class employeeComplaintController extends Controller
 {
-    function sendComplaint(Request $req)
+    public function sendComplaint(Request $req)
     {
         $firstname = $req->first_name;
         $lastname = $req->last_name;
@@ -17,7 +17,7 @@ class employeeComplaintController extends Controller
         $shortDis = $req->shortDis;
         $discription = $req->discription;
 
-        $this->validate($req,[
+        $this->validate($req, [
             'first_name' => ['nullable', 'alpha'],
             'last_name' => ['nullable', 'alpha'],
             'email' => ['nullable', 'email'],
@@ -34,10 +34,10 @@ class employeeComplaintController extends Controller
             'jobtitle' => $jobtitle,
             'location' => $location,
             'shortDis' => $shortDis,
-            'discription' => $discription
+            'discription' => $discription,
         ];
 
-        Mail::send(['mail'=>'mail.test_mail'], $data, function($message) use ($firstname, $lastname, $email, $jobtitle, $location, $shortDis, $discription) {
+        Mail::send(['mail' => 'mail.test_mail'], $data, function ($message) use ($firstname, $lastname, $email, $jobtitle, $location, $shortDis, $discription) {
             $message->to('hr-complaints@BlueSky.com')
                     ->subject('complaint - '.$shortDis);
             $message->text("Discription of the incident:\n".$discription."\n\nlocation of the incident:\n".$location."\n\n\nfirstname: ".$firstname."\nlastname: ".$lastname."\nemail: ".$email."\njobtitle: ".$jobtitle);
