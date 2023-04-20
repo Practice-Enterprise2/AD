@@ -1,4 +1,4 @@
-@extends('layouts.header')
+
 <x-app-layout>
   <style>
     .userpanel {
@@ -21,6 +21,7 @@
   </style>
   <div>
     <a id="newemployee" href="{{ route('employee.create') }}">new employee</a>
+    @if ($employees[0])
     @foreach ($employees as $employee)
       <div class="userpanel">
 
@@ -35,5 +36,6 @@
         
       </div>
     @endforeach
+    @endif
     
 </x-app-layout>
