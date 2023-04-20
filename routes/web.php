@@ -128,17 +128,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
-    //contact and messages
-    Route::get('/contact', [contactController::class, 'create'])->name('contact.create');
-    Route::post('/contact', [contactController::class, 'store'])->name('contact.store');
-    Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
-    Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
-    Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
-    Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create');
+    Route::middleware(['auth', 'verified'])->group(function () {
+        //contact and messages
+        Route::get('/contact', [contactController::class, 'create'])->name('contact.create');
+        Route::post('/contact', [contactController::class, 'store'])->name('contact.store');
+        Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
+        Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
+        Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
+        Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create');
 
-    Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
-    Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
-    Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
+        Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
+        Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
+        Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
+    });
 
     //Notification
     Route::get('/markAsRead', function () {

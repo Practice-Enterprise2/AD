@@ -22,7 +22,7 @@ class contactController extends Controller
                 'contacts' => contact::where('is_handled', 0)->get()
             ]);
         }
-        return Redirect(route('shipment.index'));
+        return Redirect(route('complaints.messages'));
         
             
     }
@@ -58,7 +58,7 @@ class contactController extends Controller
             'message' => $request->message,
             'is_handled' => 0
         ]);
-        return Redirect(route('shipment.index'));
+        return Redirect(route('complaints.messages'));
     }
 
     /**
@@ -76,7 +76,7 @@ class contactController extends Controller
         }
         else
         {
-            return redirect(route('shipment.index'));
+            return redirect(route('complaints.messages'));
         }
     }
 
@@ -108,6 +108,6 @@ class contactController extends Controller
             contact::destroy($id);
             return redirect(route('contact.index'));
         }
-        return redirect(route('shipment.index'));
+        return redirect(route('complaints.messages'));
     }
 }
