@@ -2,7 +2,7 @@
 
 ## How to Add Code
 
-1. Fork the project using the 'Fork' button on GitHub
+1. Fork the project using the 'Fork' button on GitHub or work on a branch
 2. Clone the forked repository to your PC
 3. Create a new branch in the local repository on your PC
 4. Add commits to the branch until your feature/bugfix is done
