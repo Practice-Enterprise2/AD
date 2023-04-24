@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+    errorBaseline="psalm_baseline.xml"
+>
+    <issueHandlers>
+        <!-- Laravel relies on uninitialized properties -->
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+    </issueHandlers>
+
+    <projectFiles>
+        <!-- TODO: Add `tests` directory -->
+        <directory name="app" />
+        <directory name="bootstrap" />
+        <directory name="config" />
+        <directory name="database" />
+        <directory name="routes" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
