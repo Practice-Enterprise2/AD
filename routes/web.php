@@ -7,7 +7,7 @@ use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
-use App\Http\Controllers\faqcontroller;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -137,7 +137,7 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 
     //FAQ page
-    Route::get('/faq', [faqcontroller::class, 'show'])->name('faq.show');
+    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 });
 
 // Email verification

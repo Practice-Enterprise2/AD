@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
-class faqcontroller extends Controller
+class FaqController extends Controller
 {
     public function show(): View|Factory
     {
