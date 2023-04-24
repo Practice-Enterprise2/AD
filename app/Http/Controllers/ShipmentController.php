@@ -185,9 +185,10 @@ class ShipmentController extends Controller
         ->select('*')
         ->get();
 
-
+        $shipmentData = $this->track($id);
         return view('shipments_details', [
-            'shipments' => $shipments
+            'shipments' => $shipments,
+            'address' => $shipmentData
         ]);
     }
 
@@ -316,7 +317,7 @@ class ShipmentController extends Controller
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
 
         // (!) don't forget to add your bing maps key here.
-        $key = 'your_bing_maps_key';
+        $key = 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S';
 
         // address should be converted here, which will be used with the baseURL to send a request.
         $country = str_ireplace(' ', '%20', request()->country);
@@ -345,6 +346,6 @@ class ShipmentController extends Controller
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-
+        return $address;
     }
 }
