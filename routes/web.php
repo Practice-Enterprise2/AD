@@ -15,6 +15,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\faqcontroller;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -134,6 +135,9 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+
+    //FAQ page
+    Route::get('/faq', [faqcontroller::class,"show"])->name('faq.show');
 });
 
 // Email verification
