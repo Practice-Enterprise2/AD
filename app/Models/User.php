@@ -88,6 +88,4 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $this->attributes['name'] = $value;
     }
-
-
 }
