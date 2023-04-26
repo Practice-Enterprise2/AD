@@ -139,7 +139,6 @@
         </x-dropdown>
       @endauth
       @auth
-<<<<<<< HEAD
         {{-- Validations needed for later. --}}
         {{-- <x-nav-link :href="route('shipments.create')">
         {{ __('Request Shipment') }}
@@ -182,11 +181,9 @@
             </x-dropdown-link>
           </x-slot>
         </x-dropdown>
-=======
         <x-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
           {{ __('FAQ') }}
         </x-nav-link>
->>>>>>> main
       @endauth
 
       <script type="text/javascript">
