@@ -15,4 +15,9 @@ return [
      * Path to the blade-formatter script.
      */
     'blade_formatter_path' => env('BLADE_FORMATTER_PATH', './node_modules/blade-formatter/bin/blade-formatter'),
+
+    /**
+     * Path to the psalm script.
+     */
+    'psalm_path' => env('PSALM_PATH', './vendor/bin/psalm'),
 ];
