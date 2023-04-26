@@ -24,8 +24,6 @@ class Employee extends Model
 
     protected $table = 'employees';
 
-    public $timestamps = true;
-
     protected $fillable = [
         'dateOfBirth',
         'jobTitle',
