@@ -33,7 +33,7 @@ return [
             'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
-            'encrypted' => false
+            'encrypted' => false,
         ],
     ],
     /*

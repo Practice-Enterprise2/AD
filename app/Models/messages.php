@@ -12,13 +12,16 @@ class messages extends Model
     protected $fillable = [
         'chatbox_id',
         'from_id',
-        'content'
+        'content',
     ];
 
-    public function fromChatBox() {
+    public function fromChatBox()
+    {
         return $this->belongsTo(chatBox::class);
     }
-    public function fromWho() {
+
+    public function fromWho()
+    {
         return $this->belongsTo(User::class);
     }
 }

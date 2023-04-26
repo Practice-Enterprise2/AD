@@ -15,10 +15,11 @@ class contact extends Model
         'shipment_id',
         'subject',
         'message',
-        'is_handled'
+        'is_handled',
     ];
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(User::class);
     }
 }

@@ -3,6 +3,8 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\complaintscontroller;
+use App\Http\Controllers\contactController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -15,12 +17,9 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Http\Controllers\complaintscontroller;
-use App\Http\Controllers\contactController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -137,7 +136,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
         Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create');
 
-        Route::get('/messages', [complaintscontroller::class,'messages'])->name('complaints.messages');
+        Route::get('/messages', [complaintscontroller::class, 'messages'])->name('complaints.messages');
         Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
         Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
     });

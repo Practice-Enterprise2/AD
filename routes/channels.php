@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Broadcast;
 use App\Models\chatBox;
-use App\Models\messages;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +17,10 @@ use App\Models\messages;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-Broadcast::channel('private.chat.{chatbox_id}', function($user, $chatbox_id) {
+Broadcast::channel('private.chat.{chatbox_id}', function ($user, $chatbox_id) {
     $chatbox = ChatBox::where('id', $chatbox_id)
                       ->first();
-        if ($chatbox && ($user->id == $chatbox->customer_id || $user->id == $chatbox->employee_id)) {
+    if ($chatbox && ($user->id == $chatbox->customer_id || $user->id == $chatbox->employee_id)) {
         return ['id' => $user->id];
     }
 });

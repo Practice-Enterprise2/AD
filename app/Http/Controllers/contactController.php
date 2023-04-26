@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class contactController extends Controller
 {
@@ -16,15 +14,14 @@ class contactController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->role == 1)
-        {
+        if (Auth::user()->role == 1) {
             return view('contact.index', [
-                'contacts' => contact::where('is_handled', 0)->get()
+                'contacts' => contact::where('is_handled', 0)->get(),
             ]);
         }
+
         return Redirect(route('complaints.messages'));
-        
-            
+
     }
 
     /**
@@ -56,8 +53,9 @@ class contactController extends Controller
             'shipment_id' => $shipment_id,
             'subject' => $request->subject,
             'message' => $request->message,
-            'is_handled' => 0
+            'is_handled' => 0,
         ]);
+
         return Redirect(route('complaints.messages'));
     }
 
@@ -68,14 +66,11 @@ class contactController extends Controller
     {
         //
         $contact = contact::where('id', $id)->first();
-        if(contact::where('id', $id)->exists() && Auth::user()->role == 1)
-        {
+        if (contact::where('id', $id)->exists() && Auth::user()->role == 1) {
             return view('contact.show', [
-                'contact' => $contact
+                'contact' => $contact,
             ]);
-        }
-        else
-        {
+        } else {
             return redirect(route('complaints.messages'));
         }
     }
@@ -103,11 +98,12 @@ class contactController extends Controller
     {
         //
         $contact = contact::where('id', $id)->first();
-        if(contact::where('id', $id)->exists() && Auth::user()->role == 1)
-        {
+        if (contact::where('id', $id)->exists() && Auth::user()->role == 1) {
             contact::destroy($id);
+
             return redirect(route('contact.index'));
         }
+
         return redirect(route('complaints.messages'));
     }
 }

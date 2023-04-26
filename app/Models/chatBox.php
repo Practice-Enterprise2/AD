@@ -11,16 +11,21 @@ class chatBox extends Model
 
     protected $fillable = [
         'customer_id',
-        'employee_id'
+        'employee_id',
     ];
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(User::class, 'customer_id');
     }
-    public function employee() {
+
+    public function employee()
+    {
         return $this->belongsTo(User::class, 'employee_id');
     }
-    public function messages() {
+
+    public function messages()
+    {
         return $this->hasMany(messages::class);
     }
 }
