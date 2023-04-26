@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $street
+ * @property string $house_number
+ * @property string $postal_code
+ * @property string $city
+ * @property string $region
+ * @property string $country
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ */
 class Address extends Model
 {
-    use HasFactory;
-
     public const VALIDATION_RULE_STREET = ['required', 'min:2'];
 
     public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'min:1'];

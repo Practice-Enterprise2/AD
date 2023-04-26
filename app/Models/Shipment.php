@@ -2,15 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property Address $source_address
+ * @property Address $destination_address
+ * @property \Illuminate\Support\Carbon $shipment_date
+ * @property \Illuminate\Support\Carbon $delivery_date
+ * @property int $expense
+ * @property int $weight
+ * @property string $type
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property User $user
+ * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?string $receiver_name
+ * @property ?string $receiver_email
+ * @property string $status
+ * @property Dimension $dimension
+ */
 class Shipment extends Model
 {
-    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [

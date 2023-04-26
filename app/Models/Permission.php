@@ -5,6 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property ?string $description
+ * @property string $guard_name
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ */
 class Permission extends SpatiePermission
 {
     /**
