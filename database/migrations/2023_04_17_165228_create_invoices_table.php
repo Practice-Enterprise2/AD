@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('shipment_id')->constrained('shipments');
             $table->string('invoice_code');
-            $table->integer('weight');
             $table->date('due_date');
             $table->float('total_price');
             $table->float('total_price_excl_vat');

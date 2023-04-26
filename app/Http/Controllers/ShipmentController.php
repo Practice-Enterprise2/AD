@@ -271,14 +271,14 @@ class ShipmentController extends Controller
         $invoice_id = $invoice->id;
         $shipment_id = DB::table('invoices')->select('shipment_id')->where('id', $invoice_id)->value('id');
         $shipment_user_id = DB::table('shipments')->select('user_id')->where('id', $shipment_id)->value('id');
-
+        $shipment_weight = DB::table('shipments')->select('weight')->where('id', $shipment_id)->value('weight');
         if ($shipment_user_id != $user_id) {
             return redirect()->route('home');
         }
         $data = [
             'subject' => $subject,
             'name' => $name,
-            'weight' => $invoice->weight,
+            'weight' => $shipment_weight,
             'total_price' => $invoice->total_price,
             'invoice_code' => $invoice->invoice_code,
         ];

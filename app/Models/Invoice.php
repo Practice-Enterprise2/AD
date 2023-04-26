@@ -11,7 +11,6 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'weight',
         'due_date',
         'total_price',
         'total_price_excl_vat',

@@ -126,7 +126,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
     //Email for invoice
-    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->middleware('auth')->name('mail.invoices');
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 
     //Notification
     Route::get('/markAsRead', function () {
