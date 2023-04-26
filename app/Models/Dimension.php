@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Dimension extends Model
 {
-    protected $fillable = ['length', 'width', 'height'];
+    protected $fillable = [
+        'length',
+        'width',
+        'height',
+    ];
 
     public function shipment()
     {

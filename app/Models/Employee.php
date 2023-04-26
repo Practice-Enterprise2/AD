@@ -26,28 +26,10 @@ class Employee extends Model
 
     public $timestamps = true;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'street',
-        'province',
-        'city',
-        'postalCode',
-        'phoneNumber',
-        'mail',
         'dateOfBirth',
         'jobTitle',
         'salary',
-        'isActive',
-        'password',
         'Iban',
-        'created_at',
-        'updated_at',
-
     ];
 }

@@ -23,7 +23,6 @@ class BusinessCustomer extends Model
     public const VALIDATION_RULE_VAT_NUMBER = ['required', 'min:4'];
 
     protected $fillable = [
-        'user_id',
         'vat_number',
     ];
 

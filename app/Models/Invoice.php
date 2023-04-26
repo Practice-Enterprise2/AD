@@ -19,10 +19,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Invoice extends Model
 {
     protected $fillable = [
+        'invoice_code',
         'due_date',
         'total_price',
         'total_price_excl_vat',
-        'invoice_code',
+        'is_paid',
     ];
 
     public function shipment(): BelongsTo

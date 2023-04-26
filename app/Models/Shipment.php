@@ -30,15 +30,14 @@ class Shipment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
         'shipment_date',
         'delivery_date',
-        'status',
         'expense',
         'weight',
         'type',
         'receiver_name',
         'receiver_email',
+        'status',
     ];
 
     public function pickups(): HasMany

@@ -14,4 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EmployeeContract extends Model
 {
+    protected $fillable = [
+        'start_date',
+        'end_date',
+    ];
 }

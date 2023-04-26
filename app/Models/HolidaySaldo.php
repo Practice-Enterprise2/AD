@@ -15,4 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class HolidaySaldo extends Model
 {
+    protected $fillable = [
+        'allowed_days',
+        'year',
+        'type',
+    ];
 }
