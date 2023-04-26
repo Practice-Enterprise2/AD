@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB as FacadesDB;
+use App\Models\review;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class ReviewController extends Controller
 {
@@ -14,31 +15,12 @@ class ReviewController extends Controller
     {
         return view('review');
     }
-
     public function save(Request $req): View
     {
-        $review = new Review();
+        $review = new review();
         $review->rating = $req->rating;
         $review->comment = $req->comment;
         $review->save();
-
         return view('app');
-    }
-
-    public function showread(): View|Factory
-    {
-        $reviews = FacadesDB::select('select * from reviews');
-        $rating = null;
-
-        return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
-
-    }
-
-    public function filter(Request $request): View|Factory
-    {
-        $reviews = FacadesDB::select('select * from reviews');
-        $rating = $request->input('rating');
-
-        return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
     }
 }
