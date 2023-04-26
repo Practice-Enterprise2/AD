@@ -110,7 +110,6 @@
               </div>
             </button>
           </x-slot>
-
           <x-slot name="content">
             @if (auth()->user()->unreadNotifications->count() > 0)
               <x-dropdown-link
@@ -181,6 +180,11 @@
             </x-dropdown-link>
           </x-slot>
         </x-dropdown>
+            <x-nav-link :href="route('readreviews')" :active="request()->routeIs('readreviews')">
+              {{ __('Reviews') }}
+            </x-nav-link>
+      @endauth
+      @auth
         <x-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
           {{ __('FAQ') }}
         </x-nav-link>

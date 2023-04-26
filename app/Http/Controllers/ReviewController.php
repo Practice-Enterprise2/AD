@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use App\Models\review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ReviewController extends Controller
 {
@@ -22,5 +23,20 @@ class ReviewController extends Controller
         $review->comment = $req->comment;
         $review->save();
         return view('app');
+    }
+    public function showread(): View|Factory
+    {
+        $reviews = FacadesDB::select('select * from reviews');
+        $rating = null;
+
+        return view('readreviews', ['review' => $reviews,'rating' => $rating]);
+        
+    }
+    public function filter(Request $request): View|Factory
+    {
+        $reviews = FacadesDB::select('select * from reviews');
+        $rating = $request->input('rating');
+
+        return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
     }
 }
