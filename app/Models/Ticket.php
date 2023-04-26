@@ -17,5 +17,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ticket extends Model
 {
-    protected $fillable = ['cstID', 'issue', 'description'];
+    protected $fillable = [
+        'cstID',
+        'employeeID',
+        'issue',
+        'description',
+        'solution',
+        'status',
+    ];
 }

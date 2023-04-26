@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Waypoint extends Model
 {
     protected $fillable = [
-        // implement later.
+        'status',
     ];
 
     public function shipment(): BelongsTo

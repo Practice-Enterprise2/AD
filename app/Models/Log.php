@@ -13,4 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Log extends Model
 {
+    protected $fillable = [
+        'session_id',
+        'timestamp',
+        'path',
+    ];
 }

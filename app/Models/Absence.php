@@ -17,4 +17,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Absence extends Model
 {
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'status',
+        'approval_time',
+        'type',
+    ];
 }
