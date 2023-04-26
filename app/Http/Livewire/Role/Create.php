@@ -32,6 +32,6 @@ class Create extends Component
 
         $this->role->save();
 
-        return redirect()->route('control-panel.groups');
+        return redirect()->route('control-panel.roles');
     }
 }

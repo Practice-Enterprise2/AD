@@ -4,12 +4,11 @@ arrowParens: 'always'
 requirePragma: false
 jsxSingleQuote: false
 insertPragma: false
-proseWrap: 'preserve'
+proseWrap: 'always'
 htmlWhitespaceSensitivity: 'css'
 embeddedLanguageFormatting: 'auto'
 singleAttributePerLine: true
 quoteProps: 'as-needed'
 semi: true
 singleQuote: true
-tabWidth: 4
 trailingComma: 'es5'

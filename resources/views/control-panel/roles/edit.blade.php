@@ -4,16 +4,19 @@
   </x-slot:title>
 
   <x-control-panel-layout>
+    <x-slot:title>
+      {{ __('Edit Group') }}
+    </x-slot:title>
+
     <x-slot:sidebar>
       @livewire('control-panel.sidebar')
     </x-slot:sidebar>
 
-    <h1 class="text-3xl font-extrabold">{{ __('Edit Group') }}</h1>
     <div class="my-5">
-      @livewire('groups.edit', ['role_id' => $group])
+      @livewire('roles.edit', ['role_id' => $role])
     </div>
     <div class="my-5">
-      @livewire('groups.permissions.edit', ['role' => \App\Models\Role::findOrFail($group)])
+      @livewire('roles.permissions.edit', ['role' => \App\Models\Role::findOrFail($role)])
     </div>
   </x-control-panel-layout>
 </x-app-layout>
