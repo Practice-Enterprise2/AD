@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Address;
-use App\Models\Dimensions;
+use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
@@ -104,8 +104,8 @@ class ShipmentController extends Controller
         $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
-        //Dimensions
-        $dimensions = new Dimensions();
+        // Dimensions
+        $dimensions = new Dimension();
         $dimensions->length = request()->shipment_length;
         $dimensions->width = request()->shipment_width;
         $dimensions->height = request()->shipment_height;
