@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class EmployeeViewController extends Controller
@@ -89,7 +90,8 @@ class EmployeeViewController extends Controller
                 //$user->isActive = $req->isActive;
                 $user->jobTitle = $req->jobTitle;
                 $user->salary = $req->salary;
-                $user2->password = $req->password;
+                $user2->password = Hash::make($req->password);
+                
                 $user->iban = $req->Iban;
                 
                 
