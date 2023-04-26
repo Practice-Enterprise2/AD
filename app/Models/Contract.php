@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -24,4 +26,29 @@ class Contract extends Model
         'price',
         'is_active',
     ];
+
+    public function absences(): HasMany
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    public function airline(): BelongsTo
+    {
+        return $this->belongsTo(Airline::class);
+    }
+
+    public function depart_airport(): BelongsTo
+    {
+        return $this->belongsTo(Airline::class);
+    }
+
+    public function destination_airport(): BelongsTo
+    {
+        return $this->belongsTo(Airline::class);
+    }
+
+    public function holiday_saldos(): HasMany
+    {
+        return $this->hasMany(HolidaySaldo::class);
+    }
 }

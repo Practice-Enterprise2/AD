@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -47,5 +48,25 @@ class Address extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function airport(): HasOne
+    {
+        return $this->hasOne(Airport::class);
+    }
+
+    public function depot(): HasOne
+    {
+        return $this->hasOne(Depot::class);
+    }
+
+    public function shipments(): HasMany
+    {
+        return $this->hasMany(Shipment::class);
+    }
+
+    public function waypoints(): HasMany
+    {
+        return $this->hasMany(Waypoint::class);
     }
 }

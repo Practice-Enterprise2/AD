@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -45,16 +46,6 @@ class Shipment extends Model
         return $this->hasMany(Pickup::class);
     }
 
-    // public function source_address(): BelongsTo
-    // {
-    //     return $this->belongsTo(Address::class);
-    // }
-
-    // public function destination_address(): BelongsTo
-    // {
-    //     return $this->belongsTo(Address::class);
-    // }
-
     public function source_address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'source_address_id');
@@ -68,5 +59,20 @@ class Shipment extends Model
     public function waypoints(): HasMany
     {
         return $this->hasMany(Waypoint::class);
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function dimension(): BelongsTo
+    {
+        return $this->belongsTo(Dimension::class);
     }
 }

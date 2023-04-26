@@ -20,8 +20,8 @@ class Dimension extends Model
         'height',
     ];
 
-    public function shipment()
+    public function shipments(): HasMany
     {
-        return $this->belongsTo('App\Models\Shipment');
+        return $this->hasMany('App\Models\Shipment');
     }
 }

@@ -23,6 +23,8 @@ class Notification extends Model
         'read_at',
     ];
 
+    // Since polymorphic relations can technically refer to anything, the
+    // inverse for this one isn't implemented.
     public function notifiable(): MorphTo
     {
         return $this->morphTo();
