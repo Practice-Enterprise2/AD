@@ -138,9 +138,9 @@
         </x-dropdown>
       @endauth
       @auth
-            <x-nav-link :href="route('readreviews')" :active="request()->routeIs('readreviews')">
-              {{ __('Reviews') }}
-            </x-nav-link>
+        <x-nav-link :href="route('readreviews')" :active="request()->routeIs('readreviews')">
+          {{ __('Reviews') }}
+        </x-nav-link>
       @endauth
       @auth
         {{-- Validations needed for later. --}}
