@@ -135,9 +135,11 @@ password: `letmein`
 
 ## Mail
 
-It is recommended to use port 587 for mail as it is the port for encrypted email transmissions using SMTP Secure(SMTPS).
+It is recommended to use port 587 for mail as it is the port for encrypted email
+transmissions using SMTP Secure(SMTPS).
 
-If you want to be able to mail please make sure your .env file has the following lines of code:
+If you want to be able to mail please make sure your .env file has the following
+lines of code:
 
 ```
 MAIL_MAILER=smtp
