@@ -11,6 +11,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
@@ -138,6 +139,10 @@ Route::middleware('auth')->group(function () {
 
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+
+    //review page
+    Route::get('/review', [ReviewController::class,'show'])->name('review');
+    Route::post('/review_add', [ReviewController::class,'save']);
 });
 
 // Email verification
