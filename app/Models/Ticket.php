@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ticket extends Model
 {
+    protected $primaryKey = 'ticketID';
+
     protected $fillable = [
         'cstID',
         'employeeID',

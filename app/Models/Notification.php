@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Notification extends Model
 {
+    public $incrementing = false;
+
     protected $fillable = [
         'type',
         'data',
