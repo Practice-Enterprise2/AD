@@ -18,6 +18,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Invoice extends Model
 {
+    protected $attributes = [
+        'is_paid' => 0,
+    ];
+
     protected $fillable = [
         'invoice_code',
         'due_date',

@@ -31,6 +31,10 @@ class Address extends Model
 
     public const VALIDATION_RULE_COUNTRY = ['required', 'min:2'];
 
+    protected $attributes = [
+        'house_number' => '',
+    ];
+
     protected $fillable = [
         'street',
         'house_number',

@@ -38,6 +38,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public const VALIDATION_RULE_EMAIL = 'required|email';
 
+    protected $attributes = [
+        'last_name' => '',
+        'role' => 0,
+        'is_locked' => 0,
+    ];
+
     protected $fillable = [
         'name',
         'last_name',

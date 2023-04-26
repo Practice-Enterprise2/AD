@@ -16,6 +16,9 @@ class Log extends Model
 {
     public $timestamps = false;
 
+    // Can't set default date in $attributes as it's impossible to create as a
+    // constant.
+
     protected $fillable = [
         'session_id',
         'timestamp',

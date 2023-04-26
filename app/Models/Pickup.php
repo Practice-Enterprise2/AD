@@ -22,6 +22,10 @@ class Pickup extends Model
 
     public const VALIDATION_RULE_TIME = ['required'];
 
+    protected $attributes = [
+        'status' => 'pending',
+    ];
+
     protected $fillable = [
         'time',
         'status',
