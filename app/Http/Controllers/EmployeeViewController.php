@@ -2,37 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Employee;
 use App\Models\User;
-use App\Models\Address;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeViewController extends Controller
 {
     public function showAdd()
     {
-        return view("add_employee");
+        return view('add_employee');
     }
-    public function employeeEdit(){
-        
-        $idforedit = $_POST["employeeId"];
-        return view("employee_edit", ['theid' => $idforedit]);
+
+    public function employeeEdit()
+    {
+
+        $idforedit = $_POST['employeeId'];
+
+        return view('employee_edit', ['theid' => $idforedit]);
 
     }
+
     public function index(): View|Factory
     {
         $employees = FacadesDB::select('select * from employees');
         $users = FacadesDB::select('select * from users');
         $address = FacadesDB::select('select * from addresses');
 
-        $comboArray = array(array());
-        for($i = 0; $i<count($employees); $i++)
-        {
+        $comboArray = [[]];
+        for ($i = 0; $i < count($employees); $i++) {
             $comboArray[$i][0] = $employees[$i]->id;
             $comboArray[$i][1] = $employees[$i]->user_id;
             $temp = FacadesDB::table('users')->where('id', $employees[$i]->user_id)->first();
@@ -44,6 +47,7 @@ class EmployeeViewController extends Controller
             $comboArray[$i][7] = $employees[$i]->salary;
 
         }
+
         return view('employee_view', ['employees' => $comboArray]);
     }
 
@@ -91,20 +95,20 @@ class EmployeeViewController extends Controller
                 $user->jobTitle = $req->jobTitle;
                 $user->salary = $req->salary;
                 $user2->password = Hash::make($req->password);
-                
+
                 $user->iban = $req->Iban;
-                
-                
+
                 $address->save();
                 $id1 = FacadesDB::table('addresses')->where('street', $req->street)->where('house_number', $req->houseNumber)->where('city', $req->city)->value('id');
-                
+
                 $user2->address_id = $id1;
                 $user2->save();
-                $id2 = FacadesDB::table('users')->where('email', $req->mail)->value('id');;
-                
+                $id2 = FacadesDB::table('users')->where('email', $req->mail)->value('id');
+
                 $user->user_id = $id2;
-                
+
                 $user->save();
+
                 return redirect()->back()->with('alert', 'complete creation');
             }
         }

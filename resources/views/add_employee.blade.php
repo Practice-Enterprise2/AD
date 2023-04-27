@@ -60,7 +60,7 @@
       <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
     </div>
     <div id="right">
-      
+
       <label for="dateOfBirth">date of birth:</label>
       <input type="date" id="dateOfBirth" name="dateOfBirth" required><br>
       <label for="jobTitle">job title:</label>
