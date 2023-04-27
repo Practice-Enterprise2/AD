@@ -1,0 +1,1875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.9.0@8b9ad1eb9e8b7d3101f949291da2b9f7767cd163">
+  <file src="app/Console/Commands/Bootstrap.php">
+    <NonInvariantDocblockPropertyType>
+      <code>$description</code>
+    </NonInvariantDocblockPropertyType>
+    <UnusedClass>
+      <code>Bootstrap</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Console/Commands/FormatCode.php">
+    <MissingClosureParamType>
+      <code>$buffer</code>
+      <code>$buffer</code>
+      <code>$buffer</code>
+      <code>$type</code>
+      <code>$type</code>
+      <code>$type</code>
+    </MissingClosureParamType>
+    <MixedArgument>
+      <code>$buffer</code>
+      <code>$buffer</code>
+      <code>$buffer</code>
+    </MixedArgument>
+    <NonInvariantDocblockPropertyType>
+      <code>$description</code>
+    </NonInvariantDocblockPropertyType>
+    <UnusedClass>
+      <code>FormatCode</code>
+    </UnusedClass>
+    <UnusedClosureParam>
+      <code>$type</code>
+      <code>$type</code>
+      <code>$type</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="app/Console/Kernel.php">
+    <UnresolvableInclude>
+      <code><![CDATA[require base_path('routes/console.php')]]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="app/Exceptions/Handler.php">
+    <UnusedClosureParam>
+      <code>$e</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="app/Http/Controllers/ApiController.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[collect($response['response']['airports'])
+            ->filter(function ($airport) {
+                return array_key_exists('iata_code', $airport);
+            })
+            ->map(function ($airport) {
+                return collect($airport)->only(['name', 'iata_code']);
+            })]]></code>
+    </InvalidReturnStatement>
+    <MixedArgument>
+      <code>$airport</code>
+      <code>$airport</code>
+      <code><![CDATA[$response['response']['airports']]]></code>
+      <code><![CDATA[request()->query('query')]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$response['response']['airports']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$search</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>JsonResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>has</code>
+      <code>query</code>
+      <code>query</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[response()->json(['error' => 'Bad Request'], 400)]]></code>
+      <code><![CDATA[response()->json(['error' => 'Bad Request'], 400)]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[request()->query('query')]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall>
+      <code>has</code>
+      <code>query</code>
+      <code>query</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference>
+      <code>has</code>
+      <code>query</code>
+      <code>query</code>
+    </PossiblyNullReference>
+    <UnusedClass>
+      <code>ApiController</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Controllers/Auth/AuthenticatedSessionController.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[redirect('/')]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>RedirectResponse</code>
+    </InvalidReturnType>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('auth.login')]]></code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+    <PossiblyUnusedReturnValue>
+      <code>RedirectResponse</code>
+    </PossiblyUnusedReturnValue>
+    <UndefinedInterfaceMethod>
+      <code>logout</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Http/Controllers/Auth/ConfirmablePasswordController.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('auth.confirm-password')]]></code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedPropertyFetch>
+      <code><![CDATA[$request->user()->email]]></code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+    <PossiblyUnusedReturnValue>
+      <code>RedirectResponse</code>
+    </PossiblyUnusedReturnValue>
+  </file>
+  <file src="app/Http/Controllers/Auth/EmailVerificationNotificationController.php">
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>hasVerifiedEmail</code>
+      <code>sendEmailVerificationNotification</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME)]]></code>
+    </MixedReturnStatement>
+  </file>
+  <file src="app/Http/Controllers/Auth/EmailVerificationPromptController.php">
+    <MixedInferredReturnType>
+      <code>RedirectResponse|View</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>hasVerifiedEmail</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[$request->user()->hasVerifiedEmail()
+                    ? redirect()->intended(RouteServiceProvider::HOME)
+                    : view('auth.verify-email')]]></code>
+      <code><![CDATA[$request->user()->hasVerifiedEmail()
+                    ? redirect()->intended(RouteServiceProvider::HOME)
+                    : view('auth.verify-email')]]></code>
+    </MixedReturnStatement>
+  </file>
+  <file src="app/Http/Controllers/Auth/NewPasswordController.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('auth.reset-password', ['request' => $request])]]></code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType>
+      <code>$user</code>
+    </MissingClosureParamType>
+    <MixedArgument>
+      <code><![CDATA[$request->password]]></code>
+      <code>$status</code>
+      <code>$status</code>
+      <code>$user</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$status</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>forceFill</code>
+      <code>save</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[Password::PASSWORD_RESET == $status
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withInput($request->only('email'))
+                        ->withErrors(['email' => __($status)])]]></code>
+      <code><![CDATA[Password::PASSWORD_RESET == $status
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withInput($request->only('email'))
+                        ->withErrors(['email' => __($status)])]]></code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="app/Http/Controllers/Auth/PasswordController.php">
+    <MixedArgument>
+      <code><![CDATA[$validated['password']]]></code>
+    </MixedArgument>
+    <MixedMethodCall>
+      <code>update</code>
+    </MixedMethodCall>
+  </file>
+  <file src="app/Http/Controllers/Auth/PasswordResetLinkController.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('auth.forgot-password')]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="app/Http/Controllers/Auth/RegisteredUserController.php">
+    <InvalidArgument>
+      <code>$user</code>
+    </InvalidArgument>
+    <InvalidReturnStatement>
+      <code>redirect(RouteServiceProvider::HOME)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>RedirectResponse</code>
+    </InvalidReturnType>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('auth.register')]]></code>
+    </LessSpecificReturnStatement>
+    <MixedArgument>
+      <code><![CDATA[$request->password]]></code>
+    </MixedArgument>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+    <PossiblyUnusedReturnValue>
+      <code>RedirectResponse</code>
+    </PossiblyUnusedReturnValue>
+  </file>
+  <file src="app/Http/Controllers/Auth/VerifyEmailController.php">
+    <MixedArgument>
+      <code><![CDATA[$request->user()]]></code>
+    </MixedArgument>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>hasVerifiedEmail</code>
+      <code>markEmailAsVerified</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME.'?verified=1')]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME.'?verified=1')]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME.'?verified=1')]]></code>
+      <code><![CDATA[redirect()->intended(RouteServiceProvider::HOME.'?verified=1')]]></code>
+    </MixedReturnStatement>
+  </file>
+  <file src="app/Http/Controllers/ControlPanelController.php">
+    <PossiblyUnusedMethod>
+      <code>info</code>
+      <code>log</code>
+      <code>permissions</code>
+      <code>roles</code>
+      <code>roles_edit</code>
+      <code>security</code>
+      <code>users</code>
+      <code>users_edit</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Controllers/CustomerController.php">
+    <MissingClosureParamType>
+      <code>$query</code>
+      <code>$query</code>
+    </MissingClosureParamType>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>from</code>
+      <code>from</code>
+      <code>select</code>
+      <code>select</code>
+      <code>with</code>
+      <code>withErrors</code>
+      <code>withInput</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->back()->withErrors($validator)->withInput()]]></code>
+      <code><![CDATA[redirect()->back()->withErrors($validator)->withInput()]]></code>
+      <code><![CDATA[redirect()->route('customer.edit', $id)->with('success', 'Customer updated successfully.')]]></code>
+      <code><![CDATA[redirect()->route('customer.edit', $id)->with('success', 'Customer updated successfully.')]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall>
+      <code>city</code>
+      <code>country</code>
+      <code>email</code>
+      <code>house_number</code>
+      <code>last_name</code>
+      <code>name</code>
+      <code>phone</code>
+      <code>postal_code</code>
+      <code>region</code>
+      <code>save</code>
+      <code>save</code>
+      <code>street</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignment>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$customer</code>
+      <code>$customer</code>
+      <code>$customer</code>
+      <code>$customer</code>
+    </PossiblyInvalidPropertyAssignment>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$customer->address_id]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignment>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$address</code>
+      <code>$customer</code>
+      <code>$customer</code>
+      <code>$customer</code>
+      <code>$customer</code>
+    </PossiblyNullPropertyAssignment>
+    <PossiblyNullPropertyFetch>
+      <code><![CDATA[$customer->address_id]]></code>
+    </PossiblyNullPropertyFetch>
+    <PossiblyNullReference>
+      <code>save</code>
+      <code>save</code>
+    </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>edit</code>
+      <code>getCustomers</code>
+      <code>update</code>
+    </PossiblyUnusedMethod>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$customer->address_id]]></code>
+      <code><![CDATA[$customer->address_id]]></code>
+      <code><![CDATA[$customer->address_id]]></code>
+      <code><![CDATA[$user->address_id]]></code>
+      <code><![CDATA[$user->id]]></code>
+    </UndefinedMagicPropertyFetch>
+    <UndefinedPropertyAssignment>
+      <code><![CDATA[$address->city]]></code>
+      <code><![CDATA[$address->city]]></code>
+      <code><![CDATA[$address->country]]></code>
+      <code><![CDATA[$address->country]]></code>
+      <code><![CDATA[$address->house_number]]></code>
+      <code><![CDATA[$address->house_number]]></code>
+      <code><![CDATA[$address->postal_code]]></code>
+      <code><![CDATA[$address->postal_code]]></code>
+      <code><![CDATA[$address->region]]></code>
+      <code><![CDATA[$address->region]]></code>
+      <code><![CDATA[$address->street]]></code>
+      <code><![CDATA[$address->street]]></code>
+      <code><![CDATA[$customer->email]]></code>
+      <code><![CDATA[$customer->email]]></code>
+      <code><![CDATA[$customer->last_name]]></code>
+      <code><![CDATA[$customer->last_name]]></code>
+      <code><![CDATA[$customer->name]]></code>
+      <code><![CDATA[$customer->name]]></code>
+      <code><![CDATA[$customer->phone]]></code>
+      <code><![CDATA[$customer->phone]]></code>
+      <code><![CDATA[$user->address]]></code>
+      <code><![CDATA[$user->vat_number]]></code>
+      <code><![CDATA[$user->vat_number]]></code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="app/Http/Controllers/EmployeeController.php">
+    <PossiblyUnusedMethod>
+      <code>employee_page</code>
+      <code>employees</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Controllers/EmployeeViewController.php">
+    <ArgumentTypeCoercion>
+      <code>$numericIBAN</code>
+    </ArgumentTypeCoercion>
+    <InvalidReturnType>
+      <code>View|Factory</code>
+    </InvalidReturnType>
+    <MixedArgument>
+      <code>$IBAN</code>
+      <code>$IBAN</code>
+      <code>$IBAN</code>
+      <code>$IBAN</code>
+      <code>$IBAN</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$IBAN</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->back()->with('alert', 'Empty Username and Password')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Empty Username and Password')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Incorrect Username!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Incorrect Username!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Incorrect password!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Incorrect password!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Invalid IBAN!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Invalid IBAN!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Problem occured!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'Problem occured!')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'complete creation')]]></code>
+      <code><![CDATA[redirect()->back()->with('alert', 'complete creation')]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$_POST['email']]]></code>
+      <code><![CDATA[$_POST['password']]]></code>
+      <code>$res</code>
+      <code>$res</code>
+    </PossiblyInvalidArgument>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$row['jobTitle']]]></code>
+      <code><![CDATA[$row['password']]]></code>
+    </PossiblyNullArrayAccess>
+    <PossiblyUnusedMethod>
+      <code>index</code>
+      <code>save</code>
+      <code>store</code>
+    </PossiblyUnusedMethod>
+    <UnusedForeachValue>
+      <code>$value</code>
+    </UnusedForeachValue>
+  </file>
+  <file src="app/Http/Controllers/PickupController.php">
+    <PossiblyUnusedMethod>
+      <code>create</code>
+      <code>destroy</code>
+      <code>edit</code>
+      <code>index</code>
+      <code>show</code>
+      <code>store</code>
+      <code>update</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$request</code>
+      <code>$request</code>
+    </PossiblyUnusedParam>
+  </file>
+  <file src="app/Http/Controllers/PostController.php">
+    <UnusedClass>
+      <code>PostController</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Controllers/ProfileController.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('profile.edit', [
+            'user' => $request->user(),
+        ])]]></code>
+    </LessSpecificReturnStatement>
+    <MixedAssignment>
+      <code>$user</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>delete</code>
+      <code>fill</code>
+      <code>isDirty</code>
+      <code>save</code>
+    </MixedMethodCall>
+    <MixedPropertyAssignment>
+      <code><![CDATA[$request->user()]]></code>
+    </MixedPropertyAssignment>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+    <PossiblyUnusedMethod>
+      <code>destroy</code>
+      <code>edit</code>
+      <code>update</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Controllers/RoleController.php">
+    <MissingClosureParamType>
+      <code>$query</code>
+    </MissingClosureParamType>
+    <MixedAssignment>
+      <code>$newId</code>
+      <code>$role_name</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>JsonResponse</code>
+      <code>RedirectResponse</code>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>isEmpty</code>
+      <code>where</code>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedOperand>
+      <code><![CDATA[Role::query()->max('id')]]></code>
+    </MixedOperand>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->back()->with('success', 'Role added successfully.')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'Role added successfully.')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'Role deleted successfully!')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'Role deleted successfully!')]]></code>
+      <code><![CDATA[response()->json(['name' => $role->name])]]></code>
+      <code><![CDATA[response()->json(['name' => $role->name])]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall>
+      <code>delete</code>
+      <code>name</code>
+      <code>save</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignment>
+      <code>$role</code>
+    </PossiblyInvalidPropertyAssignment>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$role->name]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignment>
+      <code>$role</code>
+    </PossiblyNullPropertyAssignment>
+    <PossiblyNullReference>
+      <code>save</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedVariable>
+      <code>$role_name</code>
+    </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>destroy</code>
+      <code>index</code>
+      <code>store</code>
+      <code>update</code>
+    </PossiblyUnusedMethod>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$role->name]]></code>
+      <code><![CDATA[$role->name]]></code>
+      <code><![CDATA[$user->roles]]></code>
+    </UndefinedMagicPropertyFetch>
+    <UndefinedPropertyAssignment>
+      <code><![CDATA[$role->name]]></code>
+      <code><![CDATA[$role->name]]></code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="app/Http/Controllers/ShipmentController.php">
+    <MissingReturnType>
+      <code>destroy</code>
+      <code>edit</code>
+      <code>show</code>
+      <code>track</code>
+      <code>update</code>
+    </MissingReturnType>
+    <MixedArgument>
+      <code><![CDATA[request()->city]]></code>
+      <code><![CDATA[request()->country]]></code>
+      <code><![CDATA[request()->input('delivery_date')]]></code>
+      <code><![CDATA[request()->input('shipment_date')]]></code>
+      <code><![CDATA[request()->state]]></code>
+      <code><![CDATA[request()->street]]></code>
+      <code><![CDATA[request()->zipcode]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[request()->handling_type[0]]]></code>
+      <code><![CDATA[request()->handling_type[0]]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$address</code>
+      <code>$latitude</code>
+      <code>$longitude</code>
+      <code>$volumetric_freight</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>getAttributes</code>
+      <code>getAttributes</code>
+      <code>has</code>
+      <code>has</code>
+      <code>input</code>
+      <code>input</code>
+      <code>notify</code>
+      <code>update</code>
+      <code>update</code>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedOperand>
+      <code><![CDATA[$dimensions->length]]></code>
+      <code>$latitude</code>
+      <code>$longitude</code>
+      <code><![CDATA[$shipment->weight]]></code>
+      <code>$volumetric_freight</code>
+      <code><![CDATA[($dimensions->length * $dimensions->width * $dimensions->height) / 5000]]></code>
+    </MixedOperand>
+    <MixedPropertyFetch>
+      <code><![CDATA[$response->ResourceSets->ResourceSet]]></code>
+      <code><![CDATA[$response->ResourceSets->ResourceSet->Resources]]></code>
+      <code><![CDATA[$response->ResourceSets->ResourceSet->Resources->Location]]></code>
+      <code><![CDATA[$response->ResourceSets->ResourceSet->Resources->Location->Point]]></code>
+      <code><![CDATA[$response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude]]></code>
+      <code><![CDATA[$response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude]]></code>
+      <code><![CDATA[$rgResponse->ResourceSets->ResourceSet]]></code>
+      <code><![CDATA[$rgResponse->ResourceSets->ResourceSet->Resources]]></code>
+      <code><![CDATA[$rgResponse->ResourceSets->ResourceSet->Resources->Location]]></code>
+      <code><![CDATA[$rgResponse->ResourceSets->ResourceSet->Resources->Location->Address]]></code>
+      <code><![CDATA[$rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress]]></code>
+      <code><![CDATA[request()->city]]></code>
+      <code><![CDATA[request()->country]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->sender_id]]></code>
+      <code><![CDATA[request()->shipment_height]]></code>
+      <code><![CDATA[request()->shipment_length]]></code>
+      <code><![CDATA[request()->shipment_weight]]></code>
+      <code><![CDATA[request()->shipment_width]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->state]]></code>
+      <code><![CDATA[request()->status]]></code>
+      <code><![CDATA[request()->street]]></code>
+      <code><![CDATA[request()->zipcode]]></code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->route('shipments.requests.evaluate.set', ['shipment' => $shipment])]]></code>
+      <code><![CDATA[redirect()->route('shipments.requests.evaluate.set', ['shipment' => $shipment])]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall>
+      <code>has</code>
+      <code>has</code>
+      <code>input</code>
+      <code>input</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[request()->city]]></code>
+      <code><![CDATA[request()->country]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->sender_id]]></code>
+      <code><![CDATA[request()->shipment_height]]></code>
+      <code><![CDATA[request()->shipment_length]]></code>
+      <code><![CDATA[request()->shipment_weight]]></code>
+      <code><![CDATA[request()->shipment_width]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->state]]></code>
+      <code><![CDATA[request()->status]]></code>
+      <code><![CDATA[request()->street]]></code>
+      <code><![CDATA[request()->zipcode]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullArgument>
+      <code><![CDATA[request()->city]]></code>
+      <code><![CDATA[request()->country]]></code>
+      <code><![CDATA[request()->state]]></code>
+      <code><![CDATA[request()->street]]></code>
+      <code><![CDATA[request()->zipcode]]></code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[request()->handling_type[0]]]></code>
+      <code><![CDATA[request()->handling_type[0]]]></code>
+    </PossiblyNullArrayAccess>
+    <PossiblyNullPropertyFetch>
+      <code><![CDATA[request()->city]]></code>
+      <code><![CDATA[request()->country]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_city]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_country]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_housenumber]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_postalcode]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_region]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->destination_street]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->handling_type]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_email]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->receiver_name]]></code>
+      <code><![CDATA[request()->sender_id]]></code>
+      <code><![CDATA[request()->shipment_height]]></code>
+      <code><![CDATA[request()->shipment_length]]></code>
+      <code><![CDATA[request()->shipment_weight]]></code>
+      <code><![CDATA[request()->shipment_width]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_city]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_country]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_housenumber]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_postalcode]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_region]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->source_street]]></code>
+      <code><![CDATA[request()->state]]></code>
+      <code><![CDATA[request()->status]]></code>
+      <code><![CDATA[request()->street]]></code>
+      <code><![CDATA[request()->zipcode]]></code>
+    </PossiblyNullPropertyFetch>
+    <PossiblyNullReference>
+      <code>has</code>
+      <code>has</code>
+      <code>input</code>
+      <code>input</code>
+      <code>notify</code>
+      <code>update</code>
+      <code>update</code>
+    </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>track</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$request</code>
+    </PossiblyUnusedParam>
+    <UnevaluatedCode>
+      <code><![CDATA[return 'Tracking Number: '.$shipment->id;]]></code>
+    </UnevaluatedCode>
+    <UnusedVariable>
+      <code>$VAT_percentage</code>
+      <code>$address</code>
+      <code>$expense_excl_VAT</code>
+    </UnusedVariable>
+  </file>
+  <file src="app/Http/Controllers/TicketController.php">
+    <MissingReturnType>
+      <code>showForm</code>
+      <code>showSubmittedTicket</code>
+      <code>store</code>
+    </MissingReturnType>
+    <MixedAssignment>
+      <code>$ticket</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>with</code>
+    </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code>showForm</code>
+      <code>showSubmittedTicket</code>
+      <code>store</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Controllers/UserController.php">
+    <InvalidReturnType>
+      <code>RedirectResponse</code>
+    </InvalidReturnType>
+    <MixedArgument>
+      <code><![CDATA[$request->password]]></code>
+    </MixedArgument>
+    <MixedInferredReturnType>
+      <code>JsonResponse</code>
+      <code>RedirectResponse</code>
+      <code>RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>with</code>
+      <code>with</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch>
+      <code><![CDATA[$role->name]]></code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->back()]]></code>
+      <code><![CDATA[redirect()->back()]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'User created successfully!')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'User created successfully!')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'User deleted successfully!')]]></code>
+      <code><![CDATA[redirect()->back()->with('success', 'User deleted successfully!')]]></code>
+      <code><![CDATA[response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $role->name,
+        ])]]></code>
+      <code><![CDATA[response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $role->name,
+        ])]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidMethodCall>
+      <code>delete</code>
+      <code>email</code>
+      <code>name</code>
+      <code>save</code>
+      <code>syncRoles</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignment>
+      <code>$user</code>
+      <code>$user</code>
+    </PossiblyInvalidPropertyAssignment>
+    <PossiblyUnusedMethod>
+      <code>destroy</code>
+      <code>show</code>
+      <code>store</code>
+      <code>toggleLock</code>
+      <code>update</code>
+    </PossiblyUnusedMethod>
+    <UndefinedPropertyAssignment>
+      <code><![CDATA[$user->email]]></code>
+      <code><![CDATA[$user->email]]></code>
+      <code><![CDATA[$user->name]]></code>
+      <code><![CDATA[$user->name]]></code>
+    </UndefinedPropertyAssignment>
+    <UndefinedVariable>
+      <code>$role</code>
+    </UndefinedVariable>
+  </file>
+  <file src="app/Http/Controllers/WaypointController.php">
+    <DocblockTypeContradiction>
+      <code>! $current_address</code>
+      <code>$current_address</code>
+    </DocblockTypeContradiction>
+    <MixedArgument>
+      <code><![CDATA[request()->waypoints]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$waypoints[$i - 1]['city']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['city']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['country']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['country']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['region']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['region']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['street']]]></code>
+      <code><![CDATA[$waypoints[$i - 1]['street']]]></code>
+      <code><![CDATA[$waypoints[$i]['city']]]></code>
+      <code><![CDATA[$waypoints[$i]['city']]]></code>
+      <code><![CDATA[$waypoints[$i]['city']]]></code>
+      <code><![CDATA[$waypoints[$i]['city']]]></code>
+      <code><![CDATA[$waypoints[$i]['country']]]></code>
+      <code><![CDATA[$waypoints[$i]['country']]]></code>
+      <code><![CDATA[$waypoints[$i]['country']]]></code>
+      <code><![CDATA[$waypoints[$i]['country']]]></code>
+      <code><![CDATA[$waypoints[$i]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$i]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$i]['region']]]></code>
+      <code><![CDATA[$waypoints[$i]['region']]]></code>
+      <code><![CDATA[$waypoints[$i]['region']]]></code>
+      <code><![CDATA[$waypoints[$i]['region']]]></code>
+      <code><![CDATA[$waypoints[$i]['street']]]></code>
+      <code><![CDATA[$waypoints[$i]['street']]]></code>
+      <code><![CDATA[$waypoints[$i]['street']]]></code>
+      <code><![CDATA[$waypoints[$i]['street']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['city']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['city']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['country']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['country']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['house_number']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['postal_code']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['region']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['region']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['street']]]></code>
+      <code><![CDATA[$waypoints[$waypoints->count() - 1]['street']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$current_waypoint</code>
+      <code>$next_waypoint</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>first</code>
+      <code>first</code>
+      <code>update</code>
+      <code>update</code>
+      <code>update</code>
+    </MixedMethodCall>
+    <MixedPropertyAssignment>
+      <code>$current_waypoint</code>
+      <code>$current_waypoint</code>
+      <code>$next_waypoint</code>
+    </MixedPropertyAssignment>
+    <MixedPropertyFetch>
+      <code><![CDATA[$current_waypoint->current_address_id]]></code>
+      <code><![CDATA[$current_waypoint->next_address_id]]></code>
+      <code><![CDATA[$next_waypoint->next_address_id]]></code>
+      <code><![CDATA[$shipment->destination_address->city]]></code>
+      <code><![CDATA[$shipment->destination_address->country]]></code>
+      <code><![CDATA[$shipment->destination_address->house_number]]></code>
+      <code><![CDATA[$shipment->destination_address->postal_code]]></code>
+      <code><![CDATA[$shipment->destination_address->region]]></code>
+      <code><![CDATA[$shipment->destination_address->street]]></code>
+      <code><![CDATA[$shipment->source_address->city]]></code>
+      <code><![CDATA[$shipment->source_address->country]]></code>
+      <code><![CDATA[$shipment->source_address->house_number]]></code>
+      <code><![CDATA[$shipment->source_address->postal_code]]></code>
+      <code><![CDATA[$shipment->source_address->region]]></code>
+      <code><![CDATA[$shipment->source_address->street]]></code>
+      <code><![CDATA[request()->waypoints]]></code>
+    </MixedPropertyFetch>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[request()->waypoints]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyFetch>
+      <code><![CDATA[request()->waypoints]]></code>
+    </PossiblyNullPropertyFetch>
+  </file>
+  <file src="app/Http/Kernel.php">
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+      <code>encrypted_cookies</code>
+      <code>middleware</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Livewire/ControlPanel/Sidebar.php">
+    <MissingPropertyType>
+      <code>$listeners</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Sidebar</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Log.php">
+    <UnusedClass>
+      <code>Log</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Permission/Edit.php">
+    <MissingPropertyType>
+      <code>$permission</code>
+      <code>$rules</code>
+    </MissingPropertyType>
+    <MixedMethodCall>
+      <code>flash</code>
+      <code>save</code>
+    </MixedMethodCall>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Pickups/Create.php">
+    <MissingClosureParamType>
+      <code>$query</code>
+      <code>$query</code>
+    </MissingClosureParamType>
+    <MissingPropertyType>
+      <code>$rules</code>
+      <code>$shipments_eligible_for_pickup_creation</code>
+      <code>$time</code>
+    </MissingPropertyType>
+    <MixedInferredReturnType>
+      <code>RedirectResponse|Redirector</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>where</code>
+      <code>where</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->to('home')]]></code>
+      <code><![CDATA[redirect()->to('home')]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidArgument>
+      <code>$pickup_address</code>
+      <code>$pickup_shipment</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall>
+      <code>contains</code>
+    </PossiblyInvalidMethodCall>
+    <UnusedClass>
+      <code>Create</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Pickups/Edit.php">
+    <InvalidPropertyAssignmentValue>
+      <code>$pickup</code>
+    </InvalidPropertyAssignmentValue>
+    <MissingPropertyType>
+      <code>$rules</code>
+    </MissingPropertyType>
+    <MixedAssignment>
+      <code><![CDATA[$this->pickup_address]]></code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>Redirector|RedirectResponse</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>replicate</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->to('home')]]></code>
+      <code><![CDATA[redirect()->to('home')]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidArgument>
+      <code>$pickup_address</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$pickup->address]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$pickup->address]]></code>
+      <code><![CDATA[$pickup->address]]></code>
+    </UndefinedMagicPropertyFetch>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Pickups/Index.php">
+    <MissingClosureParamType>
+      <code>$query</code>
+      <code>$query</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType>
+      <code>function ($query) {</code>
+      <code>function ($query) {</code>
+    </MissingClosureReturnType>
+    <MissingPropertyType>
+      <code>$pickups</code>
+    </MissingPropertyType>
+    <MixedMethodCall>
+      <code>where</code>
+      <code>where</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall>
+      <code>save</code>
+      <code>status</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignment>
+      <code>$pickup</code>
+    </PossiblyInvalidPropertyAssignment>
+    <PossiblyNullPropertyAssignment>
+      <code>$pickup</code>
+    </PossiblyNullPropertyAssignment>
+    <PossiblyNullReference>
+      <code>save</code>
+    </PossiblyNullReference>
+    <UndefinedPropertyAssignment>
+      <code><![CDATA[$pickup->status]]></code>
+      <code><![CDATA[$pickup->status]]></code>
+    </UndefinedPropertyAssignment>
+    <UnusedClass>
+      <code>Index</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Role/Create.php">
+    <MissingPropertyType>
+      <code>$role</code>
+      <code>$rules</code>
+    </MissingPropertyType>
+    <MixedInferredReturnType>
+      <code>Redirector</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>save</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code><![CDATA[redirect()->route('control-panel.roles')]]></code>
+      <code><![CDATA[redirect()->route('control-panel.roles')]]></code>
+    </MixedReturnStatement>
+    <UnusedClass>
+      <code>Create</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Roles.php">
+    <MissingPropertyType>
+      <code>$queryString</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Roles</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Roles/Edit.php">
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[Role::query()->findOrFail($role_id)]]></code>
+    </InvalidPropertyAssignmentValue>
+    <MissingPropertyType>
+      <code>$rules</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Roles/Permissions/Edit.php">
+    <MixedAssignment>
+      <code><![CDATA[$this->permission_to_add]]></code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>pluck</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall>
+      <code>first</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignmentValue>
+      <code><![CDATA[Permission::query()->whereNotIn('name', $this->role->permissions->pluck('name'))->get()]]></code>
+    </PossiblyInvalidPropertyAssignmentValue>
+    <PossiblyNullPropertyFetch>
+      <code><![CDATA[$this->unassigned_permissions->first()->name]]></code>
+    </PossiblyNullPropertyFetch>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$this->role->permissions]]></code>
+    </UndefinedMagicPropertyFetch>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Username.php">
+    <MissingPropertyType>
+      <code>$listeners</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Username</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Users.php">
+    <MissingPropertyType>
+      <code>$queryString</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Users</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Users/Edit.php">
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[User::query()->findOrFail($user_id)]]></code>
+    </InvalidPropertyAssignmentValue>
+    <MissingPropertyType>
+      <code>$rules</code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Livewire/Users/Roles/Edit.php">
+    <MixedAssignment>
+      <code><![CDATA[$this->role_to_add]]></code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>pluck</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall>
+      <code>first</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidPropertyAssignmentValue>
+      <code><![CDATA[Role::query()->whereNotIn('name', $this->user->roles->pluck('name'))->get()]]></code>
+    </PossiblyInvalidPropertyAssignmentValue>
+    <PossiblyNullPropertyFetch>
+      <code><![CDATA[$this->unassigned_roles->first()->name]]></code>
+    </PossiblyNullPropertyFetch>
+    <UnusedClass>
+      <code>Edit</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Middleware/Authenticate.php">
+    <PossiblyUnusedProperty>
+      <code>$description</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="app/Http/Middleware/LockUserAccount.php">
+    <MixedAssignment>
+      <code>$user</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>Response</code>
+    </MixedInferredReturnType>
+    <MixedPropertyFetch>
+      <code><![CDATA[$user->is_locked]]></code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement>
+      <code>$next($request)</code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>handle</code>
+    </PossiblyUnusedMethod>
+    <UndefinedInterfaceMethod>
+      <code>logout</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Http/Middleware/LogRequests.php">
+    <MixedInferredReturnType>
+      <code>Response</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>$next($request)</code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>handle</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$description</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="app/Http/Middleware/LogUserActivity.php">
+    <MissingParamType>
+      <code>$request</code>
+    </MissingParamType>
+    <MissingReturnType>
+      <code>handle</code>
+    </MissingReturnType>
+    <MixedAssignment>
+      <code>$path</code>
+      <code>$sessionId</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>getId</code>
+      <code>getPathInfo</code>
+    </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code>handle</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Middleware/RedirectIfAuthenticated.php">
+    <InvalidReturnStatement>
+      <code>redirect(RouteServiceProvider::HOME)</code>
+    </InvalidReturnStatement>
+    <MixedInferredReturnType>
+      <code>Response</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>$next($request)</code>
+    </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>handle</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Middleware/TrustHosts.php">
+    <UnusedClass>
+      <code>TrustHosts</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Http/Middleware/TrustProxies.php">
+    <PossiblyUnusedProperty>
+      <code>$description</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="app/Http/Middleware/ValidateSignature.php">
+    <PossiblyUnusedProperty>
+      <code>$except</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="app/Http/Requests/Auth/LoginRequest.php">
+    <DeprecatedInterface>
+      <code><![CDATA[array<string, \Illuminate\Contracts\Validation\Rule|array|string>]]></code>
+    </DeprecatedInterface>
+    <MixedArgument>
+      <code><![CDATA[$this->input('email')]]></code>
+    </MixedArgument>
+    <PossiblyNullOperand>
+      <code><![CDATA[$this->ip()]]></code>
+    </PossiblyNullOperand>
+    <PossiblyUnusedMethod>
+      <code>authorize</code>
+      <code>rules</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Http/Requests/ProfileUpdateRequest.php">
+    <DeprecatedInterface>
+      <code><![CDATA[array<string, \Illuminate\Contracts\Validation\Rule|array|string>]]></code>
+    </DeprecatedInterface>
+    <MixedPropertyFetch>
+      <code><![CDATA[$this->user()->id]]></code>
+    </MixedPropertyFetch>
+    <PossiblyUnusedMethod>
+      <code>rules</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Models/Address.php">
+    <PossiblyUnusedMethod>
+      <code>pickups</code>
+      <code>users</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Models/BusinessCustomer.php">
+    <MissingPropertyType>
+      <code>$dates</code>
+    </MissingPropertyType>
+    <PossiblyUnusedMethod>
+      <code>user</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Models/Dimensions.php">
+    <MissingReturnType>
+      <code>shipment</code>
+    </MissingReturnType>
+    <PossiblyUnusedMethod>
+      <code>shipment</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Models/Employee.php">
+    <NonInvariantDocblockPropertyType>
+      <code>$fillable</code>
+    </NonInvariantDocblockPropertyType>
+  </file>
+  <file src="app/Models/Permission.php">
+    <MixedArgument>
+      <code><![CDATA[$granted_permission->flattened_down()]]></code>
+      <code><![CDATA[$granting_permission->flattened_up()]]></code>
+      <code><![CDATA[$this->granted_by]]></code>
+      <code><![CDATA[$this->grants]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$granted_permission</code>
+      <code>$granting_permission</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>flattened_down</code>
+      <code>flattened_up</code>
+    </MixedMethodCall>
+    <MixedReturnTypeCoercion>
+      <code>$permissions</code>
+      <code>$permissions</code>
+      <code><![CDATA[array<Permission>]]></code>
+      <code><![CDATA[array<Permission>]]></code>
+    </MixedReturnTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code>flattened_down</code>
+      <code>granted_by</code>
+      <code>grants</code>
+    </PossiblyUnusedMethod>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->granted_by]]></code>
+      <code><![CDATA[$this->grants]]></code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="app/Models/Shipment.php">
+    <PossiblyUnusedMethod>
+      <code>destination_address</code>
+      <code>pickups</code>
+      <code>source_address</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Models/User.php">
+    <MissingParamType>
+      <code>$permission</code>
+    </MissingParamType>
+    <MixedArgument>
+      <code><![CDATA[$flat_permission->roles]]></code>
+      <code>$permission</code>
+      <code><![CDATA[$permission->flattened_up()]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$permission</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>flattened_up</code>
+      <code>getKey</code>
+      <code>getKeyName</code>
+    </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code>address</code>
+      <code>businessCustomer</code>
+    </PossiblyUnusedMethod>
+    <UndefinedMagicPropertyFetch>
+      <code><![CDATA[$flat_permission->roles]]></code>
+    </UndefinedMagicPropertyFetch>
+    <UnusedVariable>
+      <code>$permission</code>
+    </UnusedVariable>
+  </file>
+  <file src="app/Models/Waypoint.php">
+    <PossiblyUnusedMethod>
+      <code>current_address</code>
+      <code>next_address</code>
+      <code>shipment</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Notifications/ShipmentUpdated.php">
+    <PossiblyInvalidArgument>
+      <code><![CDATA[url('/')]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidCast>
+      <code><![CDATA[url('/')]]></code>
+    </PossiblyInvalidCast>
+    <PossiblyUnusedMethod>
+      <code>toArray</code>
+      <code>toDatabase</code>
+      <code>toMail</code>
+      <code>via</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$notifiable</code>
+      <code>$notifiable</code>
+      <code>$notifiable</code>
+      <code>$notifiable</code>
+    </PossiblyUnusedParam>
+  </file>
+  <file src="app/Policies/EmployeePolicy.php">
+    <InvalidReturnType>
+      <code>bool</code>
+      <code>bool</code>
+      <code>bool</code>
+      <code>bool</code>
+      <code>bool</code>
+      <code>bool</code>
+    </InvalidReturnType>
+    <PossiblyUnusedParam>
+      <code>$employee</code>
+      <code>$employee</code>
+      <code>$employee</code>
+      <code>$employee</code>
+      <code>$employee</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+    </PossiblyUnusedParam>
+    <UnusedClass>
+      <code>EmployeePolicy</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Policies/UserPolicy.php">
+    <InvalidReturnType>
+      <code>bool</code>
+      <code>bool</code>
+      <code>bool</code>
+    </InvalidReturnType>
+    <PossiblyUnusedParam>
+      <code>$model</code>
+      <code>$model</code>
+      <code>$model</code>
+      <code>$model</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+    </PossiblyUnusedParam>
+    <UnusedClass>
+      <code>UserPolicy</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Providers/AppServiceProvider.php">
+    <LessSpecificReturnStatement>
+      <code>Permission::findByName($name)</code>
+      <code>Role::findByName($name)</code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType>
+      <code>$ability</code>
+      <code>$user</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType>
+      <code>function ($user, $ability) {</code>
+    </MissingClosureReturnType>
+    <MixedAssignment>
+      <code>$new_permission</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>Permission</code>
+      <code>Role</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>attach</code>
+      <code>grants</code>
+      <code>hasRole</code>
+    </MixedMethodCall>
+    <MixedReturnStatement>
+      <code>$new_permission</code>
+      <code><![CDATA[Role::create([
+                'name' => $name,
+                'description' => $description,
+            ])]]></code>
+    </MixedReturnStatement>
+    <PossiblyNullReference>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+      <code>assignRole</code>
+    </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>boot</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>Permission</code>
+    </PossiblyUnusedReturnValue>
+    <UnusedClosureParam>
+      <code>$ability</code>
+    </UnusedClosureParam>
+    <UnusedVariable>
+      <code>$admin_user</code>
+      <code>$employee_user</code>
+      <code>$employee_user</code>
+      <code>$employee_user</code>
+      <code>$regular_user</code>
+      <code>$role_admin</code>
+    </UnusedVariable>
+  </file>
+  <file src="app/Providers/BroadcastServiceProvider.php">
+    <UnresolvableInclude>
+      <code><![CDATA[require base_path('routes/channels.php')]]></code>
+    </UnresolvableInclude>
+    <UnusedClass>
+      <code>BroadcastServiceProvider</code>
+    </UnusedClass>
+  </file>
+  <file src="app/Providers/EventServiceProvider.php">
+    <NonInvariantDocblockPropertyType>
+      <code>$listen</code>
+    </NonInvariantDocblockPropertyType>
+  </file>
+  <file src="app/Providers/PolicyMappingServiceProvider.php">
+    <PossiblyUnusedMethod>
+      <code>boot</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="app/Providers/RouteServiceProvider.php">
+    <MixedPropertyFetch>
+      <code><![CDATA[$request->user()?->id]]></code>
+    </MixedPropertyFetch>
+  </file>
+  <file src="app/Rules/ValidPickupTime.php">
+    <UnusedClass>
+      <code>ValidPickupTime</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/AppLayout.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('layouts.app')]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View|Closure|string</code>
+    </MoreSpecificReturnType>
+    <UnusedClass>
+      <code>AppLayout</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/ContentLayout.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[view('layouts.content')]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>View|Closure|string</code>
+    </InvalidReturnType>
+    <UnusedClass>
+      <code>ContentLayout</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/ControlPanel/Sidebar.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[view('components.control-panel.sidebar')]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>View|Closure|string</code>
+    </InvalidReturnType>
+    <UnusedClass>
+      <code>Sidebar</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/ControlPanelLayout.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[view('layouts.control-panel')]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>View|Closure|string</code>
+    </InvalidReturnType>
+    <UnusedClass>
+      <code>ControlPanelLayout</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/GuestLayout.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[view('layouts.guest')]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>View</code>
+    </MoreSpecificReturnType>
+    <UnusedClass>
+      <code>GuestLayout</code>
+    </UnusedClass>
+  </file>
+  <file src="app/View/Components/SidebarLayout.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[view('layouts.sidebar-layout')]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>View|Closure|string</code>
+    </InvalidReturnType>
+    <UnusedClass>
+      <code>SidebarLayout</code>
+    </UnusedClass>
+  </file>
+  <file src="config/broadcasting.php">
+    <MixedOperand>
+      <code><![CDATA[env('PUSHER_APP_CLUSTER', 'mt1')]]></code>
+    </MixedOperand>
+  </file>
+  <file src="config/cache.php">
+    <MixedArgument>
+      <code><![CDATA[env('APP_NAME', 'laravel')]]></code>
+    </MixedArgument>
+  </file>
+  <file src="config/database.php">
+    <MixedArgument>
+      <code><![CDATA[env('APP_NAME', 'laravel')]]></code>
+    </MixedArgument>
+  </file>
+  <file src="config/filesystems.php">
+    <MixedOperand>
+      <code><![CDATA[env('APP_URL')]]></code>
+    </MixedOperand>
+  </file>
+  <file src="config/logging.php">
+    <MixedOperand>
+      <code><![CDATA[env('PAPERTRAIL_PORT')]]></code>
+      <code><![CDATA[env('PAPERTRAIL_URL')]]></code>
+    </MixedOperand>
+  </file>
+  <file src="config/sanctum.php">
+    <MixedArgument>
+      <code><![CDATA[env('SANCTUM_STATEFUL_DOMAINS', sprintf(
+        '%s%s',
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+        Sanctum::currentApplicationUrlWithPort()
+    ))]]></code>
+    </MixedArgument>
+  </file>
+  <file src="config/session.php">
+    <MixedArgument>
+      <code><![CDATA[env('APP_NAME', 'laravel')]]></code>
+    </MixedArgument>
+  </file>
+  <file src="database/migrations/2023_04_09_112138_create_permission_tables.php">
+    <MixedArgument>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$tableNames['model_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['model_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['model_has_roles']]]></code>
+      <code><![CDATA[$tableNames['model_has_roles']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['role_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['role_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['model_morph_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$columnNames['team_foreign_key']]]></code>
+      <code><![CDATA[$tableNames['model_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['model_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['model_has_roles']]]></code>
+      <code><![CDATA[$tableNames['model_has_roles']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['permissions']]]></code>
+      <code><![CDATA[$tableNames['role_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['role_has_permissions']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+      <code><![CDATA[$tableNames['roles']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$columnNames</code>
+      <code>$tableNames</code>
+      <code>$tableNames</code>
+      <code>$teams</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>forget</code>
+      <code>store</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod>
+      <code>store</code>
+    </PossiblyUndefinedMethod>
+    <UnusedClass>
+      <code>CreatePermissionTables</code>
+    </UnusedClass>
+  </file>
+  <file src="database/migrations/2023_04_13_193644_create_logs_table.php">
+    <MissingReturnType>
+      <code>down</code>
+      <code>up</code>
+    </MissingReturnType>
+    <UnusedClass>
+      <code>CreateLogsTable</code>
+    </UnusedClass>
+  </file>
+  <file src="database/seeders/DatabaseSeeder.php">
+    <UnusedClass>
+      <code>DatabaseSeeder</code>
+    </UnusedClass>
+  </file>
+  <file src="routes/api.php">
+    <MissingClosureReturnType>
+      <code>function (Request $request) {</code>
+    </MissingClosureReturnType>
+  </file>
+  <file src="routes/auth.php">
+    <PossiblyInvalidMethodCall>
+      <code>name</code>
+      <code>name</code>
+    </PossiblyInvalidMethodCall>
+  </file>
+  <file src="routes/channels.php">
+    <MissingClosureParamType>
+      <code>$id</code>
+      <code>$user</code>
+    </MissingClosureParamType>
+    <MixedPropertyFetch>
+      <code><![CDATA[$user->id]]></code>
+    </MixedPropertyFetch>
+  </file>
+  <file src="routes/web.php">
+    <MixedMethodCall>
+      <code>markAsRead</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall>
+      <code>name</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyUndefinedMethod>
+      <code>user</code>
+    </PossiblyUndefinedMethod>
+  </file>
+</files>
