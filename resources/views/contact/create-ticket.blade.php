@@ -3,14 +3,14 @@
 
     <form method="POST" action="{{ route('submitted-ticket') }}" class="text-stone-50">
         @csrf
-        <label for="cstID">Cst ID</label>
-        <input type="text" name="cstID" id="cstID" value="{{ old('CstID') }}" required>
+        <label for="cstID" >Cst ID</label>
+        <input type="text" name="cstID" id="cstID" class="text-neutral-950" value="{{ old('CstID') }}" required>
 
         <label for="issue">Issue</label>
-        <input type="text" name="issue" id="issue" value="{{ old('Issue') }}" required>
+        <input type="text" name="issue" id="issue" class="text-neutral-950" value="{{ old('Issue') }}" required>
         
         <label for="description">Description</label>
-        <textarea name="description" id="description" required>{{ old('description') }}</textarea>
+        <textarea name="description" id="description" class="text-neutral-950" required>{{ old('description') }}</textarea>
 
         <button type="submit">Submit</button>
     </form>

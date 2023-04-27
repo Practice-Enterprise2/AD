@@ -2,30 +2,46 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Ticket;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Faker\Factory as Faker;
 
 class TicketSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        $faker = Faker::create();
+        Ticket::create([
+            'cstId' => 123,
+            'issue' => 'Account Locked',
+            'description' => 'I am unable to access my account. It seems to be locked. Can you please help me to unlock it?',
+            'status' => 'Unsolved',
+        ]);
 
-        foreach (range(1, 50) as $index) {
-            DB::table('tickets')->insert([
-                'ticketID' => $faker->unique()->randomNumber(8),
-                'cstID' => $faker->unique()->randomNumber(5),
-                'employeeID' => $faker->unique()->randomNumber(5),
-                'issue' => $faker->sentence(),
-                'description' => $faker->paragraph(),
-                'solution' => $faker->paragraph(),
-                'status' => $faker->randomElement(['solved', 'unsolved']),
+        Ticket::create([
+            'cstId' => 23,
+            'issue' => 'Payment Not Processed',
+            'description' => 'I made a payment, but it\'s not showing up on my account. Can you please check and let me know what\'s going on?',
+            'status' => 'Unsolved',
+        ]);
+
+        Ticket::create([
+            'cstId' => 89,
+            'issue' => 'Cannot Reset Password',
+            'description' => 'I am trying to reset my password, but I am not receiving the reset email. Can you please help me to reset my password?',
+            'status' => 'Unsolved',
+        ]);
+
+        Ticket::create([
+            'cstId' => 123,
+            'issue' => 'Product Not Delivered',
+            'description' => 'I ordered a product, but it has not been delivered yet. Can you please check the status and let me know what\'s going on?',
+            'status' => 'Unsolved',
+        ]);
+
+        Ticket::create([
+            'cstId' => 56,
+            'issue' => 'Incorrect Product Received',
+            'description' => 'I received a product, but it\'s not the one I ordered. Can you please help me to get the correct product?',
+            'status' => 'Unsolved',
         ]);
     }
-}}
+}

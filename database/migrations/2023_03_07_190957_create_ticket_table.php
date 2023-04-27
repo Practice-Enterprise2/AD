@@ -14,11 +14,12 @@ return new class() extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('ticketID')->unique();
             $table->tinyInteger('cstID');
-            $table->tinyInteger('employeeID');
+            $table->tinyInteger('employeeID')->nullable();
             $table->string('issue', 64);
             $table->longText('description');
             $table->longText('solution')->nullable();
             $table->set('status', ['solved', 'unsolved'])->default('unsolved');
+            $table->timestamps();
         });
     }
 

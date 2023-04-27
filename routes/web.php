@@ -75,12 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/admin/roles', 'store')->name('roles.store');
     });
 
-    Route::controller(TicketController::class)->group(function () {
-        Route::get('/create-ticket', 'showForm')->name('create-ticket');
-        Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
-        Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
-    });
-
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customers', 'getCustomers')->name('customers')->middleware('permission:view_all_users');
         Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
@@ -134,14 +128,19 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+
+    //TicketController
+    Route::controller(TicketController::class)->group(function () {
+    Route::get('/contact/create-ticket', 'showForm')->name('create-ticket');
+    Route::post('/contact/submitted-ticket', 'store')->name('submitted-ticket');
+    Route::get('/contact/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
+    });
 });
 
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
 
-Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
-Route::post('/contact/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
-Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
-
-
+// Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+// Route::post('/contact/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
+// Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
 require __DIR__.'/auth.php';
