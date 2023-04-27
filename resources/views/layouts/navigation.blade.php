@@ -110,7 +110,8 @@
               <x-dropdown-link :href="route(
                   'shipments.show',
                   $notification->data['shipment']['id'],
-              )">
+              )"
+                onclick="markNotificationAsRead('{{ $notification->id }}')">
                 Shipment {{ $notification->data['shipment']['id'] }} has been
                 updated.
               </x-dropdown-link>
@@ -151,6 +152,21 @@
               },
             });
           }
+        }
+
+        function markNotificationAsRead(notification) {
+          $.ajax({
+            url: "{{ url('markAsRead') }}" + '/' + notification,
+            type: "GET",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+              window.location.href = notification.data['shipment']['id'] +
+                '/show';
+            },
+          });
+
         }
       </script>
 

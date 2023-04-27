@@ -134,6 +134,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
     });
+    Route::get('/markAsRead/{id}', function ($id) {
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+    });
 
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
@@ -148,11 +151,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/review_add', [ReviewController::class, 'save']);
     Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
-});
 
-// Email verification
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    // Email verification
+    Route::view('/email/verify', 'auth.verify-email')
+        ->name('verification.notice');
+});
 
 require __DIR__.'/auth.php';
