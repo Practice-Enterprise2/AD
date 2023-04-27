@@ -6,6 +6,9 @@
 
 import axios from 'axios';
 window.axios = axios;
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -29,4 +32,9 @@ window.Echo = new Echo({
     forceTLS: false,
     enabledTransports: ['ws', 'wss'],
     encrypted: false,
+    auth: {
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+    },
 });

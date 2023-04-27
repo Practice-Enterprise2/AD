@@ -78,16 +78,15 @@
             <x-dropdown-link :href="route('shipments.index')">
               {{ __('Show Confirmed Shipments') }}
             </x-dropdown-link>
-            @if (Auth::user()->role == 0)
+
               <x-dropdown-link :href="route('contact.create')">
                 {{ __('contact us') }}
               </x-dropdown-link>
-            @endif
-            @if (Auth::user()->role == 1)
+              @can('view_complain')
               <x-dropdown-link :href="route('contact.index')">
                 {{ __('complaints') }}
               </x-dropdown-link>
-            @endif
+           @endcan
             <x-dropdown-link :href="route('complaints.messages')">
               {{ __('messages') }}
             </x-dropdown-link>
@@ -166,16 +165,17 @@
           </x-slot>
 
           <x-slot name="content">
-            @if (Auth::user()->role == 0)
+
               <x-dropdown-link :href="route('contact.create')">
                 {{ __('contact us') }}
               </x-dropdown-link>
-            @endif
-            @if (Auth::user()->role == 1)
+              @can('view_complain')
               <x-dropdown-link :href="route('contact.index')">
                 {{ __('complaints') }}
               </x-dropdown-link>
-            @endif
+           @endcan
+
+
             <x-dropdown-link :href="route('complaints.messages')">
               {{ __('messages') }}
             </x-dropdown-link>

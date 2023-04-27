@@ -36,14 +36,14 @@ class complaintscontroller extends Controller
             ]);
             event(new complaint($request->content, $chatbox, Auth::user()));
 
-            return null;
+            return Auth::user();
         }
 
     }
 
     public function createChat($id)
     {
-        if (Auth::user()->role == 1) {
+
             $contact = contact::where('id', $id)->first();
             $chatbox = chatBox::where('customer_id', $contact->customer_id)
             ->where('employee_id', Auth::user()->id)
@@ -69,7 +69,7 @@ class complaintscontroller extends Controller
             $contact->save();
 
             return Redirect(route('complaints.messages'));
-        }
+
     }
 
     public function viewChat($id)

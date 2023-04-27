@@ -24,10 +24,16 @@ use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/broadcasting/auth', function () {
+        return auth()->user();
+    });
+});
 
 Route::redirect('/', 'home');
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -132,15 +138,15 @@ Route::middleware('auth')->group(function () {
         //contact and messages
         Route::get('/contact', [contactController::class, 'create'])->name('contact.create');
         Route::post('/contact', [contactController::class, 'store'])->name('contact.store');
-        Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index');
-        Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy');
-        Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show');
-        Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create');
-
+        Route::get('/contact/manager', [contactController::class, 'index'])->name('contact.index')->middleware('permission:view_complain');
+        Route::delete('/contact/{id}', [contactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_complain');
+        Route::get('/contact/{id}', [contactController::class, 'show'])->name('contact.show')->middleware('permission:view_complain');
+        Route::post('/contact/{id}', [complaintscontroller::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_complain');
         Route::get('/messages', [complaintscontroller::class, 'messages'])->name('complaints.messages');
         Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
         Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
     });
+    
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 

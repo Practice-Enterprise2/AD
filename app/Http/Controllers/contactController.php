@@ -14,13 +14,11 @@ class contactController extends Controller
     public function index()
     {
         //
-        if (Auth::user()->role == 1) {
+
             return view('contact.index', [
                 'contacts' => contact::where('is_handled', 0)->get(),
             ]);
-        }
 
-        return Redirect(route('complaints.messages'));
 
     }
 
@@ -66,7 +64,7 @@ class contactController extends Controller
     {
         //
         $contact = contact::where('id', $id)->first();
-        if (contact::where('id', $id)->exists() && Auth::user()->role == 1) {
+        if (contact::where('id', $id)->exists() ) {
             return view('contact.show', [
                 'contact' => $contact,
             ]);
@@ -98,7 +96,7 @@ class contactController extends Controller
     {
         //
         $contact = contact::where('id', $id)->first();
-        if (contact::where('id', $id)->exists() && Auth::user()->role == 1) {
+        if (contact::where('id', $id)->exists()) {
             contact::destroy($id);
 
             return redirect(route('contact.index'));
