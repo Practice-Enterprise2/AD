@@ -141,6 +141,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
         Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
     });
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 
     //Notification
     Route::get('/markAsRead', function () {
