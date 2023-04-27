@@ -44,11 +44,17 @@ it.
     > be undone, which prevents people from making an easy transition to new
     > database versions.
 
--   No commented code
+-   Don't leave commented code around
 
     > Commenting out code is nice during development, but has no meaning to
     > other people. It should either be removed, or replaced by a single comment
     > explaining a todo, like `// TODO: Implement put method for controller`.
+
+-   Don't use raw CSS for layouts and components, use TailwindCSS
+
+    > Using raw CSS can cause confusion when others make use of your
+    > component/layout as it will mess with all the classes on the page, not
+    > just the file it's defined in.
 
 These requirements are hard rules. Pull requests that don't check these cannot
 be merged. They are meant to help everyone by keeping upstream functional and
