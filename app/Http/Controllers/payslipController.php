@@ -76,24 +76,28 @@ class PayslipController extends Controller
     private function tax25($taxable)
     {
         $taxes = $taxable * 0.25;
+
         return $taxes;
     }
 
     private function tax40($taxable)
     {
         $taxes = $taxable * 0.4;
+
         return $taxes;
     }
 
     private function tax45($taxable)
     {
         $taxes = $taxable * 0.45;
+
         return $taxes;
     }
 
     private function tax50($taxable)
     {
         $taxes = $taxable * 0.5;
+
         return $taxes;
     }
 
