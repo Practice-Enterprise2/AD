@@ -16,26 +16,31 @@ class DepotController extends Controller
     // GET Depots
     public function index()
     {
-        if (Auth::user()->role != 0) {
-            $depots = DB::select('select * from depots');
-            if (Auth::user()) {
+        if (Auth::user() ) {
+            if (Auth::user()->role != 0) {
+                $depots = DB::select('select * from depots');
                 $name = Auth::user()->name;
-            } else {
-                $name = 'guest';
+                return view('depotManagement', ['depots' => $depots, 'name' => $name]);
             }
-
-            return view('depotManagement', ['depots' => $depots, 'name' => $name]);
-        } else {
-            header('Location: /DepotManagement');
-            exit();
         }
+        echo('Access denied. Redirecting');
+        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
+        exit();
     }
 
     public function overviewperDepot(int $id)
     {
-        $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
+        if (Auth::user() ) {
+            if (Auth::user()->role != 0) {
+                $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
+                return view('overviewperdepot', ['data' => $data, 'id' => $id]);
+            }
+        }
+        echo('Access denied. Redirecting');
+        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
+        exit();
+        
 
-        return view('overviewperdepot', ['data' => $data, 'id' => $id]);
 
     }
 
@@ -60,9 +65,15 @@ class DepotController extends Controller
 
     public function editDepotpage(int $id)
     {
-        $depots = DB::select('select * from depots where id = ?', [$id]);
-
-        return view('editDepot', ['depots' => $depots]);
+        if (Auth::user() ) {
+            if (Auth::user()->role != 0) {        
+                $depots = DB::select('select * from depots where id = ?', [$id]);
+                return view('editDepot', ['depots' => $depots]);
+            }
+        }
+        echo('Access denied. Redirecting');
+        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
+        exit();
     }
 
     public function editDepot(Request $request, int $id)

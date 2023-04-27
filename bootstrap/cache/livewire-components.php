@@ -1,0 +1,16 @@
+<?php return array (
+  'control-panel.sidebar' => 'App\\Http\\Livewire\\ControlPanel\\Sidebar',
+  'log' => 'App\\Http\\Livewire\\Log',
+  'permission.edit' => 'App\\Http\\Livewire\\Permission\\Edit',
+  'pickups.create' => 'App\\Http\\Livewire\\Pickups\\Create',
+  'pickups.edit' => 'App\\Http\\Livewire\\Pickups\\Edit',
+  'pickups.index' => 'App\\Http\\Livewire\\Pickups\\Index',
+  'role.create' => 'App\\Http\\Livewire\\Role\\Create',
+  'roles' => 'App\\Http\\Livewire\\Roles',
+  'roles.edit' => 'App\\Http\\Livewire\\Roles\\Edit',
+  'roles.permissions.edit' => 'App\\Http\\Livewire\\Roles\\Permissions\\Edit',
+  'username' => 'App\\Http\\Livewire\\Username',
+  'users' => 'App\\Http\\Livewire\\Users',
+  'users.edit' => 'App\\Http\\Livewire\\Users\\Edit',
+  'users.roles.edit' => 'App\\Http\\Livewire\\Users\\Roles\\Edit',
+);
