@@ -146,12 +146,6 @@ Route::middleware('auth')->group(function () {
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 
-    //review page
-    Route::get('/review', [ReviewController::class,'show'])->name('review');
-    Route::post('/review_add', [ReviewController::class,'save']);
-    Route::get('/readreviews', [ReviewController::class,'showread'])->name('readreviews');
-    Route::get('/filterreview', [ReviewController::class,'filter']);
-
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
         ->name('verification.notice');
