@@ -328,6 +328,7 @@ class ShipmentController extends Controller
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-
     }
+
+    // Dashboard Function
 }
