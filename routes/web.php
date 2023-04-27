@@ -144,11 +144,10 @@ Route::middleware('auth')->group(function () {
 
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
-});
 
-// Email verification
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    // Email verification
+    Route::view('/email/verify', 'auth.verify-email')
+        ->name('verification.notice');
+});
 
 require __DIR__.'/auth.php';
