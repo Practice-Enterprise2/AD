@@ -21,14 +21,12 @@ use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Events\complaint;
+use App\Models\contact;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/broadcasting/auth', function () {
-        return auth()->user();
-    });
-});
 
 Route::redirect('/', 'home');
 
@@ -134,7 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
-    Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware('auth')->group(function () {
         //contact and messages
         Route::get('/contact', [contactController::class, 'create'])->name('contact.create');
         Route::post('/contact', [contactController::class, 'store'])->name('contact.store');

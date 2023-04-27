@@ -6,10 +6,10 @@
 <div class=" w-10/12 h-full flex flex-row justify-center bg-slate-400 mx-auto my-10 rounded-lg p-6">
     <div  class="w-2/6 h-96 flex flex-col border-r-black border-r-2  items-center justify-start overflow-y-auto">
     @foreach($chatboxs as $chatbox)
-    @if(Auth::user()->role == 0)
-    <a href="#" class="chatbox w-8/12 p-3 my-1 text-center bg-slate-700 rounded-xl text-white" data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->employee_id)->get()->first()->name }}</a>
-    @elseif(Auth::user()->role == 1)
+    @if(Auth::user()->can('view_complain'))
     <a href="#" class="chatbox w-8/12 p-3 my-1 text-center bg-slate-700 rounded-xl text-white" data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->customer_id)->get()->first()->name }}</a>
+    @else
+    <a href="#" class="chatbox w-8/12 p-3 my-1 text-center bg-slate-700 rounded-xl text-white" data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->employee_id)->get()->first()->name }}</a>
     @endif
 @endforeach
     
@@ -87,7 +87,7 @@
                     formContainer.innerHTML = ` 
                         <form class="w-full" id="form">
                             <input type="hidden" name="id" id="input-chatID" value="${chatID}"/>
-                            <input type="text" id="input-message" name="content" placeholder="send message" class="w-full p-2 rounded-md"/>
+                            <input type="text" id="input-message" name="content" placeholder="send message" class="w-full p-2 rounded-md text-black"/>
                         </form>`;
                     const form = document.getElementById('form');
                     const inputMessage = document.getElementById('input-message');
@@ -99,7 +99,13 @@
                         axios.post('/chat-message', {
                             content:userInput,
                             id:chatIDInput
+                        },
+                        {
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
                         })
+                        inputMessage.value = '';
                     });
                     const channel = Echo.private('private.chat.' + chatID);
                     channel.subscribed(() => {
@@ -140,6 +146,7 @@
                             `;
                         }
                         messageContainer.insertAdjacentHTML('beforeend', messageEvent);
+                        
                         element.forEach((element, index) => {
                         if(index === 1)
                         {
