@@ -158,11 +158,7 @@ table
                         <td>Contract ID:</td> <td><input type="number"  value="{{ $contract->id }}" disabled required>
                         <input type="number" name="id" value="{{ $contract->id }}" hidden></td>
                         </tr>
-                      <!--  <tr>
-                            <td>Airline name:</td> <td><input type="number"  value="{ { $contract->airline_id }}"  required disabled hidden>
-                            <input type="text"  value="{ { $airlines[0]->name }}" name="airline"  ></td>
-                        </tr>
-                    -->
+
                     <tr>
                         <td colspan="2">
                             Airline:
@@ -206,14 +202,6 @@ table
                                 </select>
                             </td>
                           </tr>
-                     <!--   <tr>
-                            <td>Departure airport:</td> <td><input type="text" name="departure_airport" value="{{ $contract->depart_airport }}" required></td>
-                      </tr>
-                    -->
-                     <!--   <tr>
-                            <td>Destination airport:</td> <td><input type="text" name="destination_airport" value="{{ $contract->destination_airport }}" required></td>
-                        </tr>
-                    -->
 
                     <tr>
                         <td colspan="2">
@@ -248,17 +236,6 @@ table
                       </tr>
                         <tr>
                             <td><input type="submit" name="submit" value="Save Changes" style="background-color: darkgray"></td> <td><?php
-                              /*  if ($contracts[0]->active == 1)
-                                {
-                                    ?>
-                                    <input type="submit" name="remove" value="delete contract">
-                                    <?php
-                                }
-                                else {
-                                    ?>
-                                     <input type="submit" name="reactivate" value="reactivate contract">
-                                    <?php
-                                } */
 
                                 ?>  reactivate/delete currently broken due to current database structure</td>
                         </tr>
