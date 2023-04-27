@@ -348,7 +348,7 @@ class PayslipController extends Controller
             Mail::send(['mail' => 'mail.test_mail'], $data, function ($message) use ($mail, $name) {
                 $message->to($mail, $name)
                         ->subject('payslip '.date('d/m/Y'))
-                        ->text("Dear employee,\n\nIn the attachments you can find your payslip for the past month.\n\nRegards,\nYour HR team");
+                        ->text("Dear ".$name.",\n\nIn the attachments you can find your payslip for the past month.\n\nRegards,\nYour HR team");
                 $message->attach(storage_path().'\app\storage\pdf\payslip'.date('m-Y').'.pdf');
             });
 
