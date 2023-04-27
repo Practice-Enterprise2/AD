@@ -2,16 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property Shipment $shipment
+ * @property Address $current_address
+ * @property Address $next_address
+ * @property string $status
+ * @property ?\Illumiate\Support\Carbon $created_at
+ * @property ?\Illumiate\Support\Carbon $updated_at
+ */
 class Waypoint extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        // implement later.
+        'status',
     ];
 
     public function shipment(): BelongsTo

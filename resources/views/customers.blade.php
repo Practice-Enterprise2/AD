@@ -69,8 +69,8 @@
               <td>{{ $user->address->country }}</td>
             @endisset
             <td>
-              @if ($user->businessCustomer)
-                {{ $user->businessCustomer->vat_number }}
+              @if ($user->business_customer)
+                {{ $user->business_customer->vat_number }}
               @else
               @endif
             </td>

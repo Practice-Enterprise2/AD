@@ -6,6 +6,8 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::preventsSilentlyDiscardingAttributes(! App::isProduction());
+
         // A gate that allows anything for users with the admin role.
         Gate::after(function ($user, $ability) {
             return $user->hasRole('admin'); // note this returns boolean
