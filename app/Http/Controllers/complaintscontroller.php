@@ -23,10 +23,10 @@ class complaintscontroller extends Controller
     public function sendMessage(Request $request)
     {
         if (chatBox::where('id', $request->id)
-        ->where(function ($query) {
-            $query->where('customer_id', Auth::user()->id)
-                ->orWhere('employee_id', Auth::user()->id);
-        })->exists()) {
+            ->where(function ($query) {
+                $query->where('customer_id', Auth::user()->id)
+                    ->orWhere('employee_id', Auth::user()->id);
+            })->exists()) {
 
             $chatbox = chatBox::where('id', $request->id)->get()->first();
             $message = messages::create([
@@ -44,31 +44,31 @@ class complaintscontroller extends Controller
     public function createChat($id)
     {
 
-            $contact = contact::where('id', $id)->first();
-            $chatbox = chatBox::where('customer_id', $contact->customer_id)
+        $contact = contact::where('id', $id)->first();
+        $chatbox = chatBox::where('customer_id', $contact->customer_id)
             ->where('employee_id', Auth::user()->id)
             ->first();
 
-            if (! $chatbox) {
-                $chatbox = chatBox::create([
-                    'customer_id' => $contact->customer_id,
-                    'employee_id' => Auth::user()->id,
-                ]);
-            }
-            $content = 'Contact: '.$contact->email.'<br>'.
+        if (! $chatbox) {
+            $chatbox = chatBox::create([
+                'customer_id' => $contact->customer_id,
+                'employee_id' => Auth::user()->id,
+            ]);
+        }
+        $content = 'Contact: '.$contact->email.'<br>'.
            'shipment_id: '.$contact->shipment_id.'<br>'.
            'Subject: '.$contact->subject.'<br>'.
            'message: '.$contact->message;
 
-            messages::create([
-                'chatbox_id' => $chatbox->id,
-                'from_id' => Auth::user()->id,
-                'content' => $content,
-            ]);
-            $contact->is_handled = 1;
-            $contact->save();
+        messages::create([
+            'chatbox_id' => $chatbox->id,
+            'from_id' => Auth::user()->id,
+            'content' => $content,
+        ]);
+        $contact->is_handled = 1;
+        $contact->save();
 
-            return Redirect(route('complaints.messages'));
+        return Redirect(route('complaints.messages'));
 
     }
 
@@ -82,8 +82,8 @@ class complaintscontroller extends Controller
             })->exists()) {
 
             $messages = messages::where('chatbox_id', $id)
-                         ->orderBy('created_at', 'asc')
-                         ->get();
+                ->orderBy('created_at', 'asc')
+                ->get();
 
             return response()->json($messages);
         } else {

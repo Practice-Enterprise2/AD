@@ -19,7 +19,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 Broadcast::channel('private.chat.{chatbox_id}', function ($user, $chatbox_id) {
     $chatbox = ChatBox::where('id', $chatbox_id)
-                      ->first();
+        ->first();
     if ($chatbox && ($user->id == $chatbox->customer_id || $user->id == $chatbox->employee_id)) {
         return ['id' => $user->id];
     }

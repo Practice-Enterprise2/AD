@@ -9,8 +9,7 @@
         class="mb-8 text-center font-light text-gray-500 dark:text-gray-400 sm:text-xl lg:mb-16">
         Got a technical issue? Want to send feedback about a beta feature? Need
         details about our Business plan? Let us know.</p>
-      <form method="post" action="{{ route('contact.store') }}"
-        class="space-y-8">
+      <form method="post" action="{{ route('contact.store') }}" class="space-y-8">
         @csrf
         <div>
           <label for="email"

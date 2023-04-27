@@ -6,7 +6,9 @@
 
 import axios from 'axios';
 window.axios = axios;
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
 
@@ -34,7 +36,7 @@ window.Echo = new Echo({
     encrypted: false,
     auth: {
         headers: {
-          'X-CSRF-Token': csrfToken,
+            'X-CSRF-Token': csrfToken,
         },
     },
 });

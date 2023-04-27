@@ -18,12 +18,10 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Models\contact;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Events\complaint;
-use App\Models\contact;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -31,7 +29,6 @@ Route::view('/home', 'app')->name('home');
 Route::redirect('/', 'home');
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
-
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -144,7 +141,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/messages/content/{id}', [complaintscontroller::class, 'viewChat'])->name('complaint.viewMessage');
         Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
     });
-    
+
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 

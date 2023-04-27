@@ -15,10 +15,9 @@ class contactController extends Controller
     {
         //
 
-            return view('contact.index', [
-                'contacts' => contact::where('is_handled', 0)->get(),
-            ]);
-
+        return view('contact.index', [
+            'contacts' => contact::where('is_handled', 0)->get(),
+        ]);
 
     }
 
@@ -64,7 +63,7 @@ class contactController extends Controller
     {
         //
         $contact = contact::where('id', $id)->first();
-        if (contact::where('id', $id)->exists() ) {
+        if (contact::where('id', $id)->exists()) {
             return view('contact.show', [
                 'contact' => $contact,
             ]);
