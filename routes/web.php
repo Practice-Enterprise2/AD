@@ -125,7 +125,7 @@ Route::middleware('auth')->group(function () {
 
     //Notification
     Route::get('/markAsRead', function () {
-        auth()->user()->unreadNotifications->markAsRead();
+        auth()->user()->unreadNotifications->markAsRead(); 
     });
 
     //WaypointController
