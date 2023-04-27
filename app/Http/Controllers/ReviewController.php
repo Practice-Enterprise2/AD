@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\review;
+use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class ReviewController extends Controller
 
     public function save(Request $req): View
     {
-        $review = new review();
+        $review = new Review();
         $review->rating = $req->rating;
         $review->comment = $req->comment;
         $review->save();
