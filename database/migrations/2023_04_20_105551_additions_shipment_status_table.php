@@ -36,12 +36,19 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->dropColumn([
-                'status',
-            ]);
+            $table->dropColumn('status');
         });
+
         Schema::table('shipments', function (Blueprint $table) {
-            $table->integer('status')->after('delivery_date');
+            $table->enum('status', [
+                'Awaiting Confirmation',
+                'Awaiting Pickup',
+                'In Transit',
+                'Out For Delivery',
+                'Delivered',
+                'Exception',
+                'Held At Location',
+            ]);
         });
     }
 };
