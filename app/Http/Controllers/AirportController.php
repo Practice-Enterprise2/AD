@@ -11,7 +11,7 @@ class AirportController extends Controller
     public function airportFiltering(Request $request)
     {
         $filter = $request->query('filter');
-    
+
         if (!empty($filter)) {
             $airports = airport::sortable()
                 ->where('name', 'like', '%'.$filter.'%')
@@ -20,14 +20,10 @@ class AirportController extends Controller
             $airports = airport::sortable()
                 ->paginate(15);
         }
-        
+
         return view('airportList', ['airports' => $airports]);
     }
-    // function show()
-    // {
-    //     $data = \App\Models\airport::paginate(10);
-    //     return view('airportList', ['airports' => $data]);
-    // }
+
     public static function getAirports()
     {
        $airports = airport::all();
@@ -42,9 +38,7 @@ class AirportController extends Controller
         $addItem->countryCode = $request->countryCode;
         $addItem->countryName = $request->countryName;
 
-        // add boolean and integers to DB
-        // $addItem->airportInUse = $request->boolean(key: 'usageCheckbox');
-        // $addItem->Tariff = $request->tariffAmount;
+
 
         $addItem->save();
         return redirect('airportList');
@@ -69,15 +63,12 @@ class AirportController extends Controller
 
         $updateItem->airportName = $request->airportName;
 
-        // Don't update primary key
-        // $updateItem->iataCode = $request->iataCode;
+
         $updateItem->stateCode = $request->stateCode;
         $updateItem->countryCode = $request->countryCode;
         $updateItem->countryName = $request->countryName;
 
-        // update boolean and int
-        // $updateItem->airportInUse = $request->boolean(key: 'usageCheckbox');
-        // $updateItem->Tariff = $request->tariffAmount;
+
 
         $updateItem->save();
         return redirect('airportList');

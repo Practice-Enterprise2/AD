@@ -27,13 +27,9 @@ class airport extends Model
         'name',
         'land',
         'address_id',
-        // 'name',
-        // // 'iataCode',
-        // 'stateCode',
-        // 'countryCode',
-        // 'countryName',
+
     ];
-    
+
     public $sortable = [
         'id',
         'name',
@@ -41,9 +37,6 @@ class airport extends Model
         'address_id',
     ];
 
-    // old DB with int as key
-    // protected $primaryKey ="airportID";
-    // // protected $fillable = ['name', 'code', 'stateCode', 'countryCode', 'countryName'];
 
     public $timestamps = false;
 }

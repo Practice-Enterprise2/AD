@@ -110,12 +110,11 @@
                         @endforeach
                     </select>
 
-                  <!--  <label for="airlineid">AirlineID:</label>
-                    <span style="color:red">
+
                         @error('airlineid')
                         {{$message}}
                         @enderror
-                    </span>
+
 
                     <input type="text" id="airlineid" name="airlineid" placeholder="AirlineID" >
                     <label for="price">Price:</label>
@@ -145,8 +144,7 @@
                         {{$message}}
                         @enderror
                     </span>
-                <!--    <input type="text" id="airportid" name="airportid" placeholder="AirportID" >
-                    <label for="departlocation">Departlocation</label> -->
+
                     <select id="airportid" name="airportid" class="chosen-select">
                         <option value="" selected hidden disabled>Select the airport</option>
                     @foreach ($airports as $airport )

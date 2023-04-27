@@ -254,7 +254,7 @@ Route::get('/contract_pdf/{id}',[contractlistcontroller::class,'contract_pdf'])-
 Route::get('/contract_list', function () {
     return view('contract_list');
 });
-//Route::get('contract_list','App\Http\Controllers\contractListController');
+
 Route::get('contract_list',[contractlistcontroller::class,'index']);
 Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering']);
 // Email verification
