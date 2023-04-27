@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -14,6 +13,7 @@ class PayslipController extends Controller
     private function getDays($startDate, $endDate)
     {
         // found: https://stackoverflow.com/questions/336127/calculate-business-days
+        //get days in a month minus holidays and weekends
 
         $endDate = strtotime($endDate);
         $startDate = strtotime($startDate);
@@ -58,13 +58,16 @@ class PayslipController extends Controller
         $startDate = $abcense->start_date;
         $endDate = $abcense->end_date;
 
+        //if startdate of absence is before the first possible day (say first day of the year) change the start day to the first possible day
         if ($startDate < $firstDate) {
             $startDate = $firstDate;
         }
+        //if enddate of absence is before the last possible day (say last day of the year) change the start day to the last possible day
         if ($endDate > $lastDate) {
             $endDate = $lastDate;
         }
 
+        //calculate the amount of days the absence was -> minus weekends and holidays
         $days = $this->getDays($startDate, $endDate);
 
         return $days;
@@ -73,33 +76,30 @@ class PayslipController extends Controller
     private function tax25($taxable)
     {
         $taxes = $taxable * 0.25;
-
         return $taxes;
     }
 
     private function tax40($taxable)
     {
         $taxes = $taxable * 0.4;
-
         return $taxes;
     }
 
     private function tax45($taxable)
     {
         $taxes = $taxable * 0.45;
-
         return $taxes;
     }
 
     private function tax50($taxable)
     {
         $taxes = $taxable * 0.5;
-
         return $taxes;
     }
 
     private function taxes($taxableIncome)
     {
+        //go trough the tax system
         $taxableIncomeYear = $taxableIncome * 12;
 
         if ($taxableIncomeYear > 46440) {
@@ -128,12 +128,16 @@ class PayslipController extends Controller
         return $taxes;
     }
 
-    public function calculateSendPayslip(Request $req)
+    public function calculateSendPayslip()
     {
+        //get all employees that are active from the database
         $employees = DB::select('SELECT * FROM employees WHERE deleted_at IS NULL');
 
+        //go trough all employees
         foreach ($employees as $employee) {
             $employee_id = $employee->id;
+
+            //get employee_contract from employee
             $employeeContract = DB::table('employee_contracts')
                                 ->where('employee_id', $employee_id)
                                 ->where(function ($query) {
@@ -145,9 +149,11 @@ class PayslipController extends Controller
                                 ->first();
             $contract_id = $employeeContract->id;
 
+            //get last possible day that an absence can be approved for this months payslip
             $lastdayForTaken = Carbon::now()->subMonthNoOverflow()->day(24)->endOfDay();
             $startYear = Carbon::now()->startOfYear();
 
+            //get all absences that have been taken this year by the employee
             $takenAbsences = DB::table('absences')
                                     ->where('contract_id', $contract_id)
                                     ->where('status', 'taken')
@@ -160,6 +166,7 @@ class PayslipController extends Controller
             $firstDate = Carbon::now()->startOfYear();
             $lastDate = Carbon::now()->endOfYear();
 
+            //get amount of days for each taken absence
             foreach ($takenAbsences as $takenAbsence) {
                 if ($takenAbsence->type == 'holiday') {
                     $takenHolidays = $takenHolidays + $this->takenAbsence($takenAbsence, $firstDate, $lastDate);
@@ -170,6 +177,8 @@ class PayslipController extends Controller
 
             $startMonth = Carbon::now()->startOfMonth();
             $endMonth = Carbon::now()->endOfMonth();
+
+            //get all taken or approved absences this month and unaccounted ones from last month
             $absencesThisMonth = DB::table('absences')
                                     ->where('contract_id', $contract_id)
                                     ->where('start_date', '<=', $endMonth->toDateString())
@@ -185,6 +194,7 @@ class PayslipController extends Controller
             $holidays = 0;
             $sickdays = 0;
 
+            //for each absence this month, how many unaccounted and how many normal absences
             foreach ($absencesThisMonth as $absence) {
                 if ($absence->start_date > $lastdayForTaken->toDateString() && $absence->start_date < $startMonth->toDateString() && $absence->approval_time > $lastdayForTaken) {
                     if ($absence->type == 'holiday') {
@@ -209,6 +219,7 @@ class PayslipController extends Controller
                 }
             }
 
+            //get total amount of absences that have been taken or approved
             if (Carbon::now()->format('M') == 'Jan') {
                 $totalHolidays = $takenHolidays + $holidays;
                 $totalSickdays = $takenSickdays + $sickdays;
@@ -225,12 +236,15 @@ class PayslipController extends Controller
             $payDayThis = $employee->salary / $daysThis;
             $payDayLast = $employee->salary / $daysLast;
 
+            //get how many absences an employee gets paid
             $allowedAbsences = DB::table('holiday_saldos')
                                     ->where('contract_id', $contract_id)
                                     ->where('year', Carbon::now()->format('Y'))
                                     ->get();
 
             $unpaidAbsence = 0;
+
+            //calculate how many unpaid absences the employee has taken
             foreach ($allowedAbsences as $allowedAbsence) {
                 if ($allowedAbsence->type == 'holiday') {
                     if ($allowedAbsence->allowed_days < $totalHolidays) {
@@ -273,7 +287,7 @@ class PayslipController extends Controller
                 }
             }
 
-            //employee gross salary minus all unpaid vaction from this month and the unaccounted from last month;
+            //employee gross salary minus all unpaid absences from this month and the unaccounted from last month;
             $wage = $employee->salary;
             $grossSalary = $wage - $unpaidAbsence;
 
@@ -290,7 +304,7 @@ class PayslipController extends Controller
             $workingDays = $daysThis - ($holidays + $sickdays);
             $workingHours = $workingDays * 7.0;
 
-            //payslip in pdf
+            //data for in pdf
             $data = [
                 'payDate' => date('d/m/Y'),
                 'workingDays' => round($workingDays, 1),
@@ -309,30 +323,32 @@ class PayslipController extends Controller
                 'netEarnings' => round($netEarnings, 2),
             ];
 
+            //create and store generated PDF file
             $pdf = PDF::loadView('payslip', $data);
             Storage::put('storage/pdf/payslip'.date('m-Y').'.pdf', $pdf->output());
 
-            //send mail with payslip
+            //get user account from employee
             $user = DB::table('users')
                     ->where('id', $employee->user_id)
                     ->first();
             $mail = $user->email;
             $name = $user->name.' '.$user->last_name;
 
+            //data for the mail
             $data = [
                 'email' => $mail,
                 'name' => $name,
             ];
 
+            //send mail with payslip in attachement
             Mail::send(['mail' => 'mail.test_mail'], $data, function ($message) use ($mail, $name) {
                 $message->to($mail, $name)
                         ->subject('payslip '.date('d/m/Y'))
                         ->text("Dear employee,\n\nIn the attachments you can find your payslip for the past month.\n\nRegards,\nYour HR team");
                 $message->attach(storage_path().'\app\storage\pdf\payslip'.date('m-Y').'.pdf');
-                $message->from('hr@BlueSkyUnlimited.com', 'HR');
             });
 
-            //delete payslip
+            //delete PDF file
             if (Storage::exists('storage/pdf/payslip'.date('m-Y').'.pdf')) {
                 Storage::delete('storage/pdf/payslip'.date('m-Y').'.pdf');
             }
