@@ -3,7 +3,7 @@
     {{ __('Control Panel - Employees') }}
   </x-slot:title>
 
-  <x-control-panel-layout>
+  <x-control-panel-layout :always_show_title="true">
     <x-slot:title>
       {{ __('Create Employee') }}
     </x-slot:title>
