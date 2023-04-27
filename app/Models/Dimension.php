@@ -22,6 +22,6 @@ class Dimension extends Model
 
     public function shipments(): HasMany
     {
-        return $this->hasMany('App\Models\Shipment');
+        return $this->hasMany(Shipment::class);
     }
 }
