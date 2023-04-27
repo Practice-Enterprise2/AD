@@ -48,7 +48,7 @@ return new class extends Migration
                 'Delivered',
                 'Exception',
                 'Held At Location',
-            ]);
+            ])->after('receiver_email');
         });
     }
 };
