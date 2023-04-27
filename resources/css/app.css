@@ -5,5 +5,5 @@
 /* add the one's below to your own code. */
 
 * {
-    @apply dark:text-white;
+    @apply dark:text-black;
 }

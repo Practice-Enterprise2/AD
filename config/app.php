@@ -216,6 +216,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
 
         // QR Code
-        'QrCode'=> SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ])->toArray(),
 ];

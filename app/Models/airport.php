@@ -14,13 +14,13 @@ class airport extends Model
     // if your key name is not 'id'
     // you can also set this to null if you don't have a primary key
     protected $table = 'airports';
+
     protected $primaryKey = 'id';
 
     public $incrementing = false;
 
     // In Laravel 6.0+ make sure to also set $keyType
     protected $keyType = 'string';
-
 
     protected $fillable = [
         'id',
@@ -37,7 +37,5 @@ class airport extends Model
         'address_id',
     ];
 
-
     public $timestamps = false;
 }
-?>

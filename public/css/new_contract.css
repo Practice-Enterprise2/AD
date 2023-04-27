@@ -4,8 +4,8 @@
     padding: 20px;
     width: 50%;
     margin: auto;
-  }
-  input{
+}
+input {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -13,5 +13,4 @@
     border-radius: 4px;
     padding: 12px;
     box-sizing: border-box;
-    
-  }
+}

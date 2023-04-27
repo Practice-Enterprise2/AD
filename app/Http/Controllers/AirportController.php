@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Illuminate\Http\Request;
 use App\Models\airport;
+use Illuminate\Http\Request;
 
 class AirportController extends Controller
 {
@@ -12,7 +11,7 @@ class AirportController extends Controller
     {
         $filter = $request->query('filter');
 
-        if (!empty($filter)) {
+        if (! empty($filter)) {
             $airports = airport::sortable()
                 ->where('name', 'like', '%'.$filter.'%')
                 ->paginate(15);
@@ -26,10 +25,12 @@ class AirportController extends Controller
 
     public static function getAirports()
     {
-       $airports = airport::all();
-       return $airports	;
+        $airports = airport::all();
+
+        return $airports;
     }
-    function addAirport(Request $request)
+
+    public function addAirport(Request $request)
     {
         $addItem = new airport;
         $addItem->airportName = $request->airportName;
@@ -38,40 +39,38 @@ class AirportController extends Controller
         $addItem->countryCode = $request->countryCode;
         $addItem->countryName = $request->countryName;
 
-
-
         $addItem->save();
+
         return redirect('airportList');
     }
 
-    function deleteAirport($iataCode)
+    public function deleteAirport($iataCode)
     {
         $data = airport::find($iataCode);
         $data->delete();
+
         return redirect('airportList');
     }
 
-    function editAirport($iataCode)
+    public function editAirport($iataCode)
     {
         $data = airport::find($iataCode);
+
         return view('editAirportList', ['data' => $data]);
     }
 
-    function updateAirport(Request $request)
+    public function updateAirport(Request $request)
     {
         $updateItem = airport::find($request->iataCode);
 
         $updateItem->airportName = $request->airportName;
 
-
         $updateItem->stateCode = $request->stateCode;
         $updateItem->countryCode = $request->countryCode;
         $updateItem->countryName = $request->countryName;
 
-
-
         $updateItem->save();
+
         return redirect('airportList');
     }
 }
-?>
