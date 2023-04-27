@@ -23,8 +23,8 @@ class contractlistcontroller extends Controller
         $filter = $request->query('filter');
         $filter1 = $request->query('filter1');
         $filter2 = $request->query('filter2');
-        $start_date = $request->query('start_date');
-        $end_date = $request->query('end_date');
+        // $start_date = $request->query('start_date');
+        // $end_date = $request->query('end_date');
         if (!empty($filter)) {
             $contracts = contractlist::sortable()
                 ->where('id', 'like', '%'.$filter.'%')
@@ -33,7 +33,6 @@ class contractlistcontroller extends Controller
             $contracts = contractlist::sortable()
                 ->paginate(15);
         }
-
         if (!empty($filter1)) {
             $contracts = contractlist::sortable()
                 ->where('depart_location', 'like', '%'.$filter1.'%')
@@ -42,7 +41,6 @@ class contractlistcontroller extends Controller
             $contracts = contractlist::sortable()
                 ->paginate(15);
         }
-
         if (!empty($filter2)) {
             $contracts = contractlist::sortable()
                 ->where('destination_location', 'like', '%'.$filter2.'%')
@@ -51,15 +49,15 @@ class contractlistcontroller extends Controller
             $contracts = contractlist::sortable()
                 ->paginate(15);
         }
-        if (!empty($filter2)) {
-            $contracts = contractlist::sortable()
-                ->where('start_date', 'between', $start_date,'and',$end_date)
-                ->where('end_date', 'between', $start_date,'and',$end_date)
-                ->paginate(15);
-        } else {
-            $contracts = contractlist::sortable()
-                ->paginate(15);
-        }
+        // if (!empty($filter2)) {
+        //     $contracts = contractlist::sortable()
+        //         ->where('start_date', ' between ', $start_date,' and ',$end_date)
+        //         ->where('end_date', ' between ', $start_date,' and ',$end_date)
+        //         ->paginate(15);
+        // } else {
+        //     $contracts = contractlist::sortable()
+        //         ->paginate(15);
+        // }
         
         return view('contract_list', ['contracts' => $contracts]);
     }

@@ -95,11 +95,7 @@
       <p><input type="text" id="filter2" name="filter2" placeholder="destination location..."></p>
       <p><label for="active">active contracts:</label></p>
       <p><label for="c_active">active</label><input type="checkbox" id="c_active" name="c_active"><label for="c_inactive">inactive</label><input type="checkbox" id="c_inactive" name="c_inactive"></p>
-      <label for="">Start date:</label> 
-      <input type="date" name="start_date"  required>
-      <label for="">End date:</label> 
-      <input type="date" name="end_date"  required>
-                        
+
     </div>
     <button type="submit">Search</button>
 </form>
