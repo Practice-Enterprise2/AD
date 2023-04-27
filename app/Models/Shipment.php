@@ -18,12 +18,14 @@ class Shipment extends Model
     use Sortable;
 
     protected $primaryKey = 'id';
+
     public $sortable = [
         'receiver_name',
         'shipment_date',
         'delivery_date',
         'status',
     ];
+
     protected $fillable = [
         'name',
         'shipment_date',

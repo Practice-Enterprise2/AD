@@ -75,14 +75,15 @@
             <x-dropdown-link :href="route('shipments.requests')">
               {{ __('Evaluate Shipment Requests') }}
             </x-dropdown-link>
-            
+
             <x-dropdown-link href="/shipments">
               {{ __('Show Shipments') }}
             </x-dropdown-link>
-            @if(Auth::user()->roles()->first()->name == 'admin' || Auth::user()->roles()->first()->name == 'employee')
-            <x-dropdown-link href="/shipmentGraphs">
-              {{ __('Shipment graphs') }}
-            </x-dropdown-link>
+            @if (Auth::user()->roles()->first()->name == 'admin' ||
+                    Auth::user()->roles()->first()->name == 'employee')
+              <x-dropdown-link href="/shipmentGraphs">
+                {{ __('Shipment graphs') }}
+              </x-dropdown-link>
             @endif
           </x-slot>
         </x-dropdown>

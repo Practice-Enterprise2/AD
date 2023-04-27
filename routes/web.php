@@ -29,80 +29,80 @@ Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('air
 
 // Routes that require an authenticated session with a verified email.
 /*Route::middleware(['auth', 'verified'])->group(function () {*/
-    /*
-     * Normal views, that can optionally take extra data.
-     */
+/*
+ * Normal views, that can optionally take extra data.
+ */
 
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
-    Route::view('/respond', 'respond');
+Route::view('/dashboard', 'dashboard')->name('dashboard');
+Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
+Route::view('/respond', 'respond');
 
-    /*
-     * Routes that offer functionality for resources.
-     */
+/*
+ * Routes that offer functionality for resources.
+ */
 
-    Route::controller(PickupController::class)->group(function () {
-        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
-        Route::get('/pickups', 'index')->name('pickups.index');
-        Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
+Route::controller(PickupController::class)->group(function () {
+    Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
+    Route::get('/pickups', 'index')->name('pickups.index');
+    Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
+});
+
+/*
+ * Controllers that require custom code to be run for a request.
+ */
+
+Route::controller(EmployeeController::class)->group(function () {
+    Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
+    Route::get('/overview_employee', 'employees')->name('employee-overview');
+});
+
+Route::controller(EmployeeViewController::class)->group(function () {
+    Route::get('/employee_overview', 'index');
+    Route::post('/employee_add', 'save');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
+    Route::put('/admin/users/{id}', 'update')->name('users.update');
+    Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
+    Route::post('/admin/users', 'store')->name('users.store');
+    Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
+});
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/admin/roles', 'index')->name('roles');
+    Route::put('/admin/roles/{id}', 'update')->name('roles.update');
+    Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
+    Route::post('/admin/roles', 'store')->name('roles.store');
+});
+
+Route::controller(TicketController::class)->group(function () {
+    Route::get('/create-ticket', 'showForm')->name('create-ticket');
+    Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
+    Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
+});
+
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/customers', 'getCustomers')->name('customers')->middleware('permission:view_all_users');
+    Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
+    Route::put('/customers/{id}', 'update')->name('customer.update');
+});
+
+Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
+    Route::get('/', ControlPanelController::class)->name('control-panel');
+    Route::name('control-panel.')->group(function () {
+        Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
+        Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
+        Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+        Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
+        Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
+        Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
+        Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
+        Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
+        Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');
+        Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
     });
-
-    /*
-     * Controllers that require custom code to be run for a request.
-     */
-
-    Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
-        Route::get('/overview_employee', 'employees')->name('employee-overview');
-    });
-
-    Route::controller(EmployeeViewController::class)->group(function () {
-        Route::get('/employee_overview', 'index');
-        Route::post('/employee_add', 'save');
-    });
-
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
-        Route::put('/admin/users/{id}', 'update')->name('users.update');
-        Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
-        Route::post('/admin/users', 'store')->name('users.store');
-        Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
-    });
-
-    Route::controller(RoleController::class)->group(function () {
-        Route::get('/admin/roles', 'index')->name('roles');
-        Route::put('/admin/roles/{id}', 'update')->name('roles.update');
-        Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
-        Route::post('/admin/roles', 'store')->name('roles.store');
-    });
-
-    Route::controller(TicketController::class)->group(function () {
-        Route::get('/create-ticket', 'showForm')->name('create-ticket');
-        Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
-        Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
-    });
-
-    Route::controller(CustomerController::class)->group(function () {
-        Route::get('/customers', 'getCustomers')->name('customers')->middleware('permission:view_all_users');
-        Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
-        Route::put('/customers/{id}', 'update')->name('customer.update');
-    });
-
-    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
-        Route::get('/', ControlPanelController::class)->name('control-panel');
-        Route::name('control-panel.')->group(function () {
-            Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
-            Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
-            Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
-            Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
-            Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
-            Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
-            Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
-            Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
-            Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');
-            Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
-        });
-    });
+});
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
     Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
@@ -123,19 +123,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update');
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
-    
+
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
     Route::get('/shipmentGraphs', function () {
-            return view('graphs');
+        return view('graphs');
     });
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
     });
-
-    
 
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create

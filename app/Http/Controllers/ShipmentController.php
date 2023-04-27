@@ -13,12 +13,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use GuzzleHttp\Client;
-
-use Illuminate\Support\Facades\Log;
-
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {
@@ -161,55 +157,52 @@ class ShipmentController extends Controller
 
     public function showshipments()
     {
-       /*  $shipments = DB::select('SELECT *
-        FROM shipments
-        ORDER BY shipments.id ASC'); */
+        /*  $shipments = DB::select('SELECT *
+         FROM shipments
+         ORDER BY shipments.id ASC'); */
 
         // $id = Auth::user()->id;
-        
+
         $shipments = DB::table('shipments')
-        ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
         // ->where('shipments.user_id', $id)
-        ->select('shipments.receiver_name','shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
-        ->get();
+            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
+            ->get();
         $shipments = Shipment::sortable()->paginate(20);
+
         return view('shipments', ['shipments' => $shipments]);
     }
 
-   
     public function showShipments_details($id)
     {
         $shipments = DB::table('shipments')
-        ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')
-        ->where('shipments.id', $id)
-        ->select('*')
-        ->get();
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
+            ->where('shipments.id', $id)
+            ->select('*')
+            ->get();
 
         $shipmentData = $this->track($id);
+
         return view('shipments_details', [
             'shipments' => $shipments,
-            'address' => $shipmentData
+            'address' => $shipmentData,
         ]);
     }
 
-    
-
     // Cancel a shipment with modal
-    public function cancel($id) 
-    {            
+    public function cancel($id)
+    {
         // Change status to Cancelled
         DB::update("UPDATE shipments SET status = 'Canceled' WHERE id = ?", [$id]);
 
         // Navigate back to shipments page and load all data
         $shipments = DB::table('shipments')
-        ->join('addresses','shipments.destination_address_id', '=', 'addresses.id')        
-        ->select('shipments.receiver_name','shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date','shipments.delivery_date', 'shipments.status')
-        ->get();
-        
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
+            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
+            ->get();
+
         return view('shipments', ['shipments' => $shipments]);
     }
-
-  
 
     public function edit(Shipment $shipment)
     {
