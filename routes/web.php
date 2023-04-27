@@ -133,6 +133,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
     });
+    Route::get('/markAsRead/{id}', function ($id) {
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+    });
 
     //WaypointController
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
