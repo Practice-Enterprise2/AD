@@ -150,4 +150,6 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
 });
 
+Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+
 require __DIR__.'/auth.php';
