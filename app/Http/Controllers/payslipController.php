@@ -319,7 +319,7 @@ class PayslipController extends Controller
                     ->where('id', $employee->user_id)
                     ->first();
             $mail = $user->email;
-            $name = $user->name;
+            $name = $user->name." ".$user->last_name;
 
             $data = [
                 'email' => $mail,
