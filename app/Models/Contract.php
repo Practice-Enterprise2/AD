@@ -20,7 +20,7 @@ class Contract extends Model
         'destination_airport_id',
         'start_date',
         'end_date',
-        "price",
+        'price',
         'is_active',
     ];
 

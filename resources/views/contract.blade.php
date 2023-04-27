@@ -23,7 +23,7 @@ if (!isset($_GET["q"]))
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href=" {{ asset('css/new_contract.css') }}">
   <title>view records</title>
- <link rel="stylesheet"
+  <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script
@@ -35,7 +35,7 @@ if (!isset($_GET["q"]))
       $('.chosen-select').chosen();
     });
   </script>
-   <style>
+  <style>
     /* HEY */
     .x {
       width: 100%;
@@ -56,6 +56,7 @@ if (!isset($_GET["q"]))
       background-color: white;
       color: black;
     }
+
     * {
       color: black;
     }
@@ -104,7 +105,7 @@ if (!isset($_GET["q"]))
 </head>
 
 <body>
- @include('layouts.header')
+  @include('layouts.header')
   <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
   <script src="{{ asset('js/chosen.jquery.js') }}"></script>
   <script src="{{ asset('js/chosen-initialization.js') }}"></script>
@@ -132,135 +133,131 @@ if (!isset($_GET["q"]))
       </ul>
     </div>
   </nav>
-  <form action="contract" method="GET" >
+  <form action="contract" method="GET">
     <table>
       <tr>
         <td>Contract number: </td>
         <td><input type="number" id="contNumber" name="q"
             autocomplete="off"></td>
-        <td><input type="submit" name="submit"
-            ></td>
+        <td><input type="submit" name="submit"></td>
       </tr>
     </table>
   </form>
 
-
-
-      <?php
+  <?php
         if (isset($_GET["q"]))
         {
             ?>
-      @foreach ($contracts as $contract)
-        <?php
-        $contract = $contracts[0];
-        ?>
+  @foreach ($contracts as $contract)
+    <?php
+    $contract = $contracts[0];
+    ?>
 
-          <form action="/edit" method="GET">
-            <table>
-              <tr>
-                <td>Contract ID:</td>
-                <td><input type="number" value="{{ $contract->id }}" disabled
-                    required>
-                  <input type="number" name="id"
-                    value="{{ $contract->id }}" hidden>
-                </td>
-              </tr>
+    <form action="/edit" method="GET">
+      <table>
+        <tr>
+          <td>Contract ID:</td>
+          <td><input type="number" value="{{ $contract->id }}" disabled
+              required>
+            <input type="number" name="id" value="{{ $contract->id }}"
+              hidden>
+          </td>
+        </tr>
 
-              <tr>
-                <td colspan="2">
-                  Airline:
+        <tr>
+          <td colspan="2">
+            Airline:
 
-                  <select class="chosen-select" name="airline">
-                    @foreach ($airlines as $airline)
-                      <option <?php
-                      if ($contracts[0]->airline_id == $airline->id) {
-                          echo ' selected '; //twee spaties rondd selected zijn nodig voor het te laten werken
-                      }
-                      ?> value="{{ $airline->id }}">
-                        {{ $airline->name }}</option>
-                    @endforeach
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Start date:</td>
-                <td><input type="date" name="start_date"
-                    value="{{ $contract->start_date }}" required></td>
-              </tr>
-              <tr>
-                <td>Expitation Date:</td>
-                <td><input type="date" name="end_date"
-                    value="{{ $contract->end_date }}" required ></td>
-              </tr>
-              <tr>
-                <td>Price/kg:</td>
-                <td><input type="number" name="price" min="0"
-                    value="{{ $contract->price }}" required></td>
-              </tr>
+            <select class="chosen-select" name="airline">
+              @foreach ($airlines as $airline)
+                <option <?php
+                if ($contracts[0]->airline_id == $airline->id) {
+                    echo ' selected '; //twee spaties rondd selected zijn nodig voor het te laten werken
+                }
+                ?> value="{{ $airline->id }}">
+                  {{ $airline->name }}</option>
+              @endforeach
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Start date:</td>
+          <td><input type="date" name="start_date"
+              value="{{ $contract->start_date }}" required></td>
+        </tr>
+        <tr>
+          <td>Expitation Date:</td>
+          <td><input type="date" name="end_date"
+              value="{{ $contract->end_date }}" required></td>
+        </tr>
+        <tr>
+          <td>Price/kg:</td>
+          <td><input type="number" name="price" min="0"
+              value="{{ $contract->price }}" required></td>
+        </tr>
 
+        <tr>
+          <td colspan="2">
+            Departure Airport:
 
-              <tr>
-                <td colspan="2">
-                  Departure Airport:
-
-                  <select class="chosen-select" name="departure_location"
-                    id="departure_airport_select">
-                    @foreach ($airports as $airport)
-                      <option <?php
-                      if ($contracts[0]->depart_location == $airport->id) {
-                          echo ' selected ';
-                      }
-                      ?> value="{{ $airport->id }}">
-                        {{ $airport->name }}</option>
-                    @endforeach
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  Destination Airport:
-                  <select class="chosen-select" name="destination_location"
-                    id="destination_airport_select">
-                    @foreach ($airports as $airport)
-                      <option <?php
-                      if ($contracts[0]->destination_location == $airport->id) {
-                          echo ' selected ';
-                      }
-                      ?>value="{{ $airport->id }}">
-                        {{ $airport->name }}</option>
-                    @endforeach
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td><input type="submit" name="submit" value="Save Changes"
-                    ></td>
-                <td>
-                  <?php
+            <select class="chosen-select" name="departure_location"
+              id="departure_airport_select">
+              @foreach ($airports as $airport)
+                <option <?php
+                if ($contracts[0]->depart_location == $airport->id) {
+                    echo ' selected ';
+                }
+                ?> value="{{ $airport->id }}">
+                  {{ $airport->name }}</option>
+              @endforeach
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            Destination Airport:
+            <select class="chosen-select" name="destination_location"
+              id="destination_airport_select">
+              @foreach ($airports as $airport)
+                <option <?php
+                if ($contracts[0]->destination_location == $airport->id) {
+                    echo ' selected ';
+                }
+                ?>value="{{ $airport->id }}">
+                  {{ $airport->name }}</option>
+              @endforeach
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><input type="submit" name="submit" value="Save Changes"></td>
+          <td>
+            <?php
 
                     if ($contract->is_active == 1)
                     {
                       ?>
-                        <input type="submit" name="deactivate" id="deactivate" value="deactivate"> </td>
-                      <?php
+            <input type="submit" name="deactivate" id="deactivate"
+              value="deactivate">
+          </td>
+          <?php
                     }
                     else {
                       ?>
-                      <input type="submit" name="reactivate" id="reactivate" value="reactivate"> </td>
-                      <?php
+          <input type="submit" name="reactivate" id="reactivate"
+            value="reactivate"> </td>
+          <?php
                     }
 
                     ?>
 
-              </tr>
-            </table>
-          </form>
-
-      @endforeach
-      <?php
+        </tr>
+      </table>
+    </form>
+  @endforeach
+  <?php
         }
         ?>
-
 
 </body>
 
