@@ -13,7 +13,6 @@ class Create extends Component
      */
     public function __construct()
     {
-        //
     }
 
     /**
