@@ -130,9 +130,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipmentGraphs', function () {
         return view('graphs');
     });
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
+    });
+    Route::get('/markAsRead/{id}', function ($id) {
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
     });
 
     //WaypointController
@@ -142,11 +148,11 @@ Route::middleware('auth')->group(function () {
 
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+
+    // Email verification
+    Route::view('/email/verify', 'auth.verify-email')
+        ->name('verification.notice');
 });
 
-// Email verification
-/*Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})>middleware('auth')->name('verification.notice');*/
 
 require __DIR__.'/auth.php';

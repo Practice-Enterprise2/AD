@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $id
+ * @property string $street
+ * @property string $house_number
+ * @property string $postal_code
+ * @property string $city
+ * @property string $region
+ * @property string $country
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ */
 class Address extends Model
 {
-    use HasFactory;
-
     public const VALIDATION_RULE_STREET = ['required', 'min:2'];
 
     public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'min:1'];
@@ -21,6 +30,10 @@ class Address extends Model
     public const VALIDATION_RULE_REGION = ['required', 'min:2'];
 
     public const VALIDATION_RULE_COUNTRY = ['required', 'min:2'];
+
+    protected $attributes = [
+        'house_number' => '',
+    ];
 
     protected $fillable = [
         'street',
@@ -41,8 +54,23 @@ class Address extends Model
         return $this->hasMany(User::class);
     }
 
-    public function shipments()
+    public function airport(): HasOne
+    {
+        return $this->hasOne(Airport::class);
+    }
+
+    public function depot(): HasOne
+    {
+        return $this->hasOne(Depot::class);
+    }
+
+    public function shipments(): HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    public function waypoints(): HasMany
+    {
+        return $this->hasMany(Waypoint::class);
     }
 }

@@ -4,46 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
- * @property Shipment $shipment
+ * @property string $iata_code
+ * @property string $name
+ * @property string $land
  * @property Address $address
- * @property \Illuminate\Support\Carbon $time
- * @property string $status
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Pickup extends Model
+class Airport extends Model
 {
     use SoftDeletes;
 
-    public const VALIDATION_RULE_TIME = ['required'];
-
-    protected $attributes = [
-        'status' => 'pending',
-    ];
-
     protected $fillable = [
-        'time',
-        'status',
+        'iata_code',
+        'name',
+        'land',
     ];
 
-    /*
-     * The address where the pickup happens.
-     */
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
     }
 
-    /*
-     * The shipment that this is a pickup for.
-     */
-    public function shipment(): BelongsTo
+    public function contracts(): HasMany
     {
-        return $this->belongsTo(Shipment::class);
+        return $this->hasMany(Contract::class);
+    }
+
+    public function airlines(): BelongsToMany
+    {
+        return $this->belongsToMany(Airline::class);
     }
 }

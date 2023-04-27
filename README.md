@@ -132,3 +132,22 @@ password: `letmein`
 ## General
 
 -   put \<x-app-layout>\</x-app-layout> around your HTML code
+
+## Mail
+
+It is recommended to use port 587 for mail as it is the port for encrypted email
+transmissions using SMTP Secure(SMTPS).
+
+If you want to be able to mail please make sure your .env file has the following
+lines of code:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=redbeastpro18@gmail.com
+MAIL_PASSWORD=jvaflujkltwmvlzu
+MAIL_ENCRYPTION=tsl
+MAIL_FROM_ADDRESS="redbeastpro18@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
