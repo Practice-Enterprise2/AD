@@ -154,5 +154,4 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
 });
 
-
 require __DIR__.'/auth.php';
