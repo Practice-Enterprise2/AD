@@ -129,7 +129,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
     Route::get('/shipmentGraphs', function () {
         return view('graphs');
-    });
+    })->name('shipmentGraphs');
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 
@@ -153,5 +153,10 @@ Route::middleware('auth')->group(function () {
     Route::view('/email/verify', 'auth.verify-email')
         ->name('verification.notice');
 });
+
+// Email verification
+/*Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})>middleware('auth')->name('verification.notice');*/
 
 require __DIR__.'/auth.php';

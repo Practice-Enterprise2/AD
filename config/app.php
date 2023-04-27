@@ -179,11 +179,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         /*
          * Package Service Providers...
          */
-
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         /*
          * Application Service Providers...
          */

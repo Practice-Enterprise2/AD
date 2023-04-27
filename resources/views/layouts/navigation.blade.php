@@ -76,12 +76,12 @@
               {{ __('Evaluate Shipment Requests') }}
             </x-dropdown-link>
 
-            <x-dropdown-link href="/shipments">
+            <x-dropdown-link :href="route('shipments.showshipments')">
               {{ __('Show Shipments') }}
             </x-dropdown-link>
             @if (Auth::user()->roles()->first()->name == 'admin' ||
                     Auth::user()->roles()->first()->name == 'employee')
-              <x-dropdown-link href="/shipmentGraphs">
+              <x-dropdown-link :href="route('shipmentGraphs')">
                 {{ __('Shipment graphs') }}
               </x-dropdown-link>
             @endif

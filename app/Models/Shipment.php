@@ -28,9 +28,6 @@ use Kyslik\ColumnSortable\Sortable;
  */
 class Shipment extends Model
 {
-    protected $table = 'shipments';
-
-    use HasFactory;
     use SoftDeletes;
     use Sortable;
 
@@ -72,11 +69,6 @@ class Shipment extends Model
     public function waypoints(): HasMany
     {
         return $this->hasMany(Waypoint::class);
-    }
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
     }
 
     public function invoices(): HasMany

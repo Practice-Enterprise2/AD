@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-// const twPlugin = require('tw-elements/dist/plugin');
 module.exports = {
     content: [
         './resources/**/*.blade.php',

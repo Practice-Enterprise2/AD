@@ -41,10 +41,10 @@
   <script>
     // setup 
     const data = {
-      labels: <?php echo json_encode($day); ?>,
+      labels: @php echo json_encode($day); @endphp,
       datasets: [{
         label: 'Weekly shipments per day',
-        data: <?php echo json_encode($shipments); ?>,
+        data: @php echo json_encode($shipments); @endphp,
         backgroundColor: [
           'rgba(255, 26, 104, 0.2)',
           'rgba(54, 162, 235, 0.2)',

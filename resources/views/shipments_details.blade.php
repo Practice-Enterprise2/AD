@@ -1,7 +1,7 @@
 <x-app-layout>
 
   <script type='text/javascript'
-    src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S'
+    src="https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=env('BING_MAPS_API_KEY')"
     async defer></script>
   <script type='text/javascript'>
     function GetMap() {
@@ -20,7 +20,7 @@
 
 
       var map = new Microsoft.Maps.Map('#map', {
-        credentials: 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S',
+        credentials: env('API_KEY'),
         center: locations[0],
         zoom: 9
       });
