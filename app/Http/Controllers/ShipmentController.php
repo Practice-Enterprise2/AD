@@ -235,14 +235,16 @@ class ShipmentController extends Controller
         //     ])->first();
         // }
 
-        $waypoints = Waypoint::query()->where([
-            'shipment_id' => $shipment->id,
-        ])->get();
+        // $waypoints = Waypoint::query()->where([
+        //     'shipment_id' => $shipment->id,
+        // ])->get();
 
-        foreach ($waypoints as $waypoint) {
-            $waypoint->delete();
-        }
+        // foreach ($waypoints as $waypoint) {
+        //     $waypoint->delete();
+        // }
 
+        $shipment->status = 'Deleted';
+        $shipment->update();
         $shipment->delete();
 
         // $source_address->delete();
