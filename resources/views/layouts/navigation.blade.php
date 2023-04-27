@@ -126,6 +126,11 @@
           </x-slot>
         </x-dropdown>
       @endauth
+      @auth
+        <x-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
+          {{ __('FAQ') }}
+        </x-nav-link>
+      @endauth
 
       <script type="text/javascript">
         function markNotificationsAsRead(notifications) {
