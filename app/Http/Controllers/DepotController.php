@@ -3,24 +3,32 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Depot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 date_default_timezone_set('Europe/Brussels');
 
 class DepotController extends Controller
 {
+    use SoftDeletes;
     // GET Depots
     public function index()
     {
-        $depots = DB::select('select * from depots');
-        if (Auth::user()) {
-            $name = Auth::user()->name;
-        } else {
-            $name = 'guest';
-        }
+        if (Auth::user()->role != 0) {
+            $depots = DB::select('select * from depots');
+            if (Auth::user()) {
+                $name = Auth::user()->name;
+            } else {
+                $name = 'guest';
+            }
 
-        return view('depotManagement', ['depots' => $depots, 'name' => $name]);
+            return view('depotManagement', ['depots' => $depots, 'name' => $name]);
+        } else {
+            header('Location: /DepotManagement');
+            exit();
+        }
     }
 
     public function overviewperDepot(int $id)
@@ -33,17 +41,18 @@ class DepotController extends Controller
 
     public function addDepotpage()
     {
-        return view('addDepot');
+        if (Auth::user() != 0) {
+            return view('addDepot');
+        } else {
+            return view('dashboard');
+        }
     }
 
     public function addDepot(Request $request)
     {
-
-        $current_date_time = date('Y-m-d H:i:s');
-        $updated_date_time = null;
-        DB::insert('insert into addresses values(?, ?, ?, ?, ?, ?, ?,?,?)', [null, $request->street, $request->house_number, $request->postal_code, $request->city, $request->region, $request->country, $current_date_time, $updated_date_time]);
+        DB::insert('insert into addresses values(?, ?, ?, ?, ?, ?, ?, ?,?)', [null, $request->street, $request->house_number, $request->postal_code, $request->city, $request->region, $request->country, now(), null]);
         $addressID = DB::getPdo()->lastInsertId();
-        DB::insert('insert into depots values(?, ?,?, ?, ?, ?, ?)', [null, $request->code, $addressID, $request->size, $request->filled, $current_date_time, $updated_date_time]);
+        DB::insert('insert into depots values(?, ?,?, ?, ?, ?, ?, ?)', [null, $request->code, $addressID, $request->size, $request->filled, now(), null,null]);
 
         header('Location: /DepotManagement');
         exit();
@@ -58,44 +67,21 @@ class DepotController extends Controller
 
     public function editDepot(Request $request, int $id)
     {
-        $updated_date_time = date('Y-m-d H:i:s');
-        DB::insert('UPDATE depots set code = ?, addressid = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->addressid, $request->size, $request->filled, $updated_date_time, $id]);
+        DB::insert('UPDATE depots set code = ?, addressid = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->addressid, $request->size, $request->filled, now(), $id]);
 
         header('Location: /DepotManagement');
         exit();
     }
 
-    // POST depot
-    /*
-    public function insertDepo(Request $request) {
-        $depotStreet = $request->input('');
-        $depotHouseNumber = $request->input('');
-        $depotPostalCode = $request->input('');
-        $depotCity = $request->input('');
-        $depotRegion = $request->input('');
-        $depotCountry = $request->input('');
-
-        $current_date_time = date('Y-m-d H:i:s');
-        $updated_date_time = null;
-        DB::insert('insert into addresses values(?, ?, ?, ?, ?, ?, ?, ?, ?)', [null, $depotStreet, $depotHouseNumber, $depotPostalCode, $depotCity, $depotRegion, $depotCountry, $current_date_time, $updated_date_time]);
-
-        $depotAddressID =  DB::getPdo()->lastInsertId();
-        $depotCode = $request->input('');
-        $depotSize = $request->input('');
-        $current_date_time = date('Y-m-d H:i:s');
-        $updated_date_time = null;
-        DB::insert('insert into depots values(?, ?, ?, ?, ?, ?)', [null, $depotCode, $depotAddressID, $depotSize, $current_date_time, $updated_date_time]);
-    }
-    */
-    // PUT depot
-    // Needs to change with the address table and new fields.
-
     // DELETE depot
     // Not soft delete yet!!!
     public function deleteDepot($id)
     {
-        DB::delete('delete from depots where id = ?', [$id]);
+        
+        Depot::where('id',[$id])->delete();
+        //DB::delete('delete from depots where id = ?', [$id]);
 
-        return $this->index()->with('status', 'Data Deleted Succesfully');
+        header('Location: /DepotManagement');
+        exit();
     }
 }

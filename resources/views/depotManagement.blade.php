@@ -11,10 +11,14 @@
                 if ($data->created_at > $var) {
                     $var = $data->created_at;
                 }
-            }
-            if ($data->updated_at > $var) {
+                if ($data->updated_at > $var) {
                 $var = $data->updated_at;
+                }
+                if ($data->deleted_at > $var) {
+                  $var = $data-deleted_at;
+                }
             }
+            
         }
         
       @endphp
@@ -37,6 +41,7 @@
       <div class="showItemDiv">
         <!-- VB hard coded example-->
         @foreach ($depots as $data)
+          @if ($data->deleted_at == NULL)
           <div class="airportCard">
             <div class="dataCard">
               <div class="name">{{ $data->code }}</div>
@@ -56,6 +61,7 @@
               </a>
             </div>
           </div>
+          @endif
         @endforeach
 
       </div>

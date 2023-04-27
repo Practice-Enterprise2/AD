@@ -19,6 +19,7 @@ return new class() extends Migration
             $table->integer('amountFilled');
             $table->timestamps();
             $table->foreign('addressid')->references('id')->on('addresses')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 
