@@ -28,6 +28,16 @@ class ControlPanelController extends Controller
         return $this->view('users.edit', ['user' => $user]);
     }
 
+    public function employees(): View|Factory
+    {
+        return $this->view('employees');
+    }
+
+    public function employees_create(): View|Factory
+    {
+        return $this->view('employees.create');
+    }
+
     public function roles(): View|Factory
     {
         return $this->view('roles');
