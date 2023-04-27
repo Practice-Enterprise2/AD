@@ -73,4 +73,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(BusinessCustomer::class);
     }
+
+    //checks if you changed the user name and sends an verification email
+    public function setNameAttribute($value)
+    {
+        // check if the user is logged in
+        if (auth()->check()) {
+            // check if the name has changed
+            if ($value !== $this->name) {
+                $this->attributes['name'] = $value;
+                $this->attributes['email_verified_at'] = null;
+                $this->sendEmailVerificationNotification();
+            }
+        }
+
+        $this->attributes['name'] = $value;
+    }
 }
