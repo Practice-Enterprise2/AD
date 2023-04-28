@@ -83,6 +83,7 @@ project). Running it multiple times has no bad effects.
 # Run these in different terminals
 npm run dev
 php artisan serve
+php artisan websockets:serve
 ```
 
 ## Code Formatting
