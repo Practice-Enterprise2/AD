@@ -20,5 +20,4 @@ return [
      * Path to the psalm script.
      */
     'psalm_path' => env('PSALM_PATH', './vendor/bin/psalm'),
-
 ];

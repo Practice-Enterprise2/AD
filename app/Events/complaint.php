@@ -38,7 +38,6 @@ class complaint implements ShouldBroadcast
     public function broadcastOn()
     {
         return new privateChannel('private.chat.'.$this->chatBox->id);
-
     }
 
     public function broadcastAs()
@@ -54,7 +53,6 @@ class complaint implements ShouldBroadcast
             'userId' => $this->user->id,
             'employee_id' => $this->chatBox->employee_id,
             'customer_id' => $this->chatBox->customer_id,
-
         ];
     }
 }

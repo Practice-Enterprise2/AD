@@ -13,12 +13,9 @@ class contactController extends Controller
      */
     public function index()
     {
-        //
-
         return view('contact.index', [
             'contacts' => contact::where('is_handled', 0)->get(),
         ]);
-
     }
 
     /**
@@ -26,7 +23,6 @@ class contactController extends Controller
      */
     public function create()
     {
-        //
         return view('contact.create');
     }
 
@@ -35,7 +31,6 @@ class contactController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
             'email' => 'email|required',
             'shipment_id' => 'numeric|nullable',
@@ -61,7 +56,6 @@ class contactController extends Controller
      */
     public function show(string $id)
     {
-        //
         $contact = contact::where('id', $id)->first();
         if (contact::where('id', $id)->exists()) {
             return view('contact.show', [
@@ -77,7 +71,6 @@ class contactController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**
@@ -85,7 +78,6 @@ class contactController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
     }
 
     /**
@@ -93,7 +85,6 @@ class contactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
         $contact = contact::where('id', $id)->first();
         if (contact::where('id', $id)->exists()) {
             contact::destroy($id);

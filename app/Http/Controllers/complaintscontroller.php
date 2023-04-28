@@ -27,7 +27,6 @@ class complaintscontroller extends Controller
                 $query->where('customer_id', Auth::user()->id)
                     ->orWhere('employee_id', Auth::user()->id);
             })->exists()) {
-
             $chatbox = chatBox::where('id', $request->id)->get()->first();
             $message = messages::create([
                 'chatbox_id' => $request->id,
@@ -38,12 +37,10 @@ class complaintscontroller extends Controller
 
             return Auth::user();
         }
-
     }
 
     public function createChat($id)
     {
-
         $contact = contact::where('id', $id)->first();
         $chatbox = chatBox::where('customer_id', $contact->customer_id)
             ->where('employee_id', Auth::user()->id)
@@ -69,18 +66,15 @@ class complaintscontroller extends Controller
         $contact->save();
 
         return Redirect(route('complaints.messages'));
-
     }
 
     public function viewChat($id)
     {
-
         if (chatBox::where('id', $id)
             ->where(function ($query) {
                 $query->where('customer_id', Auth::user()->id)
                     ->orWhere('employee_id', Auth::user()->id);
             })->exists()) {
-
             $messages = messages::where('chatbox_id', $id)
                 ->orderBy('created_at', 'asc')
                 ->get();
