@@ -142,7 +142,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/chat-message', [complaintscontroller::class, 'sendMessage']);
     });
 
-
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 

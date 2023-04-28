@@ -21,5 +21,4 @@ return [
      */
     'psalm_path' => env('PSALM_PATH', './vendor/bin/psalm'),
 
-    
 ];

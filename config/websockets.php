@@ -24,7 +24,7 @@ return [
     'apps' => [
         [
             'port' => 6001,
-            'host' =>'127.0.0.1',
+            'host' => '127.0.0.1',
             'id' => 'staging',
             'name' => env('APP_NAME'),
             'key' => 'staging',
