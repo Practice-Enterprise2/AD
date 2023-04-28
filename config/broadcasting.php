@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'pusher'),
+    'default' => 'pusher',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,13 +30,13 @@ return [
     'connections' => [
         'pusher' => [
             'driver' => 'pusher',
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'app_id' => env('PUSHER_APP_ID'),
+            'key' => 'staging',
+            'secret' => 'staging',
+            'app_id' => 'staging',
             'options' => [
-                'host' => env('LARAVEL_WEBSOCKETS_HOST'),
-                'port' => env('LARAVEL_WEBSOCKETS_PORT'),
-                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'cluster' => 'mt1',
                 'scheme' => 'http',
                 'useTLS' => false,
                 'encrypted' => false,
