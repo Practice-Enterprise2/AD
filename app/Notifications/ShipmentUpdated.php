@@ -65,7 +65,6 @@ class ShipmentUpdated extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
         ];
     }
 }
