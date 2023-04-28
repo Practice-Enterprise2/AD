@@ -18,7 +18,6 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Models\CustomerContact;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -129,18 +128,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
-
-        //contact and messages
-        Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-        Route::get('/contact/manager', [ContactController::class, 'index'])->name('contact.index')->middleware('permission:view_complain');
-        Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_complain');
-        Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show')->middleware('permission:view_complain');
-        Route::post('/contact/{id}', [ComplaintsController::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_complain');
-        Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
-        Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
-        Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
-
+    //contact and messages
+    Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact/manager', [ContactController::class, 'index'])->name('contact.index')->middleware('permission:view_complain');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_complain');
+    Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show')->middleware('permission:view_complain');
+    Route::post('/contact/{id}', [ComplaintsController::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_complain');
+    Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
+    Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
+    Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
 
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\Complaint;
 use App\Models\ChatBox;
-use App\Models\CustomerContact;
 use App\Models\ChatBoxMessages;
+use App\Models\CustomerContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +57,7 @@ class ComplaintsController extends Controller
            'Subject: '.$contact->subject.'<br>'.
            'message: '.$contact->message;
 
-           ChatBoxMessages::create([
+        ChatBoxMessages::create([
             'chatbox_id' => $chatbox->id,
             'from_id' => Auth::user()->id,
             'content' => $content,

@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ChatBoxMessages extends Model
 {
-
-
     protected $fillable = [
         'chatbox_id',
         'from_id',
