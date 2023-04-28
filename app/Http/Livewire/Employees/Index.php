@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Employees;
 
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -13,7 +12,7 @@ use Livewire\Component;
 // term is included in the fields.
 class Index extends Component
 {
-    public function render(): View|Factory
+    public function render(): View
     {
         return view('livewire.employees.index', ['employee_users' => User::query()->whereHas('employee')->get()]);
     }
