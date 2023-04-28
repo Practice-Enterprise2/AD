@@ -15,7 +15,7 @@
         @else
           <a href="#"
             class="chatbox my-1 w-8/12 rounded-xl bg-slate-700 p-3 text-center text-white"
-            data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->employee_id)->get()->first()->name }}</a>
+            data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->employee_user_id)->get()->first()->name }}</a>
         @endif
       @endforeach
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\contact;
+use App\Models\CustomerContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,7 @@ class contactController extends Controller
     public function index()
     {
         return view('contact.index', [
-            'contacts' => contact::where('is_handled', 0)->get(),
+            'contacts' => CustomerContact::where('is_handled', 0)->get(),
         ]);
     }
 
@@ -39,7 +39,7 @@ class contactController extends Controller
         ]);
 
         $shipment_id = $request->filled('shipment_id') ? $request->shipment_id : 0;
-        contact::create([
+        CustomerContact::create([
             'customer_id' => Auth::user()->id,
             'email' => $request->email,
             'shipment_id' => $shipment_id,
@@ -56,8 +56,8 @@ class contactController extends Controller
      */
     public function show(string $id)
     {
-        $contact = contact::where('id', $id)->first();
-        if (contact::where('id', $id)->exists()) {
+        $contact = CustomerContact::where('id', $id)->first();
+        if (CustomerContact::where('id', $id)->exists()) {
             return view('contact.show', [
                 'contact' => $contact,
             ]);
@@ -66,28 +66,16 @@ class contactController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $contact = contact::where('id', $id)->first();
-        if (contact::where('id', $id)->exists()) {
-            contact::destroy($id);
+        $contact = CustomerContact::where('id', $id)->first();
+        if (CustomerContact::where('id', $id)->exists()) {
+            CustomerContact::destroy($id);
 
             return redirect(route('contact.index'));
         }

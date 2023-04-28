@@ -30,20 +30,21 @@ return [
     'connections' => [
         'pusher' => [
             'driver' => 'pusher',
-            'key' => 'staging',
-            'secret' => 'staging',
-            'app_id' => 'staging',
+            'key' => env('PUSHER_APP_KEY', 'staging'),
+            'secret' => env('PUSHER_APP_SECRET', 'staging'),
+            'app_id' => env('PUSHER_APP_ID', 'staging'),
             'options' => [
-                'host' => '127.0.0.1',
-                'port' => 6001,
-                'cluster' => 'mt1',
+                'host' => env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'),
+                'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
+                'cluster' => env('PUSHER_APP_CLUSTER', 'mt1'),
                 'scheme' => 'http',
                 'useTLS' => false,
-                'encrypted' => false,
+                'encrypted' => false, 
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,
-                ],
+                ]
+
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html

@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class chatBox extends Model
+class ChatBox extends Model
 {
-    use HasFactory;
+ 
 
     protected $fillable = [
         'customer_id',
-        'employee_id',
+        'employee_user_id',
     ];
 
     public function customer()
@@ -21,11 +21,11 @@ class chatBox extends Model
 
     public function employee()
     {
-        return $this->belongsTo(User::class, 'employee_id');
+        return $this->belongsTo(User::class, 'employee_user_id');
     }
 
     public function messages()
     {
-        return $this->hasMany(messages::class);
+        return $this->hasMany(ChatBoxMessages::class);
     }
 }

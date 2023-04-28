@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\complaint;
-use App\Models\chatBox;
-use App\Models\contact;
-use App\Models\messages;
+use App\Events\Complaint;
+use App\Models\ChatBox;
+use App\Models\CustomerContact;
+use App\Models\ChatBoxMessages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class complaintscontroller extends Controller
+class ComplaintsController extends Controller
 {
     public function messages()
     {
-        $chatbox = chatBox::where('customer_id', Auth::user()->id)->orWhere('employee_id', Auth::user()->id)->get();
+        $chatbox = ChatBox::where('customer_id', Auth::user()->id)->orWhere('employee_user_id', Auth::user()->id)->get();
 
         return view('complaints.messages', [
             'chatboxs' => $chatbox,
@@ -22,18 +22,18 @@ class complaintscontroller extends Controller
 
     public function sendMessage(Request $request)
     {
-        if (chatBox::where('id', $request->id)
+        if (ChatBox::where('id', $request->id)
             ->where(function ($query) {
                 $query->where('customer_id', Auth::user()->id)
-                    ->orWhere('employee_id', Auth::user()->id);
+                    ->orWhere('employee_user_id', Auth::user()->id);
             })->exists()) {
-            $chatbox = chatBox::where('id', $request->id)->get()->first();
-            $message = messages::create([
+            $chatbox = ChatBox::where('id', $request->id)->get()->first();
+            $message = ChatBoxMessages::create([
                 'chatbox_id' => $request->id,
                 'from_id' => Auth::user()->id,
                 'content' => $request->content,
             ]);
-            event(new complaint($request->content, $chatbox, Auth::user()));
+            event(new Complaint($request->content, $chatbox, Auth::user()));
 
             return Auth::user();
         }
@@ -41,15 +41,15 @@ class complaintscontroller extends Controller
 
     public function createChat($id)
     {
-        $contact = contact::where('id', $id)->first();
-        $chatbox = chatBox::where('customer_id', $contact->customer_id)
-            ->where('employee_id', Auth::user()->id)
+        $contact = CustomerContact::where('id', $id)->first();
+        $chatbox = ChatBox::where('customer_id', $contact->customer_id)
+            ->where('employee_user_id', Auth::user()->id)
             ->first();
 
         if (! $chatbox) {
-            $chatbox = chatBox::create([
+            $chatbox = ChatBox::create([
                 'customer_id' => $contact->customer_id,
-                'employee_id' => Auth::user()->id,
+                'employee_user_id' => Auth::user()->id,
             ]);
         }
         $content = 'Contact: '.$contact->email.'<br>'.
@@ -57,7 +57,7 @@ class complaintscontroller extends Controller
            'Subject: '.$contact->subject.'<br>'.
            'message: '.$contact->message;
 
-        messages::create([
+           ChatBoxMessages::create([
             'chatbox_id' => $chatbox->id,
             'from_id' => Auth::user()->id,
             'content' => $content,
@@ -70,12 +70,12 @@ class complaintscontroller extends Controller
 
     public function viewChat($id)
     {
-        if (chatBox::where('id', $id)
+        if (ChatBox::where('id', $id)
             ->where(function ($query) {
                 $query->where('customer_id', Auth::user()->id)
-                    ->orWhere('employee_id', Auth::user()->id);
+                    ->orWhere('employee_user_id', Auth::user()->id);
             })->exists()) {
-            $messages = messages::where('chatbox_id', $id)
+            $messages = ChatBoxMessages::where('chatbox_id', $id)
                 ->orderBy('created_at', 'asc')
                 ->get();
 

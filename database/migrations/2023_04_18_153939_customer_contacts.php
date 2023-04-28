@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('customer_contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->string('email');
             $table->integer('shipment_id');
             $table->string('subject');
             $table->string('message');
-            $table->unsignedTinyInteger('is_handled')->default(0);
+            $table->boolean('is_handled')->default(0);
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

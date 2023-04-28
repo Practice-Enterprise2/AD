@@ -7,7 +7,8 @@ return [
      * Set a custom dashboard configuration
      */
     'dashboard' => [
-        'port' => config('development.websockets.dashboard.port'),
+        'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
+        'host' => env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'),
     ],
 
     /*
@@ -22,17 +23,17 @@ return [
      */
     'apps' => [
         [
-            'port' => 6001,
-            'host' => '127.0.0.1',
-            'id' => 'staging',
+            'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
+            'host' => env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'),
+            'id' => env('PUSHER_APP_ID', 'staging'),
             'name' => env('APP_NAME'),
-            'key' => 'staging',
-            'secret' => 'staging',
+            'key' => env('PUSHER_APP_KEY', 'staging'),
+            'secret' => env('PUSHER_APP_SECRET', 'staging'),
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
-            'encrypted' => false,
+            'encrypted' => false
         ],
     ],
     /*

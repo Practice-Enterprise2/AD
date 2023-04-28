@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class contact extends Model
+class ChatBoxMessages extends Model
 {
-    use HasFactory;
+
 
     protected $fillable = [
-        'customer_id',
-        'email',
-        'shipment_id',
-        'subject',
-        'message',
-        'is_handled',
+        'chatbox_id',
+        'from_id',
+        'content',
     ];
 
-    public function customer()
+    public function fromChatBox()
+    {
+        return $this->belongsTo(ChatBox::class);
+    }
+
+    public function fromWho()
     {
         return $this->belongsTo(User::class);
     }
