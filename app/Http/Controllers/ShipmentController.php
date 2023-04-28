@@ -51,7 +51,6 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
-
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
@@ -265,7 +264,6 @@ class ShipmentController extends Controller
 
     public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse
     {
-
         $subject = 'Your invoice for your latest shipment.';
         $user_id = auth()->user()->id;
         $emailke = auth()->user()->email;
@@ -330,6 +328,5 @@ class ShipmentController extends Controller
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-
     }
 }
