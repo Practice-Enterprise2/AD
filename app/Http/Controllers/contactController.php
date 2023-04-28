@@ -6,7 +6,7 @@ use App\Models\CustomerContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class contactController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
