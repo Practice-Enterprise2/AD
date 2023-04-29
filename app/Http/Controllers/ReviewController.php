@@ -31,7 +31,6 @@ class ReviewController extends Controller
         $rating = null;
 
         return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
-
     }
 
     public function filter(Request $request): View|Factory
