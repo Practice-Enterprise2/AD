@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dimensions', function (Blueprint $table) {
+        Schema::create('chat_box_messages', function (Blueprint $table) {
             $table->id();
-            $table->decimal('length', 8, 2);
-            $table->decimal('width', 8, 2);
-            $table->decimal('height', 8, 2);
+            $table->foreignId('chatbox_id')->constrained('chat_boxes');
+            $table->foreignId('from_id')->constrained('users');
+            $table->string('content');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dimensions');
+        Schema::dropIfExists('chat_box_messages');
     }
 };
