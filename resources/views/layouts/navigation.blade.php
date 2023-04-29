@@ -82,7 +82,7 @@
             <x-dropdown-link :href="route('contact.create')">
               {{ __('contact us') }}
             </x-dropdown-link>
-            @can('view_complain')
+            @can('view_all_complaints')
               <x-dropdown-link :href="route('contact.index')">
                 {{ __('complaints') }}
               </x-dropdown-link>
@@ -170,7 +170,7 @@
             <x-dropdown-link :href="route('contact.create')">
               {{ __('contact us') }}
             </x-dropdown-link>
-            @can('view_complain')
+            @can('view_all_complaints')
               <x-dropdown-link :href="route('contact.index')">
                 {{ __('complaints') }}
               </x-dropdown-link>

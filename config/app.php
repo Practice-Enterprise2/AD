@@ -157,7 +157,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        App\Providers\BroadcastServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -192,6 +191,7 @@ return [
         App\Providers\PolicyMappingServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
 
         // QR Code
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,

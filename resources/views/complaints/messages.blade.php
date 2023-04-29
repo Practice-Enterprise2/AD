@@ -8,7 +8,7 @@
     <div
       class="flex h-96 w-2/6 flex-col items-center justify-start overflow-y-auto border-r-2 border-r-black">
       @foreach ($chatboxs as $chatbox)
-        @if (Auth::user()->can('view_complain'))
+        @if (Auth::user()->can('view_all_complaints'))
           <a href="#"
             class="chatbox my-1 w-8/12 rounded-xl bg-slate-700 p-3 text-center text-white"
             data-chat="{{ $chatbox->id }}">{{ User::where('id', $chatbox->customer_id)->get()->first()->name }}</a>

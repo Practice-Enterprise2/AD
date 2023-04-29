@@ -10,12 +10,12 @@ class ChatBoxMessages extends Model
         'content',
     ];
 
-    public function fromChatBox()
+    public function chatbox()
     {
         return $this->belongsTo(ChatBox::class);
     }
 
-    public function fromWho()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
