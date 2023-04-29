@@ -8,7 +8,6 @@ class CustomerContact extends Model
 {
     protected $fillable = [
         'email',
-        'shipment_id',
         'subject',
         'message',
         'is_handled',
@@ -17,5 +16,10 @@ class CustomerContact extends Model
     public function customer()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function shipment()
+    {
+        return $this->belongsTo(Shipment::class);
     }
 }

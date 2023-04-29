@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('users');
             $table->string('email');
-            $table->integer('shipment_id');
+            $table->foreignId('shipment_id')->nullable()->constrained('shipments');
             $table->string('subject');
             $table->string('message');
             $table->boolean('is_handled')->default(0);

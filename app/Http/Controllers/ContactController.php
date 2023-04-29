@@ -38,7 +38,7 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        $shipment_id = $request->filled('shipment_id') ? $request->shipment_id : 0;
+        $shipment_id = $request->filled('shipment_id') ? $request->shipment_id : null;
         $customerContact = new CustomerContact();
         $customerContact->customer_id = Auth::user()->id;
         $customerContact->email = $request->input('email');
