@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('chat_box_messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('chatbox_id');
-            $table->unsignedBigInteger('from_id');
+            $table->foreignId('chatbox_id')->constrained('chat_boxes');
+            $table->foreignId('from_id')->constrained('users');
             $table->string('content');
-            $table->foreign('from_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('chatbox_id')->references('id')->on('chat_boxes')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
