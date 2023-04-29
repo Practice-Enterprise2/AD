@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\chatBox;
+use App\Models\ChatBox;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
