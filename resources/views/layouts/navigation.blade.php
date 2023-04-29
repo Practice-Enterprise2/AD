@@ -143,11 +143,6 @@
         </x-nav-link>
       @endauth
       @auth
-        <x-nav-link :href="route('readreviews')" :active="request()->routeIs('readreviews')">
-          {{ __('Reviews') }}
-        </x-nav-link>
-      @endauth
-      @auth
         {{-- Validations needed for later. --}}
         {{-- <x-nav-link :href="route('shipments.create')">
         {{ __('Request Shipment') }}
