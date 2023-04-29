@@ -28,11 +28,11 @@ class ComplaintsController extends Controller
                     ->orWhere('employee_user_id', Auth::user()->id);
             })->exists()) {
             $chatbox = ChatBox::where('id', $request->id)->get()->first();
-            $message = ChatBoxMessages::create([
-                'chatbox_id' => $request->id,
-                'from_id' => Auth::user()->id,
-                'content' => $request->content,
-            ]);
+            $chatboxMessages = new ChatBoxMessages();
+            $chatboxMessages->chatbox_id = $chatbox->id;
+            $chatboxMessages->from_id = Auth::user()->id;
+            $chatboxMessages->content =  $request->content;
+            $chatboxMessages->save();
             event(new Complaint($request->content, $chatbox, Auth::user()));
 
             return Auth::user();
@@ -47,21 +47,21 @@ class ComplaintsController extends Controller
             ->first();
 
         if (! $chatbox) {
-            $chatbox = ChatBox::create([
-                'customer_id' => $contact->customer_id,
-                'employee_user_id' => Auth::user()->id,
-            ]);
+            $chatbox = new ChatBox();
+            $chatbox->customer_id = $contact->customer_id;
+            $chatbox->employee_user_id = Auth::user()->id;
+            $chatbox->save();
         }
         $content = 'Contact: '.$contact->email.'<br>'.
            'shipment_id: '.$contact->shipment_id.'<br>'.
            'Subject: '.$contact->subject.'<br>'.
            'message: '.$contact->message;
 
-        ChatBoxMessages::create([
-            'chatbox_id' => $chatbox->id,
-            'from_id' => Auth::user()->id,
-            'content' => $content,
-        ]);
+        $chatboxMessages = new ChatBoxMessages();
+        $chatboxMessages->chatbox_id = $chatbox->id;
+        $chatboxMessages->from_id = Auth::user()->id;
+        $chatboxMessages->content = $content;
+        $chatboxMessages->save();
         $contact->is_handled = 1;
         $contact->save();
 

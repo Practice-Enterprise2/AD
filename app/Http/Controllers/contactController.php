@@ -37,17 +37,16 @@ class ContactController extends Controller
             'subject' => 'required',
             'message' => 'required',
         ]);
-
+        
         $shipment_id = $request->filled('shipment_id') ? $request->shipment_id : 0;
-        CustomerContact::create([
-            'customer_id' => Auth::user()->id,
-            'email' => $request->email,
-            'shipment_id' => $shipment_id,
-            'subject' => $request->subject,
-            'message' => $request->message,
-            'is_handled' => 0,
-        ]);
-
+        $customerContact = new CustomerContact();
+        $customerContact->customer_id = Auth::user()->id;
+        $customerContact->email = $request->input('email');
+        $customerContact->shipment_id = $shipment_id;
+        $customerContact->subject = $request->input('subject');
+        $customerContact->message = $request->input('message');
+        $customerContact->is_handled = 0;
+        $customerContact->save();
         return Redirect(route('complaints.messages'));
     }
 

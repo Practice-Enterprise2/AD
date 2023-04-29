@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatBox extends Model
 {
-    protected $fillable = [
-        'customer_id',
-        'employee_user_id',
-    ];
 
     public function customer()
     {
