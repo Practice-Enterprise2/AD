@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatBox extends Model
 {
-
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id');

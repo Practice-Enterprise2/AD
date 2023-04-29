@@ -31,7 +31,7 @@ class ComplaintsController extends Controller
             $chatboxMessages = new ChatBoxMessages();
             $chatboxMessages->chatbox_id = $chatbox->id;
             $chatboxMessages->from_id = Auth::user()->id;
-            $chatboxMessages->content =  $request->content;
+            $chatboxMessages->content = $request->content;
             $chatboxMessages->save();
             event(new Complaint($request->content, $chatbox, Auth::user()));
 
