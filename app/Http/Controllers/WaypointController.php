@@ -18,7 +18,6 @@ class WaypointController extends Controller
 
     public function store(Shipment $shipment): View|Factory
     {
-
         $waypoints = collect(request()->waypoints);
 
         for ($i = 0; $i < $waypoints->count(); $i++) {
@@ -190,7 +189,6 @@ class WaypointController extends Controller
 
     public function update(Shipment $shipment): void
     {
-
         if ($shipment->status == 'Delivered') {
             dd('Shipments is already Delivered!');
         }

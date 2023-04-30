@@ -17,7 +17,10 @@
     },
     "dependencies": {
         "gunzip": "^1.2.2",
-        "tw-elements": "^1.0.0-beta2"
+        "tw-elements": "^1.0.0-beta2",
+        "laravel-echo": "^1.15.0",
+        "pusher-js": "^8.0.2",
+        "tw-elements": "^1.0.0-beta1"
     },
     "optionalDependencies": {
         "blade-formatter": "^1.32.12",

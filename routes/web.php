@@ -3,6 +3,8 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\ComplaintsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
@@ -124,6 +127,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
+    //contact and messages
+    Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact/manager', [ContactController::class, 'index'])->name('contact.index')->middleware('permission:view_all_complaints');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_all_complaints');
+    Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show')->middleware('permission:view_all_complaints');
+    Route::post('/contact/{id}', [ComplaintsController::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_all_complaints');
+    Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
+    Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
+    Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
+
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
@@ -148,11 +162,18 @@ Route::middleware('auth')->group(function () {
 
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+    //review page
+    Route::get('/review', [ReviewController::class, 'show'])->name('review');
+    Route::post('/review_add', [ReviewController::class, 'save']);
+    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
+    Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
         ->name('verification.notice');
 });
+
+Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 // Email verification
 /*Route::get('/email/verify', function () {
