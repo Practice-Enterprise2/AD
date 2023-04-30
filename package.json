@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "gunzip": "^1.2.2",
         "laravel-echo": "^1.15.0",
         "pusher-js": "^8.0.2",

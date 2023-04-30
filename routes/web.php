@@ -22,6 +22,7 @@ use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GraphController;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -163,6 +164,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/review_add', [ReviewController::class, 'save']);
     Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
+
+    // employee graph
+    route::get('/employeegraph', [GraphController::class,'index']);
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
