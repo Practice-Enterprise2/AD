@@ -52,10 +52,12 @@ class ShipmentUpdated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->greeting('Shipment Updated')
             ->subject('Shipment '.$this->shipment->id.' has been updated')
             ->line('Shipment '.$this->shipment->id.' has been updated.')
             ->action('View Shipment', url('/shipments/'.$this->shipment->id))
-            ->line('Thank you for using our application!');
+            ->line('Thank you for using our application!')
+            ->salutation('Regards, '.config('app.name'));
     }
 
     /**
