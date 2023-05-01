@@ -14,7 +14,11 @@
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
         label: '# of employees this year',
-        data: $countpm,
+        data: [
+          @for($i = 1; $i <= 12; $i++)
+            {{ $countpm[$i - 1] }},
+          @endfor
+      ],
         borderWidth: 1
       }]
     },
