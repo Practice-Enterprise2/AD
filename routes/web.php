@@ -3,23 +3,24 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\AirportController;
+use App\Http\Controllers\contractController;
+use App\Http\Controllers\contractlistcontroller;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\newcontractcontroller;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\contractController;
-use App\Http\Controllers\AirportController;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\newcontractcontroller;
-use App\Http\Controllers\contractlistcontroller;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WaypointController;
+use App\Models\Employee;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,11 +31,11 @@ use App\Http\Controllers\contractlistcontroller;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WaypointController;
-use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -125,7 +126,6 @@ Route::get('/home', function () {
     return View::make('app');
 })->name('home');
 
-
 Route::get('/page2', function () {
     return view('page2');
 });
@@ -144,19 +144,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //roles() method gives an error but it still works (I have no idea how or why)
-Route::get('/employee', function(){
+Route::get('/employee', function () {
     return Auth::user()->roles()->first()->name == 'employee' ||
         Auth::user()->roles()->first()->name == 'admin' ? view('employee') : abort(404);
 })->middleware(['auth', 'verified'])->name('employee');
 
-
 //admin page
-Route::get('/admin', function(){
+Route::get('/admin', function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin') : abort(404);
 })->middleware(['auth', 'verified'])->name('admin');
 
 //user page
-Route::get('/admin/users', [UserController::class, 'show'], function(){
+Route::get('/admin/users', [UserController::class, 'show'], function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.users') : abort(404);
 })->middleware(['auth', 'verified'])->name('users');
 Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('users.update');
@@ -164,13 +163,12 @@ Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('us
 Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
 
 //roles page
-Route::get('/admin/roles', [RoleController::class, 'show'],  function(){
+Route::get('/admin/roles', [RoleController::class, 'show'], function () {
     return Auth::user()->roles()->first()->name == 'admin' ? view('admin.roles') : abort(404);
 })->middleware(['auth', 'verified'])->name('roles');
 Route::put('/admin/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
 Route::delete('/admin/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 Route::post('/admin/roles', [RoleController::class, 'store'])->name('roles.store');
-
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
@@ -193,6 +191,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
@@ -202,12 +203,12 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+
+    //FAQ page
+    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 });
 
-
-
-Route::get('/overview', function ()
-{
+Route::get('/overview', function () {
     $tickets = DB::select('SELECT ticketID, cstID, employeeID, issue, description, solution, status FROM tickets');
 
     // dd($tickets);
@@ -219,26 +220,25 @@ Route::get('/overview', function ()
 // Route::get('/dump', 'ticket_overview@dump')->name('dump');
 
 Route::get('/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
-Route::post('/submitted-ticket',  [TicketController::class, 'store'])->name('submitted-ticket');
+Route::post('/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
 Route::get('/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
 
 //  contracts view
 Route::get('contract', [contractController::class, 'simpleV2']);
-Route::get('edit',[contractController::class, 'alter']);
-Route::get('contractGet',[contractController::class, 'simpleIndex']);
-Route::get('specif', function() {
+Route::get('edit', [contractController::class, 'alter']);
+Route::get('contractGet', [contractController::class, 'simpleIndex']);
+Route::get('specif', function () {
     return view('specific-contracts');
 });
 
 require __DIR__.'/auth.php';
 
 //contractmenu
-Route::get('contractsMenu', function (){
+Route::get('contractsMenu', function () {
     return view('contractsMenu');
 });
 //airportlist
 Route::get('airportList', [AirportController::class, 'airportFiltering']);
-
 
 // Add, delete and edit airportList
 Route::post('airportList', [AirportController::class, 'addAirport']);
@@ -248,14 +248,14 @@ Route::post('editAirport', [AirportController::class, 'updateAirport']);
 
 Route::post('plaats', [newcontractcontroller::class, 'plaats']);
 Route::get('new_contract', [newcontractcontroller::class, 'dropdown']);
-Route::get('/contract_pdf/{id}',[contractlistcontroller::class,'contract_pdf'])->name('contract_pdf');
+Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
 
 //contract list
 Route::get('/contract_list', function () {
     return view('contract_list');
 });
-//Route::get('contract_list','App\Http\Controllers\contractListController');
-Route::get('contract_list',[contractlistcontroller::class,'index']);
+
+Route::get('contract_list', [contractlistcontroller::class, 'index']);
 Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering']);
 // Email verification
 Route::get('/email/verify', function () {

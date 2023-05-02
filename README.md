@@ -64,7 +64,7 @@ npm ci
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
-./artisan bootstrap
+php artisan bootstrap
 ```
 
 Running `./artisan bootstrap` is done automatically when seeding the database,
@@ -92,7 +92,7 @@ installed by npm and Composer. Currently the following formatters are used:
 Run the following command to automatically format all code:
 
 ```sh
-./artisan format
+php artisan format
 ```
 
 To check whether the code in the current directory follows the style, you can
@@ -102,6 +102,22 @@ only report files that aren't following the correct style.
 > It is possible to install the formatters globally and change the path through
 > environment variables (`LARAVEL_PINT_PATH`, `PRETTIER_PATH` and
 > `BLADE_FORMATTER_PATH`).
+
+## Static Code Analysis
+
+Static code analysis is available and can be run using the following commands.
+It helps to prevent common errors and suggests improvements.
+
+```sh
+# Run all the tools below
+php artisan clippy
+
+# Run Psalm on all PHP files
+php ./vendor/bin/psalm
+```
+
+> It is possible to install the tools globally and change the path through
+> environment variables.
 
 ## Basic user accounts
 
@@ -116,3 +132,22 @@ password: `letmein`
 ## General
 
 -   put \<x-app-layout>\</x-app-layout> around your HTML code
+
+## Mail
+
+It is recommended to use port 587 for mail as it is the port for encrypted email
+transmissions using SMTP Secure(SMTPS).
+
+If you want to be able to mail please make sure your .env file has the following
+lines of code:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=redbeastpro18@gmail.com
+MAIL_PASSWORD=jvaflujkltwmvlzu
+MAIL_ENCRYPTION=tsl
+MAIL_FROM_ADDRESS="redbeastpro18@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```

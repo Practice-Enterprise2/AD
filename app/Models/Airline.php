@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Airline extends Model
 {
     use HasFactory;
+
     protected $table = 'airlines';
+
     protected $primaryKey = 'id';
+
     protected $fillable = [
         'id',
         'name',
-        'price'
+        'price',
     ];
 
     public $timestamps = false;

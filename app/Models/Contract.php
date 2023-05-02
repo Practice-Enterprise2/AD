@@ -9,22 +9,20 @@ class Contract extends Model
 {
     use HasFactory;
 
-
     protected $table = 'contracts';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'id',
         'airline_id',
+        'depart_airport_id',
+        'destination_airport_id',
         'start_date',
         'end_date',
         'price',
-        'airport_id',
-        'depart_location',
-        'destination_location',
-        'created_at',
-        'updated_at'
+        'is_active',
     ];
-public $timestamps = false;
+
+    public $timestamps = true;
 }
-?>

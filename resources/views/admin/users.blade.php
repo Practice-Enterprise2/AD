@@ -63,20 +63,24 @@
                   </td>
                   <!--button to lock/ unlock accounts-->
                   <td class="px-4 py-2">
-                    <form action="{{ route('users.toggle-lock', $user->id) }}"
-                      method="POST">
-                      @csrf
-                      @method('PUT')
-                      <button type="submit"
-                        class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
-                        @if ($user->is_locked)
-                          Unlock
-                        @else
-                          Lock
-                        @endif
-                      </button>
-                    </form>
+                    @if ($user->roles->first()->name != 'admin')
+                      <form
+                        action="{{ route('users.toggle-lock', $user->id) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit"
+                          class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
+                          @if ($user->is_locked)
+                            Unlock
+                          @else
+                            Lock
+                          @endif
+                        </button>
+                      </form>
+                    @endif
                   </td>
+
                   <td class="px-4 py-2">
                     <form action="{{ route('users.destroy', $user->id) }}"
                       method="POST">
