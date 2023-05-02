@@ -57,6 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
+        Route::get('/employee_add_contract', 'contract_index')->name('contract-index');
+        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
     });
 
     Route::controller(EmployeeViewController::class)->group(function () {
