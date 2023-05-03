@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('department');
             $table->text('description');
-            $table->timestamp('filled_at')->nullable();
+            $table->boolean('filled')->default(false);
             $table->timestamps();
         });
 
