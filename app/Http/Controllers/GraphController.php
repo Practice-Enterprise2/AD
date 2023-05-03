@@ -61,7 +61,6 @@ class GraphController extends Controller
             $countpy[] = $count ? $count : 0;
         }
 
-        return view('employeegraph', ['countpm' => $countpm, 'countpy' => $countpy,'year' => $year]);
+        return view('employeegraph', ['countpm' => $countpm, 'countpy' => $countpy, 'year' => $year]);
     }
-
 }

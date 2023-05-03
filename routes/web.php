@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -22,7 +23,6 @@ use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GraphController;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -168,7 +168,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // employee graph
-    route::get('/employeegraph', [GraphController::class,'index'])->name('employeegraph');
+    route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
