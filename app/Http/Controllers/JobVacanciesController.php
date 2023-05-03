@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\JobVacancy;
+use Illuminate\Http\Request;
 
 class JobVacanciesController extends Controller
 {
-    function add_job(Request $req)
+    public function add_job(Request $req)
     {
         $this->validate($req, [
             'job_title' => ['required', 'regex:/^[A-Za-z\s]+$/'],
             'job_department' => ['required', 'regex:/^[A-Za-z\s]+$/'],
-            'job_description' => ['required', 'string']
+            'job_description' => ['required', 'string'],
         ]);
 
         $jobVacancy = JobVacancy::create([

@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -19,9 +20,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Http\Controllers\JobVacanciesController;
 use App\Models\Employee;
-use App\Models\JobVacancy;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
