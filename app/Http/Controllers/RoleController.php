@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
     public function create(): View|Factory
     {
-        return view('control-panel.groups.create');
+        return view('control-panel.roles.create');
     }
 
     public function index(): View|Factory

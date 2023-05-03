@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Groups\Permissions;
+namespace App\Http\Livewire\Roles\Permissions;
 
 use App\Models\Permission;
 use App\Models\Role;

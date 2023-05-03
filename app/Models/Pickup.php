@@ -6,14 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/*
- * Model for the `pickups` table.
+/**
+ * @property int $id
+ * @property Shipment $shipment
+ * @property Address $address
+ * @property \Illuminate\Support\Carbon $time
+ * @property string $status
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
  */
 class Pickup extends Model
 {
     use SoftDeletes;
 
     public const VALIDATION_RULE_TIME = ['required'];
+
+    protected $attributes = [
+        'status' => 'pending',
+    ];
 
     protected $fillable = [
         'time',

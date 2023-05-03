@@ -41,6 +41,10 @@ class FormatCode extends Command
         $pint_process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        if (! $pint_process->isSuccessful()) {
+            exit(1);
+        }
     }
 
     public function format_using_prettier(): void
@@ -55,6 +59,10 @@ class FormatCode extends Command
         $prettier_process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        if (! $prettier_process->isSuccessful()) {
+            exit(1);
+        }
     }
 
     public function format_blade_templates(): void
@@ -69,5 +77,9 @@ class FormatCode extends Command
         $blade_formatter_process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        if (! $blade_formatter_process->isSuccessful()) {
+            exit(1);
+        }
     }
 }

@@ -37,6 +37,7 @@
     input {
       width: 100%;
       border: black solid 1px;
+      color: black;
     }
 
     tr {
@@ -155,8 +156,8 @@
             <td>
               <input type="text" name="vat_number" id="vat_number" readonly
                 style="background-color: darkgrey;"
-                value="{{ $customer->businessCustomer ? $customer->businessCustomer->vat_number : '' }}"
-                {{ $customer->businessCustomer && $customer->businessCustomer->vat_number ? 'required' : '' }}>
+                value="{{ $customer->business_customer ? $customer->business_customer->vat_number : '' }}"
+                {{ $customer->business_customer && $customer->business_customer->vat_number ? 'required' : '' }}>
 
             </td>
           </tr>

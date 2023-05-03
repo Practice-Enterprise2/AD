@@ -17,7 +17,6 @@ class Create extends Component
 
     public function updated(string $propertyName): void
     {
-
         $this->validateOnly($propertyName);
     }
 
@@ -32,6 +31,6 @@ class Create extends Component
 
         $this->role->save();
 
-        return redirect()->route('control-panel.groups');
+        return redirect()->route('control-panel.roles');
     }
 }
