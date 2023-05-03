@@ -171,36 +171,67 @@
                 weight:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_weight" id="shipment_weight">
+                type="text" name="shipment_weight" id="shipment_weight"
+                onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Length:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_length" id="shipment_length">
+                type="text" name="shipment_length" id="shipment_length"
+                onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Height:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_height" id="shipment_height">
+                type="text" name="shipment_height" id="shipment_height"
+                onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Width:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_width" id="shipment_width">
+                type="text" name="shipment_width" id="shipment_width"
+                onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Expense:</label>
-              <input
-                class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_expense" id="shipment_expense">
+              <span id="shipment_price"
+                class="ml-auto w-2/3 rounded-md p-1 text-black">0</span>
             </div>
+            <script type="text/javascript">
+              function calculateShipmentPrice() {
+                var shipment_weight = document.getElementById('shipment_weight').value;
+                var shipment_length = document.getElementById('shipment_length').value;
+                var shipment_height = document.getElementById('shipment_height').value;
+                var shipment_width = document.getElementById('shipment_width').value;
+                var shipment_price = document.getElementById('shipment_price');
+                if (shipment_weight == '' || shipment_length == '' || shipment_height ==
+                  '' || shipment_width == '') {
+                  shipment_price.innerHTML = 0;
+                  return;
+                }
+                var price = 0;
+                var volumetric_freight = 0;
+                var volumetric_freight_tarrif = 5;
+                var dense_cargo_tarrif = 4;
+                var expense_excl_VAT = 0;
+                var VAT_percentage = 0;
+                volumetric_freight += ((shipment_length * shipment_width *
+                  shipment_height) / 5000);
+                if (volumetric_freight > shipment_weight) {
+                  price = volumetric_freight * volumetric_freight_tarrif;
+                } else {
+                  price = shipment_height * dense_cargo_tarrif;
+                }
+                shipment_price.innerHTML = price;
+              }
+            </script>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Preferred
@@ -242,6 +273,17 @@
             </div>
           </div>
         </div>
+        @if ($errors->any())
+          <div class="mb-4">
+            <label class="block font-medium text-red-700">Errors:</label>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li class="block font-medium text-black">-{{ $error }}
+                </li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         <button
           class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           type="submit">Submit</button>
