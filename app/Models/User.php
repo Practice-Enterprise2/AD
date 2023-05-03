@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -28,15 +31,39 @@ use Spatie\Permission\Traits\HasRoles;
  * @property ?\Illuminate\Support\Carbon $deleted_at
  * @property bool $is_locked
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, ValidatesAttributes
 {
-    use HasApiTokens, Notifiable, SoftDeletes, HasRoles;
+    use HasApiTokens, Notifiable, SoftDeletes, HasRoles, AppValidatesAttributes;
 
-    public const VALIDATION_RULE_NAME = 'required|min:2';
+    public const VALIDATION_RULE_NAME = ['required', 'min:2'];
 
-    public const VALIDATION_RULE_LAST_NAME = 'required|min:2';
+    public const VALIDATION_RULE_LAST_NAME = ['min:2'];
 
-    public const VALIDATION_RULE_EMAIL = 'required|email';
+    public const VALIDATION_RULE_EMAIL = ['required', 'email'];
+
+    public const VALIDATION_RULE_EMAIL_VERIFIED_AT = ['date'];
+
+    public const VALIDATION_RULE_PASSWORD = ['required'];
+
+    public const VALIDATION_RULE_PHONE = [];
+
+    public const VALIDATION_RULE_ROLE = [];
+
+    public const VALIDATION_RULE_REMEMBER_TOKEN = [];
+
+    public const VALIDATION_RULE_IS_LOCKED = ['boolean'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+        'last_name' => self::VALIDATION_RULE_LAST_NAME,
+        'email' => self::VALIDATION_RULE_EMAIL,
+        'email_verified_at' => self::VALIDATION_RULE_EMAIL_VERIFIED_AT,
+        'password' => self::VALIDATION_RULE_PASSWORD,
+        'phone' => self::VALIDATION_RULE_PHONE,
+        'role' => self::VALIDATION_RULE_ROLE,
+        'remember_token' => self::VALIDATION_RULE_REMEMBER_TOKEN,
+        'is_locked' => self::VALIDATION_RULE_IS_LOCKED,
+    ];
 
     protected $attributes = [
         'last_name' => '',
@@ -127,5 +154,36 @@ class User extends Authenticatable implements MustVerifyEmail
     public function shipments(): HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    /**
+     * Return a collection of unique permissions granted to this user. This
+     * method takes all the ways permissions can be granted into account. The
+     * permissions are also flattened (which makes sure transitive permissions
+     * are expanded further to their granted subpermissions as well). Basically
+     * this returns all the permissions that would return `true` when asked
+     * 'does this user have this permission'.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<string, Permission>
+     */
+    public function get_permissions(): Collection
+    {
+        $flat_direct_permissions = new Collection;
+        $flat_role_permissions = new Collection;
+        $direct_permissions = $this->permissions;
+        foreach ($direct_permissions as $direct_permission) {
+            $flat_direct_permissions = $flat_direct_permissions->concat($direct_permission->flattened_down());
+        }
+        $role_permissions = $this->getPermissionsViaRoles();
+
+        /*
+         * @var \App\Models\Permission $role_permission
+         */
+        foreach ($role_permissions as $role_permission) {
+            $flat_role_permissions = $flat_role_permissions->concat($role_permission->flattened_down());
+        }
+        $flat_direct_permissions = $flat_direct_permissions->concat($flat_role_permissions);
+
+        return $flat_direct_permissions->unique();
     }
 }

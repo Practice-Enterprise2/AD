@@ -3,7 +3,7 @@
     Control Panel - Permissions
   </x-slot:title>
 
-  <x-control-panel-layout>
+  <x-control-panel-layout :always_show_title="true">
     <x-slot:title>
       {{ __('Edit Permission') }}
     </x-slot:title>

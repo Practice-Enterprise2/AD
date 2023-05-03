@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +16,7 @@ class UserController extends Controller
     /**
      * Return a view showing all users.
      */
-    public function show(): View|Factory
+    public function show(): View
     {
         $users = User::with('roles')->get();
         $roles = Role::all()->pluck('name');
