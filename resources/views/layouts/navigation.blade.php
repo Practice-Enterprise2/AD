@@ -75,28 +75,14 @@
             <x-dropdown-link :href="route('shipments.requests')">
               {{ __('Evaluate Shipment Requests') }}
             </x-dropdown-link>
-
             <x-dropdown-link :href="route('shipments.showshipments')">
               {{ __('Show Shipments') }}
             </x-dropdown-link>
-            @if (Auth::user()->roles()->first()->name == 'admin' ||
-                    Auth::user()->roles()->first()->name == 'employee')
+            @can('view_shipmentgraphs')
               <x-dropdown-link :href="route('shipmentGraphs')">
                 {{ __('Shipment graphs') }}
               </x-dropdown-link>
-            @endif
-
-            <x-dropdown-link :href="route('contact.create')">
-              {{ __('contact us') }}
-            </x-dropdown-link>
-            @can('view_all_complaints')
-              <x-dropdown-link :href="route('contact.index')">
-                {{ __('complaints') }}
-              </x-dropdown-link>
             @endcan
-            <x-dropdown-link :href="route('complaints.messages')">
-              {{ __('messages') }}
-            </x-dropdown-link>
           </x-slot>
         </x-dropdown>
       @endauth
