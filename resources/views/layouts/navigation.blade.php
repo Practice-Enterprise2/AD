@@ -138,16 +138,16 @@
           </x-slot>
         </x-dropdown>
       @endauth
-      @auth
+      @can('view_all_overviews')
         <x-nav-link :href="route('employeegraph')" :active="request()->routeIs('employeegraph')">
           {{ __('Graphs') }}
         </x-nav-link>
-      @endauth
-      @auth
+      @endcan
+      @can('view_all_overviews')
         <x-nav-link :href="route('readreviews')">
           {{ __('Reviews') }}
         </x-nav-link>
-      @endauth
+      @endcan
       @auth
         {{-- Validations needed for later. --}}
         {{-- <x-nav-link :href="route('shipments.create')">
