@@ -19,6 +19,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\JobVacanciesController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -173,6 +174,7 @@ Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegist
 
 
 
-Route::view('/add_job', 'job-vacancies.add_job')->name('job-vacancies.add_job');
+Route::view('/addJob', 'job-vacancies.add_job');
+Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('sendEmployeeComplaint.add');
 
 require __DIR__.'/auth.php';
