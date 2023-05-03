@@ -24,6 +24,18 @@ class Airport extends Model implements ValidatesAttributes
 {
     use SoftDeletes, AppValidatesAttributes;
 
+    public const VALIDATION_RULE_IATA_CODE = ['required', 'max:3'];
+
+    public const VALIDATION_RULE_NAME = ['required'];
+
+    public const VALIDATION_RULE_LAND = ['required'];
+
+    public const VALIDATION_RULES = [
+        'iata_code' => self::VALIDATION_RULE_IATA_CODE,
+        'name' => self::VALIDATION_RULE_NAME,
+        'land' => self::VALIDATION_RULE_LAND,
+    ];
+
     protected $fillable = [
         'iata_code',
         'name',

@@ -18,10 +18,16 @@ class Dimension extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    const VALIDATION_RULE_LENGTH = ['required', 'gt:0', 'numeric'];
+
+    const VALIDATION_RULE_WIDTH = ['required', 'gt:0', 'numeric'];
+
+    const VALIDATION_RULE_HEIGHT = ['required', 'gt:0', 'numeric'];
+
     const VALIDATION_RULES = [
-        'length' => ['required', 'gt:0', 'numeric'],
-        'width' => ['required', 'gt:0', 'numeric'],
-        'height' => ['required', 'gt:0', 'numeric'],
+        'length' => self::VALIDATION_RULE_LENGTH,
+        'width' => self::VALIDATION_RULE_WIDTH,
+        'height' => self::VALIDATION_RULE_HEIGHT,
     ];
 
     protected $fillable = [

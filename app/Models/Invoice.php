@@ -22,6 +22,24 @@ class Invoice extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_INVOICE_CODE = ['required'];
+
+    public const VALIDATION_RULE_DUE_DATE = ['required', 'date'];
+
+    public const VALIDATION_RULE_TOTAL_PRICE = ['required', 'numeric', 'gte:total_price_excl_vat'];
+
+    public const VALIDATION_RULE_TOTAL_PRICE_EXCL_VAT = ['required', 'numeric', 'lte:total_price'];
+
+    public const VALIDATION_RULE_IS_PAID = ['boolean'];
+
+    public const VALIDATION_RULES = [
+        'invoice_code' => self::VALIDATION_RULE_INVOICE_CODE,
+        'due_date' => self::VALIDATION_RULE_DUE_DATE,
+        'total_price' => self::VALIDATION_RULE_TOTAL_PRICE,
+        'total_price_excl_vat' => self::VALIDATION_RULE_TOTAL_PRICE_EXCL_VAT,
+        'is_paid' => self::VALIDATION_RULE_IS_PAID,
+    ];
+
     protected $attributes = [
         'is_paid' => 0,
     ];

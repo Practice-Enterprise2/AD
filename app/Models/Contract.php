@@ -24,6 +24,21 @@ class Contract extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_START_DATE = ['required', 'before_or_equal:end_date'];
+
+    public const VALIDATION_RULE_END_DATE = ['required', 'after_or_equal:end_date'];
+
+    public const VALIDATION_RULE_PRICE = ['required', 'numeric'];
+
+    public const VALIDATION_RULE_IS_ACTIVE = ['boolean'];
+
+    public const VALIDATION_RULES = [
+        'start_date' => self::VALIDATION_RULE_START_DATE,
+        'end_date' => self::VALIDATION_RULE_END_DATE,
+        'price' => self::VALIDATION_RULE_PRICE,
+        'is_active' => self::VALIDATION_RULE_IS_ACTIVE,
+    ];
+
     protected $fillable = [
         'start_date',
         'end_date',

@@ -34,11 +34,35 @@ class User extends Authenticatable implements MustVerifyEmail, ValidatesAttribut
 {
     use HasApiTokens, Notifiable, SoftDeletes, HasRoles, AppValidatesAttributes;
 
-    public const VALIDATION_RULE_NAME = 'required|min:2';
+    public const VALIDATION_RULE_NAME = ['required', 'min:2'];
 
-    public const VALIDATION_RULE_LAST_NAME = 'required|min:2';
+    public const VALIDATION_RULE_LAST_NAME = ['min:2'];
 
-    public const VALIDATION_RULE_EMAIL = 'required|email';
+    public const VALIDATION_RULE_EMAIL = ['required', 'email'];
+
+    public const VALIDATION_RULE_EMAIL_VERIFIED_AT = ['date'];
+
+    public const VALIDATION_RULE_PASSWORD = ['required'];
+
+    public const VALIDATION_RULE_PHONE = [];
+
+    public const VALIDATION_RULE_ROLE = [];
+
+    public const VALIDATION_RULE_REMEMBER_TOKEN = [];
+
+    public const VALIDATION_RULE_IS_LOCKED = ['boolean'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+        'last_name' => self::VALIDATION_RULE_LAST_NAME,
+        'email' => self::VALIDATION_RULE_EMAIL,
+        'email_verified_at' => self::VALIDATION_RULE_EMAIL_VERIFIED_AT,
+        'password' => self::VALIDATION_RULE_PASSWORD,
+        'phone' => self::VALIDATION_RULE_PHONE,
+        'role' => self::VALIDATION_RULE_ROLE,
+        'remember_token' => self::VALIDATION_RULE_REMEMBER_TOKEN,
+        'is_locked' => self::VALIDATION_RULE_IS_LOCKED,
+    ];
 
     protected $attributes = [
         'last_name' => '',

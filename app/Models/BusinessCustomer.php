@@ -20,9 +20,11 @@ class BusinessCustomer extends Model implements ValidatesAttributes
 {
     use SoftDeletes, AppValidatesAttributes;
 
-    public const VALIDATION_RULE_USER_ID = ['required', 'min:1'];
-
     public const VALIDATION_RULE_VAT_NUMBER = ['required', 'min:4'];
+
+    public const VALIDATION_RULES = [
+        'vat_number' => self::VALIDATION_RULE_VAT_NUMBER,
+    ];
 
     protected $fillable = [
         'vat_number',

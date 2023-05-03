@@ -20,6 +20,15 @@ class EmployeeContract extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_START_DATE = ['before_or_equal:end_date'];
+
+    public const VALIDATION_RULE_END_DATE = ['after_or_equal:start_date'];
+
+    public const VALIDATION_RULES = [
+        'start_date' => self::VALIDATION_RULE_START_DATE,
+        'end_date' => self::VALIDATION_RULE_END_DATE,
+    ];
+
     protected $fillable = [
         'start_date',
         'end_date',

@@ -21,6 +21,21 @@ class Ticket extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_ISSUE = ['required'];
+
+    public const VALIDATION_RULE_DESCRIPTION = ['required'];
+
+    public const VALIDATION_RULE_SOLUTION = ['required'];
+
+    public const VALIDATION_RULE_STATUS = ['required'];
+
+    public const VALIDATION_RULES = [
+        'issue' => self::VALIDATION_RULE_ISSUE,
+        'description' => self::VALIDATION_RULE_DESCRIPTION,
+        'solution' => self::VALIDATION_RULE_SOLUTION,
+        'status' => self::VALIDATION_RULE_STATUS,
+    ];
+
     protected $primaryKey = 'ticketID';
 
     protected $fillable = [

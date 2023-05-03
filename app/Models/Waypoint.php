@@ -20,6 +20,12 @@ class Waypoint extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_STATUS = ['required', 'in:In Transit,Out For Delivery,Delivered,Exception'];
+
+    public const VALIDATION_RULES = [
+        'status' => self::VALIDATION_RULE_STATUS,
+    ];
+
     protected $fillable = [
         'status',
     ];

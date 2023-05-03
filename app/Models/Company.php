@@ -17,6 +17,15 @@ class Company extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_NAME = ['required'];
+
+    public const VALIDATION_RULE_BTW = ['required', 'numeric'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+        'btw' => self::VALIDATION_RULE_BTW,
+    ];
+
     protected $fillable = [
         'name',
         'btw',

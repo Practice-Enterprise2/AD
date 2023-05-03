@@ -19,6 +19,15 @@ class Airline extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_NAME = ['required'];
+
+    public const VALIDATION_RULE_PRICE = ['required'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+        'price' => self::VALIDATION_RULE_PRICE,
+    ];
+
     protected $fillable = [
         'name',
         'price',

@@ -21,6 +21,15 @@ class Notification extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_TYPE = ['required'];
+
+    public const VALIDATION_RULE_DATA = ['required'];
+
+    public const VALIDATION_RULES = [
+        'type' => self::VALIDATION_RULE_TYPE,
+        'data' => self::VALIDATION_RULE_DATA,
+    ];
+
     public $incrementing = false;
 
     protected $fillable = [

@@ -17,6 +17,12 @@ class Position extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
+    public const VALIDATION_RULE_NAME = ['required'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+    ];
+
     protected $fillable = [
         'name',
     ];

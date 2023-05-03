@@ -24,6 +24,13 @@ class Pickup extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_TIME = ['required'];
 
+    public const VALIDATION_RULE_STATUS = ['in:pending,completed,canceled'];
+
+    public const VALIDATION_RULES = [
+        'time' => self::VALIDATION_RULE_TIME,
+        'status' => self::VALIDATION_RULE_STATUS,
+    ];
+
     protected $attributes = [
         'status' => 'pending',
     ];
