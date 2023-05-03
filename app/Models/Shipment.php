@@ -33,7 +33,7 @@ class Shipment extends Model implements ValidatesAttributes
     use SoftDeletes;
     use Sortable;
     use SoftDeletes, AppValidatesAttributes;
-    
+
     protected $primaryKey = 'id';
 
     public $sortable = [
@@ -42,8 +42,6 @@ class Shipment extends Model implements ValidatesAttributes
         'delivery_date',
         'status',
     ];
-
-    
 
     public const VALIDATION_RULE_SHIPMENT_DATE = ['required'];
 

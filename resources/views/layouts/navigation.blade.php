@@ -121,47 +121,6 @@
               </button>
             </x-slot>
 
-          <x-slot name="content">
-            <x-dropdown-link :href="route('shipments.create')">
-              {{ __('Request Shipment') }}
-            </x-dropdown-link>
-            <x-dropdown-link :href="route('shipments.requests')">
-              {{ __('Evaluate Shipment Requests') }}
-            </x-dropdown-link>
-            <x-dropdown-link :href="route('shipments.showshipments')">
-              {{ __('Show Shipments') }}
-            </x-dropdown-link>
-            @can('view_shipmentgraphs')
-              <x-dropdown-link :href="route('shipmentGraphs')">
-                {{ __('Shipment graphs') }}
-              </x-dropdown-link>
-            @endcan
-          </x-slot>
-        </x-dropdown>
-      @endauth
-      @auth
-        <x-dropdown>
-          <x-slot name="trigger">
-            <button
-              class="mt-3 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-              Notifications <span
-                class="ml-1 inline-block whitespace-nowrap rounded-full bg-primary-500 px-2 py-1 text-center text-xs font-bold text-white">{{ auth()->user()->unreadNotifications->count() }}</span>
-              <div class="ml-1">
-                <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-
-              </div>
-            </button>
-          </x-slot>
-
-          <x-slot name="content">
-            @if (auth()->user()->unreadNotifications->count() > 0)
-              <x-dropdown-link
-                onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
-                <b>Mark all as read</b>
             <x-slot name="content">
               <x-dropdown-link :href="route('shipments.create')">
                 {{ __('Request Shipment') }}
@@ -169,21 +128,62 @@
               <x-dropdown-link :href="route('shipments.requests')">
                 {{ __('Evaluate Shipment Requests') }}
               </x-dropdown-link>
-              <x-dropdown-link :href="route('shipments.index')">
-                {{ __('Show Confirmed Shipments') }}
+              <x-dropdown-link :href="route('shipments.showshipments')">
+                {{ __('Show Shipments') }}
               </x-dropdown-link>
-              <x-dropdown-link :href="route('contact.create')">
-                {{ __('contact us') }}
-              </x-dropdown-link>
-              @can('view_all_complaints')
-                <x-dropdown-link :href="route('contact.index')">
-                  {{ __('complaints') }}
+              @can('view_shipmentgraphs')
+                <x-dropdown-link :href="route('shipmentGraphs')">
+                  {{ __('Shipment graphs') }}
                 </x-dropdown-link>
               @endcan
-              <x-dropdown-link :href="route('complaints.messages')">
-                {{ __('messages') }}
-              </x-dropdown-link>
             </x-slot>
+          </x-dropdown>
+        @endauth
+        @auth
+          <x-dropdown>
+            <x-slot name="trigger">
+              <button
+                class="mt-3 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+                Notifications <span
+                  class="ml-1 inline-block whitespace-nowrap rounded-full bg-primary-500 px-2 py-1 text-center text-xs font-bold text-white">{{ auth()->user()->unreadNotifications->count() }}</span>
+                <div class="ml-1">
+                  <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd" />
+                  </svg>
+
+                </div>
+              </button>
+            </x-slot>
+
+            <x-slot name="content">
+              @if (auth()->user()->unreadNotifications->count() > 0)
+                <x-dropdown-link
+                  onclick="markNotificationsAsRead({{ auth()->user()->unreadNotifications->count() }})">
+                  <b>Mark all as read</b>
+                  <x-slot name="content">
+                    <x-dropdown-link :href="route('shipments.create')">
+                      {{ __('Request Shipment') }}
+                    </x-dropdown-link>
+                    <x-dropdown-link :href="route('shipments.requests')">
+                      {{ __('Evaluate Shipment Requests') }}
+                    </x-dropdown-link>
+                    <x-dropdown-link :href="route('shipments.index')">
+                      {{ __('Show Confirmed Shipments') }}
+                    </x-dropdown-link>
+                    <x-dropdown-link :href="route('contact.create')">
+                      {{ __('contact us') }}
+                    </x-dropdown-link>
+                    @can('view_all_complaints')
+                      <x-dropdown-link :href="route('contact.index')">
+                        {{ __('complaints') }}
+                      </x-dropdown-link>
+                    @endcan
+                    <x-dropdown-link :href="route('complaints.messages')">
+                      {{ __('messages') }}
+                    </x-dropdown-link>
+                  </x-slot>
           </x-dropdown>
         @endauth
 

@@ -203,7 +203,6 @@ class ShipmentController extends Controller
         return view('shipments', ['shipments' => $shipments]);
     }
 
-    public function edit(Shipment $shipment)
     public function edit(Shipment $shipment): View
     {
         return view('shipments.edit', compact('shipment'));
