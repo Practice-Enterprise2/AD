@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Console\Command;
 
 class DeleteUnverifiedUsers extends Command
 {
@@ -29,13 +27,11 @@ class DeleteUnverifiedUsers extends Command
     public function handle()
     {
         $unverifiedUsers = User::whereNull('email_verified_at')
-        ->where('created_at', '<=', now()->subDays(2))
+            ->where('created_at', '<=', now()->subDays(2))
             ->get();
 
         foreach ($unverifiedUsers as $user) {
             $user->delete();
-
         }
-
     }
 }
