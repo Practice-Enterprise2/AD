@@ -171,4 +171,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
+
+
+Route::view('/add_job', 'job-vacancies.add_job')->name('job-vacancies.add_job');
+
 require __DIR__.'/auth.php';
