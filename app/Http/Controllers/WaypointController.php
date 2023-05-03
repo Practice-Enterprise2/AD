@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Shipment;
 use App\Models\Waypoint;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
 class WaypointController extends Controller
 {
-    public function create(Shipment $shipment): View|Factory
+    public function create(Shipment $shipment): View
     {
         // dd($shipment);
         return view('shipments.set', compact('shipment'));
     }
 
-    public function store(Shipment $shipment): View|Factory
+    public function store(Shipment $shipment): View
     {
         $this->validate(request(), [
             'waypoints' => 'required|array',

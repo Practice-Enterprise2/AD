@@ -57,6 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
+        Route::get('/employee_add_contract', 'contract_index')->name('contract-index');
+        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
     });
 
     Route::controller(EmployeeViewController::class)->group(function () {
@@ -97,6 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+            Route::get('/employees', 'employees')->name('employees')->middleware('permission:view_all_employees');
+            Route::get('/employees/create', 'employees_create')->name('employees.create')->middleware('permission:add_employee');
             Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
             Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
             Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
