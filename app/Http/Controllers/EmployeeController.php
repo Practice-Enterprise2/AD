@@ -25,7 +25,21 @@ class EmployeeController extends Controller
 
     public function contract_index(): View|Factory
     {
-        return view('employee_add_contract');
+        $i=0;
+        $employees = DB::table('employees')->get();
+        $users=[];
+        foreach($employees as $employee)
+        {
+            
+            $username =  DB::table('users')->where('id', $employee->user_id)->value('name');
+            $userlastname =  DB::table('users')->where('id', $employee->user_id)->value('last_name');
+            $users[$i]['employeeID'] = $employee->id;
+            $users[$i]['lastname'] = $userlastname;
+            $users[$i]['name'] = $username;
+
+            $i+=1;
+        }
+        return view('employee_add_contract', ['users' => $users]);
     }
 
     public function contract_save(Request $req): RedirectResponse
