@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,11 +28,12 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $status
  * @property Dimension $dimension
  */
-class Shipment extends Model
+class Shipment extends Model implements ValidatesAttributes
 {
     use SoftDeletes;
     use Sortable;
-
+    use SoftDeletes, AppValidatesAttributes;
+    
     protected $primaryKey = 'id';
 
     public $sortable = [
@@ -38,6 +41,34 @@ class Shipment extends Model
         'shipment_date',
         'delivery_date',
         'status',
+    ];
+
+    
+
+    public const VALIDATION_RULE_SHIPMENT_DATE = ['required'];
+
+    public const VALIDATION_RULE_DELIVERY_DATE = ['required'];
+
+    public const VALIDATION_RULE_EXPENSE = ['required', 'numeric'];
+
+    public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
+
+    public const VALIDATION_RULE_TYPE = ['required', 'numeric'];
+
+    public const VALIDATION_RULE_RECEIVER_NAME = [];
+
+    public const VALIDATION_RULE_RECEIVER_EMAIL = ['email'];
+
+    public const VALIDATION_RULE_STATUS = ['required', 'in:Awaiting Confirmation,Awaiting Pickup,In Transit,Out For Delivery,Delivered,Exception,Held At Location,Deleted,Declined'];
+
+    public const VALIDATION_RULES = [
+        'shipment_date' => self::VALIDATION_RULE_SHIPMENT_DATE,
+        'delivery_date' => self::VALIDATION_RULE_DELIVERY_DATE,
+        'expense' => self::VALIDATION_RULE_EXPENSE,
+        'weight' => self::VALIDATION_RULE_WEIGHT,
+        'type' => self::VALIDATION_RULE_TYPE,
+        'receiver_name' => self::VALIDATION_RULE_RECEIVER_NAME,
+        'receiver_email' => self::VALIDATION_RULE_RECEIVER_EMAIL,
     ];
 
     protected $fillable = [

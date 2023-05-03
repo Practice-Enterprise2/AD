@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
@@ -13,8 +15,22 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Permission extends SpatiePermission
+class Permission extends SpatiePermission implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
+    public const VALIDATION_RULE_NAME = ['required'];
+
+    public const VALIDATION_RULE_DESCRIPTION = [];
+
+    public const VALIDATION_RULE_GUARD_NAME = ['required'];
+
+    public const VALIDATION_RULES = [
+        'name' => self::VALIDATION_RULE_NAME,
+        'description' => self::VALIDATION_RULE_DESCRIPTION,
+        'guard_name' => self::VALIDATION_RULE_GUARD_NAME,
+    ];
+
     protected $fillable = [
         'name',
         'description',
