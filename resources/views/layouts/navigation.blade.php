@@ -140,20 +140,20 @@
       @endauth
       @auth
         {{-- Validations needed for later. --}}
-        {{-- <x-nav-link :href="route('shipments.create')">
-        {{ __('Request Shipment') }}
+        {{-- <x-nav-link :href="route('new_contract')">
+        {{ __('Contract Overview') }}
       </x-nav-link>
-      <x-nav-link :href="route('shipments.requests')">
-        {{ __('Evaluate Shipment Requests') }}
+      <x-nav-link :href="route('new_contract')">
+        {{ __('New Contract') }}
       </x-nav-link>
       <x-nav-link :href="route('shipments.index')">
-        {{ __('Show Confirmed Shipments') }}
+        {{ __('Edit Contract') }}
       </x-nav-link> --}}
         <x-dropdown>
           <x-slot name="trigger">
             <button
               class="mt-4 inline-flex items-center rounded-md border border-transparent border-white bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-              Shipments
+              Contracts
               <div class="ml-1">
                 <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
                   <path fill-rule="evenodd"
@@ -166,14 +166,14 @@
           </x-slot>
 
           <x-slot name="content"> 
-            <x-dropdown-link :href="route('shipments.create')">
-              {{ __('Request Shipment') }}
+            <x-dropdown-link :href="route('new_contract')">
+              {{ __('Contract Overview') }}
             </x-dropdown-link>
-            <x-dropdown-link :href="route('shipments.requests')">
-              {{ __('Evaluate Shipment Requests') }}
+            <x-dropdown-link :href="route('new_contract')">
+              {{ __('New Contract') }}
             </x-dropdown-link>
             <x-dropdown-link :href="route('shipments.index')">
-              {{ __('Show Confirmed Shipments') }}
+              {{ __('Edit Contract') }}
             </x-dropdown-link> 
           </x-slot>
         </x-dropdown>

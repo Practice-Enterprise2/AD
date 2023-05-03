@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
-use App\Models\contractList;
+use App\Models\ContractList;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DB;
 use Illuminate\Http\Request;
 
-class contractlistcontroller extends Controller
+class Contractlistcontroller extends Controller
 {
     public function contract_pdf($id)
     {

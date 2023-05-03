@@ -5,6 +5,7 @@
 
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Contractlistcontroller;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\NewContractController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -145,6 +147,18 @@ Route::middleware('auth')->group(function () {
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 
+    //contracts between airlines
+    Route::post('plaats', [NewContractController::class, 'plaats']);
+    Route::get('new_contract', [NewContractController::class, 'dropdown'])->name('new_contract');
+    Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
+
+    //contract list
+    Route::get('/contract_list', function () {
+    return view('contract_list');
+    })->name('contract_list');
+
+    Route::get('contract_list', [contractlistcontroller::class, 'index']);
+    Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering']);
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();
