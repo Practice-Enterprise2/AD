@@ -99,6 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+            Route::get('/employees', 'employees')->name('employees')->middleware('permission:view_all_employees');
+            Route::get('/employees/create', 'employees_create')->name('employees.create')->middleware('permission:add_employee');
             Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
             Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
             Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');

@@ -20,6 +20,19 @@
       </x-nav-link>
     </div>
   @endcanany
+  @canany(['view_all_employees'])
+    <div>
+      <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
+        :href="route('control-panel.employees')" :active="str_starts_with(
+            request()
+                ->route()
+                ->getName(),
+            'control-panel.employees',
+        )">
+        {{ __('Employees') }}
+      </x-nav-link>
+    </div>
+  @endcanany
   @canany(['view_all_roles'])
     <div>
       <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"

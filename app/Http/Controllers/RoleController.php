@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,12 +11,12 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function create(): View|Factory
+    public function create(): View
     {
         return view('control-panel.roles.create');
     }
 
-    public function index(): View|Factory
+    public function index(): View
     {
         $data = Role::all();
 

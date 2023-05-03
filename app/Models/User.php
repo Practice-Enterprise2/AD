@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -153,5 +154,36 @@ class User extends Authenticatable implements MustVerifyEmail, ValidatesAttribut
     public function shipments(): HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    /**
+     * Return a collection of unique permissions granted to this user. This
+     * method takes all the ways permissions can be granted into account. The
+     * permissions are also flattened (which makes sure transitive permissions
+     * are expanded further to their granted subpermissions as well). Basically
+     * this returns all the permissions that would return `true` when asked
+     * 'does this user have this permission'.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<string, Permission>
+     */
+    public function get_permissions(): Collection
+    {
+        $flat_direct_permissions = new Collection;
+        $flat_role_permissions = new Collection;
+        $direct_permissions = $this->permissions;
+        foreach ($direct_permissions as $direct_permission) {
+            $flat_direct_permissions = $flat_direct_permissions->concat($direct_permission->flattened_down());
+        }
+        $role_permissions = $this->getPermissionsViaRoles();
+
+        /*
+         * @var \App\Models\Permission $role_permission
+         */
+        foreach ($role_permissions as $role_permission) {
+            $flat_role_permissions = $flat_role_permissions->concat($role_permission->flattened_down());
+        }
+        $flat_direct_permissions = $flat_direct_permissions->concat($flat_role_permissions);
+
+        return $flat_direct_permissions->unique();
     }
 }
