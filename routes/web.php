@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Models\Employee;
+use App\Models\JobVacancy;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -172,9 +173,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
-
-
-Route::view('/addJob', 'job-vacancies.add_job');
-Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('sendEmployeeComplaint.add');
+//job vacancies
+Route::view('/addJob', 'add_job')->name('job.add')->middleware('permission:edit_any_user_info');
+Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
 
 require __DIR__.'/auth.php';
