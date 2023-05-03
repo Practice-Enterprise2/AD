@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\BusinessCustomer;
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
-    public function getCustomers(): View|Factory
+    public function getCustomers(): View
     {
         $users = User::query()->whereNotIn('id', function ($query) {
             $query->select('user_id')
@@ -39,7 +38,7 @@ class CustomerController extends Controller
     /**
      * @param  mixed  $id
      */
-    public function edit($id): View|Factory
+    public function edit($id): View
     {
         $this->authorize('update', User::query()->findOrFail($id));
 

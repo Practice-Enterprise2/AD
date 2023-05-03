@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,13 +16,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class BusinessCustomer extends Model
+class BusinessCustomer extends Model implements ValidatesAttributes
 {
-    use SoftDeletes;
-
-    public const VALIDATION_RULE_USER_ID = ['required', 'min:1'];
+    use SoftDeletes, AppValidatesAttributes;
 
     public const VALIDATION_RULE_VAT_NUMBER = ['required', 'min:4'];
+
+    public const VALIDATION_RULES = [
+        'vat_number' => self::VALIDATION_RULE_VAT_NUMBER,
+    ];
 
     protected $fillable = [
         'vat_number',

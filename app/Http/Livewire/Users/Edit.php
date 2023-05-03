@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -22,7 +21,7 @@ class Edit extends Component
         $this->user = User::query()->findOrFail($user_id);
     }
 
-    public function render(): View|Factory
+    public function render(): View
     {
         return view('livewire.users.edit');
     }

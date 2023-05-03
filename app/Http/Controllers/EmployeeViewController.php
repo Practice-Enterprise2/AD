@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class EmployeeViewController extends Controller
 {
-    public function index(): View|Factory
+    public function index(): View
     {
         $users = FacadesDB::select('select * from employees');
 
@@ -68,7 +67,7 @@ class EmployeeViewController extends Controller
         return redirect()->back()->with('alert', 'Invalid IBAN!');
     }
 
-    public function store(Request $request): View|Factory
+    public function store(Request $request): View
     {
         if (! empty($_POST['naam']) && ! empty($_POST['password'])) {
             $name = htmlspecialchars($_POST['email']);
@@ -105,5 +104,5 @@ class EmployeeViewController extends Controller
     }
 }
 ?>
-    
+
 
