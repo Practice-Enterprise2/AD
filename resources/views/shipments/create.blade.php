@@ -301,10 +301,133 @@
           </div>
         </div>
         <button
-          class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          type="submit">Submit</button>
+          class="rounded-md bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
+          onclick="getAddress()">Check Address</button>
+        <button
+          class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+          type="submit" id="submitBtn" disabled>Submit</button>
+          <div class=" text-black">
+            <h2  id="addressInfo" class=" text-black"></h2>
+          </div>
+          
+          <div id="map" style="width:650px; height:450px;"></div>
     </div>
     </form>
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId"></script>
+      <script>
+			async function getAddress()
+			{
+        event.preventDefault();
+			const country = document.getElementsByName('source_country')[0].value;
+			const city = document.getElementsByName('source_city')[0].value;
+			const postalcode = document.getElementsByName('source_postalcode')[0].value;
+			const street = document.getElementsByName('source_street')[0].value;
+			const houseNumber = document.getElementsByName('source_housenumber')[0].value;
+      const address = street+ ' ' + houseNumber;
+			const tocountry = document.getElementsByName('destination_country')[0].value;
+			const tocity = document.getElementsByName('destination_city')[0].value;
+			const topostalcode = document.getElementsByName('destination_postalcode')[0].value;
+      const toStreet = document.getElementsByName('destination_street')[0].value;
+			const toSouseNumber = document.getElementsByName('destination_housenumber')[0].value;
+			const toAddress = toStreet+ ' ' + toSouseNumber;
+			let check = false;
+			let map;
+			let departurePin, destinationPin;
+      let departureInfo, destinationInfo;
+			if (country.trim() === '' || city.trim() === '' || postalcode.trim() === '' || address.trim() === '' || tocountry.trim() === '' || tocity.trim() === '' || topostalcode.trim() === '' || toAddress.trim() === '') {
+			alert('Please fill in all the fields');
+			} else {
+  // the rest of your code
+			await fetch(`https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(country)}&locality=${encodeURIComponent(city)}&postalCode=${encodeURIComponent(postalcode)}&addressLine=${encodeURIComponent(address)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`)
+			.then(response => response.json())
+			.then(data => {
+				// Extract the latitude and longitude from the response
+				if(data.resourceSets[0].resources.length > 0){
+					if(data.resourceSets[0].resources[0].confidence === "High" && data.resourceSets[0].resources[0].entityType === "Address")
+					{
+					const departureLat = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0];
+					const departureLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
+					console.log(data.resourceSets[0].resources[0]);
+					departureInfo = data.resourceSets[0].resources[0].address.formattedAddress
+
+
+					// // Create a pushpin for the departure location
+					departurePin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(departureLat, departureLng));
+					// map.entities.push(departurePin);
+
+					// Chain the second fetch call inside the first fetch call's callback
+					return fetch(`https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(tocountry)}&locality=${encodeURIComponent(tocity)}&postalCode=${encodeURIComponent(topostalcode)}&addressLine=${encodeURIComponent(toAddress)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`);
+					}
+					else
+					{
+					return alert("address not exists");
+					}
+				}
+				else
+				{ 
+					return alert("address not exists");
+				}
+			})
+			.then(response => {
+				if (!response) {
+					return 0;
+				}
+				return response.json();
+			})
+			.then(data => {
+				// Extract the latitude and longitude from the response
+				if(data)
+				{
+					if(data.resourceSets[0].resources.length > 0){
+						if(data.resourceSets[0].resources[0].confidence === "High" && data.resourceSets[0].resources[0].entityType === "Address")
+						{
+						const destinationLat = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0];
+						const destinationLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
+						console.log(data.resourceSets[0].resources[0]);
+            destinationInfo = data.resourceSets[0].resources[0].address.formattedAddress
+						check = true;
+						map = new Microsoft.Maps.Map("#map", {
+              credentials:'ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId',
+						center: new Microsoft.Maps.Location(destinationLat, destinationLng),
+						zoom: 12
+						});
+						// Create a pushpin for the destination location
+						destinationPin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(destinationLat, destinationLng));
+						map.entities.push(departurePin);
+
+						map.entities.push(destinationPin);
+
+						Microsoft.Maps.loadModule('Microsoft.Maps.SpatialMath', function() {
+							console.log(Microsoft.Maps.SpatialMath.getDistanceTo(departurePin.getLocation(), destinationPin.getLocation(), Microsoft.Maps.SpatialMath.DistanceUnits.Kilometers));
+							var locations = Microsoft.Maps.SpatialMath.getGeodesicPath([departurePin.getLocation(), destinationPin.getLocation()]);
+							var polyline = new Microsoft.Maps.Polyline(locations, { strokeThickness: 3 });
+							map.entities.push(polyline);
+						});
+						}
+						else
+						{
+							return alert("address not exists");
+						}
+					}
+					else
+					{
+						return alert("address not exists");
+					}
+				}
+			})
+			.catch(error => {
+				console.error(error);
+			});
+			if(check)
+			{
+				document.getElementById('submitBtn').disabled = false;
+        document.getElementById('addressInfo').textContent = "From: " + departureInfo + "To: " + destinationInfo ;
+			}
+			
+		}
+			
+		}
+		  </script>
   </div>
   </div>
 </x-app-layout>
