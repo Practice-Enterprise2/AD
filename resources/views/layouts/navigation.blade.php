@@ -139,6 +139,11 @@
         </x-dropdown>
       @endauth
       @auth
+          <x-nav-link :href="route('employeegraph')" :active="request()->routeIs('employeegraph')">
+            {{ __('Graphs') }}
+          </x-nav-link>
+      @endauth
+      @auth
         <x-nav-link :href="route('readreviews')">
           {{ __('Reviews') }}
         </x-nav-link>
