@@ -11,13 +11,13 @@
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <ol>
             @can(['view_all_users', 'edit_any_user_info'])
-              <li><a href="{{ route('users') }}">Users ></a></li>
+              <li><a href="{{ route('users') }}">Users &gt</a></li>
             @endcan
             @can(['view_all_users', 'edit_any_user_info'])
-              <li><a href="{{ route('customers') }}">Customers ></a></li>
+              <li><a href="{{ route('customers') }}">Customers &gt</a></li>
             @endcan
             @can(['view_all_roles', 'edit_roles'])
-              <li><a href="{{ route('roles') }}">Roles ></a></li>
+              <li><a href="{{ route('roles') }}">Roles &gt</a></li>
             @endcan
           </ol>
         </div>

@@ -9,6 +9,8 @@
         class="border hover:cursor-pointer dark:border-white">Last Name</th>
       <th wire:click="sort_by('email')"
         class="border hover:cursor-pointer dark:border-white">Email</th>
+      <th wire:click="sort_by('email')"
+        class="border hover:cursor-pointer dark:border-white">Permissions</th>
       <th class="border dark:border-white"></th>
     </tr>
     @foreach ($users as $user)
@@ -16,6 +18,13 @@
         <td class="border dark:border-white">{{ $user->name }}</td>
         <td class="border dark:border-white">{{ $user->last_name }}</td>
         <td class="border dark:border-white">{{ $user->email }}</td>
+        <td class="border dark:border-white">
+          <ul>
+            @foreach ($user->get_permissions() as $permission)
+              <li>{{ $permission->name }}</li>
+            @endforeach
+          </ul>
+        </td>
         <td class="border text-right dark:border-white"><a
             href="{{ route('control-panel.users.edit', ['user' => $user->id]) }}">Edit</a>
         </td>
