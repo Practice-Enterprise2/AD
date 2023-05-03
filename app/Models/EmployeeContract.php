@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,8 +16,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property ?\Illuminate\Support\Carbon $created_date
  * @property ?\Illuminate\Support\Carbon $updated_date
  */
-class EmployeeContract extends Model
+class EmployeeContract extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     protected $fillable = [
         'start_date',
         'end_date',

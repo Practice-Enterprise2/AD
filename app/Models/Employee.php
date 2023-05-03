@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,9 +22,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Employee extends Model
+class Employee extends Model implements ValidatesAttributes
 {
-    use HasApiTokens, Notifiable, SoftDeletes;
+    use HasApiTokens, Notifiable, SoftDeletes, AppValidatesAttributes;
 
     protected $table = 'employees';
 

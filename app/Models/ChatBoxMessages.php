@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class ChatBoxMessages extends Model
+class ChatBoxMessages extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     protected $fillable = [
         'content',
     ];

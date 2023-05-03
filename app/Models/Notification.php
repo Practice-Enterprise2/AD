@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -15,8 +17,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Notification extends Model
+class Notification extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     public $incrementing = false;
 
     protected $fillable = [

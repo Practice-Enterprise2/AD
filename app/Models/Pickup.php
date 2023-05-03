@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,9 +18,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Pickup extends Model
+class Pickup extends Model implements ValidatesAttributes
 {
-    use SoftDeletes;
+    use SoftDeletes, AppValidatesAttributes;
 
     public const VALIDATION_RULE_TIME = ['required'];
 

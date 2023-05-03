@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,9 +27,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $status
  * @property Dimension $dimension
  */
-class Shipment extends Model
+class Shipment extends Model implements ValidatesAttributes
 {
-    use SoftDeletes;
+    use SoftDeletes, AppValidatesAttributes;
 
     protected $fillable = [
         'shipment_date',

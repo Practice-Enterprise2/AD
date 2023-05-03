@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,8 +16,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property ?\Illumiate\Support\Carbon $created_at
  * @property ?\Illumiate\Support\Carbon $updated_at
  */
-class Waypoint extends Model
+class Waypoint extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     protected $fillable = [
         'status',
     ];

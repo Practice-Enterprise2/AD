@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,8 +14,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon $timestamp
  * @property string $path
  */
-class Log extends Model
+class Log extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     public $timestamps = false;
 
     // Can't set default date in $attributes as it's impossible to create as a

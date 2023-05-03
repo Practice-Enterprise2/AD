@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -16,8 +18,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Absence extends Model
+class Absence extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
+    const VALIDATION_RULES = [
+        'start_date' => ['before_or_equal:end_date'],
+    ];
+
     protected $fillable = [
         'start_date',
         'end_date',

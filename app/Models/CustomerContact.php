@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerContact extends Model
+class CustomerContact extends Model implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     protected $fillable = [
         'email',
         'subject',

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Spatie\Permission\Models\Role as SpatieRole;
 
 /**
@@ -12,8 +14,10 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Role extends SpatieRole
+class Role extends SpatieRole implements ValidatesAttributes
 {
+    use AppValidatesAttributes;
+
     protected $fillable = [
         'name',
         'description',
