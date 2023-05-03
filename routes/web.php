@@ -168,7 +168,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // employee graph
-    route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
+    Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
