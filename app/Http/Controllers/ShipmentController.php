@@ -51,6 +51,27 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
+        request()->validate([
+            'receiver_name' => 'string|required|max:255',
+            'receiver_email' => 'email|required',
+            'source_street' => 'required|string|max:255',
+            'source_housenumber' => 'required|string|max:255',
+            'source_postalcode' => 'required|string|max:255',
+            'source_city' => 'required|string|max:255',
+            'source_region' => 'required|string|max:255',
+            'source_country' => 'required|string|max:255',
+            'destination_street' => 'required|string|max:255',
+            'destination_housenumber' => 'required|string|max:255',
+            'destination_postalcode' => 'required|string|max:255',
+            'destination_city' => 'required|string|max:255',
+            'destination_region' => 'required|string|max:255',
+            'destination_country' => 'required|string|max:255',
+            'shipment_length' => 'required|numeric',
+            'shipment_width' => 'required|numeric',
+            'shipment_height' => 'required|numeric',
+            'shipment_weight' => 'required|numeric',
+            'handling_type' => 'required',
+        ]);
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,

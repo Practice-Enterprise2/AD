@@ -23,12 +23,18 @@
             for="receiver_name">Receiver Name</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
             type="text" id="receiver_name" name="receiver_name">
+            @error('receiver_name')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700"
             for="receiver_email">Receiver Email</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
             type="receiver_email" id="receiver_email" name="receiver_email">
+            @error('receiver_email')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
         {{--
                 $table->foreignId('source_address_id');
@@ -48,6 +54,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_country">
             </div>
+            @error('source_country')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -55,6 +64,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_postalcode">
             </div>
+            @error('source_postalcode')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -62,6 +74,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_city">
             </div>
+            @error('source_city')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -69,6 +84,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_region">
             </div>
+            @error('source_region')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -76,6 +94,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_street">
             </div>
+            @error('source_street')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -83,6 +104,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="source_housenumber">
             </div>
+            @error('source_housenumber')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
           </div>
         </div>
 
@@ -99,6 +123,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_country">
             </div>
+            @error('destination_country')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -106,6 +133,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_postalcode">
             </div>
+            @error('destination_postalcode')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -113,6 +143,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_city">
             </div>
+            @error('destination_city')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -120,6 +153,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_region">
             </div>
+            @error('destination_region')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -127,6 +163,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_street">
             </div>
+            @error('destination_street')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -134,6 +173,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="destination_housenumber">
             </div>
+            @error('destination_housenumber')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
           </div>
         </div>
         <div class="mb-4">
@@ -162,6 +204,9 @@
             </label>
           </div>
         </div>
+        @error('handling_type')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700">Package
             details</label>
@@ -173,6 +218,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_weight" id="shipment_weight">
             </div>
+            @error('shipment_weight')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Length:</label>
@@ -180,6 +228,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_length" id="shipment_length">
             </div>
+            @error('shipment_length')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Height:</label>
@@ -187,6 +238,9 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_height" id="shipment_height">
             </div>
+            @error('shipment_height')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Width:</label>
@@ -194,12 +248,16 @@
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_width" id="shipment_width">
             </div>
+            @error('shipment_width')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Expense:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_expense" id="shipment_expense">
+                
             </div>
             <div class="mb-2 flex">
               <label
