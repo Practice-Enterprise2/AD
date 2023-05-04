@@ -2,18 +2,38 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/*
- * Model for the `pickups` table.
+/**
+ * @property int $id
+ * @property Shipment $shipment
+ * @property Address $address
+ * @property \Illuminate\Support\Carbon $time
+ * @property string $status
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Pickup extends Model
+class Pickup extends Model implements ValidatesAttributes
 {
-    use SoftDeletes;
+    use SoftDeletes, AppValidatesAttributes;
 
     public const VALIDATION_RULE_TIME = ['required'];
+
+    public const VALIDATION_RULE_STATUS = ['in:pending,completed,canceled'];
+
+    public const VALIDATION_RULES = [
+        'time' => self::VALIDATION_RULE_TIME,
+        'status' => self::VALIDATION_RULE_STATUS,
+    ];
+
+    protected $attributes = [
+        'status' => 'pending',
+    ];
 
     protected $fillable = [
         'time',

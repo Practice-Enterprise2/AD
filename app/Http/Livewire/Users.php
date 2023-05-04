@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -35,7 +34,7 @@ class Users extends Component
         }
     }
 
-    public function render(): View|Factory
+    public function render(): View
     {
         $query = User::query()
             ->where('name', 'LIKE', "%$this->search%")

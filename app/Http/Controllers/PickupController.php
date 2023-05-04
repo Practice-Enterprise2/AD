@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -11,7 +10,7 @@ class PickupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|Factory
+    public function index(): View
     {
         return view('pickup_list');
     }
@@ -19,7 +18,7 @@ class PickupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(int|null $shipment_id = null): View|Factory
+    public function create(int|null $shipment_id = null): View
     {
         return view('pickup_creation_form', [
             'shipment_id' => $shipment_id,
@@ -44,7 +43,7 @@ class PickupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $pickup_id): View|Factory
+    public function edit(int $pickup_id): View
     {
         return view('pickup_edit', [
             'pickup_id' => $pickup_id,
