@@ -36,7 +36,7 @@ class Dimension extends Model implements ValidatesAttributes
         'height',
     ];
 
-    public function shipments(): HasMany
+    public function shipments()
     {
         return $this->hasMany(Shipment::class);
     }
