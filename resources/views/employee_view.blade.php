@@ -23,7 +23,6 @@
     <a id="newemployee" href="{{ route('employee.create') }}">new employee</a>
     @foreach ($users as $user)
       <div class="userpanel">
-
         <p>ID: {{ $user->id }}</p>
         <p>first name: {{ $user->firstName }}</p>
         <p>last name: {{ $user->lastName }}</p>
@@ -31,4 +30,5 @@
         <p>province: {{ $user->province }}</p>
       </div>
     @endforeach
+  </div>
 </x-app-layout>

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         AppServiceProvider::bootstrap_database();
         $this->call([
             PositionTableSeeder::class,
+            EmployeeTableSeeder::class,
         ]);
     }
 }

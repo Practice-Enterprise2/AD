@@ -14,6 +14,8 @@ class EmployeeTableSeeder extends Seeder
      */
     public function run()
     {
+
+        
         Employee::create([
             'user_id' => 1,
             'dateOfBirth' => '1990-01-01',

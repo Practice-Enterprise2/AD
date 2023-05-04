@@ -7,8 +7,7 @@ use Illuminate\Database\Seeder;
 
 class ShiftsTableSeeder extends Seeder
 {
-    public function run()
-{
+public function run(){
     DB::table('shifts')->insert([
         [
             'employee_id' => 1,

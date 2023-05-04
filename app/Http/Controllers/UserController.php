@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Position;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -42,7 +43,7 @@ class UserController extends Controller
         return response()->json([
             'name' => $user->name,
             'email' => $user->email,
-            'role' => $role->name,
+            //'role' => $role->name,
         ]);
     }
 

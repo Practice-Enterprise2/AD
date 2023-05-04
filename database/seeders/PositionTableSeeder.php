@@ -14,8 +14,6 @@ class PositionTableSeeder extends Seeder
      */
     public function run(): void
     {
-
-
         DB::table('positions')->insert([
             [
                 'id' => '1',

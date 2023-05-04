@@ -6,6 +6,7 @@ use App\Models\Shift;
 use App\Models\Employee;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Position;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use DateTime;
@@ -43,6 +44,8 @@ class ShiftsController extends Controller
     
         //Retrieve all users
         $users = User::all(); // Retrieve all users
+
+        $positions = Position::all();
         
         // Create an empty array to hold the shifts for each employee
         $shiftsByEmployee = [];
@@ -69,7 +72,8 @@ class ShiftsController extends Controller
             'date' => $dateTime->format('Y-m-d'),
             'shiftsByEmployee' => $shiftsByEmployee,
             'employees' => $employees,
-            'users' => $users
+            'users' => $users,
+            'positions' => $positions,
         ]);
     }
     /**
