@@ -80,15 +80,8 @@
           <form action="contract_list" method="GET">
             @csrf
             <div>
-              <p><label for="filter">Search contract id:</label></p>
               <p><input type="text" id="filter" name="filter"
                   placeholder="contract id..."></p>
-              <p><label for="filter1">Search by depart location:</label></p>
-              <p><input type="text" id="filter1" name="filter1"
-                  placeholder="depart location..."></p>
-              <p><label for="filter2">Search by destination location:</label></p>
-              <p><input type="text" id="filter2" name="filter2"
-                  placeholder="destination location..."></p>
               <p><label for="active">active contracts:</label></p>
               <p><label for="c_active">active</label><input type="checkbox"
                   id="c_active" name="c_active"><label
@@ -134,16 +127,6 @@
       </div>
     </main>
     <!--Main layout-->
-    <div>
-      <p><label for="filter">Search contract id:</label></p>
-      <p><input type="text" id="filter" name="filter" placeholder="contract id..."></p>
-      <p><label for="filter1">Search by depart location:</label></p>
-      <p><input type="text" id="filter1" name="filter1" placeholder="depart location..."></p>
-      <p><label for="filter2">Search by destination location:</label></p>
-      <p><input type="text" id="filter2" name="filter2" placeholder="destination location..."></p>
-      <p><label for="active">active contracts:</label></p>
-      <p><label for="c_active">active</label><input type="checkbox" id="c_active" name="c_active"><label for="c_inactive">inactive</label><input type="checkbox" id="c_inactive" name="c_inactive"></p>
 
-    </div>
   </div>
 @endsection
