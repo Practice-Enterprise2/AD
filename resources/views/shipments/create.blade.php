@@ -22,13 +22,15 @@
           <label class="mb-2 block font-medium text-gray-700"
             for="receiver_name">Receiver Name</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
-            type="text" id="receiver_name" name="receiver_name" value = "{{ old ('receiver_name') }}">
+            type="text" id="receiver_name" name="receiver_name"
+            value="{{ old('receiver_name') }}">
         </div>
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700"
             for="receiver_email">Receiver Email</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
-            type="receiver_email" id="receiver_email" name="receiver_email" value = "{{ old ('receiver_email') }}">
+            type="receiver_email" id="receiver_email" name="receiver_email"
+            value="{{ old('receiver_email') }}">
         </div>
         {{--
                 $table->foreignId('source_address_id');
@@ -46,42 +48,48 @@
                 class="inline-flex w-1/3 items-center text-black">Country:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_country" value = "{{ old ('source_country') }}">
+                type="text" name="source_country"
+                value="{{ old('source_country') }}">
             </div>
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_postalcode" value = "{{ old ('source_postalcode') }}">
+                type="text" name="source_postalcode"
+                value="{{ old('source_postalcode') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_city" value = "{{ old ('source_city') }}">
+                type="text" name="source_city"
+                value="{{ old('source_city') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_region" value = "{{ old ('source_region') }}">
+                type="text" name="source_region"
+                value="{{ old('source_region') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_street" value = "{{ old ('source_street') }}">
+                type="text" name="source_street"
+                value="{{ old('source_street') }}">
             </div>
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_housenumber" value = "{{ old ('source_housenumber') }}">
+                type="text" name="source_housenumber"
+                value="{{ old('source_housenumber') }}">
             </div>
           </div>
         </div>
@@ -97,42 +105,48 @@
                 class="inline-flex w-1/3 items-center text-black">Country:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_country" value = "{{ old ('destination_country') }}">
+                type="text" name="destination_country"
+                value="{{ old('destination_country') }}">
             </div>
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_postalcode" value = "{{ old ('destination_postalcode') }}">
+                type="text" name="destination_postalcode"
+                value="{{ old('destination_postalcode') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_city" value = "{{ old ('destination_city') }}">
+                type="text" name="destination_city"
+                value="{{ old('destination_city') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_region" value = "{{ old ('destination_region') }}">
+                type="text" name="destination_region"
+                value="{{ old('destination_region') }}">
             </div>
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_street" value = "{{ old ('destination_street') }}">
+                type="text" name="destination_street"
+                value="{{ old('destination_street') }}">
             </div>
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_housenumber" value = "{{ old ('destination_housenumber') }}">
+                type="text" name="destination_housenumber"
+                value="{{ old('destination_housenumber') }}">
             </div>
           </div>
         </div>
@@ -142,7 +156,7 @@
           <div class="flex flex-col">
             <label class="inline-flex items-center">
               <input type="radio" class="form-radio" name="handling_type[]"
-                value="Standart">
+                value="Standart" checked>
               <span class="ml-2 text-black">Standard</span>
             </label>
             <label class="inline-flex items-center">
@@ -171,7 +185,8 @@
                 weight:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_weight" id="shipment_weight" value = "{{ old ('shipment_weight') }}"
+                type="text" name="shipment_weight" id="shipment_weight"
+                value="{{ old('shipment_weight') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
@@ -179,7 +194,8 @@
                 class="inline-flex w-1/3 items-center text-black">Length:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_length" id="shipment_length" value = "{{ old ('shipment_length') }}"
+                type="text" name="shipment_length" id="shipment_length"
+                value="{{ old('shipment_length') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
@@ -187,7 +203,8 @@
                 class="inline-flex w-1/3 items-center text-black">Height:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_height" id="shipment_height" value = "{{ old ('shipment_height') }}"
+                type="text" name="shipment_height" id="shipment_height"
+                value="{{ old('shipment_height') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
@@ -195,7 +212,8 @@
                 class="inline-flex w-1/3 items-center text-black">Width:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="shipment_width" id="shipment_width" value = "{{ old ('shipment_width') }}"
+                type="text" name="shipment_width" id="shipment_width"
+                value="{{ old('shipment_width') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">

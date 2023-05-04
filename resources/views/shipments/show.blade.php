@@ -252,25 +252,25 @@
             {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
           </div>
           @can('view_general_employee_content')
-          <div class="mb-2 flex justify-end">
-            <form action="{{ route('shipments.edit', $shipment->id) }}"
-              method="GET">
-              @csrf
-              <button
-                class="me-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                type="submit">
-                Edit</button>
-            </form>
-            <form action="{{ route('shipments.destroy', $shipment->id) }}"
-              method="POST">
-              @csrf
-              @method('DELETE')
-              <button
-                class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                type="submit">
-                Delete</button>
-            </form>
-          </div>
+            <div class="mb-2 flex justify-end">
+              <form action="{{ route('shipments.edit', $shipment->id) }}"
+                method="GET">
+                @csrf
+                <button
+                  class="me-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  type="submit">
+                  Edit</button>
+              </form>
+              <form action="{{ route('shipments.destroy', $shipment->id) }}"
+                method="POST">
+                @csrf
+                @method('DELETE')
+                <button
+                  class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  type="submit">
+                  Delete</button>
+              </form>
+            </div>
           @endcan
         </div>
 
