@@ -147,12 +147,6 @@ class ShipmentController extends Controller
         return view('/shipments.requests', compact('shipments'));
     }
 
-    public function dashboard(): View
-    {
-        $shipments = Shipment::all();
-        return view('/shipments.dashboard', compact('shipments'));
-    }
-
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
@@ -301,4 +295,21 @@ class ShipmentController extends Controller
     }
 
     // Dashboard Function
+    public function dashboard(): View
+    {
+        $shipments = Shipment::all();
+
+        // Gathering count of each status
+        $countAwaConf = DB::select("SELECT COUNT('id') FROM shipments WHERE status = 'Awaiting Confirmation'");
+        $countAwaPick = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Awaiting Pickup'");
+        $countInTran = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'In Transit'");
+        $countOutFDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Out For Delivery'");
+        $countDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Delivered'");
+        $countEx = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Exeption'");
+        $countHaL = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Held At Location'");
+        $countDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Deleted'");
+        $countDec = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Declined'");
+
+        return view('/shipments.dashboard',['totAwaConf' => $countAwaConf, 'totAwaPick' => $countAwaPick, 'countInTran' => $countInTran, 'countOutFDel' => $countOutFDel, 'countDel' => $countDel, 'countEx' => $countEx, 'countHaL' => $countHaL, 'CountDel' => $countDel, 'countDel' => $countDel ], compact('shipments'));
+    }
 }
