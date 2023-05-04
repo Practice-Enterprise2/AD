@@ -147,6 +147,12 @@ class ShipmentController extends Controller
         return view('/shipments.requests', compact('shipments'));
     }
 
+    public function dashboard(): View
+    {
+        $shipments = Shipment::all();
+        return view('/shipments.dashboard', compact('shipments'));
+    }
+
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {

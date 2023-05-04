@@ -122,6 +122,9 @@
             </x-slot>
 
             <x-slot name="content">
+              <x-dropdown-link :href="route('shipments.dashboard')">
+                {{ __('Shipment Dashboard') }}
+              </x-dropdown-link>
               <x-dropdown-link :href="route('shipments.create')">
                 {{ __('Request Shipment') }}
               </x-dropdown-link>
@@ -142,6 +145,7 @@
               <x-dropdown-link :href="route('complaints.messages')">
                 {{ __('messages') }}
               </x-dropdown-link>
+
             </x-slot>
           </x-dropdown>
         @endauth

@@ -20,6 +20,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
+use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -126,6 +127,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
+    Route::get('/shdipments/dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit');
