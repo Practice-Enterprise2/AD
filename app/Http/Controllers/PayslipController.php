@@ -143,14 +143,14 @@ class PayslipController extends Controller
 
             //get employee_contract from employee
             $employeeContract = DB::table('employee_contracts')
-                                ->where('employee_id', $employee_id)
-                                ->where(function ($query) {
-                                    $now = Carbon::now()->toDateString();
+                ->where('employee_id', $employee_id)
+                ->where(function ($query) {
+                    $now = Carbon::now()->toDateString();
 
-                                    $query->WhereNull('end_date')
-                                    ->orwhereDate('end_date', '>=', $now);
-                                })
-                                ->first();
+                    $query->WhereNull('end_date')
+                        ->orwhereDate('end_date', '>=', $now);
+                })
+                ->first();
             $contract_id = $employeeContract->id;
 
             //get last possible day that an absence can be approved for this months payslip
@@ -159,11 +159,11 @@ class PayslipController extends Controller
 
             //get all absences that have been taken this year by the employee
             $takenAbsences = DB::table('absences')
-                                    ->where('contract_id', $contract_id)
-                                    ->where('status', 'taken')
-                                    ->where('approval_time', '<=', $lastdayForTaken)
-                                    ->where('end_date', '>=', $startYear)
-                                    ->get();
+                ->where('contract_id', $contract_id)
+                ->where('status', 'taken')
+                ->where('approval_time', '<=', $lastdayForTaken)
+                ->where('end_date', '>=', $startYear)
+                ->get();
 
             $takenHolidays = 0;
             $takenSickdays = 0;
@@ -184,14 +184,14 @@ class PayslipController extends Controller
 
             //get all taken or approved absences this month and unaccounted ones from last month
             $absencesThisMonth = DB::table('absences')
-                                    ->where('contract_id', $contract_id)
-                                    ->where('start_date', '<=', $endMonth->toDateString())
-                                    ->where('end_date', '>', $lastdayForTaken->toDateString())
-                                    ->where(function ($query) {
-                                        $query->where('status', 'taken')
-                                        ->orWhere('status', 'approved');
-                                    })
-                                    ->get();
+                ->where('contract_id', $contract_id)
+                ->where('start_date', '<=', $endMonth->toDateString())
+                ->where('end_date', '>', $lastdayForTaken->toDateString())
+                ->where(function ($query) {
+                    $query->where('status', 'taken')
+                        ->orWhere('status', 'approved');
+                })
+                ->get();
 
             $unaccountedHolidays = 0;
             $unaccountedSickdays = 0;
@@ -242,9 +242,9 @@ class PayslipController extends Controller
 
             //get how many absences an employee gets paid
             $allowedAbsences = DB::table('holiday_saldos')
-                                    ->where('contract_id', $contract_id)
-                                    ->where('year', Carbon::now()->format('Y'))
-                                    ->get();
+                ->where('contract_id', $contract_id)
+                ->where('year', Carbon::now()->format('Y'))
+                ->get();
 
             $unpaidAbsence = 0;
 
@@ -334,8 +334,8 @@ class PayslipController extends Controller
 
             //get user account from employee
             $user = DB::table('users')
-                    ->where('id', $employee->user_id)
-                    ->first();
+                ->where('id', $employee->user_id)
+                ->first();
             $mail = $user->email;
             $name = $user->name.' '.$user->last_name;
 
@@ -348,8 +348,8 @@ class PayslipController extends Controller
             //send mail with payslip in attachement
             Mail::send(['mail' => 'mail.test_mail'], $data, function ($message) use ($mail, $name) {
                 $message->to($mail, $name)
-                        ->subject('payslip '.date('d/m/Y'))
-                        ->text('Dear '.$name.",\n\nIn the attachments you can find your payslip for the past month.\n\nRegards,\nYour HR team");
+                    ->subject('payslip '.date('d/m/Y'))
+                    ->text('Dear '.$name.",\n\nIn the attachments you can find your payslip for the past month.\n\nRegards,\nYour HR team");
                 $message->attach(storage_path().'\app\storage\pdf\payslip'.date('m-Y').'.pdf');
             });
 
