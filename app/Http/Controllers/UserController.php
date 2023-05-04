@@ -26,7 +26,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param  mixed  $id
+     * @param mixed  $id
      */
     public function update(Request $request, $id): JsonResponse
     {

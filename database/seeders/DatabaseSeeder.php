@@ -15,5 +15,8 @@ class DatabaseSeeder extends Seeder
         // This always needs to run when the database is regenerated, even in
         // production (which is done automatically)!
         AppServiceProvider::bootstrap_database();
+        $this->call([
+            PositionTableSeeder::class,
+        ]);
     }
 }
