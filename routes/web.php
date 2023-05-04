@@ -181,7 +181,7 @@ Route::get('/paymentSuccess', function () {
 
 // Depot routes
 
-Route::get('/DepotManagement', [DepotController::class, 'index']);
+Route::get('/DepotManagement', [DepotController::class, 'index'])->name('Depots');
 
 Route::get('depotoverview/{key}', [DepotController::class, 'overviewperDepot']);
 

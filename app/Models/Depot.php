@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use illuminate\Database\Eloquent\SoftDeletes;   
+use illuminate\Database\Eloquent\SoftDeletes;
 
 class Depot extends Model
 {
     use HasFactory, SoftDeletes;
-    
+
     protected $table = 'depots';
 
     protected $fillable = [
@@ -19,5 +19,4 @@ class Depot extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
 }

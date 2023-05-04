@@ -27,6 +27,11 @@
               {{ __('Employee') }}
             </x-nav-link>
           @endcan
+          @auth
+            <x-nav-link :href="route('Depots')" :active="request()->routeIs('Depots')">
+              {{ __('Depots') }}
+            </x-nav-link>
+          @endauth
           @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
             'view_detailed_server_info', 'edit_roles'])
             <x-nav-link :href="route('control-panel')" :active="str_starts_with(
@@ -246,6 +251,11 @@
           {{ __('Employee') }}
         </x-responsive-nav-link>
       @endcan
+      @auth
+        <x-responsive-nav-link :href="route('Depots')" :active="request()->routeIs('Depots')">
+          {{ __('Depots') }}
+        </x-responsive-nav-link>
+      @endauth
       @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
         'view_detailed_server_info', 'edit_roles'])
         <x-responsive-nav-link :href="route('control-panel')" :active="str_starts_with(

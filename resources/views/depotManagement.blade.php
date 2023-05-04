@@ -12,13 +12,12 @@
                     $var = $data->created_at;
                 }
                 if ($data->updated_at > $var) {
-                $var = $data->updated_at;
+                    $var = $data->updated_at;
                 }
                 if ($data->deleted_at > $var) {
-                  $var = $data-deleted_at;
+                    $var = $data - deleted_at;
                 }
             }
-            
         }
         
       @endphp
@@ -41,26 +40,27 @@
       <div class="showItemDiv">
         <!-- VB hard coded example-->
         @foreach ($depots as $data)
-          @if ($data->deleted_at == NULL)
-          <div class="airportCard">
-            <div class="dataCard">
-              <div class="name">{{ $data->code }}</div>
-              <div class="location">{{ $data->addressid }}</div>
-              <div class="size">{{ $data->size }}</div>
-              <div class="size">{{ $data->amountFilled }}</div>
-              <div><a href="{{ url('depotoverview/' . $data->id) }}">Details</a>
+          @if ($data->deleted_at == null)
+            <div class="airportCard">
+              <div class="dataCard">
+                <div class="name">{{ $data->code }}</div>
+                <div class="location">{{ $data->addressid }}</div>
+                <div class="size">{{ $data->size }}</div>
+                <div class="size">{{ $data->amountFilled }}</div>
+                <div><a
+                    href="{{ url('depotoverview/' . $data->id) }}">Details</a>
+                </div>
+              </div>
+
+              <div class="relButtons">
+                <a href="{{ url('editDepot/' . $data->id) }}">
+                  <div class="editButton"> Edit </div>
+                </a>
+                <a href="{{ url('deleteDepot/' . $data->id) }}">
+                  <div class="deleteButton"> Delete </div>
+                </a>
               </div>
             </div>
-
-            <div class="relButtons">
-              <a href="{{ url('editDepot/' . $data->id) }}">
-                <div class="editButton"> Edit </div>
-              </a>
-              <a href="{{ url('deleteDepot/' . $data->id) }}">
-                <div class="deleteButton"> Delete </div>
-              </a>
-            </div>
-          </div>
           @endif
         @endforeach
 
