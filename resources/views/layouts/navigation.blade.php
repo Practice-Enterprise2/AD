@@ -125,7 +125,7 @@
               <x-dropdown-link :href="route('shipments.create')">
                 {{ __('Request Shipment') }}
               </x-dropdown-link>
-              @can('view_shipment_edit')
+              @can('edit_all_shipments')
                 <x-dropdown-link :href="route('shipments.requests')">
                   {{ __('Evaluate Shipment Requests') }}
                 </x-dropdown-link>
