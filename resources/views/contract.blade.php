@@ -144,6 +144,7 @@ if (!isset($_GET["q"]))
     </table>
   </form>
 
+
   <?php
         if (isset($_GET["q"]))
         {
@@ -204,7 +205,7 @@ if (!isset($_GET["q"]))
               id="departure_airport_select">
               @foreach ($airports as $airport)
                 <option <?php
-                if ($contracts[0]->depart_location == $airport->id) {
+                if ($contracts[0]->depart_airport_id == $airport->id) {
                     echo ' selected ';
                 }
                 ?> value="{{ $airport->id }}">
@@ -220,7 +221,7 @@ if (!isset($_GET["q"]))
               id="destination_airport_select">
               @foreach ($airports as $airport)
                 <option <?php
-                if ($contracts[0]->destination_location == $airport->id) {
+                if ($contracts[0]->destination_airport_id == $airport->id) {
                     echo ' selected ';
                 }
                 ?>value="{{ $airport->id }}">
