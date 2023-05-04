@@ -20,11 +20,9 @@ class EmployeeViewController extends Controller
 
     public function employeeEdit()
     {
-
         $idforedit = $_POST['employeeId'];
 
         return view('employee_edit', ['theid' => $idforedit]);
-
     }
 
     public function index(): View
@@ -44,7 +42,6 @@ class EmployeeViewController extends Controller
             $comboArray[$i][5] = $employees[$i]->dateOfBirth;
             $comboArray[$i][6] = $employees[$i]->jobTitle;
             $comboArray[$i][7] = $employees[$i]->salary;
-
         }
 
         return view('employee_view', ['employees' => $comboArray]);
