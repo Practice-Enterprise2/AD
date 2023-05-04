@@ -3,7 +3,7 @@
     Control Panel - Groups
   </x-slot:title>
 
-  <x-control-panel-layout>
+  <x-control-panel-layout :always_show_title="true">
     <x-slot:title>
       {{ __('Create Group') }}
     </x-slot:title>

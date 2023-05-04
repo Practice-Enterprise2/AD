@@ -4,19 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Address;
-use App\Models\Dimensions;
+use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
-use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse; // Traits for invoices
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,7 +23,7 @@ class ShipmentController extends Controller
 {
     use Invoices;
 
-    public function index(): View|Factory
+    public function index(): View
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
             ->whereNot('status', 'Declined')
@@ -35,7 +34,7 @@ class ShipmentController extends Controller
     }
 
     //create
-    public function create(): View|Factory
+    public function create(): View
     {
         // Generate list of dates for the next 7 days
         $deliveryDateStart = (new DateTime())->modify('+2 days');
@@ -51,7 +50,6 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
-
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
@@ -104,8 +102,8 @@ class ShipmentController extends Controller
         $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
-        //Dimensions
-        $dimensions = new Dimensions();
+        // Dimensions
+        $dimensions = new Dimension();
         $dimensions->length = request()->shipment_length;
         $dimensions->width = request()->shipment_width;
         $dimensions->height = request()->shipment_height;
@@ -134,13 +132,13 @@ class ShipmentController extends Controller
         //After the shipment has been created, we will generate an invoice with the following Trait
         $this->generateInvoice();
 
-        $last_invoice = Invoice::orderBy('id', 'desc')->first();
+        $last_invoice = Invoice::query()->orderBy('id', 'desc')->first();
         $last_invoice_id = $last_invoice->id;
         //Send mail
         return redirect()->route('mail.invoices', ['invoice' => $last_invoice_id]);
     }
 
-    public function requests(): View|Factory
+    public function requests(): View
     {
         // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
@@ -163,12 +161,12 @@ class ShipmentController extends Controller
         }
     }
 
-    public function edit(Shipment $shipment)
+    public function edit(Shipment $shipment): View
     {
         return view('shipments.edit', compact('shipment'));
     }
 
-    public function update(Request $request, Shipment $shipment)
+    public function update(Request $request, Shipment $shipment): Redirector|RedirectResponse
     {
         $source_address = Address::query()->where([
             'id' => $shipment->source_address_id,
@@ -213,59 +211,23 @@ class ShipmentController extends Controller
             ->with('success', 'Shipment updated successfully');
     }
 
-    public function destroy(Shipment $shipment)
+    public function destroy(Shipment $shipment): Redirector|RedirectResponse
     {
-        // We can't delete the shipment completely, because we are using SoftDeletes.
-        // Because of this we will have shipment data in the database, but we will not be able to see it.
-        // Also we will not be able to delete the addresses, because they are used in the shipment.
-        // If we remove the SoftDeletes from the Shipment model, we will be able to delete the shipment and the addresses.
-        // If you uncomment the lines below, you will be able to delete the shipment and the addresses after removing the SoftDeletes from the Shipment model.
-
-        // $source_address = Address::query()->where([
-        //     'id' => $shipment->source_address_id,
-        // ])->first();
-
-        // $destination_address = Address::query()->where([
-        //     'id' => $shipment->destination_address_id,
-        // ])->first();
-
-        // foreach ($waypoints as $waypoint) {
-        //     $waypoint_address[] = Address::query()->where([
-        //         'id' => $waypoint->current_address_id,
-        //     ])->first();
-        // }
-
-        // $waypoints = Waypoint::query()->where([
-        //     'shipment_id' => $shipment->id,
-        // ])->get();
-
-        // foreach ($waypoints as $waypoint) {
-        //     $waypoint->delete();
-        // }
-
         $shipment->status = 'Deleted';
         $shipment->update();
         $shipment->delete();
-
-        // $source_address->delete();
-        // $destination_address->delete();
-
-        // foreach ($waypoint_address as $address) {
-        //     $address->delete();
-        // }
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment deleted successfully');
     }
 
-    public function show(Shipment $shipment)
+    public function show(Shipment $shipment): View
     {
         return view('shipments.show', compact('shipment'));
     }
 
-    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse
+    public function sendInvoiceMail(Invoice $invoice): View|RedirectResponse
     {
-
         $subject = 'Your invoice for your latest shipment.';
         $user_id = auth()->user()->id;
         $emailke = auth()->user()->email;
@@ -295,7 +257,7 @@ class ShipmentController extends Controller
 
     // Bing Maps Locations API
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
-    public function track()
+    public function track(): View
     {
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
@@ -330,7 +292,6 @@ class ShipmentController extends Controller
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-
     }
 }
 

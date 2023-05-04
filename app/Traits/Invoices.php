@@ -11,7 +11,6 @@ trait Invoices
 {
     public function generateUniqueCode()
     {
-
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersNumber = strlen($characters);
         $codeLength = 6;

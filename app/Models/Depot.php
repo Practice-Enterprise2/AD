@@ -2,21 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
-use illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Depot extends Model
+/**
+ * @property int $id
+ * @property string $code
+ * @property Address $address
+ * @property int $size
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ */
+class Depot extends Model implements ValidatesAttributes
 {
-    use HasFactory, SoftDeletes;
+    use AppValidatesAttributes;
 
-    protected $table = 'depots';
+    public const VALIDATION_RULE_CODE = ['required'];
+
+    public const VALIDATION_RULE_SIZE = ['required', 'numeric'];
+
+    public const VALIDATION_RULES = [
+        'code' => self::VALIDATION_RULE_CODE,
+        'size' => self::VALIDATION_RULE_SIZE,
+    ];
 
     protected $fillable = [
         'code',
         'size',
-        'amountfilled',
     ];
 
-    protected $dates = ['deleted_at'];
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
 }
