@@ -6,6 +6,8 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::preventsSilentlyDiscardingAttributes(! App::isProduction());
+
         // A gate that allows anything for users with the admin role.
         Gate::after(function ($user, $ability) {
             return $user->hasRole('admin'); // note this returns boolean
@@ -50,10 +54,12 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_roles', 'View all the roles.');
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
         static::bootstrap_permission('view_all_users', 'View all the users.');
+        static::bootstrap_permission('view_all_employees', 'View all the employees.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
         static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
+        static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
 
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
@@ -63,11 +69,13 @@ class AppServiceProvider extends ServiceProvider
         $role_user = static::bootstrap_role('user');
 
         $role_employee->givePermissionTo('view_general_employee_content');
+        $role_employee->givePermissionTo('view_all_complaints');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
+        $role_employee_hr->givePermissionTo('view_all_employees');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');

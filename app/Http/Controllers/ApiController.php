@@ -22,7 +22,6 @@ class ApiController extends Controller
         $response = Http::get('https://airlabs.co/api/v9/suggest', [
             'api_key' => $airlabsKey,
             'query' => $search,
-
         ]);
 
         return collect($response['response']['airports'])

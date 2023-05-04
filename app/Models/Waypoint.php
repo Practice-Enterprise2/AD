@@ -2,16 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Waypoint extends Model
+/**
+ * @property int $id
+ * @property Shipment $shipment
+ * @property Address $current_address
+ * @property Address $next_address
+ * @property string $status
+ * @property ?\Illumiate\Support\Carbon $created_at
+ * @property ?\Illumiate\Support\Carbon $updated_at
+ */
+class Waypoint extends Model implements ValidatesAttributes
 {
-    use HasFactory;
+    use AppValidatesAttributes;
+
+    public const VALIDATION_RULE_STATUS = ['required', 'in:In Transit,Out For Delivery,Delivered,Exception'];
+
+    public const VALIDATION_RULES = [
+        'status' => self::VALIDATION_RULE_STATUS,
+    ];
 
     protected $fillable = [
-        // implement later.
+        'status',
     ];
 
     public function shipment(): BelongsTo

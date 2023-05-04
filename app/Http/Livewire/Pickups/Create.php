@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Pickups;
 use App\Models\Address;
 use App\Models\Pickup;
 use App\Models\Shipment;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +87,7 @@ class Create extends Component
         return redirect()->to('home');
     }
 
-    public function render(): View|Factory
+    public function render(): View
     {
         return view('livewire.pickups.create');
     }
