@@ -241,9 +241,12 @@ Route::get('contractsMenu', function () {
 Route::get('airportList', [AirportController::class, 'airportFiltering']);
 
 // Add, delete and edit airportList
-Route::post('airportList', [AirportController::class, 'addAirport']);
-Route::get('deleteAirport/{iataCode}', [AirportController::class, 'deleteAirport']);
-Route::get('editAirport/{iataCode}', [AirportController::class, 'editAirport']);
+Route::get('addAirportList', function () { 
+    return view('addAirportList');
+});
+Route::post('airportList/add', [AirportController::class, 'addAirport']);
+Route::get('deleteAirport/{id}', [AirportController::class, 'deleteAirport']);
+Route::get('editAirport/{id}', [AirportController::class, 'editAirport']);
 Route::post('editAirport', [AirportController::class, 'updateAirport']);
 
 Route::post('plaats', [newcontractcontroller::class, 'plaats']);

@@ -33,41 +33,40 @@ class AirportController extends Controller
     public function addAirport(Request $request)
     {
         $addItem = new airport;
-        $addItem->airportName = $request->airportName;
-        $addItem->iataCode = $request->iataCode;
-        $addItem->stateCode = $request->stateCode;
-        $addItem->countryCode = $request->countryCode;
-        $addItem->countryName = $request->countryName;
+        $addItem->iata_code = $request->iata_code;
+        $addItem->name = $request->name;
+        $addItem->land = $request->land;
+        $addItem->address_id = $request->address_id;
 
         $addItem->save();
 
         return redirect('airportList');
     }
 
-    public function deleteAirport($iataCode)
+    public function deleteAirport($id)
     {
-        $data = airport::find($iataCode);
-        $data->delete();
-
+        $data = airport::find($id);
+        $data->deleted_at = \Carbon\Carbon::now()->toDateTimeString();
+        $data->save();
         return redirect('airportList');
     }
 
-    public function editAirport($iataCode)
+    public function editAirport($id)
     {
-        $data = airport::find($iataCode);
+        $data = airport::find($id);
 
         return view('editAirportList', ['data' => $data]);
     }
 
     public function updateAirport(Request $request)
     {
-        $updateItem = airport::find($request->iataCode);
+        $updateItem = airport::find($request->id);
 
-        $updateItem->airportName = $request->airportName;
+        $updateItem->iata_code = $request->iata_code;
+        $updateItem->name = $request->name;
 
-        $updateItem->stateCode = $request->stateCode;
-        $updateItem->countryCode = $request->countryCode;
-        $updateItem->countryName = $request->countryName;
+        $updateItem->land = $request->land;
+        $updateItem->address_id = $request->address_id;
 
         $updateItem->save();
 

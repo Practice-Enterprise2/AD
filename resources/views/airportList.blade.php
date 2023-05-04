@@ -92,11 +92,11 @@
 
           <table border="1">
             <thead>
+              <th>@sortablelink('id', 'ID')</th>
+              <th>@sortablelink('iata_code', 'IATA Code')</th>
               <th>@sortablelink('name', 'Name')</th>
-              <th>@sortablelink('iataCode', 'IATA Code')</th>
-              <th>@sortablelink('stateCode', 'State Code')</th>
-              <th>@sortablelink('countryCode', 'Country Code')</th>
-              <th>@sortablelink('countryName', 'Country Name')</th>
+              <th>@sortablelink('land', 'Country')</th>
+              <th>@sortablelink('address_id', 'Address ID')</th>
               <th>Actions</th>
             </thead>
             <tbody>
@@ -108,18 +108,19 @@
               @endif
 
               @foreach ($airports as $airport)
-                <tr>
-                  <td>{{ $airport['name'] }}</td>
-                  <td>{{ $airport['iataCode'] }}</td>
-                  <td>{{ $airport['stateCode'] }}</td>
-                  <td>{{ $airport['countryCode'] }}</td>
-                  <td>{{ $airport['countryName'] }}</td>
-                  <td>
-                    <a
-                      href={{ 'deleteAirport/' . $airport['iataCode'] }}>Delete</a>
-                    <a href={{ 'editAirport/' . $airport['iataCode'] }}>Edit</a>
-                  </td>
-                </tr>
+                @if ($airport['deleted_at'] == null)
+                  <tr>
+                    <td>{{ $airport['id'] }}</td>
+                    <td>{{ $airport['iata_code'] }}</td>
+                    <td>{{ $airport['name'] }}</td>
+                    <td>{{ $airport['land'] }}</td>
+                    <td>{{ $airport['address_id'] }}</td>
+                    <td>
+                      <a href={{ 'deleteAirport/' . $airport['id'] }}>Remove</a>
+                      <a href={{ 'editAirport/' . $airport['id'] }}>Edit</a>
+                    </td>
+                  </tr>
+                @endif
               @endforeach
             </tbody>
           </table>
@@ -137,30 +138,9 @@
             }
           </style>
 
-          {{-- Form for adding airports --}}
-          <h2>Add Airport</h2>
+          {{-- Button to go to seperate page add airport --}}
+          <a href={{ 'addAirportList' }}>Add</a>
 
-          <form action="airportList" method="POST">
-
-            @csrf
-            <input type="text" name="airportName" placeholder="Enter name">
-            <br> <br>
-            <input type="text" name="iataCode" placeholder="Enter IATA Code">
-            <br> <br>
-            <input type="text" name="stateCode" placeholder="Enter State Code">
-            <br> <br>
-            <input type="text" name="countryCode"
-              placeholder="Enter Country Code"> <br> <br>
-            <input type="text" name="countryName"
-              placeholder="Enter Country Name"> <br> <br>
-            {{--  Forms for booleans and integers       
-    <label for="usageCheckbox">Airport in use?</label> <br>
-    <input type="checkbox" name="usageCheckbox" id="usageCheckbox" value="1"> <br> <br>
-
-    <input type="number" name="tariffAmount" placeholder="Tariff amount"> <br> <br>
---}}
-            <button type="submit">Add airport</button>
-          </form>
         </div>
       </div>
     </main>

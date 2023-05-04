@@ -11,19 +11,12 @@ class airport extends Model
     use HasFactory;
     use Sortable;
 
-    // if your key name is not 'id'
-    // you can also set this to null if you don't have a primary key
     protected $table = 'airports';
 
     protected $primaryKey = 'id';
 
-    public $incrementing = false;
-
-    // In Laravel 6.0+ make sure to also set $keyType
-    protected $keyType = 'string';
-
     protected $fillable = [
-        'id',
+        'iata_code',
         'name',
         'land',
         'address_id',
@@ -32,10 +25,11 @@ class airport extends Model
 
     public $sortable = [
         'id',
+        'iata_code',
         'name',
         'land',
         'address_id',
     ];
 
-    public $timestamps = false;
+    // public $timestamps = false;
 }
