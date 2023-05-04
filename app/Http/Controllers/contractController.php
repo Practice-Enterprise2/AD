@@ -21,28 +21,44 @@ class contractController extends Controller
 
     public function alter()
     {
-        $id = $_GET['id'];
-        $airlineID = $_GET['airline'];
-        $start_date = $_GET['start_date'];
-        $end_date = $_GET['end_date'];
-        $price = $_GET['price'];
+        if (!isset($_GET['id']) || !isset($_GET['airline']) || !isset($_GET['start_date']) || !isset($_GET['end_date']) || !isset($_GET['price']) || !isset($_GET['departure_location']) || !isset($_GET['destination_location']))
+        {
 
-        $departure = $_GET['departure_location'];
-        $destination = $_GET['destination_location'];
-        $affected = DB::table('contracts')->where('id', $id)->update(
-            ['airline_id' => $airlineID, 'start_date' => $start_date, 'end_date' => $end_date, 'price' => $price,  'depart_airport_id' => $departure, 'destination_airport_id' => $destination]);
-        if (isset($_GET['deactivate'])) {
-            $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 0]);
         }
-        if (isset($_GET['reactivate'])) {
-            $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 1]);
+        else
+        {
+            if (empty($_GET['id']) || empty($_GET['airline']) || empty($_GET['start_date']) || empty($_GET['end_date']) || empty($_GET['price']) || empty($_GET['departure_location']) || empty($_GET['destination_location']))
+            {
+
+            }
+            else
+            {
+                $id = $_GET['id'];
+                $airlineID = $_GET['airline'];
+                $start_date = $_GET['start_date'];
+                $end_date = $_GET['end_date'];
+                $price = $_GET['price'];
+
+                $departure = $_GET['departure_location'];
+                $destination = $_GET['destination_location'];
+                $affected = DB::table('contracts')->where('id', $id)->update(
+                    ['airline_id' => $airlineID, 'start_date' => $start_date, 'end_date' => $end_date, 'price' => $price,  'depart_airport_id' => $departure, 'destination_airport_id' => $destination]);
+                if (isset($_GET['deactivate'])) {
+                    $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 0]);
+                }
+                if (isset($_GET['reactivate'])) {
+                    $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 1]);
+                }
+                unset($_GET);
+                ?>
+                   <script>
+                    this.location.replace("/contract");
+                   </script>
+                   <?php
+            }
+
         }
-        unset($_GET);
-        ?>
-           <script>
-            this.location.replace("/contract");
-           </script>
-           <?php
+
     }
 
     public function simpleV2()
