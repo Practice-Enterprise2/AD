@@ -1,6 +1,6 @@
 <h1>Update airport</h1>
 
-<form action="/editAirport" method="POST">
+<form action="/editAirport" method="POST" autocomplete="off">
     @csrf
     <input type="hidden" name="id" value="{{ $data['id'] }}" required>
 
