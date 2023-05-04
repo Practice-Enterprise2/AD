@@ -327,12 +327,10 @@ class PayslipController extends Controller
                 'netEarnings' => round($netEarnings, 2),
             ];
 
-            error_log('generate pdf');
             //create and store generated PDF file
             $pdf = PDF::loadView('pdf.payslip', $data);
             Storage::put('storage/pdf/payslip'.date('m-Y').'.pdf', $pdf->output());
 
-            error_log('after pdf');
             //get user account from employee
             $user = DB::table('users')
                     ->where('id', $employee->user_id)
