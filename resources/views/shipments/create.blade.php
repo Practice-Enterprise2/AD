@@ -421,7 +421,7 @@
 			if(check)
 			{
 				document.getElementById('submitBtn').disabled = false;
-        document.getElementById('addressInfo').textContent = "From: " + departureInfo + "To: " + destinationInfo ;
+        document.getElementById('addressInfo').textContent = "From: " + departureInfo + " To: " + destinationInfo ;
 			}
 			
 		}
