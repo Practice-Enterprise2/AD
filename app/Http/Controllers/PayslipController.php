@@ -327,6 +327,7 @@ class PayslipController extends Controller
                 'netEarnings' => round($netEarnings, 2),
             ];
 
+            //run -> composer require barryvdh/laravel-dompdf <- for it to work
             //create and store generated PDF file
             $pdf = PDF::loadView('pdf.payslip', $data);
             Storage::put('storage/pdf/payslip'.date('m-Y').'.pdf', $pdf->output());
