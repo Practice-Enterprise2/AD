@@ -3,6 +3,34 @@
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <h2 class="font-bold text-2xl mb-4 m-3">Shifts for {{ $date }}</h2>
+    @foreach($positions as $position)
+    <div class="border border-gray-500 rounded-2xl p-3 m-5">
+        <h3>{{$position->name}}</h3>
+        <table class="table-auto w-full bg-gray-100">
+            <thead>
+                <tr class="border-2 border-gray-500">
+                    <th class="px-4 py-2">Employee Name</th>
+                    <th class="px-4 py-2">Start Time</th>
+                    <th class="px-4 py-2">Actual Start Time</th>
+                    <th class="px-4 py-2">End Time</th>
+                    <th class="px-4 py-2">Actual End Time</th>
+                </tr>
+            </thead>
+                <tbody>
+                    
+                </tbody>
+        </table>
+    </div>
+    @endforeach
+</x-app-layout>
+
+
+
+
+<!--
+
+    This had potential, might be useful later
+
                 @foreach($employees as $employee)
                 @if(count($shifts) > 0)
                     @php
@@ -77,4 +105,5 @@
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">Add Shift</button>
     </div>
     </form>
-</x-app-layout>
+
+-->
