@@ -4,7 +4,7 @@
     @csrf
     <input type="hidden" name="id" value="{{ $data['id'] }}">
 
-    <label for="iata_code">Airport Name</label> <br>
+    <label for="iata_code">IATA code</label> <br>
     <input type="iata_code" name="iata_code" value="{{ $data['iata_code'] }}"> <br> <br>
 
     <label for="name">Airport Name</label> <br>

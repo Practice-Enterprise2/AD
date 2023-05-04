@@ -31,5 +31,5 @@ class airport extends Model
         'address_id',
     ];
 
-    public $timestamps = false;
+    // public $timestamps = false;
 }
