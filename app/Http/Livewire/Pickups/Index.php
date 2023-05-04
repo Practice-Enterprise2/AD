@@ -6,7 +6,6 @@ Livewire component list to show all the pickups for the logged in user.
 namespace App\Http\Livewire\Pickups;
 
 use App\Models\Pickup;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -32,7 +31,7 @@ class Index extends Component
         })->get();
     }
 
-    public function render(): View|Factory
+    public function render(): View
     {
         return view('livewire.pickups.index');
     }
