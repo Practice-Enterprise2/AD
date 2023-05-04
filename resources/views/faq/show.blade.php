@@ -23,20 +23,20 @@
       padding-left: 30px;
     }
 
-    a#contactus {
+    .link#contactus {
       color: #007bff;
       text-decoration: none;
       text-align: center;
     }
 
-    a:hover#contactus {
+    .link:hover#contactus {
       color: #0056b3;
       text-align: center;
     }
   </style>
   <h1>Frequently asked questions</h1>
   <br>
-  <a id="contactus"> contact us</a>
+  <x-nav-link id="contactus" :href="route('contact.create')" class="link"> contact us</x-nav-link>
   <ol>
     <li>
       <h3>What is the delivery time for my shipment?</h3>
