@@ -108,18 +108,19 @@
               @endif
 
               @foreach ($airports as $airport)
-                <tr>
-                  <td>{{ $airport['id'] }}</td>
-                  <td>{{ $airport['iata_code'] }}</td>
-                  <td>{{ $airport['name'] }}</td>
-                  <td>{{ $airport['land'] }}</td>
-                  <td>{{ $airport['address_id'] }}</td>
-                  <td>
-                    <a
-                      href={{ 'deleteAirport/' . $airport['id'] }}>Delete</a>
-                    <a href={{ 'editAirport/' . $airport['id'] }}>Edit</a>
-                  </td>
-                </tr>
+                @if ($airport['deleted_at'] == null)
+                  <tr>
+                    <td>{{ $airport['id'] }}</td>
+                    <td>{{ $airport['iata_code'] }}</td>
+                    <td>{{ $airport['name'] }}</td>
+                    <td>{{ $airport['land'] }}</td>
+                    <td>{{ $airport['address_id'] }}</td>
+                    <td>
+                      <a href={{ 'deleteAirport/' . $airport['id'] }}>Remove</a>
+                      <a href={{ 'editAirport/' . $airport['id'] }}>Edit</a>
+                    </td>
+                  </tr>
+                @endif
               @endforeach
             </tbody>
           </table>
@@ -149,7 +150,8 @@
             <br> <br>
             <input type="text" name="land" placeholder="Enter Country">
             <br> <br>
-            <input type="text" name="address_id" placeholder="Enter address ID">
+            <input type="text" name="address_id"
+              placeholder="Enter address ID">
             <br> <br>
             <button type="submit">Add airport</button>
           </form>
