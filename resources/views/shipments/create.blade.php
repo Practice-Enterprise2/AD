@@ -270,9 +270,11 @@
                 class="inline-flex w-1/3 items-center text-black">Estimated
                 date of
                 shipping: </label>
-              <input type="hidden" name="shipment_date" id="shipment_date">
+              <input type="hidden" name="shipment_date" id="shipment_date"
+                value="{{ date('Y-m-d') }}">
               <span id="shipment_date_display"
-                class="ml-auto w-2/3 p-1 text-black"></span>
+                class="ml-auto w-2/3 p-1 text-black">
+                {{ date('Y-m-d') }}</span>
               <!-- Script to calculate estimated shipping date compared to selected preferred delivery date -->
               <script>
                 const deliveryDateSelected = document.getElementById('delivery_date');

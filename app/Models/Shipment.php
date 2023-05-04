@@ -31,7 +31,7 @@ class Shipment extends Model implements ValidatesAttributes
 {
     use SoftDeletes, AppValidatesAttributes;
 
-    public const VALIDATION_RULE_NAME = ['required', 'string', 'regex:/^[A-Za-z\s]+$/'];
+    public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 
     public const VALIDATION_RULE_SHIPMENT_DATE = ['required'];
 
@@ -41,29 +41,7 @@ class Shipment extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_TYPE = ['required', 'numeric'];
 
-    public const VALIDATION_RULE_EMAIL = ['required', 'email', 'unique:users,email'];
-
-    public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/'];
-
-    public const VALIDATION_RULE_HOUSENUMBER = ['required', 'string'];
-
-    public const VALIDATION_RULE_POSTALCODE = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/'];
-
-    public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/'];
-
-    public const VALIDATION_RULE_REGION = ['required', 'string', 'regex:/^[A-Za-z\s]+$/'];
-
-    public const VALIDATION_RULE_COUNTRY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/'];
-
     public const VALIDATION_RULE_STATUS = ['required', 'in:Awaiting Confirmation,Awaiting Pickup,In Transit,Out For Delivery,Delivered,Exception,Held At Location,Deleted,Declined'];
-
-    public const VALIDATION_RULE_WIDTH = ['required', 'numeric'];
-
-    public const VALIDATION_RULE_HEIGHT = ['required', 'numeric'];
-
-    public const VALIDATION_RULE_LENGTH = ['required', 'numeric'];
-
-    public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 
     public const VALIDATION_RULES = [
         'shipment_date' => self::VALIDATION_RULE_SHIPMENT_DATE,
@@ -71,18 +49,24 @@ class Shipment extends Model implements ValidatesAttributes
         'expense' => self::VALIDATION_RULE_EXPENSE,
         'weight' => self::VALIDATION_RULE_WEIGHT,
         'type' => self::VALIDATION_RULE_TYPE,
-        'name' => self::VALIDATION_RULE_NAME,
-        'email' => self::VALIDATION_RULE_EMAIL,
-        'street' => self::VALIDATION_RULE_STREET,
-        'house_number' => self::VALIDATION_RULE_HOUSENUMBER,
-        'postal_code' => self::VALIDATION_RULE_POSTALCODE,
-        'city' => self::VALIDATION_RULE_CITY,
-        'region' => self::VALIDATION_RULE_REGION,
-        'country' => self::VALIDATION_RULE_COUNTRY,
+        'user.name' => User::VALIDATION_RULE_NAME,
+        'user.email' => User::VALIDATION_RULE_EMAIL,
+        'source_address.street' => Address::VALIDATION_RULE_STREET,
+        'source_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'source_address.city' => Address::VALIDATION_RULE_CITY,
+        'source_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'source_address.region' => Address::VALIDATION_RULE_REGION,
+        'source_address.country' => Address::VALIDATION_RULE_COUNTRY,
+        'destination_address.street' => Address::VALIDATION_RULE_STREET,
+        'destination_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'destination_address.city' => Address::VALIDATION_RULE_CITY,
+        'destination_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'destination_address.region' => Address::VALIDATION_RULE_REGION,
+        'destination_address.country' => Address::VALIDATION_RULE_COUNTRY,
         'status' => self::VALIDATION_RULE_STATUS,
-        'width' => self::VALIDATION_RULE_WIDTH,
-        'height' => self::VALIDATION_RULE_HEIGHT,
-        'length' => self::VALIDATION_RULE_LENGTH,
+        'dimension.width' => Dimension::VALIDATION_RULE_WIDTH,
+        'dimension.height' => Dimension::VALIDATION_RULE_HEIGHT,
+        'dimension.length' => Dimension::VALIDATION_RULE_LENGTH,
     ];
 
     protected $fillable = [

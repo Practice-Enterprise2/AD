@@ -19,12 +19,12 @@ class WaypointController extends Controller
     {
         $this->validate(request(), [
             'waypoints' => Waypoint::VALIDATION_RULES['array'],
-            'waypoints.*.street' => Waypoint::VALIDATION_RULES['street'],
-            'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['house_number'],
-            'waypoints.*.postal_code' => Waypoint::VALIDATION_RULES['postal_code'],
-            'waypoints.*.city' => Waypoint::VALIDATION_RULES['city'],
-            'waypoints.*.region' => Waypoint::VALIDATION_RULES['region'],
-            'waypoints.*.country' => Waypoint::VALIDATION_RULES['country'],
+            'waypoints.*.street' => Waypoint::VALIDATION_RULES['current_address.street'],
+            'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['current_address.house_number'],
+            'waypoints.*.postal_code' => Waypoint::VALIDATION_RULES['current_address.postal_code'],
+            'waypoints.*.city' => Waypoint::VALIDATION_RULES['current_address.city'],
+            'waypoints.*.region' => Waypoint::VALIDATION_RULES['current_address.region'],
+            'waypoints.*.country' => Waypoint::VALIDATION_RULES['current_address.country'],
         ],
             [
                 'waypoints.*.street.regex' => 'Please enter a valid street for waypoint.',
