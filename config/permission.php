@@ -1,9 +1,7 @@
 <?php
 
 return [
-
     'models' => [
-
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
          * Eloquent model should be used to retrieve your permissions. Of course, it
@@ -25,11 +23,9 @@ return [
          */
 
         'role' => App\Models\Role::class,
-
     ],
 
     'table_names' => [
-
         /*
          * When using the "HasRoles" trait from this package, we need to know which
          * table should be used to retrieve your roles. We have chosen a basic
@@ -136,7 +132,6 @@ return [
     'enable_wildcard_permission' => false,
 
     'cache' => [
-
         /*
          * By default all permissions are cached for 24 hours to speed up performance.
          * When permissions or roles are updated the cache is flushed automatically.

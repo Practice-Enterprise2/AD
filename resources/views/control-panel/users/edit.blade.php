@@ -3,7 +3,7 @@
     Control Panel - Users
   </x-slot:title>
 
-  <x-control-panel-layout>
+  <x-control-panel-layout :always_show_title="true">
     <x-slot:title>
       {{ __('Edit User') }}
     </x-slot:title>
