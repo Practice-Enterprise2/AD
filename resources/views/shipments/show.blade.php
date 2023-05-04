@@ -251,6 +251,7 @@
           <div class="mb-4 flex justify-end border p-2">
             {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
           </div>
+          @can('view_general_employee_content')
           <div class="mb-2 flex justify-end">
             <form action="{{ route('shipments.edit', $shipment->id) }}"
               method="GET">
@@ -270,6 +271,7 @@
                 Delete</button>
             </form>
           </div>
+          @endcan
         </div>
 
       </div>
