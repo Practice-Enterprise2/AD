@@ -1,6 +1,5 @@
 <x-app-layout>
-@extends('layouts.header')
-@section('content')
+
   <!-- example -->
 
   <head>
@@ -187,9 +186,9 @@
             </form>
           </div>
         </div>
-      </div>
+      </div>  
     </main>
     <!--Main layout-->
   </div>
-@endsection
+
 </x-app-layout>
