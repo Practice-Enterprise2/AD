@@ -15,7 +15,7 @@ return new class() extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->string('name', 50); // is dropped at update_shipments table
             $table->foreignId('source_address_id')->constrained('addresses');
             $table->foreignId('destination_address_id')->constrained('addresses');
             $table->date('shipment_date');
@@ -23,8 +23,9 @@ return new class() extends Migration
             $table->integer('status');
             $table->integer('expense');
             $table->integer('weight');
-            $table->string('type', 50);
+            $table->string('type', 50); // Fragile, Liquid, Hazardous(Lighter, Battery etc..)
             $table->timestamps();
+            // new updates for the shipments table is at "modify_shipments" migration.
         });
     }
 

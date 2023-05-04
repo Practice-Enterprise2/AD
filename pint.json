@@ -1,1 +1,22 @@
-{}
+{
+    "rules": {
+        "statement_indentation": true,
+        "no_extra_blank_lines": {
+            "tokens": [
+                "extra",
+                "break",
+                "continue",
+                "curly_brace_block",
+                "parenthesis_brace_block",
+                "return",
+                "square_brace_block",
+                "throw",
+                "use",
+                "switch",
+                "case",
+                "default"
+            ]
+        },
+        "no_empty_comment": true
+    }
+}

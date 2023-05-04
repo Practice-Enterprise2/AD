@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {
+    public string $description = 'Trust requests coming from a proxy.';
+
     /**
      * The trusted proxies for this application.
      *

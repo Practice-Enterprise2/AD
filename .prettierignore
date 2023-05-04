@@ -1,0 +1,4 @@
+# Shut up Prettier, it's correct and you know it!
+docs/validation.md
+vendor
+*.php
