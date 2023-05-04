@@ -1,0 +1,10 @@
+services:
+  bluesky-website:
+    image: bluesky-website:0.1.0
+    dns:
+      - 8.8.8.8
+      - 8.0.0.8
+    build:
+      context: .
+    ports:
+      - 80:8000
