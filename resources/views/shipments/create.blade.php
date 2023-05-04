@@ -334,6 +334,7 @@
 			let map;
 			let departurePin, destinationPin;
       let departureInfo, destinationInfo;
+      let departureLocation, destinationLocation;
 			if (country.trim() === '' || city.trim() === '' || postalcode.trim() === '' || address.trim() === '' || tocountry.trim() === '' || tocity.trim() === '' || topostalcode.trim() === '' || toAddress.trim() === '') {
 			alert('Please fill in all the fields');
 			} else {
@@ -349,10 +350,10 @@
 					const departureLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
 					console.log(data.resourceSets[0].resources[0]);
 					departureInfo = data.resourceSets[0].resources[0].address.formattedAddress
-
+          departureLocation = new Microsoft.Maps.Location(departureLat, departureLng)
 
 					// // Create a pushpin for the departure location
-					departurePin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(departureLat, departureLng));
+					departurePin = new Microsoft.Maps.Pushpin(departureLocation);
 					// map.entities.push(departurePin);
 
 					// Chain the second fetch call inside the first fetch call's callback
@@ -385,11 +386,13 @@
 						const destinationLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
 						console.log(data.resourceSets[0].resources[0]);
             destinationInfo = data.resourceSets[0].resources[0].address.formattedAddress
+            destinationLocation = new Microsoft.Maps.Location(destinationLat, destinationLng);
 						check = true;
 						map = new Microsoft.Maps.Map("#map", {
               credentials:'ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId',
 						center: new Microsoft.Maps.Location(destinationLat, destinationLng),
-						zoom: 12
+            bounds: Microsoft.Maps.LocationRect.fromLocations(destinationLocation, departureLocation),
+            zoom:12
 						});
 						// Create a pushpin for the destination location
 						destinationPin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(destinationLat, destinationLng));
