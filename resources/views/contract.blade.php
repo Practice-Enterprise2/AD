@@ -1,3 +1,5 @@
+@extends('layouts.header')
+@section('content')
 <?php
 
 use App\Http\Controllers\contractController;
@@ -14,15 +16,15 @@ if (!isset($_GET["q"]))
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href=" {{ asset('css/new_contract.css') }}">
+  
   <title>view records</title>
+  
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -100,12 +102,30 @@ if (!isset($_GET["q"]))
       overflow-y: auto;
       /* Scrollable contents if viewport is shorter than content. */
     }
+    
+    .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+    width: 70%;
+    margin: auto;
+    }
+    input {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
   </style>
   <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
 </head>
 
-<body>
-  @include('layouts.header')
+
+
   <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
   <script src="{{ asset('js/chosen.jquery.js') }}"></script>
   <script src="{{ asset('js/chosen-initialization.js') }}"></script>
@@ -133,15 +153,17 @@ if (!isset($_GET["q"]))
       </ul>
     </div>
   </nav>
-  <form action="contract" method="GET">
-    <table>
-      <tr>
-        <td>Contract number: </td>
-        <td><input type="number" id="contNumber" name="q"
-            autocomplete="off"></td>
-        <td><input type="submit" name="submit"></td>
-      </tr>
-    </table>
+
+  <main style="margin-top: 58px">
+    <div class="container pt-4">
+      <div class="container">
+      <form action="contract" method="GET">
+    
+      <label for="contNumber">Contract number:</label>
+      <input type="number" id="contNumber" name="q" autocomplete="off">
+      <input type="submit" name="submit">
+      
+    
   </form>
 
   <?php
@@ -152,21 +174,16 @@ if (!isset($_GET["q"]))
     <?php
     $contract = $contracts[0];
     ?>
-
+  
     <form action="/edit" method="GET">
-      <table>
-        <tr>
-          <td>Contract ID:</td>
-          <td><input type="number" value="{{ $contract->id }}" disabled
+
+          <label for="id">Contract ID:</label>
+          <input type="number" name="id_s" value="{{ $contract->id }}" disabled
               required>
             <input type="number" name="id" value="{{ $contract->id }}"
               hidden>
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2">
-            Airline:
+        
+            <label>Airline:</label>
 
             <select class="chosen-select" name="airline">
               @foreach ($airlines as $airline)
@@ -178,27 +195,24 @@ if (!isset($_GET["q"]))
                   {{ $airline->name }}</option>
               @endforeach
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Start date:</td>
-          <td><input type="date" name="start_date"
-              value="{{ $contract->start_date }}" required></td>
-        </tr>
-        <tr>
-          <td>Expitation Date:</td>
-          <td><input type="date" name="end_date"
-              value="{{ $contract->end_date }}" required></td>
-        </tr>
-        <tr>
-          <td>Price/kg:</td>
-          <td><input type="number" name="price" min="0"
-              value="{{ $contract->price }}" required></td>
-        </tr>
+          <br>
+          <label>Start date:</label>
+          <input type="date" name="start_date"
+              value="{{ $contract->start_date }}" required>
+        
+        
+          <label>Expitation Date:</label>
+          <input type="date" name="end_date"
+              value="{{ $contract->end_date }}" required>
+        
+        
+          <label>Price/kg:</label>
+          <input type="number" name="price" min="0"
+              value="{{ $contract->price }}" required>
+       
 
-        <tr>
-          <td colspan="2">
-            Departure Airport:
+          <label for="">Departure Airport:</label>
+            
 
             <select class="chosen-select" name="departure_location"
               id="departure_airport_select">
@@ -211,11 +225,9 @@ if (!isset($_GET["q"]))
                   {{ $airport->name }}</option>
               @endforeach
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            Destination Airport:
+          <br>
+          <label for="">Destination Airport:</label>
+            
             <select class="chosen-select" name="destination_location"
               id="destination_airport_select">
               @foreach ($airports as $airport)
@@ -227,38 +239,33 @@ if (!isset($_GET["q"]))
                   {{ $airport->name }}</option>
               @endforeach
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td><input type="submit" name="submit" value="Save Changes"></td>
-          <td>
+    
+          <input type="submit" name="submit" value="Save Changes">
+          
             <?php
 
                     if ($contract->is_active == 1)
                     {
                       ?>
-            <input type="submit" name="deactivate" id="deactivate"
+            <input style="display:inline;" type="submit" name="deactivate" id="deactivate"
               value="deactivate">
-          </td>
+          
           <?php
                     }
                     else {
                       ?>
-          <input type="submit" name="reactivate" id="reactivate"
-            value="reactivate"> </td>
+          <input style="display:inline;" type="submit" name="reactivate" id="reactivate"
+            value="reactivate"> 
           <?php
                     }
 
                     ?>
-
-        </tr>
-      </table>
     </form>
   @endforeach
   <?php
         }
         ?>
-
-</body>
-
-</html>
+      </div>
+    </div>
+  </main>
+@endsection
