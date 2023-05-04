@@ -51,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');
         static::bootstrap_permission('edit_permissions', 'Edit all the authorization permissions.');
         static::bootstrap_permission('edit_roles', 'Edit all the authorization roles.');
+        static::bootstrap_permission('edit_all_shipments', 'Edit all the shipments.');
         static::bootstrap_permission('view_all_roles', 'View all the roles.');
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
         static::bootstrap_permission('view_all_users', 'View all the users.');
@@ -60,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
+        static::bootstrap_permission('view_shipment_edit', 'view shipment edit page');
 
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
@@ -70,6 +72,8 @@ class AppServiceProvider extends ServiceProvider
 
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
+        $role_employee->givePermissionTo('edit_all_shipments');
+        $role_employee->givePermissionTo('view_shipment_edit');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
