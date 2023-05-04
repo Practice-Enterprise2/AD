@@ -38,6 +38,11 @@
               {{ __('Control Panel') }}
             </x-nav-link>
           @endrole
+          @can('view_all_overviews')
+            <x-nav-link :href="route('employeegraph')" :active="request()->routeIs('employeegraph')">
+              {{ __('Graphs') }}
+            </x-nav-link>
+          @endcan
           @auth
             <x-nav-link :href="route('readreviews')">
               {{ __('Reviews') }}

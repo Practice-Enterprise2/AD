@@ -60,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
+        static::bootstrap_permission('view_all_overviews', 'view all overviews');
 
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
@@ -67,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee_hr = static::bootstrap_role('employee_hr');
         $role_employee_it = static::bootstrap_role('employee_it');
         $role_user = static::bootstrap_role('user');
+        $role_management = static::bootstrap_role('management');
 
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
@@ -82,6 +84,8 @@ class AppServiceProvider extends ServiceProvider
 
         $role_user->givePermissionTo('edit_own_user_info');
         $role_user->givePermissionTo('delete_own_user_account');
+
+        $role_management->givePermissionTo('view_all_overviews');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {
@@ -128,12 +132,21 @@ class AppServiceProvider extends ServiceProvider
                 'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
             ]);
         }
+        if (! User::query()->where('email', 'management@local.test')->first()) {
+            $regular_user = User::query()->create([
+                'name' => 'Management',
+                'email' => 'management@local.test',
+                'email_verified_at' => Carbon::parse('2022-01-01 13:00:00'),
+                'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
+            ]);
+        }
 
         $admin_user = User::query()->where('email', 'admin@local.test')->first();
         $employee_user = User::query()->where('email', 'employee@local.test')->first();
         $employee_hr_user = User::query()->where('email', 'employee-hr@local.test')->first();
         $employee_it_user = User::query()->where('email', 'employee-it@local.test')->first();
         $regular_user = User::query()->where('email', 'user@local.test')->first();
+        $management_user = User::query()->where('email', 'management@local.test')->first();
 
         // Assign each required user their required roles.
         $admin_user->assignRole('admin'); // Admin user automatically gets all permissions!
@@ -150,6 +163,8 @@ class AppServiceProvider extends ServiceProvider
         $employee_user->assignRole('user');
 
         $regular_user->assignRole('user');
+
+        $management_user->assignRole('management');
     }
 
     // If a permission with the given name doesn't exist, create it.
