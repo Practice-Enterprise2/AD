@@ -23,18 +23,18 @@
             for="receiver_name">Receiver Name</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
             type="text" id="receiver_name" name="receiver_name">
-            @error('receiver_name')
+          @error('receiver_name')
             <div class="text-danger">{{ $message }}</div>
-            @enderror
+          @enderror
         </div>
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700"
             for="receiver_email">Receiver Email</label>
           <input class="w-3/5 rounded-md border border-gray-400 p-2 text-black"
             type="receiver_email" id="receiver_email" name="receiver_email">
-            @error('receiver_email')
+          @error('receiver_email')
             <div class="text-danger">{{ $message }}</div>
-            @enderror
+          @enderror
         </div>
         {{--
                 $table->foreignId('source_address_id');
@@ -55,8 +55,8 @@
                 type="text" name="source_country">
             </div>
             @error('source_country')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -65,8 +65,8 @@
                 type="text" name="source_postalcode">
             </div>
             @error('source_postalcode')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -75,8 +75,8 @@
                 type="text" name="source_city">
             </div>
             @error('source_city')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -85,8 +85,8 @@
                 type="text" name="source_region">
             </div>
             @error('source_region')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -95,8 +95,8 @@
                 type="text" name="source_street">
             </div>
             @error('source_street')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -105,8 +105,8 @@
                 type="text" name="source_housenumber">
             </div>
             @error('source_housenumber')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
           </div>
         </div>
 
@@ -124,8 +124,8 @@
                 type="text" name="destination_country">
             </div>
             @error('destination_country')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -134,8 +134,8 @@
                 type="text" name="destination_postalcode">
             </div>
             @error('destination_postalcode')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -144,8 +144,8 @@
                 type="text" name="destination_city">
             </div>
             @error('destination_city')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -154,8 +154,8 @@
                 type="text" name="destination_region">
             </div>
             @error('destination_region')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -164,8 +164,8 @@
                 type="text" name="destination_street">
             </div>
             @error('destination_street')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -174,8 +174,8 @@
                 type="text" name="destination_housenumber">
             </div>
             @error('destination_housenumber')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
           </div>
         </div>
         <div class="mb-4">
@@ -205,8 +205,8 @@
           </div>
         </div>
         @error('handling_type')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+          <div class="text-danger">{{ $message }}</div>
+        @enderror
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700">Package
             details</label>
@@ -219,8 +219,8 @@
                 type="text" name="shipment_weight" id="shipment_weight">
             </div>
             @error('shipment_weight')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Length:</label>
@@ -229,8 +229,8 @@
                 type="text" name="shipment_length" id="shipment_length">
             </div>
             @error('shipment_length')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Height:</label>
@@ -239,8 +239,8 @@
                 type="text" name="shipment_height" id="shipment_height">
             </div>
             @error('shipment_height')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Width:</label>
@@ -249,15 +249,15 @@
                 type="text" name="shipment_width" id="shipment_width">
             </div>
             @error('shipment_width')
-                <div class="text-danger">{{ $message }}</div>
-                @enderror
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Expense:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_expense" id="shipment_expense">
-                
+
             </div>
             <div class="mb-2 flex">
               <label
@@ -306,131 +306,160 @@
         <button
           class="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
           type="submit" id="submitBtn" disabled>Submit</button>
-          <div class=" text-black">
-            <h2  id="addressInfo" class=" text-black"></h2>
-          </div>
-          
-          <div id="map" style="width:650px; height:450px;"></div>
+        <div class="text-black">
+          <h2 id="addressInfo" class="text-black"></h2>
+        </div>
+
+        <div id="map" style="width:650px; height:450px;"></div>
     </div>
     </form>
-    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId"></script>
-      <script>
-			async function getAddress()
-			{
+    <script type="text/javascript"
+      src="https://www.bing.com/api/maps/mapcontrol?key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId">
+    </script>
+    <script>
+      async function getAddress() {
         event.preventDefault();
-			const country = document.getElementsByName('source_country')[0].value;
-			const city = document.getElementsByName('source_city')[0].value;
-			const postalcode = document.getElementsByName('source_postalcode')[0].value;
-			const street = document.getElementsByName('source_street')[0].value;
-			const houseNumber = document.getElementsByName('source_housenumber')[0].value;
-      const address = street+ ' ' + houseNumber;
-			const tocountry = document.getElementsByName('destination_country')[0].value;
-			const tocity = document.getElementsByName('destination_city')[0].value;
-			const topostalcode = document.getElementsByName('destination_postalcode')[0].value;
-      const toStreet = document.getElementsByName('destination_street')[0].value;
-			const toSouseNumber = document.getElementsByName('destination_housenumber')[0].value;
-			const toAddress = toStreet+ ' ' + toSouseNumber;
-			let check = false;
-			let map;
-			let departurePin, destinationPin;
-      let departureInfo, destinationInfo;
-      let departureLocation, destinationLocation;
-			if (country.trim() === '' || city.trim() === '' || postalcode.trim() === '' || address.trim() === '' || tocountry.trim() === '' || tocity.trim() === '' || topostalcode.trim() === '' || toAddress.trim() === '') {
-			alert('Please fill in all the fields');
-			} else {
-  // the rest of your code
-			await fetch(`https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(country)}&locality=${encodeURIComponent(city)}&postalCode=${encodeURIComponent(postalcode)}&addressLine=${encodeURIComponent(address)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`)
-			.then(response => response.json())
-			.then(data => {
-				// Extract the latitude and longitude from the response
-				if(data.resourceSets[0].resources.length > 0){
-					if(data.resourceSets[0].resources[0].confidence === "High" && data.resourceSets[0].resources[0].entityType === "Address")
-					{
-					const departureLat = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0];
-					const departureLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
-					console.log(data.resourceSets[0].resources[0]);
-					departureInfo = data.resourceSets[0].resources[0].address.formattedAddress
-          departureLocation = new Microsoft.Maps.Location(departureLat, departureLng)
+        const country = document.getElementsByName('source_country')[0].value;
+        const city = document.getElementsByName('source_city')[0].value;
+        const postalcode = document.getElementsByName('source_postalcode')[0]
+          .value;
+        const street = document.getElementsByName('source_street')[0].value;
+        const houseNumber = document.getElementsByName('source_housenumber')[0]
+          .value;
+        const address = street + ' ' + houseNumber;
+        const region = document.getElementsByName('source_region')[0].value;
+        const toregion = document.getElementsByName('destination_region')[0]
+        .value;
+        const tocountry = document.getElementsByName('destination_country')[0]
+          .value;
+        const tocity = document.getElementsByName('destination_city')[0].value;
+        const topostalcode = document.getElementsByName('destination_postalcode')[
+          0].value;
+        const toStreet = document.getElementsByName('destination_street')[0]
+        .value;
+        const toSouseNumber = document.getElementsByName(
+          'destination_housenumber')[0].value;
+        const toAddress = toStreet + ' ' + toSouseNumber;
+        let check = false;
+        let map;
+        let departurePin, destinationPin;
+        let departureInfo, destinationInfo;
+        let departureLocation, destinationLocation;
+        if (country.trim() === '' || city.trim() === '' || postalcode.trim() ===
+          '' || address.trim() === '' || tocountry.trim() === '' || tocity
+        .trim() === '' || topostalcode.trim() === '' || toAddress.trim() === '') {
+          alert('Please fill in all the fields');
+        } else {
+          // the rest of your code
+          await fetch(
+              `https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(country)}&state=${encodeURIComponent(region)}&locality=${encodeURIComponent(city)}&postalCode=${encodeURIComponent(postalcode)}&addressLine=${encodeURIComponent(address)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`
+              )
+            .then(response => response.json())
+            .then(data => {
+              // Extract the latitude and longitude from the response
+              if (data.resourceSets[0].resources.length > 0) {
+                if (data.resourceSets[0].resources[0].confidence === "High" &&
+                  data.resourceSets[0].resources[0].entityType === "Address") {
+                  const departureLat = data.resourceSets[0].resources[0]
+                    .geocodePoints[0].coordinates[0];
+                  const departureLng = data.resourceSets[0].resources[0]
+                    .geocodePoints[0].coordinates[1];
+                  console.log(data.resourceSets[0].resources[0]);
+                  departureInfo = data.resourceSets[0].resources[0].address
+                    .formattedAddress
+                  departureLocation = new Microsoft.Maps.Location(departureLat,
+                    departureLng)
 
-					// // Create a pushpin for the departure location
-					departurePin = new Microsoft.Maps.Pushpin(departureLocation);
-					// map.entities.push(departurePin);
+                  // // Create a pushpin for the departure location
+                  departurePin = new Microsoft.Maps.Pushpin(departureLocation);
+                  // map.entities.push(departurePin);
 
-					// Chain the second fetch call inside the first fetch call's callback
-					return fetch(`https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(tocountry)}&locality=${encodeURIComponent(tocity)}&postalCode=${encodeURIComponent(topostalcode)}&addressLine=${encodeURIComponent(toAddress)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`);
-					}
-					else
-					{
-					return alert("address not exists");
-					}
-				}
-				else
-				{ 
-					return alert("address not exists");
-				}
-			})
-			.then(response => {
-				if (!response) {
-					return 0;
-				}
-				return response.json();
-			})
-			.then(data => {
-				// Extract the latitude and longitude from the response
-				if(data)
-				{
-					if(data.resourceSets[0].resources.length > 0){
-						if(data.resourceSets[0].resources[0].confidence === "High" && data.resourceSets[0].resources[0].entityType === "Address")
-						{
-						const destinationLat = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0];
-						const destinationLng = data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
-						console.log(data.resourceSets[0].resources[0]);
-            destinationInfo = data.resourceSets[0].resources[0].address.formattedAddress
-            destinationLocation = new Microsoft.Maps.Location(destinationLat, destinationLng);
-						check = true;
-						map = new Microsoft.Maps.Map("#map", {
-              credentials:'ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId',
-						center: new Microsoft.Maps.Location(destinationLat, destinationLng),
-            bounds: Microsoft.Maps.LocationRect.fromLocations(destinationLocation, departureLocation),
-            zoom:12
-						});
-						// Create a pushpin for the destination location
-						destinationPin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(destinationLat, destinationLng));
-						map.entities.push(departurePin);
+                  // Chain the second fetch call inside the first fetch call's callback
+                  return fetch(
+                    `https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(tocountry)}&state=${encodeURIComponent(toregion)}&locality=${encodeURIComponent(tocity)}&postalCode=${encodeURIComponent(topostalcode)}&addressLine=${encodeURIComponent(toAddress)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`
+                    );
+                } else {
+                  return alert("address not exists");
+                }
+              } else {
+                return alert("address not exists");
+              }
+            })
+            .then(response => {
+              if (!response) {
+                return 0;
+              }
+              return response.json();
+            })
+            .then(data => {
+              // Extract the latitude and longitude from the response
+              if (data) {
+                if (data.resourceSets[0].resources.length > 0) {
+                  if (data.resourceSets[0].resources[0].confidence === "High" &&
+                    data.resourceSets[0].resources[0].entityType === "Address"
+                    ) {
+                    const destinationLat = data.resourceSets[0].resources[0]
+                      .geocodePoints[0].coordinates[0];
+                    const destinationLng = data.resourceSets[0].resources[0]
+                      .geocodePoints[0].coordinates[1];
+                    console.log(data.resourceSets[0].resources[0]);
+                    destinationInfo = data.resourceSets[0].resources[0].address
+                      .formattedAddress
+                    destinationLocation = new Microsoft.Maps.Location(
+                      destinationLat, destinationLng);
+                    check = true;
+                    map = new Microsoft.Maps.Map("#map", {
+                      credentials: 'ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId',
+                      center: new Microsoft.Maps.Location(destinationLat,
+                        destinationLng),
+                      bounds: Microsoft.Maps.LocationRect.fromLocations(
+                        destinationLocation, departureLocation),
+                      zoom: 12
+                    });
+                    // Create a pushpin for the destination location
+                    destinationPin = new Microsoft.Maps.Pushpin(new Microsoft
+                      .Maps.Location(destinationLat, destinationLng));
+                    map.entities.push(departurePin);
 
-						map.entities.push(destinationPin);
+                    map.entities.push(destinationPin);
 
-						Microsoft.Maps.loadModule('Microsoft.Maps.SpatialMath', function() {
-							console.log(Microsoft.Maps.SpatialMath.getDistanceTo(departurePin.getLocation(), destinationPin.getLocation(), Microsoft.Maps.SpatialMath.DistanceUnits.Kilometers));
-							var locations = Microsoft.Maps.SpatialMath.getGeodesicPath([departurePin.getLocation(), destinationPin.getLocation()]);
-							var polyline = new Microsoft.Maps.Polyline(locations, { strokeThickness: 3 });
-							map.entities.push(polyline);
-						});
-						}
-						else
-						{
-							return alert("address not exists");
-						}
-					}
-					else
-					{
-						return alert("address not exists");
-					}
-				}
-			})
-			.catch(error => {
-				console.error(error);
-			});
-			if(check)
-			{
-				document.getElementById('submitBtn').disabled = false;
-        document.getElementById('addressInfo').textContent = "From: " + departureInfo + " To: " + destinationInfo ;
-			}
-			
-		}
-			
-		}
-		  </script>
+                    Microsoft.Maps.loadModule('Microsoft.Maps.SpatialMath',
+                      function() {
+                        console.log(Microsoft.Maps.SpatialMath.getDistanceTo(
+                          departurePin.getLocation(), destinationPin
+                          .getLocation(), Microsoft.Maps.SpatialMath
+                          .DistanceUnits.Kilometers));
+                        var locations = Microsoft.Maps.SpatialMath
+                          .getGeodesicPath([departurePin.getLocation(),
+                            destinationPin.getLocation()
+                          ]);
+                        var polyline = new Microsoft.Maps.Polyline(
+                        locations, {
+                          strokeThickness: 3
+                        });
+                        map.entities.push(polyline);
+                      });
+                  } else {
+                    return alert("address not exists");
+                  }
+                } else {
+                  return alert("address not exists");
+                }
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          if (check) {
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('addressInfo').textContent = "From: " +
+              departureInfo + " To: " + destinationInfo;
+          }
+
+        }
+
+      }
+    </script>
   </div>
   </div>
 </x-app-layout>
