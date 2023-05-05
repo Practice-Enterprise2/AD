@@ -56,7 +56,8 @@
                 Code:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_postalcode" onkeyup="disableSubmit();"
+                type="text" name="source_postalcode"
+                onkeyup="disableSubmit();"
                 value="{{ old('source_postalcode') }}">
             </div>
             <div class="mb-2 flex">
@@ -88,7 +89,8 @@
                 Number:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_housenumber" onkeyup="disableSubmit();"
+                type="text" name="source_housenumber"
+                onkeyup="disableSubmit();"
                 value="{{ old('source_housenumber') }}">
             </div>
           </div>
@@ -105,7 +107,8 @@
                 class="inline-flex w-1/3 items-center text-black">Country:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_country" onkeyup="disableSubmit();"
+                type="text" name="destination_country"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_country') }}">
             </div>
             <div class="mb-2 flex">
@@ -113,7 +116,8 @@
                 Code:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_postalcode" onkeyup="disableSubmit();"
+                type="text" name="destination_postalcode"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_postalcode') }}">
             </div>
             <div class="mb-2 flex">
@@ -121,7 +125,8 @@
                 class="inline-flex w-1/3 items-center text-black">City:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_city" onkeyup="disableSubmit();"
+                type="text" name="destination_city"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_city') }}">
             </div>
             <div class="mb-2 flex">
@@ -129,7 +134,8 @@
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_region" onkeyup="disableSubmit();"
+                type="text" name="destination_region"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_region') }}">
             </div>
             <div class="mb-2 flex">
@@ -137,7 +143,8 @@
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_street" onkeyup="disableSubmit();"
+                type="text" name="destination_street"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_street') }}">
             </div>
             <div class="mb-2 flex">
@@ -145,7 +152,8 @@
                 Number:</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_housenumber" onkeyup="disableSubmit();"
+                type="text" name="destination_housenumber"
+                onkeyup="disableSubmit();"
                 value="{{ old('destination_housenumber') }}">
             </div>
           </div>
@@ -322,8 +330,7 @@
       src="https://www.bing.com/api/maps/mapcontrol?key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId">
     </script>
     <script>
-      function disableSubmit()
-      {
+      function disableSubmit() {
         document.getElementById('submitBtn').disabled = true;
       }
       async function getAddress() {
@@ -361,7 +368,7 @@
         if (country.trim() === '' || city.trim() === '' || postalcode.trim() ===
           '' || address.trim() === '' || tocountry.trim() === '' || tocity
           .trim() === '' || topostalcode.trim() === '' || toAddress.trim() === ''
-          ) {
+        ) {
           return addressError.textContent = "Please fill in all the fields";
         } else {
           // the rest of your code
