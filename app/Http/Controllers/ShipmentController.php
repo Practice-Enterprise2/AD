@@ -50,27 +50,41 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
-        request()->validate([
-            'receiver_name' => 'string|required|max:255',
-            'receiver_email' => 'email|required',
-            'source_street' => 'required|string|max:255',
-            'source_housenumber' => 'required|string|max:255',
-            'source_postalcode' => 'required|string|max:255',
-            'source_city' => 'required|string|max:255',
-            'source_region' => 'required|string|max:255',
-            'source_country' => 'required|string|max:255',
-            'destination_street' => 'required|string|max:255',
-            'destination_housenumber' => 'required|string|max:255',
-            'destination_postalcode' => 'required|string|max:255',
-            'destination_city' => 'required|string|max:255',
-            'destination_region' => 'required|string|max:255',
-            'destination_country' => 'required|string|max:255',
-            'shipment_length' => 'required|numeric',
-            'shipment_width' => 'required|numeric',
-            'shipment_height' => 'required|numeric',
-            'shipment_weight' => 'required|numeric',
-            'handling_type' => 'required',
-        ]);
+        // Validate request
+        $this->validate(request(), [
+            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
+            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
+            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
+            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
+            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
+            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
+            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
+            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
+            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
+            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
+            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
+            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
+            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
+            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
+            'shipment_weight' => Shipment::VALIDATION_RULES['weight'],
+            'shipment_length' => Shipment::VALIDATION_RULES['dimension.length'],
+            'shipment_width' => Shipment::VALIDATION_RULES['dimension.width'],
+            'shipment_height' => Shipment::VALIDATION_RULES['dimension.height'],
+        ],
+            [
+                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
+                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
+                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
+                'source_city.regex' => 'The source city field may only contain letters and spaces.',
+                'source_region.regex' => 'The source region field may only contain letters and spaces.',
+                'source_country.regex' => 'The source country field may only contain letters and spaces.',
+                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
+                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
+                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
+                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
+                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
+            ]);
+
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
@@ -189,6 +203,36 @@ class ShipmentController extends Controller
 
     public function update(Request $request, Shipment $shipment): Redirector|RedirectResponse
     {
+        $this->validate(request(), [
+            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
+            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
+            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
+            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
+            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
+            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
+            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
+            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
+            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
+            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
+            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
+            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
+            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
+            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
+        ],
+            [
+                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
+                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
+                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
+                'source_city.regex' => 'The source city field may only contain letters and spaces.',
+                'source_region.regex' => 'The source region field may only contain letters and spaces.',
+                'source_country.regex' => 'The source country field may only contain letters and spaces.',
+                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
+                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
+                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
+                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
+                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
+            ]);
+
         $source_address = Address::query()->where([
             'id' => $shipment->source_address_id,
         ])->first();
