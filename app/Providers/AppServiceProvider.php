@@ -51,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');
         static::bootstrap_permission('edit_permissions', 'Edit all the authorization permissions.');
         static::bootstrap_permission('edit_roles', 'Edit all the authorization roles.');
+        static::bootstrap_permission('edit_all_shipments', 'Edit all the shipments.');
         static::bootstrap_permission('view_all_roles', 'View all the roles.');
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
         static::bootstrap_permission('view_all_users', 'View all the users.');
@@ -60,7 +61,8 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
-        static::bootstrap_permission('view_shipments', 'view their shipments');
+        static::bootstrap_permission('view_own_shipments', 'view their shipments');
+        static::bootstrap_permission('view_all_shipments', 'view their shipments');
         static::bootstrap_permission('view_shipmentgraphs', 'view shipment graphs');
 
         // Create the minimum required roles (user groups).
@@ -72,25 +74,26 @@ class AppServiceProvider extends ServiceProvider
 
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
-        $role_employee->givePermissionTo('view_shipments');
+        $role_employee->givePermissionTo('view_all_shipments');
         $role_employee->givePermissionTo('view_shipmentgraphs');
+        $role_employee->givePermissionTo('edit_all_shipments');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
-        $role_employee_hr->givePermissionTo('view_shipments');
+        $role_employee_hr->givePermissionTo('view_all_shipments');
         $role_employee_hr->givePermissionTo('view_shipmentgraphs');
         $role_employee_hr->givePermissionTo('view_all_employees');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');
-        $role_employee_it->givePermissionTo('view_shipments');
+        $role_employee_it->givePermissionTo('view_all_shipments');
         $role_employee_it->givePermissionTo('view_shipmentgraphs');
 
         $role_user->givePermissionTo('edit_own_user_info');
         $role_user->givePermissionTo('delete_own_user_account');
-        $role_user->givePermissionTo('view_shipments');
+        $role_user->givePermissionTo('view_own_shipments');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {

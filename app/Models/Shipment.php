@@ -42,6 +42,7 @@ class Shipment extends Model implements ValidatesAttributes
         'delivery_date',
         'status',
     ];
+    public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 
     public const VALIDATION_RULE_SHIPMENT_DATE = ['required'];
 
@@ -49,13 +50,7 @@ class Shipment extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_EXPENSE = ['required', 'numeric'];
 
-    public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
-
     public const VALIDATION_RULE_TYPE = ['required', 'numeric'];
-
-    public const VALIDATION_RULE_RECEIVER_NAME = [];
-
-    public const VALIDATION_RULE_RECEIVER_EMAIL = ['email'];
 
     public const VALIDATION_RULE_STATUS = ['required', 'in:Awaiting Confirmation,Awaiting Pickup,In Transit,Out For Delivery,Delivered,Exception,Held At Location,Deleted,Declined'];
 
@@ -65,8 +60,24 @@ class Shipment extends Model implements ValidatesAttributes
         'expense' => self::VALIDATION_RULE_EXPENSE,
         'weight' => self::VALIDATION_RULE_WEIGHT,
         'type' => self::VALIDATION_RULE_TYPE,
-        'receiver_name' => self::VALIDATION_RULE_RECEIVER_NAME,
-        'receiver_email' => self::VALIDATION_RULE_RECEIVER_EMAIL,
+        'user.name' => User::VALIDATION_RULE_NAME,
+        'user.email' => User::VALIDATION_RULE_EMAIL,
+        'source_address.street' => Address::VALIDATION_RULE_STREET,
+        'source_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'source_address.city' => Address::VALIDATION_RULE_CITY,
+        'source_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'source_address.region' => Address::VALIDATION_RULE_REGION,
+        'source_address.country' => Address::VALIDATION_RULE_COUNTRY,
+        'destination_address.street' => Address::VALIDATION_RULE_STREET,
+        'destination_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'destination_address.city' => Address::VALIDATION_RULE_CITY,
+        'destination_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'destination_address.region' => Address::VALIDATION_RULE_REGION,
+        'destination_address.country' => Address::VALIDATION_RULE_COUNTRY,
+        'status' => self::VALIDATION_RULE_STATUS,
+        'dimension.width' => Dimension::VALIDATION_RULE_WIDTH,
+        'dimension.height' => Dimension::VALIDATION_RULE_HEIGHT,
+        'dimension.length' => Dimension::VALIDATION_RULE_LENGTH,
     ];
 
     protected $fillable = [
