@@ -223,6 +223,17 @@
             </label>
           </div>
         </div>
+        @if ($errors->any())
+          <div class="mb-4">
+            <label class="block font-medium text-red-700">Errors:</label>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li class="block font-medium text-black">-{{ $error }}
+                </li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         <a href="{{ route('shipments.index') }}"
           class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600">Cancel</a>
         <button

@@ -22,8 +22,23 @@ class Waypoint extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_STATUS = ['required', 'in:In Transit,Out For Delivery,Delivered,Exception'];
 
+    public const VALIDATION_RULE_ARRAY = ['required', 'array'];
+
     public const VALIDATION_RULES = [
+        'array' => self::VALIDATION_RULE_ARRAY,
         'status' => self::VALIDATION_RULE_STATUS,
+        'current_address.street' => Address::VALIDATION_RULE_STREET,
+        'current_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'current_address.city' => Address::VALIDATION_RULE_CITY,
+        'current_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'current_address.region' => Address::VALIDATION_RULE_REGION,
+        'current_address.country' => Address::VALIDATION_RULE_COUNTRY,
+        'next_address.street' => Address::VALIDATION_RULE_STREET,
+        'next_address.house_number' => Address::VALIDATION_RULE_HOUSE_NUMBER,
+        'next_address.city' => Address::VALIDATION_RULE_CITY,
+        'next_address.postal_code' => Address::VALIDATION_RULE_POSTAL_CODE,
+        'next_address.region' => Address::VALIDATION_RULE_REGION,
+        'next_address.country' => Address::VALIDATION_RULE_COUNTRY,
     ];
 
     protected $fillable = [
