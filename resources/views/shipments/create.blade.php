@@ -51,9 +51,6 @@
                 type="text" name="source_country"
                 value="{{ old('source_country') }}">
             </div>
-            @error('source_country')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -62,9 +59,6 @@
                 type="text" name="source_postalcode"
                 value="{{ old('source_postalcode') }}">
             </div>
-            @error('source_postalcode')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -73,9 +67,6 @@
                 type="text" name="source_city"
                 value="{{ old('source_city') }}">
             </div>
-            @error('source_city')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -84,9 +75,6 @@
                 type="text" name="source_region"
                 value="{{ old('source_region') }}">
             </div>
-            @error('source_region')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -95,9 +83,6 @@
                 type="text" name="source_street"
                 value="{{ old('source_street') }}">
             </div>
-            @error('source_street')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -106,9 +91,6 @@
                 type="text" name="source_housenumber"
                 value="{{ old('source_housenumber') }}">
             </div>
-            @error('source_housenumber')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
           </div>
         </div>
 
@@ -126,9 +108,6 @@
                 type="text" name="destination_country"
                 value="{{ old('destination_country') }}">
             </div>
-            @error('destination_country')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -137,9 +116,6 @@
                 type="text" name="destination_postalcode"
                 value="{{ old('destination_postalcode') }}">
             </div>
-            @error('destination_postalcode')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">City:</label>
@@ -148,9 +124,6 @@
                 type="text" name="destination_city"
                 value="{{ old('destination_city') }}">
             </div>
-            @error('destination_city')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Region:</label>
@@ -159,9 +132,6 @@
                 type="text" name="destination_region"
                 value="{{ old('destination_region') }}">
             </div>
-            @error('destination_region')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Street:</label>
@@ -170,9 +140,6 @@
                 type="text" name="destination_street"
                 value="{{ old('destination_street') }}">
             </div>
-            @error('destination_street')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">House
                 Number:</label>
@@ -181,9 +148,6 @@
                 type="text" name="destination_housenumber"
                 value="{{ old('destination_housenumber') }}">
             </div>
-            @error('destination_housenumber')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
           </div>
         </div>
         <div class="mb-4">
@@ -212,9 +176,6 @@
             </label>
           </div>
         </div>
-        @error('handling_type')
-          <div class="text-danger">{{ $message }}</div>
-        @enderror
         <div class="mb-4">
           <label class="mb-2 block font-medium text-gray-700">Package
             details</label>
@@ -228,9 +189,6 @@
                 value="{{ old('shipment_weight') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
-            @error('shipment_weight')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Length:</label>
@@ -240,9 +198,6 @@
                 value="{{ old('shipment_length') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
-            @error('shipment_length')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Height:</label>
@@ -252,9 +207,6 @@
                 value="{{ old('shipment_height') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
-            @error('shipment_height')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Width:</label>
@@ -264,9 +216,6 @@
                 value="{{ old('shipment_width') }}"
                 onkeyup="calculateShipmentPrice()">
             </div>
-            @error('shipment_width')
-              <div class="text-danger">{{ $message }}</div>
-            @enderror
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Expense:</label>
