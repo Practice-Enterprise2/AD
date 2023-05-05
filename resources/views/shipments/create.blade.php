@@ -363,6 +363,7 @@
           type="submit" id="submitBtn" disabled>Submit</button>
         <div class="text-black">
           <h2 id="addressInfo" class="text-black"></h2>
+          <h2 id="addressError" class="text-red-600"></h2>
         </div>
 
         <div id="map" style="width:650px; height:450px;"></div>
@@ -384,14 +385,14 @@
         const address = street + ' ' + houseNumber;
         const region = document.getElementsByName('source_region')[0].value;
         const toregion = document.getElementsByName('destination_region')[0]
-        .value;
+          .value;
         const tocountry = document.getElementsByName('destination_country')[0]
           .value;
         const tocity = document.getElementsByName('destination_city')[0].value;
         const topostalcode = document.getElementsByName('destination_postalcode')[
           0].value;
         const toStreet = document.getElementsByName('destination_street')[0]
-        .value;
+          .value;
         const toSouseNumber = document.getElementsByName(
           'destination_housenumber')[0].value;
         const toAddress = toStreet + ' ' + toSouseNumber;
@@ -400,15 +401,20 @@
         let departurePin, destinationPin;
         let departureInfo, destinationInfo;
         let departureLocation, destinationLocation;
+        let addressError = document.getElementById('addressError');
+        let addressInfo = document.getElementById('addressInfo');
+        addressError.textContent = '';
+        addressInfo.textContent = '';
         if (country.trim() === '' || city.trim() === '' || postalcode.trim() ===
           '' || address.trim() === '' || tocountry.trim() === '' || tocity
-        .trim() === '' || topostalcode.trim() === '' || toAddress.trim() === '') {
-          alert('Please fill in all the fields');
+          .trim() === '' || topostalcode.trim() === '' || toAddress.trim() === ''
+          ) {
+          return addressError.textContent = "Please fill in all the fields";
         } else {
           // the rest of your code
           await fetch(
               `https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(country)}&state=${encodeURIComponent(region)}&locality=${encodeURIComponent(city)}&postalCode=${encodeURIComponent(postalcode)}&addressLine=${encodeURIComponent(address)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`
-              )
+            )
             .then(response => response.json())
             .then(data => {
               // Extract the latitude and longitude from the response
@@ -432,12 +438,12 @@
                   // Chain the second fetch call inside the first fetch call's callback
                   return fetch(
                     `https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=${encodeURIComponent(tocountry)}&state=${encodeURIComponent(toregion)}&locality=${encodeURIComponent(tocity)}&postalCode=${encodeURIComponent(topostalcode)}&addressLine=${encodeURIComponent(toAddress)}&key=ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId`
-                    );
+                  );
                 } else {
-                  return alert("address not exists");
+                  return addressError.textContent = "source address not exists";
                 }
               } else {
-                return alert("address not exists");
+                return addressError.textContent = "source address not exists";
               }
             })
             .then(response => {
@@ -452,7 +458,7 @@
                 if (data.resourceSets[0].resources.length > 0) {
                   if (data.resourceSets[0].resources[0].confidence === "High" &&
                     data.resourceSets[0].resources[0].entityType === "Address"
-                    ) {
+                  ) {
                     const destinationLat = data.resourceSets[0].resources[0]
                       .geocodePoints[0].coordinates[0];
                     const destinationLng = data.resourceSets[0].resources[0]
@@ -489,16 +495,18 @@
                             destinationPin.getLocation()
                           ]);
                         var polyline = new Microsoft.Maps.Polyline(
-                        locations, {
-                          strokeThickness: 3
-                        });
+                          locations, {
+                            strokeThickness: 3
+                          });
                         map.entities.push(polyline);
                       });
                   } else {
-                    return alert("address not exists");
+                    return addressError.textContent =
+                      "destination address not exists";
                   }
                 } else {
-                  return alert("address not exists");
+                  return addressError.textContent =
+                    "destination address not exists";
                 }
               }
             })
@@ -507,7 +515,7 @@
             });
           if (check) {
             document.getElementById('submitBtn').disabled = false;
-            document.getElementById('addressInfo').textContent = "From: " +
+            addressInfo.textContent = "From: " +
               departureInfo + " To: " + destinationInfo;
           }
 
