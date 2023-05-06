@@ -23,6 +23,7 @@ RUN apt-get install -y php-xml
 RUN apt-get install -y php-curl
 RUN apt-get install -y curl
 RUN apt-get install -y wget
+RUN apt-get install -y php8.1-mysql
 
 ENV NODE_VERSION=18.15.0
 RUN apt install -y curl
@@ -52,7 +53,6 @@ COPY resources/ resources/
 COPY routes/ routes/
 COPY storage/ storage/
 COPY tests/ tests/
-COPY .env.example .env
 COPY artisan artisan
 COPY composer.json composer.json
 COPY composer.lock composer.lock
@@ -66,8 +66,5 @@ COPY vite.config.js vite.config.js
 RUN npm ci
 RUN composer install
 RUN npm run build
-RUN php artisan key:generate
-RUN php artisan migrate
-RUN php artisan bootstrap
 
 ENTRYPOINT ["php", "artisan", "serve"]

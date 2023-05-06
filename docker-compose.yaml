@@ -1,9 +1,10 @@
 services:
   bluesky-website:
     image: bluesky-website:0.1.0
-    dns:
-      - 8.8.8.8
-      - 8.0.0.8
+    hostname: bluesky-website-container
+    container_name: bluesky-website
+    env_file:
+      - .env
     build:
       context: .
     ports:
