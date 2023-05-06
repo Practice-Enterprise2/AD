@@ -1,46 +1,4 @@
 <x-app-layout>
-  <style>
-    .userpanel {
-      /* width: 650px; */
-      max-width: 700px;
-      background-color: white;
-      padding: 25px;
-      margin-top: 50px;
-      margin-left: auto;
-      margin-right: auto;
-      overflow: auto;
-      border-radius: 8px;
-      box-shadow: 0px 0px 10px -1px rgba(158, 158, 158, 1);
-    }
-
-    #newemployeediv {
-      margin-top: 40px;
-      text-align: center;
-      width: 100%;
-    }
-
-    .innerpanel1 {
-      width: 325px;
-      float: left;
-    }
-
-    .innerpanel2 {
-      width: 324px;
-      float: right;
-    }
-
-    .clearfix::after {
-      content: "";
-      clear: both;
-      display: table;
-    }
-
-    #editButton {
-      float: right;
-    }
-
-    .theEditButton {}
-  </style>
   <div>
     <div id="newemployeediv">
       <a id="newemployee"

@@ -1,39 +1,4 @@
 <x-app-layout>
-  <style>
-    h1 {
-      padding-top: 50px;
-      text-align: center;
-    }
-
-    div#everything {
-      background-color: lightblue;
-      width: 80%;
-      margin: auto;
-    }
-
-    form {
-      text-align: center;
-      padding-top: 50px;
-    }
-
-    input {
-      margin-bottom: 20px;
-    }
-
-    form button {
-      border-radius: 250px;
-      color: darkgoldenrod;
-      font-size: large;
-      margin: 50px;
-      padding: 15px;
-      width: 200px;
-    }
-
-    form button:hover {
-      background-color: blueviolet;
-      color: black;
-    }
-  </style>
   <h1>New Employee</h1>
   <form method="post" action="employee_add" accept-charset="UTF-8">
     @csrf
@@ -72,10 +37,6 @@
       <label for="Iban">Iban:</label>
       <input type="int" id="Iban" name="Iban" required><br>
       <label for="isActive">active:</label>
-      <!-- <select name="isActive" id="isActive" value="yes">
-        <option value="yes">yes</option>
-        <option value="no">no</option>
-      </select> -->
     </div>
     <br>
     <a href="{{ route('employee.overview') }}">Back</a>
