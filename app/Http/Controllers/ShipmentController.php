@@ -214,12 +214,9 @@ class ShipmentController extends Controller
             ->where('shipments.id', $id)
             ->select('*')
             ->get();
-
-        $shipmentData = $this->track($id);
-
+    
         return view('shipments_details', [
             'shipments' => $shipments,
-            'address' => $shipmentData,
         ]);
     }
 
