@@ -150,6 +150,9 @@ if (!isset($_GET["q"]))
         <li> <a href="airportList"
             class="list-group-item list-group-item-action ripple py-2"><span>airport
               list</span></a></li>
+              <li> <a href="addAirportList"
+              class="list-group-item list-group-item-action ripple py-2"><span>add airport</span></a>
+          </li>
       </ul>
     </div>
   </nav>
