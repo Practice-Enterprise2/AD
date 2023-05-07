@@ -43,7 +43,7 @@ Slots:
 
 <body
   class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
-  @include('layouts.navigation')
+  @include('components.navigation')
 
   @if (isset($header))
     <header class="bg-white shadow dark:bg-gray-800">
