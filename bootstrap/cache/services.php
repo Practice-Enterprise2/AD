@@ -39,7 +39,8 @@
     35 => 'App\\Providers\\PolicyMappingServiceProvider',
     36 => 'App\\Providers\\EventServiceProvider',
     37 => 'App\\Providers\\RouteServiceProvider',
-    38 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    38 => 'App\\Providers\\BroadcastServiceProvider',
+    39 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
   ),
   'eager' => 
   array (
@@ -66,7 +67,8 @@
     20 => 'App\\Providers\\PolicyMappingServiceProvider',
     21 => 'App\\Providers\\EventServiceProvider',
     22 => 'App\\Providers\\RouteServiceProvider',
-    23 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    23 => 'App\\Providers\\BroadcastServiceProvider',
+    24 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
   ),
   'deferred' => 
   array (

@@ -14,9 +14,6 @@
 
         <!-- Navigation Links -->
         <div class="hidden space-x-8 lg:-my-px lg:ml-10 lg:flex">
-          <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-            {{ __('Home') }}
-          </x-nav-link>
           @auth
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
               {{ __('Dashboard') }}
@@ -314,9 +311,6 @@
   <!-- Responsive Navigation Menu -->
   <div :class="{ 'block': open, 'hidden': !open }" class="hidden lg:hidden">
     <div class="space-y-1 pb-3 pt-2">
-      <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-        {{ __('Home') }}
-      </x-responsive-nav-link>
       @auth
         <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
           {{ __('Dashboard') }}

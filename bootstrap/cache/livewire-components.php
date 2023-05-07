@@ -1,5 +1,6 @@
 <?php return array (
   'control-panel.sidebar' => 'App\\Http\\Livewire\\ControlPanel\\Sidebar',
+  'employees.index' => 'App\\Http\\Livewire\\Employees\\Index',
   'log' => 'App\\Http\\Livewire\\Log',
   'permission.edit' => 'App\\Http\\Livewire\\Permission\\Edit',
   'pickups.create' => 'App\\Http\\Livewire\\Pickups\\Create',

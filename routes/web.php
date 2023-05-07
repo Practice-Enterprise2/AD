@@ -7,7 +7,6 @@ use App\Http\Controllers\ControlPanelController;
 
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\EmployeeController;
@@ -96,22 +95,21 @@ Route::controller(CustomerController::class)->group(function () {
     Route::put('/customers/{id}', 'update')->name('customer.update');
 });
 
-    Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
-        Route::get('/', ControlPanelController::class)->name('control-panel');
-        Route::name('control-panel.')->group(function () {
-            Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
-            Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
-            Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
-            Route::get('/employees', 'employees')->name('employees')->middleware('permission:view_all_employees');
-            Route::get('/employees/create', 'employees_create')->name('employees.create')->middleware('permission:add_employee');
-            Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
-            Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
-            Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
-            Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
-            Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
-            Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');
-            Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
-        });
+Route::controller(ControlPanelController::class)->middleware('permission:view_all_roles|view_all_users|view_basic_server_info|view_detailed_server_info|edit_roles')->prefix('/control-panel')->group(function () {
+    Route::get('/', ControlPanelController::class)->name('control-panel');
+    Route::name('control-panel.')->group(function () {
+        Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
+        Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
+        Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+        Route::get('/employees', 'employees')->name('employees')->middleware('permission:view_all_employees');
+        Route::get('/employees/create', 'employees_create')->name('employees.create')->middleware('permission:add_employee');
+        Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
+        Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
+        Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
+        Route::get('/permissions', 'permissions')->name('permissions')->middleware('permission:view_all_permissions');
+        Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit')->middleware('permission:edit_permissions');
+        Route::get('/info', 'info')->name('info')->middleware('permission:view_basic_server_info|view_detailed_server_info');
+        Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
     });
 });
 
@@ -210,18 +208,18 @@ Route::get('/paymentSuccess', function () {
 
 // Depot routes
 
-Route::get('/DepotManagement', [DepotController::class, 'index'])->name('Depots');
+Route::get('/DepotManagement', [DepotController::class, 'index'])->name('Depots')->middleware('permission:view_general_depot_content');
 
-Route::get('depotoverview/{key}', [DepotController::class, 'overviewperDepot']);
+Route::get('depotoverview/{key}', [DepotController::class, 'overviewperDepot'])->middleware('permission:view_general_depot_content');
 
-Route::get('/addDepot', [DepotController::class, 'addDepotpage']);
+Route::get('/addDepot', [DepotController::class, 'addDepotpage'])->middleware('permission:edit_depot_content');
 
-Route::post('addDepotform', [DepotController::class, 'addDepot']);
+Route::post('addDepotform', [DepotController::class, 'addDepot'])->middleware('permission:edit_depot_content');
 
-Route::get('/editDepot/{key}', [DepotController::class, 'editDepotpage']);
+Route::get('/editDepot/{key}', [DepotController::class, 'editDepotpage'])->middleware('permission:edit_depot_content');
 
-Route::post('/editDepotform/{key}', [DepotController::class, 'editDepot']);
+Route::post('/editDepotform/{key}', [DepotController::class, 'editDepot'])->middleware('permission:edit_depot_content');
 
-Route::get('deleteDepot/{key}', [DepotController::class, 'deleteDepot']);
+Route::get('deleteDepot/{key}', [DepotController::class, 'deleteDepot'])->middleware('permission:edit_depot_content');
 
 require __DIR__.'/auth.php';

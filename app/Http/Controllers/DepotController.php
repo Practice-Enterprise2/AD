@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Depot;
 use Auth;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,46 +11,35 @@ date_default_timezone_set('Europe/Brussels');
 
 class DepotController extends Controller
 {
-    use SoftDeletes;
 
     // GET Depots
     public function index()
     {
-        if (Auth::user()) {
-            if (Auth::user()->role != 0) {
-                $depots = DB::select('select * from depots');
-                $name = Auth::user()->name;
+        $depots = DB::select('select * from depots');
+        if (Auth::user()!=null ){
+            
+            $name = Auth::user()->name;
 
-                return view('depotManagement', ['depots' => $depots, 'name' => $name]);
-            }
+            return view('depotManagement', ['depots' => $depots, 'name' => $name]);
+        } else {
+            return view('depotManagement',['depots' => $depots, 'name' => $name]);
         }
-        echo 'Access denied. Redirecting';
-        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
-        exit();
+         
     }
 
     public function overviewperDepot(int $id)
     {
-        if (Auth::user()) {
-            if (Auth::user()->role != 0) {
-                $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
+        $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
 
-                return view('overviewperdepot', ['data' => $data, 'id' => $id]);
-            }
-        }
-        echo 'Access denied. Redirecting';
-        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
-        exit();
-
+        return view('overviewperdepot', ['data' => $data, 'id' => $id]);
     }
 
     public function addDepotpage()
-    {
-        if (Auth::user() != 0) {
-            return view('addDepot');
-        } else {
-            return view('dashboard');
-        }
+    {   
+        
+        return view('addDepot');
+            
+                
     }
 
     public function addDepot(Request $request)
@@ -66,16 +54,11 @@ class DepotController extends Controller
 
     public function editDepotpage(int $id)
     {
-        if (Auth::user()) {
-            if (Auth::user()->role != 0) {
-                $depots = DB::select('select * from depots where id = ?', [$id]);
+        
+        $depots = DB::select('select * from depots where id = ?', [$id]);
 
-                return view('editDepot', ['depots' => $depots]);
-            }
-        }
-        echo 'Access denied. Redirecting';
-        echo "<script>setTimeout(\"location.href = 'http://localhost:8000/home';\",1000);</script>";
-        exit();
+        return view('editDepot', ['depots' => $depots]);
+
     }
 
     public function editDepot(Request $request, int $id)
@@ -86,13 +69,10 @@ class DepotController extends Controller
         exit();
     }
 
-    // DELETE depot
-    // Not soft delete yet!!!
     public function deleteDepot($id)
     {
 
         Depot::where('id', [$id])->delete();
-        //DB::delete('delete from depots where id = ?', [$id]);
 
         header('Location: /DepotManagement');
         exit();
