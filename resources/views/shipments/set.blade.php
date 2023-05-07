@@ -151,7 +151,17 @@
                         <input class="border border-gray-400 p-2 w-3/5 rounded-md" type="text" name="waypoints[]" id="waypoint_1">
                     </div> --}}
         </div>
-
+        @if ($errors->any())
+          <div class="mb-4">
+            <label class="block font-medium text-red-700">Errors:</label>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li class="block font-medium text-black">-{{ $error }}
+                </li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         <div class="mt-2">
           <button id="add-waypoint"
             class="rounded-md bg-green-500 p-2 text-white hover:bg-green-600"

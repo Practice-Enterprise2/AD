@@ -23,17 +23,17 @@ class Address extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
-    public const VALIDATION_RULE_STREET = ['required', 'min:2'];
+    public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'min:1'];
+    public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'string', 'min:1'];
 
-    public const VALIDATION_RULE_POSTAL_CODE = ['required', 'min:2'];
+    public const VALIDATION_RULE_POSTAL_CODE = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_CITY = ['required', 'min:2'];
+    public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_REGION = ['required', 'min:2'];
+    public const VALIDATION_RULE_REGION = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_COUNTRY = ['required', 'min:2'];
+    public const VALIDATION_RULE_COUNTRY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
     public const VALIDATION_RULES = [
         'street' => self::VALIDATION_RULE_STREET,
