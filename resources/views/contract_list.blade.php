@@ -44,6 +44,23 @@
       overflow-y: auto;
       /* Scrollable contents if viewport is shorter than content. */
     }
+
+    .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+    width: 100%;
+    margin: auto;
+    }
+    input {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
   </style>
   <div class="">
     <!-- Sidebar -->
