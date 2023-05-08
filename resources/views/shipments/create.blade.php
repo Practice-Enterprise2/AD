@@ -263,7 +263,7 @@
                 class="inline-flex w-1/3 items-center text-black">Preferred
                 date of
                 delivery:</label>
-              <!-- Read out initialised delivery dates list of following 7 days -->
+              {{-- Read out initialised delivery dates list of following 7 days --}}
               <select name="delivery_date" id="delivery_date"
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black">
                 @foreach ($deliveryDates as $date)
@@ -283,7 +283,7 @@
               <span id="shipment_date_display"
                 class="ml-auto w-2/3 p-1 text-black">
                 {{ date('Y-m-d') }}</span>
-              <!-- Script to calculate estimated shipping date compared to selected preferred delivery date -->
+              {{-- Script to calculate estimated shipping date compared to selected preferred delivery date --}}
               <script>
                 const deliveryDateSelected = document.getElementById('delivery_date');
                 const estimatedShippingDateInput = document.getElementById('shipment_date');
