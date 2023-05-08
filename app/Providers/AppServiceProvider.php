@@ -171,7 +171,6 @@ class AppServiceProvider extends ServiceProvider
         $management_user->assignRole('management');
         $management_user->assingRole('employee');
         $management_user->assignRole('user');
-
     }
 
     // If a permission with the given name doesn't exist, create it.

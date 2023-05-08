@@ -30,7 +30,7 @@
           @can('view_employee_count')
             <x-nav-link :href="route('employeegraph')" :active="request()->routeIs('employeegraph')">
               {{ __('Graphs') }}
-          </x-nav-link> 
+            </x-nav-link>
           @endcan
           @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
             'view_detailed_server_info', 'edit_roles'])
