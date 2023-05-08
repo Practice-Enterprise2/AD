@@ -6,6 +6,7 @@ use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * @property int $id
  * @property string $code
@@ -32,7 +33,6 @@ class Depot extends Model implements ValidatesAttributes
         'size',
     ];
 
-    //example-commit
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);

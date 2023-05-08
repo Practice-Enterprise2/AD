@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Depot;
 use App\Models\Shipment;
 use App\Models\Waypoint;
 use Illuminate\Contracts\View\View;
@@ -11,31 +12,64 @@ class WaypointController extends Controller
 {
     public function create(Shipment $shipment): View
     {
-        // dd($shipment);
-        return view('shipments.set', compact('shipment'));
+        $countries = [
+            $shipment->source_address->country,
+            $shipment->destination_address->country,
+        ];
+
+        // query that retrieves the depots that has the same country as the source and destination addresses for the shipment object.
+        $depots = Depot::whereHas('address', function ($query) use ($countries) {
+            $query->whereIn('country', $countries);
+        })->get();
+
+        return view('shipments.set', compact(['shipment', 'depots']));
     }
 
     public function store(Shipment $shipment): View
     {
-        $this->validate(request(), [
-            'waypoints' => Waypoint::VALIDATION_RULES['array'],
-            'waypoints.*.street' => Waypoint::VALIDATION_RULES['current_address.street'],
-            'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['current_address.house_number'],
-            'waypoints.*.postal_code' => Waypoint::VALIDATION_RULES['current_address.postal_code'],
-            'waypoints.*.city' => Waypoint::VALIDATION_RULES['current_address.city'],
-            'waypoints.*.region' => Waypoint::VALIDATION_RULES['current_address.region'],
-            'waypoints.*.country' => Waypoint::VALIDATION_RULES['current_address.country'],
-        ],
-            [
-                'waypoints.*.street.regex' => 'Please enter a valid street for waypoint.',
-                'waypoints.*.postal_code.regex' => 'Please enter a valid postal code for waypoint.',
-                'waypoints.*.city.regex' => 'Please enter a valid city for waypoint.',
-                'waypoints.*.region.regex' => 'Please enter a valid region for waypoint.',
-                'waypoints.*.country.regex' => 'Please enter a valid country for waypoint.',
-            ]
-        );
+        // VALIDATION IS NOT NECESSARY ANYMORE SINCE ADDRESS IS CHOSEN FROM THE DROPDOWN LIST(HTML SELECT TAG to be more specific.)
+        // $this->validate(request(), [
+        //     'waypoints' => Waypoint::VALIDATION_RULES['array'],
+        //     'waypoints.*.street' => Waypoint::VALIDATION_RULES['current_address.street'],
+        //     'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['current_address.house_number'],
+        //     'waypoints.*.postal_code' => Waypoint::VALIDATION_RULES['current_address.postal_code'],
+        //     'waypoints.*.city' => Waypoint::VALIDATION_RULES['current_address.city'],
+        //     'waypoints.*.region' => Waypoint::VALIDATION_RULES['current_address.region'],
+        //     'waypoints.*.country' => Waypoint::VALIDATION_RULES['current_address.country'],
+        // ],
+        //     [
+        //         'waypoints.*.street.regex' => 'Please enter a valid street for waypoint.',
+        //         'waypoints.*.postal_code.regex' => 'Please enter a valid postal code for waypoint.',
+        //         'waypoints.*.city.regex' => 'Please enter a valid city for waypoint.',
+        //         'waypoints.*.region.regex' => 'Please enter a valid region for waypoint.',
+        //         'waypoints.*.country.regex' => 'Please enter a valid country for waypoint.',
+        //     ]
+        // );
+        // $waypoints = collect(request()->waypoints);
 
-        $waypoints = collect(request()->waypoints);
+        // converting id's into waypoints in this way not to break any logic that been written before.
+        $waypoint_ids = collect(request()->waypoints);
+        $waypoints = collect([]);
+
+        for ($i = 0; $i < $waypoint_ids->count(); $i++) {
+            if (isset($waypoint_ids[$i]['depot_id'])) {
+                // dd("here");
+                $address = Address::find($waypoint_ids[$i]['depot_id']);
+                $waypoint = [];
+                $waypoint['type'] = 'depot'; //branch need a change to depot
+            } else {
+                $address = Address::find($waypoint_ids[$i]['airport_id']);
+                $waypoint = [];
+                $waypoint['type'] = 'airport';
+            }
+            $waypoint['street'] = $address->street;
+            $waypoint['house_number'] = $address->house_number;
+            $waypoint['postal_code'] = $address->postal_code;
+            $waypoint['city'] = $address->city;
+            $waypoint['region'] = $address->region;
+            $waypoint['country'] = $address->country;
+            $waypoints->push($waypoint);
+        }
 
         for ($i = 0; $i < $waypoints->count(); $i++) {
             if ($i == 0) {
@@ -89,7 +123,7 @@ class WaypointController extends Controller
 
                     // dd($next_address);
                 }
-                $status = 'Out For Delivery'; // presents this is the current waypoint.
+                $status = 'Awaiting Action';  // presents this is the current waypoint.
             } else {
                 // $current_address = $waypoints[$i - 1];
                 $current_address = Address::query()->where([
@@ -209,7 +243,20 @@ class WaypointController extends Controller
         if ($shipment->status == 'Delivered') {
             dd('Shipments is already Delivered!');
         }
+
         $current_waypoint = $shipment->waypoints()->where('status', 'Out For Delivery')->first();
+
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Awaiting Action')->first();
+        }
+
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Received')->first();
+        }
+
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Out For Client')->first();
+        }
 
         // checking if it is the first waypoint
         if ($current_waypoint->current_address_id == $shipment->source_address_id) {
@@ -219,21 +266,42 @@ class WaypointController extends Controller
         }
 
         if ($current_waypoint->next_address_id == $shipment->destination_address_id) {
-            $current_waypoint->status = 'Delivered';
-            $current_waypoint->update();
-            $shipment->status = 'Delivered';
-            $shipment->update();
-        } else {
-            $next_waypoint = $shipment->waypoints()->where('current_address_id', $current_waypoint->next_address_id)->first();
-            $current_waypoint->status = 'Delivered';
-            $current_waypoint->update();
-            $next_waypoint->status = 'Out For Delivery';
-            $next_waypoint->update();
+            if ($current_waypoint->status == 'Out For Delivery') {
+                $current_waypoint->status = 'Received';
+                $current_waypoint->update();
+            } elseif ($current_waypoint->status == 'Received') {
+                $current_waypoint->status = 'Out For Client';
+                $current_waypoint->update();
 
-            // checking if it is the last waypoint
-            if ($next_waypoint->next_address_id == $shipment->destination_address_id) {
+                // Since it is not IN TRANSIT anymore
                 $shipment->status = 'Out For Delivery';
                 $shipment->update();
+            } elseif ($current_waypoint->status == 'Out For Client') {
+                $current_waypoint->status = 'Delivered';
+                $current_waypoint->update();
+                $shipment->status = 'Delivered';
+                $shipment->update();
+            }
+        } else {
+            // NEW CODE
+            if ($current_waypoint->status == 'Out For Delivery') {
+                $current_waypoint->status = 'Received';
+                $current_waypoint->update();
+                dd('waypoint with id: '.$current_waypoint->id." state changed to: 'received'");
+            }
+
+            if ($current_waypoint->status == 'Received' || $current_waypoint->status == 'Awaiting Action') {
+                $next_waypoint = $shipment->waypoints()->where('current_address_id', $current_waypoint->next_address_id)->first();
+                $current_waypoint->status = 'Delivered';
+                $current_waypoint->update();
+                $next_waypoint->status = 'Out For Delivery';
+                $next_waypoint->update();
+
+                // checking if it is the last waypoint
+                // if ($next_waypoint->next_address_id == $shipment->destination_address_id) {
+                //     $shipment->status = 'Out For Delivery';
+                //     $shipment->update();
+                // }
             }
         }
         dd('Waypoints updated. Check Database.');
