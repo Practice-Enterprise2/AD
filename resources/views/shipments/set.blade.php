@@ -131,8 +131,6 @@
           Handling Type:</span>
         <span class="text-black">{{ $shipment->type }}</span>
       </p>
-      {{-- {{ route('shipments.store') }} --}}
-      {{-- {{ route('shipments.requests.evaluate.set.store') }} --}}
       <form
         action="{{ route('shipments.requests.evaluate.set.store', ['shipment' => $shipment]) }}"
         method="POST">
@@ -141,11 +139,6 @@
         </h1>
 
         <div class="space-y-2 text-black" id="waypoints-container">
-          {{-- ORIGINAL INPUT BELOW: --}}
-          {{-- <div class="waypoint">
-            <label class="block text-gray-700 font-medium mb-2" for="waypoint_1"> <b>Waypoint 1</b> Branch Address:</label>
-            <input class="border border-gray-400 p-2 w-3/5 rounded-md" type="text" name="waypoints[]" id="waypoint_1">
-          </div> --}}
         </div>
         @if ($errors->any())
           <div class="mb-4">
