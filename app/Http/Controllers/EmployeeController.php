@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmployeeContract;
+use App\Models\HolidaySaldo;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -70,6 +71,20 @@ class EmployeeController extends Controller
         $contract->start_date = $req->startdate;
         $contract->end_date = $req->stopdate;
         $contract->save();
+        sleep(2);
+        $contractId = DB::table('employee_contracts')->where('employee_id', $req->employeeID)->value('id');
+        $startyear =  intval($req->startdate.substr(0,4));
+        $stopyear = intval($req->stopdate.substr(0,4));
+        for($i = $startyear; $i<$stopyear; $i++)
+        {
+            $year = $startyear+$i-1;
+            $holidaySaldo = new HolidaySaldo();
+            $holidaySaldo->contract_id = $contractId;
+            $holidaySaldo->allowed_days = $req->days.$i;
+            $holidaySaldo->year = $i+1;
+            $holidaySaldo->type = 1;
+            $holidaySaldo->save();
+        }
 
         return redirect()->back()->with('alert', 'complete creation');
     }
