@@ -18,7 +18,7 @@ Slots:
     {{ config('app.name', 'Laravel') . ($title ?? false ? " - $title" : '') }}
   </title>
 
-  <!-- Fonts -->
+  {{-- Fonts --}}
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link
     href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
@@ -36,14 +36,14 @@ Slots:
     {{ $head }}
   @endisset
 
-  <!-- Scripts -->
+  {{-- Scripts --}}
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   @livewireStyles
 </head>
 
 <body
   class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
-  @include('layouts.navigation')
+  @include('components.navigation')
 
   @if (isset($header))
     <header class="bg-white shadow dark:bg-gray-800">
