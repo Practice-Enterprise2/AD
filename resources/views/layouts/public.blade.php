@@ -19,19 +19,10 @@
   @livewireStyles
 </head>
 
-<body
-  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
-  @include('components.navigation')
+<body>
+  @include('components.public.header')
 
-  @if (isset($header))
-    <header class="bg-white shadow dark:bg-gray-800">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {{ $header }}
-      </div>
-    </header>
-  @endif
-
-  <main class="contents">
+  <main>
     {{ $slot }}
   </main>
 
