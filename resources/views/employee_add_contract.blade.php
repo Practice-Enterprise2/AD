@@ -1,4 +1,36 @@
 <x-app-layout>
+  <script>
+    function change(){
+      var years = 0;
+
+      var date1 = document.getElementById("startdate").value;
+      var date2 = document.getElementById("stopdate").value;
+      document.getElementById("extra").innerHTML= "";
+      if(date1 && date2)
+      {
+        var date1Year = date1.substr(0,4);
+        var date2Year = date2.substr(0,4);
+        date1Year = parseInt(date1Year);
+        date2Year = parseInt(date2Year);
+        console.log(date1Year);
+        console.log(date2Year);
+        if(date1Year == date2Year)
+        {
+          years = 1;
+        }
+        if(date2Year > date1Year)
+        {
+          years = date2Year - date1Year +1;
+        }
+        for(var i = 0; i<years; i++)
+        {
+          var Year = i+date1Year;          
+          document.getElementById("extra").innerHTML+='<label for="days'+i+'">amount vacation days for year '+Year+':</label><br><input type="number" name="days'+i+'" required><br>';
+        }
+      }
+    }
+
+  </script>
   <div class="m-auto w-2/5 bg-white text-center">
     <h1 class="p-8 text-center text-xl">New Employee Contract</h1>
 
@@ -16,9 +48,14 @@
       <br>
 
       <label for="startdate">Start date:</label>
-      <input type="date" id="startdate" name="startdate" required><br>
+      <input type="date" id="startdate" name="startdate" required onchange="change()"><br>
       <label for="stopdate">Stop date:</label>
-      <input type="date" id="stopdate" name="stopdate" required><br>
+      <input type="date" id="stopdate" name="stopdate" required onchange="change()"><br>
+
+      
+      <div id="extra">
+
+      </div>
 
       <br>
 
