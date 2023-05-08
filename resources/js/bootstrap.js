@@ -2,6 +2,7 @@ import Alpine from 'alpinejs';
 import axios from 'axios';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import $ from 'jquery';
 
 const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -28,6 +29,8 @@ window.axios = axios;
 window.Pusher = Pusher;
 window.Echo = echo;
 window.Alpine = Alpine;
+window.$ = $;
+window.jQuery = $;
 
 // Set common Axios request headers
 axios_headers['X-CSRF-Token'] = csrfToken;
