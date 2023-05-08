@@ -38,7 +38,7 @@
               {{ __('Control Panel') }}
             </x-nav-link>
           @endrole
-          @can('view_employee_graph')
+          @can('view_employee_count')
             <x-nav-link :href="route('employeegraph')" :active="request()->routeIs('employeegraph')">
               {{ __('Graphs') }}
             </x-nav-link>
