@@ -5,6 +5,8 @@
  */
 
 import axios from 'axios';
+import Alpine from 'alpinejs';
+
 window.axios = axios;
 const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -40,3 +42,8 @@ window.Echo = new Echo({
         },
     },
 });
+
+// This optional assignment allows usage of Alpine from the browser's dev
+// tools.
+window.Alpine = Alpine;
+Alpine.start();
