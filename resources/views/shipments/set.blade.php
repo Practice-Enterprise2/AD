@@ -1,7 +1,3 @@
-{{-- <div class="mb-4">
-    <label class="block text-gray-700 font-medium mb-2" for="receiver_name">Receiver Name</label>
-    <input class="border border-gray-400 p-2 w-3/5 rounded-md" type="text" id="receiver_name" name="receiver_name">
-</div> --}}
 <x-app-layout>
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">
@@ -135,8 +131,6 @@
           Handling Type:</span>
         <span class="text-black">{{ $shipment->type }}</span>
       </p>
-      {{-- {{ route('shipments.store') }} --}}
-      {{-- {{ route('shipments.requests.evaluate.set.store') }} --}}
       <form
         action="{{ route('shipments.requests.evaluate.set.store', ['shipment' => $shipment]) }}"
         method="POST">
@@ -145,11 +139,6 @@
         </h1>
 
         <div class="space-y-2 text-black" id="waypoints-container">
-          {{-- ORIGINAL INPUT BELOW: --}}
-          {{-- <div class="waypoint">
-                        <label class="block text-gray-700 font-medium mb-2" for="waypoint_1"> <b>Waypoint 1</b> Branch Address:</label>
-                        <input class="border border-gray-400 p-2 w-3/5 rounded-md" type="text" name="waypoints[]" id="waypoint_1">
-                    </div> --}}
         </div>
         @if ($errors->any())
           <div class="mb-4">
@@ -179,39 +168,8 @@
     </div>
 
   </div>
-</x-app-layout>
 
-{{-- <script>
-    $(document).ready(function() {
-        var count = 0;
-        $('#add-waypoint').click(function() {
-            count++;
-
-            var newWaypoint = $('<div/>', {
-                'class': 'waypoint'
-            });
-
-            var label = $('<label/>', {
-                'class': 'block text-gray-700 font-medium mb-2',
-                'for': 'waypoint_' + count,
-                html: '<b>Waypoint ' + count + ':</b> '
-            });
-
-            var input = $('<input/>', {
-                'class': 'border border-gray-400 p-2 w-3/5 rounded-md',
-                'type': 'text',
-                'name': 'waypoints[]',
-                'id': 'waypoint_' + count
-            });
-
-            newWaypoint.append(label);
-            newWaypoint.append(input);
-            $('#waypoints-container').append(newWaypoint);
-        });
-    });
-</script> --}}
-
-<script>
+  <script type="module">
   $(document).ready(function() {
     var count = 0;
     $('#add-waypoint').click(function() {
@@ -285,4 +243,5 @@
       $('#waypoints-container').append(newWaypoint);
     });
   });
-</script>
+  </script>
+</x-app-layout>
