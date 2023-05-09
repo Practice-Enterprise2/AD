@@ -1,10 +1,10 @@
 <nav x-data="{ open: false }"
   class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
-  <!-- Primary Navigation Menu -->
+  {{-- Primary Navigation Menu --}}
   <div class="mx-auto max-w-7xl px-4 lg:px-6 lg:px-8">
     <div class="flex h-16 justify-between">
       <div class="flex">
-        <!-- Logo -->
+        {{-- Logo --}}
         <div class="flex shrink-0 items-center">
           <a href="{{ route('home') }}">
             <x-application-logo
@@ -12,7 +12,7 @@
           </a>
         </div>
 
-        <!-- Navigation Links -->
+        {{-- Navigation Links --}}
         <div class="hidden space-x-8 lg:-my-px lg:ml-10 lg:flex">
           <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             {{ __('Home') }}
@@ -195,7 +195,7 @@
         @endauth
       </div>
 
-      <script type="text/javascript">
+      <script type="module">
         function markNotificationsAsRead(notifications) {
           if (notifications !== '0') {
             $.ajax({
@@ -228,7 +228,7 @@
         }
       </script>
 
-      <!-- Settings Dropdown -->
+      {{-- Settings Dropdown --}}
       <div class="hidden lg:ml-6 lg:flex lg:items-center">
 
         @guest
@@ -272,7 +272,7 @@
                   {{ __('Profile') }}
                 </x-dropdown-link>
               @endif
-              <!-- Authentication -->
+              {{-- Authentication --}}
 
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -290,7 +290,7 @@
         @endguest
       </div>
 
-      <!-- Hamburger -->
+      {{-- Hamburger --}}
       <div class="-mr-2 flex items-center lg:hidden">
         <button @click="open = ! open"
           class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400">
@@ -308,7 +308,7 @@
     </div>
   </div>
 
-  <!-- Responsive Navigation Menu -->
+  {{-- Responsive Navigation Menu --}}
   <div :class="{ 'block': open, 'hidden': !open }" class="hidden lg:hidden">
     <div class="space-y-1 pb-3 pt-2">
       <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
@@ -343,7 +343,7 @@
 
     </div>
 
-    <!-- Responsive Settings Options -->
+    {{-- Responsive Settings Options --}}
     <div class="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
       @auth
         <div class="px-4">
@@ -358,7 +358,7 @@
           {{ __('Profile') }}
         </x-responsive-nav-link>
 
-        <!-- Authentication -->
+        {{-- Authentication --}}
         <form method="POST" action="{{ route('logout') }}">
           @csrf
 
