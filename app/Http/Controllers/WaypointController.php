@@ -27,7 +27,6 @@ class WaypointController extends Controller
 
     public function store(Shipment $shipment): View
     {
-
         // converting id's into waypoints in this way not to break any logic that been written before.
         $waypoint_ids = collect(request()->waypoints);
         $waypoints = collect([]);

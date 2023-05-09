@@ -183,70 +183,67 @@
   </div>
 
   <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
 
-    var count = 0;
-    $('#add-depot, #add-airport').click(function() {
+      var count = 0;
+      $('#add-depot, #add-airport').click(function() {
 
-      // later on airport will be converted to address from IATA
-      var type = $(this).attr('id') === 'add-depot' ? 'depot' :
-        'airport';
+        // later on airport will be converted to address from IATA
+        var type = $(this).attr('id') === 'add-depot' ? 'depot' :
+          'airport';
 
-      // Create a new select element
-      var title = $('<h1/>', {
-        'class': 'text-black font-bold',
-        'for': 'waypoint_' + count + '_' + type + '_id',
-        'html': 'Waypoint[' + (count) + ']: ' + type.charAt(0)
-          .toUpperCase() + type.slice(1)
-      });
-
-
-
-      // (!) NEED TO BE ABLE TO DISABLE AND RETRIEVE THE VALUE AT THE SAME TIME.
-
-      // var hiddenInput = $('<input/>', {
-      // 'type': 'hidden',
-      // 'name': 'waypoints[' + count + '][' + type + '_id]',
-      // 'class': 'waypoint-hidden',
-      // 'value': $('.waypoint-select').val()
-      // });
-
-      // $('.waypoint-select').prop('disabled', true);
-
-      var newWaypoint = $('<select/>', {
-        'class': 'block w-full p-2 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50',
-        'name': 'waypoints[' + count + '][' + type + '_id]',
-        'id': 'waypoint_' + count + '_' + type + '_id'
-      });
-
-
-      // Populate the select element with options for each depot
-      @foreach ($depots as $depot)
-        var option = $('<option/>', {
-          'value': '{{ $depot->id }}',
-          html: 'Depot Code: {{ $depot->code }} / Depot Address: {{ $depot->address->country }}, {{ $depot->address->region }}, {{ $depot->address->city }}, {{ $depot->address->postal_code }}, {{ $depot->address->street }}, {{ $depot->address->house_number }}'
+        // Create a new select element
+        var title = $('<h1/>', {
+          'class': 'text-black font-bold',
+          'for': 'waypoint_' + count + '_' + type + '_id',
+          'html': 'Waypoint[' + (count) + ']: ' + type.charAt(0)
+            .toUpperCase() + type.slice(1)
         });
 
-        // Check if the option is already selected in another select element
-        if ($('.waypoint-select').find(
-            ':selected[value="{{ $depot->id }}"]').length == 0) {
-          newWaypoint.append(option);
-        }
-      @endforeach
 
-      // class is added to check if the select option is already selected above
-      newWaypoint.addClass('waypoint-select');
 
-      // Increment the count and append the new select element to the container
-      count++;
-      $('#waypoints-container').append(title);
-      $('#waypoints-container').append(newWaypoint);
-      $('#waypoints-container').append(hiddenInput);
+        // (!) NEED TO BE ABLE TO DISABLE AND RETRIEVE THE VALUE AT THE SAME TIME.
+
+        // var hiddenInput = $('<input/>', {
+        // 'type': 'hidden',
+        // 'name': 'waypoints[' + count + '][' + type + '_id]',
+        // 'class': 'waypoint-hidden',
+        // 'value': $('.waypoint-select').val()
+        // });
+
+        // $('.waypoint-select').prop('disabled', true);
+
+        var newWaypoint = $('<select/>', {
+          'class': 'block w-full p-2 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50',
+          'name': 'waypoints[' + count + '][' + type + '_id]',
+          'id': 'waypoint_' + count + '_' + type + '_id'
+        });
+
+
+        // Populate the select element with options for each depot
+        @foreach ($depots as $depot)
+          var option = $('<option/>', {
+            'value': '{{ $depot->id }}',
+            html: 'Depot Code: {{ $depot->code }} / Depot Address: {{ $depot->address->country }}, {{ $depot->address->region }}, {{ $depot->address->city }}, {{ $depot->address->postal_code }}, {{ $depot->address->street }}, {{ $depot->address->house_number }}'
+          });
+
+          // Check if the option is already selected in another select element
+          if ($('.waypoint-select').find(
+              ':selected[value="{{ $depot->id }}"]').length == 0) {
+            newWaypoint.append(option);
+          }
+        @endforeach
+
+        // class is added to check if the select option is already selected above
+        newWaypoint.addClass('waypoint-select');
+
+        // Increment the count and append the new select element to the container
+        count++;
+        $('#waypoints-container').append(title);
+        $('#waypoints-container').append(newWaypoint);
+        $('#waypoints-container').append(hiddenInput);
+      });
     });
-  });
-</script>
+  </script>
 
 </x-app-layout>
-
-
-
