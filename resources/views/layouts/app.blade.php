@@ -29,7 +29,7 @@ Slots:
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/layouts/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/app.css', 'resources/js/layouts/app.js'])
   @livewireStyles
 </head>
 

@@ -185,8 +185,6 @@
         }
       </script>
 
-      {{-- Settings Dropdown --}}
-
       {{-- Hamburger --}}
       <div class="-mr-2 flex items-center lg:hidden">
         <button @click="open = ! open"
