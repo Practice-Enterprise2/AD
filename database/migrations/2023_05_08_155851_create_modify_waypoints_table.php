@@ -23,7 +23,7 @@ return new class extends Migration
                 'Out For Delivery',
                 'Delivered',
                 'Exception',
-            ]);
+            ])->after('next_address_id');
         });
     }
 
@@ -42,7 +42,7 @@ return new class extends Migration
                 'Out For Delivery',
                 'Delivered',
                 'Exception',
-            ]);
+            ])->after('next_address_id');
         });
     }
 };
