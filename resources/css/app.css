@@ -7,3 +7,8 @@
 * {
     @apply dark:text-white;
 }
+
+/* Required for all pages that use Alpine */
+[x-cloak] {
+    display: none !important;
+}

@@ -24,14 +24,6 @@ Slots:
     href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
     rel="stylesheet" />
 
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js">
-  </script>
-
-  {{-- jQuery --}}
-  <script src="https://code.jquery.com/jquery-3.6.4.js"
-    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-    crossorigin="anonymous"></script>
-
   @isset($head)
     {{ $head }}
   @endisset
