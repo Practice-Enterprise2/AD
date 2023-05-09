@@ -15,12 +15,14 @@
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/public.css', 'resources/js/app.js'])
   @livewireStyles
 </head>
 
 <body>
-  @include('components.public.header')
+  <header>
+    @livewire('public.header')
+  </header>
 
   <main>
     {{ $slot }}

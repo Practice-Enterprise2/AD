@@ -1,5 +1,5 @@
 <x-sidebar-layout>
-  @vite(['resources/css/control_panel/main.css'])
+  @vite(['resources/css/layouts/control-panel.css'])
 
   @isset($title)
     <x-slot:title>
