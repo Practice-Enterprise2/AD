@@ -34,7 +34,6 @@ class WaypointController extends Controller
 
         for ($i = 0; $i < $waypoint_ids->count(); $i++) {
             if (isset($waypoint_ids[$i]['depot_id'])) {
-                // dd("here");
                 $address = Address::find($waypoint_ids[$i]['depot_id']);
                 $waypoint = [];
                 $waypoint['type'] = 'depot'; //branch need a change to depot
