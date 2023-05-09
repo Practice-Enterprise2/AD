@@ -152,11 +152,13 @@
           </div>
         @endif
         <div class="mt-2">
-          <button id="add-waypoint"
+          <button id="add-depot"
             class="rounded-md bg-green-500 p-2 text-white hover:bg-green-600"
-            type="button">
-            Add Waypoint
-          </button>
+            type="button">Add Branch</button>
+
+          <button id="add-airport"
+            class="rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+            type="button">Add Airport</button>
           <button
             class="rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
             type="submit">
@@ -169,79 +171,59 @@
 
   </div>
 
-  <script type="module">
-  $(document).ready(function() {
-    var count = 0;
-    $('#add-waypoint').click(function() {
-      var newWaypoint = $('<div/>', {
-        'class': 'waypoint'
+  <script>
+    $(document).ready(function() {
+
+      var count = 0;
+      $('#add-depot, #add-airport').click(function() {
+
+        // later on airport will be converted to address from IATA
+        var type = $(this).attr('id') === 'add-depot' ? 'depot' :
+          'airport';
+
+        // Create a new select element
+        var title = $('<h1/>', {
+          'class': 'text-black font-bold',
+          'for': 'waypoint_' + count + '_' + type + '_id',
+          'html': 'Waypoint[' + (count) + ']: ' + type.charAt(0)
+            .toUpperCase() + type.slice(1)
+        });
+
+
+
+        // hiddenInput comes here.
+
+        var newWaypoint = $('<select/>', {
+          'class': 'block w-full p-2 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50',
+          'name': 'waypoints[' + count + '][' + type + '_id]',
+          'id': 'waypoint_' + count + '_' + type + '_id'
+        });
+
+
+        // Populate the select element with options for each depot
+        @foreach ($depots as $depot)
+          var option = $('<option/>', {
+            'value': '{{ $depot->id }}',
+            html: 'Depot Code: {{ $depot->code }} / Depot Address: {{ $depot->address->country }}, {{ $depot->address->region }}, {{ $depot->address->city }}, {{ $depot->address->postal_code }}, {{ $depot->address->street }}, {{ $depot->address->house_number }}'
+          });
+
+          // Check if the option is already selected in another select element
+          if ($('.waypoint-select').find(
+              ':selected[value="{{ $depot->id }}"]').length == 0) {
+            newWaypoint.append(option);
+          }
+        @endforeach
+
+        // class is added to check if the select option is already selected above
+        newWaypoint.addClass('waypoint-select');
+
+        // Increment the count and append the new select element to the container
+        count++;
+        $('#waypoints-container').append(title);
+        $('#waypoints-container').append(newWaypoint);
+        $('#waypoints-container').append(hiddenInput);
       });
-
-      var label = $('<label/>', {
-        'class': 'block text-gray-700 font-medium mb-2 text-black',
-        'for': 'waypoint_' + count,
-        html: '<b class="text-black">Waypoint ' + count + ':</b> '
-      });
-
-      var streetInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][street]',
-        'id': 'waypoint_' + count + '_street',
-        'placeholder': 'Street'
-      });
-
-      var houseNumberInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][house_number]',
-        'id': 'waypoint_' + count + '_house_number',
-        'placeholder': 'House number'
-      });
-
-      var postalCodeInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][postal_code]',
-        'id': 'waypoint_' + count + '_postal_code',
-        'placeholder': 'Postal code'
-      });
-
-      var cityInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][city]',
-        'id': 'waypoint_' + count + '_city',
-        'placeholder': 'City'
-      });
-
-      var regionInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][region]',
-        'id': 'waypoint_' + count + '_region',
-        'placeholder': 'Region'
-      });
-
-      var countryInput = $('<input/>', {
-        'class': 'border border-gray-400 p-2 w-3/5 rounded-md mb-1 text-black',
-        'type': 'text',
-        'name': 'waypoints[' + count + '][country]',
-        'id': 'waypoint_' + count + '_country',
-        'placeholder': 'Country'
-      });
-
-      count++;
-      newWaypoint.append(label);
-      newWaypoint.append(streetInput);
-      newWaypoint.append(houseNumberInput);
-      newWaypoint.append(postalCodeInput);
-      newWaypoint.append(cityInput);
-      newWaypoint.append(regionInput);
-      newWaypoint.append(countryInput);
-
-      $('#waypoints-container').append(newWaypoint);
     });
-  });
   </script>
+
 </x-app-layout>
