@@ -191,16 +191,7 @@
 
 
 
-        // (!) NEED TO BE ABLE TO DISABLE AND RETRIEVE THE VALUE AT THE SAME TIME.
-
-        // var hiddenInput = $('<input/>', {
-        // 'type': 'hidden',
-        // 'name': 'waypoints[' + count + '][' + type + '_id]',
-        // 'class': 'waypoint-hidden',
-        // 'value': $('.waypoint-select').val()
-        // });
-
-        // $('.waypoint-select').prop('disabled', true);
+        // hiddenInput comes here.
 
         var newWaypoint = $('<select/>', {
           'class': 'block w-full p-2 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50',
