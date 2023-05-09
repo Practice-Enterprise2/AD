@@ -275,12 +275,6 @@ class WaypointController extends Controller
                 $current_waypoint->update();
                 $next_waypoint->status = 'Out For Delivery';
                 $next_waypoint->update();
-
-                // checking if it is the last waypoint
-                // if ($next_waypoint->next_address_id == $shipment->destination_address_id) {
-                //     $shipment->status = 'Out For Delivery';
-                //     $shipment->update();
-                // }
             }
         }
         dd('Waypoints updated. Check Database.');
