@@ -15,7 +15,7 @@
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/layouts/public.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/public.css', 'resources/js/layouts/public.js'])
   @livewireStyles
 </head>
 
