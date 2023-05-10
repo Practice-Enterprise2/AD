@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Airline;
 use App\Models\airport;
-use App\Models\Contract;
+use App\Models\AirlineContract;
 use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\Types\Type;
 use Sabberworm\CSS\Value\Size;
@@ -48,7 +48,7 @@ class EditContractController extends Controller
                 unset($_GET);
                 ?>
                    <script>
-                    this.location.replace("/contract?q=<?php echo $id; ?>");
+                    this.location.replace("/edit?q=<?php echo $id; ?>");
                    </script>
                    <?php
             }
@@ -68,7 +68,7 @@ class EditContractController extends Controller
         if (is_numeric($_GET['q'])) {
             $id = $_GET['q'];
         }
-        $contracts = Contract::where('id', $id)->get();
+        $contracts = AirlineContract::where('id', $id)->get();
         $airports = airport::all();
 
         $airlines = Airline::all();
@@ -81,7 +81,7 @@ class EditContractController extends Controller
         {
             ?>
              <script>
-                   this.location.replace("/contract");
+                   this.location.replace("/edit");
             </script>
             <?php
         }

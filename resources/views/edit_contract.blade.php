@@ -1,3 +1,5 @@
+<x-app-layout>
+
 @extends('layouts.header')
 @section('content')
 <?php
@@ -22,9 +24,9 @@ if (!isset($_GET["q"]))
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href=" {{ asset('css/new_contract.css') }}">
-  
+
   <title>view records</title>
-  
+
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -102,7 +104,7 @@ if (!isset($_GET["q"]))
       overflow-y: auto;
       /* Scrollable contents if viewport is shorter than content. */
     }
-    
+
     .container {
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -129,6 +131,8 @@ if (!isset($_GET["q"]))
   <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
   <script src="{{ asset('js/chosen.jquery.js') }}"></script>
   <script src="{{ asset('js/chosen-initialization.js') }}"></script>
+  <h1>dit is een test</h1>
+
   <nav id="sidebarMenu" class="d-lg-block sidebar bg-white">
     <a href="contractsMenu">
       <h1><b>Contracts</b></h1>
@@ -160,16 +164,16 @@ if (!isset($_GET["q"]))
   <main style="margin-top: 58px">
     <div class="container pt-4">
       <div class="container">
-      <form action="contract" method="GET">
-    
+      <form action="edit" method="GET">
+
       <label for="contNumber">Contract number:</label>
       <input type="number" id="contNumber" name="q" autocomplete="off">
       <input type="submit" name="submit">
-      
-    
+
+
   </form>
 
-
+    <h1>dit is een test</h1>
   <?php
         if (isset($_GET["q"]))
         {
@@ -178,15 +182,15 @@ if (!isset($_GET["q"]))
     <?php
     $contract = $contracts[0];
     ?>
-  
-    <form action="/edit" method="GET">
+
+    <form action="/editt" method="GET">
 
           <label for="id">Contract ID:</label>
           <input type="number" name="id_s" value="{{ $contract->id }}" disabled
               required>
             <input type="number" name="id" value="{{ $contract->id }}"
               hidden>
-        
+
             <label>Airline:</label>
 
             <select class="chosen-select" name="airline">
@@ -203,20 +207,20 @@ if (!isset($_GET["q"]))
           <label>Start date:</label>
           <input type="date" name="start_date"
               value="{{ $contract->start_date }}" required>
-        
-        
+
+
           <label>Expitation Date:</label>
           <input type="date" name="end_date"
               value="{{ $contract->end_date }}" required>
-        
-        
+
+
           <label>Price/kg:</label>
           <input type="number" name="price" min="0"
               value="{{ $contract->price }}" required>
-       
+
 
           <label for="">Departure Airport:</label>
-            
+
 
             <select class="chosen-select" name="departure_location"
               id="departure_airport_select">
@@ -231,7 +235,7 @@ if (!isset($_GET["q"]))
             </select>
           <br>
           <label for="">Destination Airport:</label>
-            
+
             <select class="chosen-select" name="destination_location"
               id="destination_airport_select">
               @foreach ($airports as $airport)
@@ -243,9 +247,9 @@ if (!isset($_GET["q"]))
                   {{ $airport->name }}</option>
               @endforeach
             </select>
-    
+
           <input type="submit" name="submit" value="Save Changes">
-          
+
             <?php
 
                     if ($contract->is_active == 1)
@@ -253,13 +257,13 @@ if (!isset($_GET["q"]))
                       ?>
             <input style="display:inline;" type="submit" name="deactivate" id="deactivate"
               value="deactivate">
-          
+
           <?php
                     }
                     else {
                       ?>
           <input style="display:inline;" type="submit" name="reactivate" id="reactivate"
-            value="reactivate"> 
+            value="reactivate">
           <?php
                     }
 
@@ -273,3 +277,4 @@ if (!isset($_GET["q"]))
     </div>
   </main>
 @endsection
+</x-app-layout>

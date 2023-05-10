@@ -16,6 +16,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('contracts:update')->daily();
 
     }
+    protected $commands = [
+        \App\Console\Commands\UpdateContractsCommand::class,
+    ];
+    
 
     /**
      * Register the commands for the application.
