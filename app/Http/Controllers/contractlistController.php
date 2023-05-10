@@ -8,12 +8,10 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class Contractlistcontroller extends Controller
 {
     public function contract_pdf($id)
     {
-
         $contract = Contract::find($id);
         $pdf = Pdf::loadView('pdf', compact('contract'));
 
@@ -56,7 +54,7 @@ class Contractlistcontroller extends Controller
 
     public function index()
     {
-        $contracts = DB::select('select * from contracts c INNER JOIN airports a ON c.depart_location = a.id INNER JOIN airlines al ON c.airline_id = al.id');
+        $contracts = DB::select('select * from contracts c INNER JOIN airports a ON c.depart_location = a.id INNER JOIN airlines al ON c.airline_id = al.id WHERE c.is_active != 0');
 
         return view('contract_list', ['contracts' => $contracts]);
     }

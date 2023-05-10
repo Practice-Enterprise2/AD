@@ -12,31 +12,30 @@ class NewContractController extends Controller
 {
     public function plaats(Request $request)
     {
+        /* $request->validate([
+             'airlineid' => 'required',
+             'creationdate' => 'required',
+             'expirationdate' => 'required',
+             'price' => 'required|integer',
+             'airportid' => 'required',
+             'departlocation' => 'required',
+             'destinationlocation' => 'required',
 
-       /* $request->validate([
-            'airlineid' => 'required',
-            'creationdate' => 'required',
-            'expirationdate' => 'required',
-            'price' => 'required|integer',
-            'airportid' => 'required',
-            'departlocation' => 'required',
-            'destinationlocation' => 'required',
+         ],
+             [
+                 'airlineid.required' => 'The AirlineID field is required.',
+                 'airportid.required' => 'The AirportID field is required.',
 
-        ],
-            [
-                'airlineid.required' => 'The AirlineID field is required.',
-                'airportid.required' => 'The AirportID field is required.',
-
-            ]);
-          $test = new Contract;
-          $test->airline_id = $request->airlineid;
-          $test->creationdate = $request->creationdate;
-          $test->expirationdate = $request->expirationdate;
-          $test->price = $request->price;
-          $test->airportID = $request->airportid;
-          $test->departlocation = $request->departlocation;
-          $test->destinationlocation = $request->destinationlocation;
-          return view('new_contract',['data' => $data]);00 */
+             ]);
+           $test = new Contract;
+           $test->airline_id = $request->airlineid;
+           $test->creationdate = $request->creationdate;
+           $test->expirationdate = $request->expirationdate;
+           $test->price = $request->price;
+           $test->airportID = $request->airportid;
+           $test->departlocation = $request->departlocation;
+           $test->destinationlocation = $request->destinationlocation;
+           return view('new_contract',['data' => $data]);00 */
         $test = new Contract;
         $test->airline_id = $request['airlineid'];
         $test->start_date = $request['creationdate'];
@@ -52,7 +51,6 @@ class NewContractController extends Controller
         $airlines = Airline::all();
 
         return view('new_contract', compact('data', 'airports', 'airlines'));
-
     }
 
     public function dropdown()

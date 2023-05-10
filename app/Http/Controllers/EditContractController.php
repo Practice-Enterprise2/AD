@@ -3,33 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airline;
-use App\Models\airport;
 use App\Models\AirlineContract;
+use App\Models\airport;
 use Illuminate\Support\Facades\DB;
-use Doctrine\DBAL\Types\Type;
-use Sabberworm\CSS\Value\Size;
 
 class EditContractController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-
     public function alter()
     {
-        if (!isset($_GET['id']) || !isset($_GET['airline']) || !isset($_GET['start_date']) || !isset($_GET['end_date']) || !isset($_GET['price']) || !isset($_GET['departure_location']) || !isset($_GET['destination_location']))
-        {
-
-        }
-        else
-        {
-            if (empty($_GET['id']) || empty($_GET['airline']) || empty($_GET['start_date']) || empty($_GET['end_date']) || empty($_GET['price']) || empty($_GET['departure_location']) || empty($_GET['destination_location']))
-            {
-
-            }
-            else
-            {
+        if (! isset($_GET['id']) || ! isset($_GET['airline']) || ! isset($_GET['start_date']) || ! isset($_GET['end_date']) || ! isset($_GET['price']) || ! isset($_GET['departure_location']) || ! isset($_GET['destination_location'])) {
+        } else {
+            if (empty($_GET['id']) || empty($_GET['airline']) || empty($_GET['start_date']) || empty($_GET['end_date']) || empty($_GET['price']) || empty($_GET['departure_location']) || empty($_GET['destination_location'])) {
+            } else {
                 $id = $_GET['id'];
                 $airlineID = $_GET['airline'];
                 $start_date = $_GET['start_date'];
@@ -52,9 +40,7 @@ class EditContractController extends Controller
                    </script>
                    <?php
             }
-
         }
-
     }
 
     public function simpleV2()
@@ -73,21 +59,14 @@ class EditContractController extends Controller
 
         $airlines = Airline::all();
 
-        if (sizeof($contracts) != 0)
-        {
+        if (count($contracts) != 0) {
             return view('edit_contract', compact('contracts', 'airports', 'airlines'));
-        }
-        else
-        {
+        } else {
             ?>
              <script>
                    this.location.replace("/edit");
             </script>
             <?php
         }
-
-
     }
-
-
 }

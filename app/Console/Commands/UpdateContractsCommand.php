@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
 
 class UpdateContractsCommand extends Command
 {
@@ -29,8 +29,23 @@ class UpdateContractsCommand extends Command
     public function handle()
     {
         $today = Carbon::today();
-        DB::table('contacts')
-            ->where('end_date',$today)
-            ->update(['active' => false]);
+        $oneMonthFromNow = Carbon::today()->addMonth();
+        $contracts = DB::table('contracts')
+            ->whereBetween('enddate', [$today, $oneMonthFromNow])
+            ->where('is_active', 1)
+            ->get();
+
+        foreach ($contracts as $contract) {
+            // Get the manager email
+            $managerEmail = DB::table('employees')
+                ->where('jobTitle', 'Manager')
+                ->value('email');
+
+            // Send email notification to manager
+            //Mail::to($managerEmail)->send(new ContractExpiryNotification($contract->id));
+            DB::table('contracts')
+                ->where('end_date', $today)
+                ->update(['is_active' => 0]);
+        }
     }
 }

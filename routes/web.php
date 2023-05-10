@@ -8,9 +8,11 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Contractlistcontroller;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EditContractController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\NewContractController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -20,12 +22,9 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Http\Controllers\NewContractController;
-use App\Http\Controllers\EditContractController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EditContractController;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -158,7 +157,7 @@ Route::middleware('auth')->group(function () {
 
     //contract list
     Route::get('/contract_list', function () {
-    return view('contract_list');
+        return view('contract_list');
     });
 
     Route::get('contract_list', [contractlistcontroller::class, 'index'])->name('contract_list');

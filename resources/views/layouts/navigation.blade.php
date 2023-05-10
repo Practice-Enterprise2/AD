@@ -165,7 +165,7 @@
             </button>
           </x-slot>
 
-          <x-slot name="content"> 
+          <x-slot name="content">
             <x-dropdown-link :href="route('contract_list')">
               {{ __('Contract Overview') }}
             </x-dropdown-link>
@@ -174,10 +174,10 @@
             </x-dropdown-link>
             <x-dropdown-link :href="route('edit_contract')">
               {{ __('Edit Contract') }}
-            </x-dropdown-link> 
+            </x-dropdown-link>
           </x-slot>
         </x-dropdown>
-        
+
       @endauth
       @auth
         <x-nav-link :href="route('readreviews')">

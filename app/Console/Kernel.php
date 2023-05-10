@@ -14,12 +14,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('contracts:update')->daily();
-
     }
+
     protected $commands = [
         \App\Console\Commands\UpdateContractsCommand::class,
     ];
-    
 
     /**
      * Register the commands for the application.
