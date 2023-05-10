@@ -146,7 +146,7 @@
       <x-nav-link :href="route('new_contract')">
         {{ __('New Contract') }}
       </x-nav-link>
-      <x-nav-link :href="route('shipments.index')">
+      <x-nav-link :href="route('edit_contract')">
         {{ __('Edit Contract') }}
       </x-nav-link> --}}
         <x-dropdown>
@@ -172,7 +172,7 @@
             <x-dropdown-link :href="route('new_contract')">
               {{ __('New Contract') }}
             </x-dropdown-link>
-            <x-dropdown-link :href="route('shipments.index')">
+            <x-dropdown-link :href="route('edit_contract')">
               {{ __('Edit Contract') }}
             </x-dropdown-link> 
           </x-slot>

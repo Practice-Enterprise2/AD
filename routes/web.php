@@ -151,6 +151,8 @@ Route::middleware('auth')->group(function () {
     Route::post('plaats', [NewContractController::class, 'plaats']);
     Route::get('new_contract', [NewContractController::class, 'dropdown'])->name('new_contract');
     Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
+    Route::get('contract', [EditContractController::class, 'simpleV2'])->name('edit_contract');
+    Route::get('edit', [EditContractController::class, 'alter'])->name('edit_contract');
 
     //contract list
     Route::get('/contract_list', function () {
