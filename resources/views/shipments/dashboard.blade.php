@@ -4,65 +4,74 @@
       
         <div class="flex mb-8">
           <div class="w-1/3 p-4 bg-gray-800 rounded shadow-lg mr-4 text-xl font-bold">
-            <h1 class="p-4 text-white font-bold text-2xl">User Shipments</h1>
-            <div class="text-sm text-7xl text-center mt-12">1</div>
+            <h1 class="p-4 text-white font-bold text-2xl underline">Amount of Shipments</h1>
+            <div class="text-7xl font-bold text-center mt-12">{{ $countUser }} </div>
           </div>
           <div class="w-1/3 p-4 bg-gray-800 rounded shadow-lg mr-4">
-            <div class="grid grid-cols-2 gap-1 text-sm">
-                <h1 class="col-span-2 p-4 text-white font-bold text-lg">Shipments per status</h1>
-                <div class="mx-auto">
-                  <div class="">Awaiting pickup</div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <h1 class="col-span-2 p-4 text-white font-bold text-2xl underline">Shipments per status</h1>
+                
+                <div class="mx-auto font-bold text-bold">
+                  <div class="">Awaiting pickup:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">1</div>
+                    <div class=""> {{ $countAwaPick }} </div>
+                </div>
+
+                <div class="mx-auto font-bold text-bold">
+                    <div class="">Awaiting confirmation:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">Awaiting confirmation</div>
+                    <div class="">{{$countAwaConf}}</div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">In Transit:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">1</div>
+                    <div class="">{{$countInTran}}</div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Out for Delivery:</div>
+                </div>
+                <div class="mx-auto ">
+                    <div class="">{{$countOutFDel}}</div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Delivered:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">In Transit</div>
+                    <div class=""> {{$countDelivered}} </div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Held at location:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">1</div>
+                    <div class=""> {{ $countHaL }} </div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Exeption:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">Out for Delivery</div>
+                    <div class=""> {{$countEx}}  </div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Deleted:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">1</div>
+                    <div class="">{{$countDel}} </div>
+                </div>
+                
+                <div class="mx-auto font-bold">
+                    <div class="">Declined:</div>
                 </div>
                 <div class="mx-auto">
-                    <div class="">Delivered</div>
-                </div>
-                <div class="mx-auto">
-                    <div class=""> {{}} </div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">Held at location</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">1</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">Exeption</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">1</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">Deleted</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">1</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">Declined</div>
-                </div>
-                <div class="mx-auto">
-                    <div class="">1</div>
+                    <div class=""> {{$countDec}}</div>
                 </div>
               </div>
               

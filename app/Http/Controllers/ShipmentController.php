@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+
 
 class ShipmentController extends Controller
 {
@@ -294,22 +296,39 @@ class ShipmentController extends Controller
         // returnSomething...
     }
 
-    // Dashboard Function
+    // Dashboard Functions
     public function dashboard(): View
     {
+        // get Data from shipment table
         $shipments = Shipment::all();
 
-        // Gathering count of each status
-        $countAwaConf = DB::select("SELECT COUNT('id') FROM shipments WHERE status = 'Awaiting Confirmation'");
-        $countAwaPick = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Awaiting Pickup'");
-        $countInTran = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'In Transit'");
-        $countOutFDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Out For Delivery'");
-        $countDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Delivered'");
-        $countEx = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Exeption'");
-        $countHaL = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Held At Location'");
-        $countDel = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Deleted'");
-        $countDec = DB::select("SELECT COUNT(id) FROM shipments WHERE status = 'Declined'");
+        // Count total shipment of user.
+        $id = Auth::user()->id;
+        $countUser = DB::table('shipments')->where('user_id',$id)->count();
 
-        return view('/shipments.dashboard',['totAwaConf' => $countAwaConf, 'totAwaPick' => $countAwaPick, 'countInTran' => $countInTran, 'countOutFDel' => $countOutFDel, 'countDel' => $countDel, 'countEx' => $countEx, 'countHaL' => $countHaL, 'CountDel' => $countDel, 'countDel' => $countDel ], compact('shipments'));
+        // Gathering count of each status
+        $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->count();
+        $countAwaPick = DB::table('shipments')->where('status','Awaiting Pickup')->count();
+        $countInTran = DB::table('shipments')->where('status','In Transit')->count();
+        $countOutFDel = DB::table('shipments')->where('status','Out For Delivery')->count();
+        $countDelivered = DB::table('shipments')->where('status','Delivered')->count();
+        $countEx = DB::table('shipments')->where('status','Exception')->count();
+        $countHaL = DB::table('shipments')->where('status','Held At Location')->count();
+        $countDel = DB::table('shipments')->where('status','Deleted')->count();
+        $countDec = DB::table('shipments')->where('status','Declined')->count();
+
+        // Return the values
+        return view('/shipments.dashboard',[
+            'countUser' => $countUser,
+            'countAwaConf' => $countAwaConf, 
+            'countAwaPick' => $countAwaPick, 
+            'countInTran' => $countInTran, 
+            'countOutFDel' => $countOutFDel, 
+            'countDelivered' => $countDelivered, 
+            'countEx' => $countEx, 
+            'countHaL' => $countHaL, 
+            'countDel' => $countDel, 
+            'countDec' => $countDec
+        ]);
     }
 }
