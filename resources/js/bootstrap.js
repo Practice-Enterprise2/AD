@@ -1,3 +1,4 @@
+// Default JavaScript for ANY page
 import Alpine from 'alpinejs';
 import axios from 'axios';
 import Echo from 'laravel-echo';

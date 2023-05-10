@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'landing-page')->name('landing-page');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -164,7 +165,6 @@ Route::middleware('auth')->group(function () {
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
-    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // employee graph
@@ -174,7 +174,5 @@ Route::middleware('auth')->group(function () {
     Route::view('/email/verify', 'auth.verify-email')
         ->name('verification.notice');
 });
-
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 require __DIR__.'/auth.php';
