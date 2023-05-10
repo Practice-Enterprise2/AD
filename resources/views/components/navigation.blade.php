@@ -229,11 +229,6 @@
         )">
           {{ __('Control Panel') }}
         </x-responsive-nav-link>
-        @auth
-          <x-responsive-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
-            {{ __('FAQ') }}
-          </x-responsive-nav-link>
-        @endauth
       @endrole
 
     </div>
