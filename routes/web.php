@@ -28,7 +28,6 @@ Route::view('/', 'landing-page')->name('landing-page');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
