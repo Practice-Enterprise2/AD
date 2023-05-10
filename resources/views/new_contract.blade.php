@@ -26,7 +26,6 @@
 
     @media (min-width: 991.98px) {
       main {
-        padding-left: 240px;
       }
     }
 
@@ -89,33 +88,16 @@
         padding: 12px;
         box-sizing: border-box;
     }
-  </style>
-  <div class="">
-    <!-- Sidebar -->
-    <nav id="sidebarMenu" class="sidebar-container">
-      <a href="contractsMenu">
-        <h1><b>Contracts</b></h1>
-      </a>
-      
-        <ul>
-          <li><a href="contract_list"
-              class="list-group-item list-group-item-action ripple py-2">
-              <span>contract list</span>
-            </a></li>
-          <li><a href="/new_contract"
-              class="list-group-item list-group-item-action ripple py-2"><span>new
-                contract</span></a></li>
+    h1{
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 150%;
+      text-decoration: underline;
+    }
 
-          <li><a href="/contract"
-              class="list-group-item list-group-item-action ripple py-2">
-              <span>edit contract</span>
-            </a></li>
-          <li> <a href="airportList"
-              class="list-group-item list-group-item-action ripple py-2"><span>airport
-                list</span></a></li>
-        </ul>
-      </div>
-    </nav>
+  </style>
+
     <!-- Sidebar -->
     <!--Main layout-->
     <main style="margin-top: 58px">
@@ -127,6 +109,7 @@
             <form action="plaats" method="post">
               @csrf
               <label for="airlineid">AirlineID:</label>
+              <hr>
               <select class="chosen-select" name="airlineid" id="airlineid">
                 <option value="" selected disabled hidden>select the airline
                 </option>
@@ -142,7 +125,8 @@
                 @error('price')
                   {{ $message }}
                 @enderror
-              </span> -->
+              </span> 
+              <hr>
               <label for="price">Price:</label>
               <input type="text" id="price" name="price"
                 placeholder="Price">
@@ -187,7 +171,7 @@
                     {{ $airport->land }}</option>
                 @endforeach
               </select>
-              
+              <hr>
               <button style="background-color: darkcyan"
                 type="submit">Create</button> <br>
               <button style="background-color: orange"

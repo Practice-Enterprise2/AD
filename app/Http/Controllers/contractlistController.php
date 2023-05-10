@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\ContractList;
 use Barryvdh\DomPDF\Facade\Pdf;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class Contractlistcontroller extends Controller
 {

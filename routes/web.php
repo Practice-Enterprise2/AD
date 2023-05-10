@@ -155,10 +155,10 @@ Route::middleware('auth')->group(function () {
     //contract list
     Route::get('/contract_list', function () {
     return view('contract_list');
-    })->name('contract_list');
+    });
 
-    Route::get('contract_list', [contractlistcontroller::class, 'index']);
-    Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering']);
+    Route::get('contract_list', [contractlistcontroller::class, 'index'])->name('contract_list');
+    Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering'])->name('contract_list');
     //Notification
     Route::get('/markAsRead', function () {
         auth()->user()->unreadNotifications->markAsRead();

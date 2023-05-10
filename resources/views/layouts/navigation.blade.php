@@ -140,7 +140,7 @@
       @endauth
       @auth
         {{-- Validations needed for later. --}}
-        {{-- <x-nav-link :href="route('new_contract')">
+        {{-- <x-nav-link :href="route('contract_list')">
         {{ __('Contract Overview') }}
       </x-nav-link>
       <x-nav-link :href="route('new_contract')">
@@ -166,7 +166,7 @@
           </x-slot>
 
           <x-slot name="content"> 
-            <x-dropdown-link :href="route('new_contract')">
+            <x-dropdown-link :href="route('contract_list')">
               {{ __('Contract Overview') }}
             </x-dropdown-link>
             <x-dropdown-link :href="route('new_contract')">
