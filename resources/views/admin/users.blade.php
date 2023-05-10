@@ -61,7 +61,7 @@
                       Save
                     </button>
                   </td>
-                  <!--button to lock/ unlock accounts-->
+                  {{-- Button to lock/ unlock accounts --}}
                   <td class="px-4 py-2">
                     @if ($user->roles->first()->name != 'admin')
                       <form
@@ -197,7 +197,7 @@
     });
   </script>
 
-  <!-- Add the following JavaScript code to your view or a separate JavaScript file -->
+  {{-- Add the following JavaScript code to your view or a separate JavaScript file --}}
   <script>
     // Attach a click event handler to the lock/unlock button
     document.querySelectorAll('.lock-button').forEach(function(button) {

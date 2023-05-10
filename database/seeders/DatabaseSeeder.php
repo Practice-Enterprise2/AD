@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
             PositionTableSeeder::class,
             EmployeeTableSeeder::class,
         ]);
+
+        // it generates addresses and assign them into depots.
+        $this->call(DepotSeeder::class);
     }
 }
