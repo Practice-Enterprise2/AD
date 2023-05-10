@@ -9,8 +9,17 @@
           initialView: 'dayGridMonth',
           dateClick: function(info) {
             window.location.href = "/shiftplanner/day/" + info.dateStr;
-          }
+          },
+          events: <?php echo json_encode($shifts); ?>.map(function (shift) {
+            return {
+              title: shift.position.name,
+              start: shift.planned_start_time,
+              end: shift.planned_end_time,
+              employee: shift.employee.name,
+            };
+          }),
         });
+        
         calendar.render();
       });
     </script>

@@ -2,7 +2,7 @@
 <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <h2 class="font-bold text-2xl mb-4 m-3">Shifts for {{ $date }}</h2>
+                <h2 class="font-bold text-2xl mb-4 m-3">Planning for {{ $date }}</h2>
     @foreach($positions as $position)
     <div class="border border-gray-500 rounded-2xl p-3 m-5">
         <h3>{{$position->name}}</h3>
@@ -22,6 +22,41 @@
         </table>
     </div>
     @endforeach
+
+    <form method="POST" action="{{ route('shifts.store') }}" class="bg-white rounded-lg p-6 shadow-md max-w-md mx-auto">
+        @csrf
+        <div class="mb-4">
+            <label for="user_id" class="block text-gray-700 font-bold mb-2">User:</label>
+            <div class="relative">
+                <select name="user_id" id="user_id" class="form-select block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path fill-rule="evenodd" d="M20 10a10 10 0 11-20 0 10 10 0 0120 0zm-2 0a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+        <label for="planned_start_time" class="block text-gray-700 font-bold mb-2">Start Time:</label>
+        <input type="datetime-local" id="planned_start_time" name="planned_start_time" class="form-input block w-full appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{ $date }}T00:00:00">
+    </div>
+    <div class="mb-4">
+        <label for="planned_end_time" class="block text-gray-700 font-bold mb-2">End Time:</label>
+        <input type="datetime-local" id="planned_end_time" name="planned_end_time" class="form-input block w-full appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{ $date }}T00:00:00">
+    </div>
+    <div class="mb-4 flex justify-center">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">Add Shift</button>
+    </div>
+    </form>
+
+
+
 </x-app-layout>
 
 

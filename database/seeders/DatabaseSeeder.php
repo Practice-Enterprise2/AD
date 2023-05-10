@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
         // production (which is done automatically)!
         AppServiceProvider::bootstrap_database();
         $this->call([
+            UserSeeder::class,
             PositionTableSeeder::class,
             EmployeeTableSeeder::class,
+            EmployeeContractsSeeder::class,
+            PositionToEmployeeContractSeeder::class,
         ]);
 
         // it generates addresses and assign them into depots.

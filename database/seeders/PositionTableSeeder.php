@@ -29,7 +29,7 @@ class PositionTableSeeder extends Seeder
             ],
             [
                 'id' => '3',
-                'name' => "IT",
+                'name' => "Developer",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
