@@ -71,6 +71,15 @@
     width: 50%;
     margin: auto;
     }
+    .sidebar-container {
+        /* Adjust the following properties as needed */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px; /* Adjust the width as per your design */
+        height: 100%;
+        z-index: 100; /* Make sure the sidebar appears above other elements if necessary */
+        /* Add any other required styling */}
     input {
         width: 100%;
         margin-top: 10px;
@@ -83,11 +92,11 @@
   </style>
   <div class="">
     <!-- Sidebar -->
-    <nav id="sidebarMenu" class="d-lg-block sidebar bg-white">
+    <nav id="sidebarMenu" class="sidebar-container">
       <a href="contractsMenu">
         <h1><b>Contracts</b></h1>
       </a>
-      <div class="list-group list-group-flush mx-3 mt-4">
+      
         <ul>
           <li><a href="contract_list"
               class="list-group-item list-group-item-action ripple py-2">
