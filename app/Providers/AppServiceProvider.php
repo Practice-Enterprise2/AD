@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
@@ -152,9 +151,6 @@ class AppServiceProvider extends ServiceProvider
         $employee_user->assignRole('user');
 
         $regular_user->assignRole('user');
-
-
-        
     }
 
     // If a permission with the given name doesn't exist, create it.

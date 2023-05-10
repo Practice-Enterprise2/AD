@@ -30,6 +30,9 @@ Route::redirect('/', 'home');
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 
+//FAQ page
+Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
     /*
@@ -155,7 +158,7 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 
     //FAQ page
-    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+    // Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 
     //TicketController
     Route::controller(TicketController::class)->group(function () {
