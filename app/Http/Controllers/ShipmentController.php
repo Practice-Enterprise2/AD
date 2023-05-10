@@ -307,15 +307,18 @@ class ShipmentController extends Controller
         $countUser = DB::table('shipments')->where('user_id',$id)->count();
 
         // Gathering count of each status
-        $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->count();
-        $countAwaPick = DB::table('shipments')->where('status','Awaiting Pickup')->count();
-        $countInTran = DB::table('shipments')->where('status','In Transit')->count();
-        $countOutFDel = DB::table('shipments')->where('status','Out For Delivery')->count();
-        $countDelivered = DB::table('shipments')->where('status','Delivered')->count();
-        $countEx = DB::table('shipments')->where('status','Exception')->count();
-        $countHaL = DB::table('shipments')->where('status','Held At Location')->count();
-        $countDel = DB::table('shipments')->where('status','Deleted')->count();
-        $countDec = DB::table('shipments')->where('status','Declined')->count();
+        $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->where('user_id', $id)->count();
+        $countAwaPick = DB::table('shipments')->where('status','Awaiting Pickup')->where('user_id', $id)->count();
+        $countInTran = DB::table('shipments')->where('status','In Transit')->where('user_id', $id)->count();
+        $countOutFDel = DB::table('shipments')->where('status','Out For Delivery')->where('user_id', $id)->count();
+        $countDelivered = DB::table('shipments')->where('status','Delivered')->where('user_id', $id)->count();
+        $countEx = DB::table('shipments')->where('status','Exception')->where('user_id', $id)->count();
+        $countHaL = DB::table('shipments')->where('status','Held At Location')->where('user_id', $id)->count();
+        $countDel = DB::table('shipments')->where('status','Deleted')->where('user_id', $id)->count();
+        $countDec = DB::table('shipments')->where('status','Declined')->where('user_id', $id)->count();
+
+        // Pie chart for overview of 
+
 
         // Return the values
         return view('/shipments.dashboard',[

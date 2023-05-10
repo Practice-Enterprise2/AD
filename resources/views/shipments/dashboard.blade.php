@@ -82,7 +82,7 @@
         </div>
       
         <div class="flex mb-8">
-          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4">Your Invoices
+          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4">Panel 4
           </div>
           <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg">Panel 5</div>
         </div>
