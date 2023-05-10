@@ -21,7 +21,9 @@ class ShiftsController extends Controller
     {
         $date = now()->toDateString();
         $employees = Employee::with('user')->get();
-        $shifts = Shift::whereDate('planned_start_time', $date)->get();
+
+        //$shifts = Shift::whereDate('planned_start_time', $date)->get();
+        $shifts = Shift::all();
         return view('shiftplanner/shiftplanner', compact('employees', 'shifts', 'date'));
     }
 
