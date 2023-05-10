@@ -25,6 +25,7 @@ use App\Http\Controllers\EditContractController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EditContractController;
 
 // Publicly available routes.
 Route::view('/home', 'app')->name('home');
@@ -153,7 +154,7 @@ Route::middleware('auth')->group(function () {
     Route::get('new_contract', [NewContractController::class, 'dropdown'])->name('new_contract');
     Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
     Route::get('edit', [EditContractController::class, 'simpleV2'])->name('edit_contract');
-    Route::get('editt', [EditContractController::class, 'alter'])->name('edit_contract');
+    Route::get('editt', [EditContractController::class, 'alter'])->name('edit_contract_function');
 
     //contract list
     Route::get('/contract_list', function () {

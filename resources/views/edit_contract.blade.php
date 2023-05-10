@@ -25,7 +25,9 @@ if (!isset($_GET["q"]))
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href=" {{ asset('css/new_contract.css') }}">
 
+
   <title>view records</title>
+
 
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
@@ -105,6 +107,7 @@ if (!isset($_GET["q"]))
       /* Scrollable contents if viewport is shorter than content. */
     }
 
+
     .container {
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -166,9 +169,13 @@ if (!isset($_GET["q"]))
       <div class="container">
       <form action="edit" method="GET">
 
+      <form action="edit" method="GET">
+
       <label for="contNumber">Contract number:</label>
       <input type="number" id="contNumber" name="q" autocomplete="off">
       <input type="submit" name="submit">
+
+
 
 
   </form>
@@ -183,7 +190,7 @@ if (!isset($_GET["q"]))
     $contract = $contracts[0];
     ?>
 
-    <form action="/editt" method="GET">
+    <form action="/edit" method="GET">
 
           <label for="id">Contract ID:</label>
           <input type="number" name="id_s" value="{{ $contract->id }}" disabled
