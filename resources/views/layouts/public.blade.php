@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="sticky top-0">
     @livewire('public.header')
   </header>
 
