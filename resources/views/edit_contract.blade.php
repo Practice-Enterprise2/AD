@@ -131,7 +131,7 @@ if (!isset($_GET["q"]))
       <div class="container">
         <form action="edit" method="GET">
 
-          <form action="edit" method="GET">
+
 
             <label for="contNumber">Contract number:</label>
             <input type="number" id="contNumber" name="q"
@@ -149,7 +149,7 @@ if (!isset($_GET["q"]))
             $contract = $contracts[0];
             ?>
 
-            <form action="/edit" method="GET">
+            <form action="/alter" method="GET">
 
               <label for="id">Contract ID:</label>
               <input type="number" name="id_s" value="{{ $contract->id }}"
@@ -172,7 +172,7 @@ if (!isset($_GET["q"]))
               <br>
               <label>Start date:</label>
               <input type="date" name="start_date"
-                value="{{ $contract->start_date }}" required disabled>
+                value="{{ $contract->start_date }}" required >
 
               <label>Expitation Date:</label>
               <input type="date" name="end_date"

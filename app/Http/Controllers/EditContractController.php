@@ -14,10 +14,7 @@ class EditContractController extends Controller
      */
     public function alter()
     {
-        if (! isset($_GET['id']) || ! isset($_GET['airline']) || ! isset($_GET['start_date']) || ! isset($_GET['end_date']) || ! isset($_GET['price']) || ! isset($_GET['departure_location']) || ! isset($_GET['destination_location'])) {
-        } else {
-            if (empty($_GET['id']) || empty($_GET['airline']) || empty($_GET['start_date']) || empty($_GET['end_date']) || empty($_GET['price']) || empty($_GET['departure_location']) || empty($_GET['destination_location'])) {
-            } else {
+
                 $id = $_GET['id'];
                 $airlineID = $_GET['airline'];
                 $start_date = $_GET['start_date'];
@@ -39,8 +36,7 @@ class EditContractController extends Controller
                     this.location.replace("/edit?q=<?php echo $id; ?>");
                    </script>
                    <?php
-            }
-        }
+
     }
 
     public function simpleV2()
