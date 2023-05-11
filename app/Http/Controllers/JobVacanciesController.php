@@ -24,4 +24,11 @@ class JobVacanciesController extends Controller
 
         return redirect()->back();
     }
+
+    public function get_jobs()
+    {
+        $jobVacancies = JobVacancy::where('filled', false)->get();
+
+        return view('job-vacancies.view_jobs', compact('jobVacancies'));
+    }
 }

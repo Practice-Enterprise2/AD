@@ -176,4 +176,6 @@ Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegist
 Route::view('/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:edit_any_user_info');
 Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
 
+Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs'])->name('view_jobs');
+
 require __DIR__.'/auth.php';
