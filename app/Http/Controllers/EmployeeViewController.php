@@ -102,6 +102,15 @@ class EmployeeViewController extends Controller
             return redirect()->back()->with('alert', 'Empty Username and Password');
         }
     }
+    public function end() {
+        $employees = Employee::all();
+
+        foreach ($employees as $employee) {
+            $employee->current_contract = $employee->contracts()->latest()->first();
+        }
+    
+        return view('endcontract', compact('employees'));
+    }
 }
 ?>
 
