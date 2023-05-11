@@ -1,3 +1,4 @@
+{{-- Livewire component for editing a permission --}}
 <div>
   <form id="permission-form" wire:submit.prevent="save"
     class="grid w-full grid-cols-12 gap-3">
