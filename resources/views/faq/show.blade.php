@@ -36,7 +36,7 @@
   </style>
   <h1>Frequently asked questions</h1>
   <br>
-  <a id="contactus" href="{{ route('contact.create') }}">Contact us</a>
+  <a id="contactus" href="contact"> contact us</a>
   <ol>
     <li>
       <h3>What is the delivery time for my shipment?</h3>

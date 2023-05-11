@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -165,6 +166,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
     Route::get('/filterreview', [ReviewController::class, 'filter']);
+
+    // employee graph
+    Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
