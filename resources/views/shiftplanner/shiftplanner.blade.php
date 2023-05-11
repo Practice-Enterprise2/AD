@@ -8,7 +8,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
@@ -54,22 +53,37 @@
         // Save button functionality
         document.getElementById('save-button').addEventListener('click', function() {
           var events = calendar.getEvents();
-
-          events.forEach(function(event) {
+          //console.log(events);
+            //var employees = '{{$employees}}';
+            var employees = <?php echo json_encode($shifts->map(function($shift) {
+            return [
+              'id' => $shift->employee->user->id,
+              'name' => $shift->employee->user->name,
+              'planned_start_time' => date('Y-m-d', strtotime($shift->planned_start_time)),
+              'planned_end-time' => date('Y-m-d', strtotime($shift->planned_end_time)),
+            ];
+          })->toArray());?>;
+            //console.log(employees);
+            events.forEach(function(event) {
+              console.log(event.title.employee_id);
             var formData = new FormData();
-            formData.append('planned_start_time', moment(event.start).format('YYYY-MM-DD HH:mm:ss'));
-            formData.append('planned_end_time', moment(event.end).format('YYYY-MM-DD HH:mm:ss'));
+            formData.append('planned_start_time', moment(event.startTime).format('YYYY-MM-DD HH:mm:ss'))
+
+            //add 24h to start time or sth
+            formData.append('planned_end_time', moment(event.endTime).format('YYYY-MM-DD HH:mm:ss'));
             formData.append('actual_start_time', null);
             formData.append('actual_end_time', null);
             formData.append('employee_id', event.extendedProps.employee_id);
+            //console.log(formData); // Log FormData to console
             fetch('/shifts', {
+              
               method: 'POST',
               body: formData,
               headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
               }
             })
-            .then(response => {
+            /*.then(response => {
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
@@ -80,7 +94,7 @@
             })
             .catch(error => {
               console.error('There was an error:', error);
-            });
+            });*/
           });
         });
       });

@@ -21,7 +21,6 @@ class ShiftsController extends Controller
     {
         $date = now()->toDateString();
         $employees = Employee::with('user')->get();
-
         //$shifts = Shift::whereDate('planned_start_time', $date)->get();
         $shifts = Shift::all();
         return view('shiftplanner/shiftplanner', compact('employees', 'shifts', 'date'));
@@ -83,6 +82,7 @@ class ShiftsController extends Controller
      */
    public function store(Request $request)
     {
+    
     $data = $request->validate([
         'user_id' => 'required|exists:user,id',
         'planned_start_time' => 'required|date_format:Y-m-d\TH:i',
@@ -94,7 +94,6 @@ class ShiftsController extends Controller
         'planned_end_time' => $data['planned_end_time'],
         'employee_id' => $data['user_id'],
     ]);
-
         return redirect()->route('shifts.index');
     }
 
