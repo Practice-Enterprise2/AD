@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,11 +23,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Airport extends Model
 {
     use SoftDeletes;
+    use HasFactory;
+    use Sortable;
 
+    protected $table = 'airports';
+
+    protected $primaryKey = 'id';
     protected $fillable = [
         'iata_code',
         'name',
         'land',
+        'address_id',
+
+    ];
+
+    public $sortable = [
+        'id',
+        'iata_code',
+        'name',
+        'land',
+        'address_id',
     ];
 
     public function address(): BelongsTo
