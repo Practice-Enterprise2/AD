@@ -14,24 +14,23 @@ class EditContractController extends Controller
      */
     public function alter()
     {
-
-                $id = $_GET['id'];
-                $airlineID = $_GET['airline'];
-                $start_date = $_GET['start_date'];
-                $end_date = $_GET['end_date'];
-                $price = $_GET['price'];
-                $departure = $_GET['departure_location'];
-                $destination = $_GET['destination_location'];
-                $affected = DB::table('contracts')->where('id', $id)->update(
-                    ['airline_id' => $airlineID, 'start_date' => $start_date, 'end_date' => $end_date, 'price' => $price,  'depart_airport_id' => $departure, 'destination_airport_id' => $destination]);
-                if (isset($_GET['deactivate'])) {
-                    $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 0]);
-                }
-                if (isset($_GET['reactivate'])) {
-                    $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 1]);
-                }
-                unset($_GET);
-                ?>
+        $id = $_GET['id'];
+        $airlineID = $_GET['airline'];
+        $start_date = $_GET['start_date'];
+        $end_date = $_GET['end_date'];
+        $price = $_GET['price'];
+        $departure = $_GET['departure_location'];
+        $destination = $_GET['destination_location'];
+        $affected = DB::table('contracts')->where('id', $id)->update(
+            ['airline_id' => $airlineID, 'start_date' => $start_date, 'end_date' => $end_date, 'price' => $price,  'depart_airport_id' => $departure, 'destination_airport_id' => $destination]);
+        if (isset($_GET['deactivate'])) {
+            $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 0]);
+        }
+        if (isset($_GET['reactivate'])) {
+            $affected = DB::table('contracts')->where('id', $id)->update(['is_active' => 1]);
+        }
+        unset($_GET);
+        ?>
                    <script>
                     this.location.replace("/edit?q=<?php echo $id; ?>");
                    </script>

@@ -48,6 +48,7 @@ class AirportController extends Controller
         $data = airport::find($id);
         $data->deleted_at = \Carbon\Carbon::now()->toDateTimeString();
         $data->save();
+
         return redirect('airportList');
     }
 

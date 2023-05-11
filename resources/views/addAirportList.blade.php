@@ -43,20 +43,21 @@
     }
 
     .container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 10px;
-    width: 100%;
-    margin: auto;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 10px;
+      width: 100%;
+      margin: auto;
     }
+
     input {
-        width: 100%;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: 1px solid black;
-        border-radius: 4px;
-        padding: 8px;
-        box-sizing: border-box;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 1px solid black;
+      border-radius: 4px;
+      padding: 8px;
+      box-sizing: border-box;
     }
   </style>
   <div class="">
@@ -80,35 +81,37 @@
           <li> <a href="airportList"
               class="list-group-item list-group-item-action ripple py-2"><span>airport
                 list</span></a></li>
-                <li> <a href="addAirportList"
-              class="list-group-item list-group-item-action ripple py-2"><span>add airport</span></a>
+          <li> <a href="addAirportList"
+              class="list-group-item list-group-item-action ripple py-2"><span>add
+                airport</span></a>
           </li>
         </ul>
       </div>
     </nav>
-    
-    
+
     <main style="margin-top: 58px">
       <div class="container pt-4">
         <div class="">
-        <h1>Add airport</h1>
-            <form action="airportList/add" method="POST" autocomplete="off">
-              @csrf
+          <h1>Add airport</h1>
+          <form action="airportList/add" method="POST" autocomplete="off">
+            @csrf
 
-              <label for="iata_code">IATA code</label> <br>
-              <input type="text" maxlength="3" name="iata_code" required> <br> <br>
+            <label for="iata_code">IATA code</label> <br>
+            <input type="text" maxlength="3" name="iata_code" required> <br>
+            <br>
 
-              <label for="name">Airport Name</label> <br>
-              <input type="text" name="name" required> <br> <br>
+            <label for="name">Airport Name</label> <br>
+            <input type="text" name="name" required> <br> <br>
 
-              <label for="land">Country</label> <br>
-              <input type="text" name="land" required> <br> <br>
+            <label for="land">Country</label> <br>
+            <input type="text" name="land" required> <br> <br>
 
-              <label for="address_id">Address ID</label> <br>
-              <input type="number" maxlength="20" name="address_id" required> <br> <br>
+            <label for="address_id">Address ID</label> <br>
+            <input type="number" maxlength="20" name="address_id" required> <br>
+            <br>
 
-              <button type="submit">Add airport</button>
-            </form>
+            <button type="submit">Add airport</button>
+          </form>
         </div>
       </div>
     </main>
@@ -118,7 +121,3 @@
     </div>
   </div>
 @endsection
-
-
-
-
