@@ -10,9 +10,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class EmployeeViewController extends Controller
 {
+   
     public function showAdd()
     {
         return view('add_employee');
@@ -73,39 +76,39 @@ class EmployeeViewController extends Controller
                 $numericIBAN .= $rearrangedArray[$key];
             }
             if (bcmod($numericIBAN, '97') == 1) {
-                $user = new Employee();
-                $user2 = new User();
+                $employee = new Employee();
+                $user = [];
                 $address = new Address();
-                $user2->name = $req->firstName;
-                $user2->last_name = $req->lastName;
+
                 $address->street = $req->street;
                 $address->house_number = $req->houseNumber;
-                $address->region = $req->province;
-                $address->city = $req->city;
                 $address->postal_code = $req->postalCode;
+                $address->city = $req->city;
+                $address->region = $req->province;
                 $address->country = $req->country;
-                //$user->phoneNumber = $req->phoneNumber;
-                $user2->email = $req->mail;
-                $user->dateOfBirth = $req->dateOfBirth;
-                //$user->isActive = $req->isActive;
-                $user->jobTitle = $req->jobTitle;
-                $user->salary = $req->salary;
-                $user2->password = Hash::make($req->password);
-
-                $user->iban = $req->Iban;
-
                 $address->save();
-                $id1 = FacadesDB::table('addresses')->where('street', $req->street)->where('house_number', $req->houseNumber)->where('city', $req->city)->value('id');
+                $addressId = FacadesDB::table('addresses')->where("street", $req->street)->where("house_number", $req->houseNumber)->value("id");
+                
+                /* $user['address_id'] = $addressId;
+                $user['name'] = $req->firstName;
+                $user['last_name'] = $req->lastName;
+                $user['email'] = $req->mail;
+                $user['password'] = 'letmein';
+                
+                User::create($user);
+                */
 
-                $user2->address_id = $id1;
-                $user2->save();
-                $id2 = FacadesDB::table('users')->where('email', $req->mail)->value('id');
-
-                $user->user_id = $id2;
-
-                $user->save();
-
-                return redirect()->back()->with('alert', 'complete creation');
+                User::insert([
+                    'name' => $req->name,
+                    'address_id' => $addressId,
+                    'email' => $req->email,
+                    'password' => Hash::make($req->password),
+                    'email_verified_at' => now(), // Optional: Set email_verified_at if you want to skip email verification
+                    'updated_at' => now(),
+                    'created_at' => now()
+                ]);
+            
+                return redirect()->back()->with('alert', 'complete creation'); 
             }
         }
 

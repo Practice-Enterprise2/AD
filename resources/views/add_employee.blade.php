@@ -4,11 +4,11 @@
     @csrf
     <div id="left">
       <label for="firstName">First name:</label>
-      <input type="text" id="firstName" name="firstName" required><br>
+      <input type="text" id="Name" name="name" required><br>
       <label for="lastName">Last name:</label>
-      <input type="text" id="lastName" name="lastName" required><br>
+      <input type="text" id="lastName" name="last_name" required><br>
       <label for="mail">mail:</label>
-      <input type="email" id="mail" name="mail" required><br>
+      <input type="email" id="mail" name="email" required><br>
       <label for="street">street:</label>
       <input type="text" id="street" name="street" required><br>
       <label for="houseNumber">house number:</label>
