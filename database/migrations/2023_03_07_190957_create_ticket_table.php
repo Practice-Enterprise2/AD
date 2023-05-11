@@ -13,7 +13,8 @@ return new class() extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('ticketID')->unique();
-            $table->tinyInteger('cstID');
+            $table->string('name');
+            $table->string('email', 255);
             $table->tinyInteger('employeeID')->nullable();
             $table->string('issue', 64);
             $table->longText('description');

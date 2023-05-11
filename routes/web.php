@@ -30,8 +30,12 @@ Route::redirect('/', 'home');
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 
-//FAQ page
-Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+//TicketController
+Route::controller(TicketController::class)->group(function () {
+    Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+    Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
+    Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+});
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -158,14 +162,9 @@ Route::middleware('auth')->group(function () {
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 
     //FAQ page
-    // Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 
-    //TicketController
-    Route::controller(TicketController::class)->group(function () {
-    Route::get('/contact/create-ticket', 'showForm')->name('create-ticket');
-    Route::post('/contact/submitted-ticket', 'store')->name('submitted-ticket');
-    Route::get('/contact/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
-    });
+    
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
