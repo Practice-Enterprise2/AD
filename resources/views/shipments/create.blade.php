@@ -227,19 +227,26 @@
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Expense:</label>
-              <span id="shipment_price"
-                class="ml-auto w-2/3 rounded-md p-1 text-black">0</span>
+              <input readonly
+                class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
+                type="text" name="shipment_price" id="shipment_price"
+                value="{{ old('shipment_price') }}">
             </div>
+            <input name="shipment_distance" id="shipment_distance"
+              value="{{ old('shipment_distance') }}" type="hidden"
+              onkeyup="calculateShipmentPrice()">
             <script type="text/javascript">
               function calculateShipmentPrice() {
+                var shipment_distance = document.getElementById('shipment_distance').value;
+                console.log(shipment_distance);
                 var shipment_weight = document.getElementById('shipment_weight').value;
                 var shipment_length = document.getElementById('shipment_length').value;
                 var shipment_height = document.getElementById('shipment_height').value;
                 var shipment_width = document.getElementById('shipment_width').value;
                 var shipment_price = document.getElementById('shipment_price');
                 if (shipment_weight == '' || shipment_length == '' || shipment_height ==
-                  '' || shipment_width == '') {
-                  shipment_price.innerHTML = 0;
+                  '' || shipment_width == '' || shipment_distance == '') {
+                  shipment_price.value = 0;
                   return;
                 }
                 var price = 0;
@@ -251,11 +258,13 @@
                 volumetric_freight += ((shipment_length * shipment_width *
                   shipment_height) / 5000);
                 if (volumetric_freight > shipment_weight) {
-                  price = volumetric_freight * volumetric_freight_tarrif;
+                  price = volumetric_freight * volumetric_freight_tarrif *
+                    shipment_distance;
                 } else {
-                  price = shipment_height * dense_cargo_tarrif;
+                  price = shipment_height * dense_cargo_tarrif * shipment_distance;
                 }
-                shipment_price.innerHTML = price;
+                var ceilPrice = Math.ceil(price);
+                shipment_price.value = ceilPrice;
               }
             </script>
             <div class="mb-2 flex">
@@ -465,6 +474,15 @@
 
                     Microsoft.Maps.loadModule('Microsoft.Maps.SpatialMath',
                       function() {
+                        var distance = Microsoft.Maps.SpatialMath
+                          .getDistanceTo(
+                            departurePin.getLocation(), destinationPin
+                            .getLocation(), Microsoft.Maps.SpatialMath
+                            .DistanceUnits.Kilometers);
+                        const distanceInfo = document.getElementById(
+                          'shipment_distance');
+                        shipment_distance.value = distance;
+                        calculateShipmentPrice();
                         console.log(Microsoft.Maps.SpatialMath.getDistanceTo(
                           departurePin.getLocation(), destinationPin
                           .getLocation(), Microsoft.Maps.SpatialMath
