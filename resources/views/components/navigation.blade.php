@@ -214,7 +214,7 @@
           {{ __('Dashboard') }}
         </x-responsive-nav-link>
       @endauth
-      
+
       @can('view_general_employee_content')
         <x-responsive-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
           {{ __('Employee') }}
