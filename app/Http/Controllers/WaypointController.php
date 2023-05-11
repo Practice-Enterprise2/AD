@@ -277,6 +277,9 @@ class WaypointController extends Controller
                 $next_waypoint->update();
             }
         }
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
         dd('Waypoints updated. Check Database.');
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
+use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
@@ -265,6 +266,13 @@ class ShipmentController extends Controller
             'status' => request()->status,
             'type' => request()->handling_type[0],
         ]);
+
+        if (request()->status == 'Awaiting Confirmation') {
+            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
+            foreach ($waypoints as $waypoint) {
+                $waypoint->delete();
+            }
+        }
 
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();
