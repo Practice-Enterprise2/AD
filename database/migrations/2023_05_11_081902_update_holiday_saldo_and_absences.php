@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::table('holiday_saldos', function (Blueprint $table) {
             $table->dropForeign(['contract_id']);
             $table->foreign('contract_id')
-            ->references('id')->on('employee_contracts')->constraint()->change();
+                ->references('id')->on('employee_contracts')->constraint()->change();
         });
-        Schema::table('absences', function (Blueprint $table){
+        Schema::table('absences', function (Blueprint $table) {
             $table->dropForeign(['contract_id']);
             $table->foreign('contract_id')
-            ->references('id')->on('employee_contracts')->constraint()->change();
+                ->references('id')->on('employee_contracts')->constraint()->change();
         });
     }
 
@@ -37,4 +36,3 @@ return new class extends Migration
         });
     }
 };
-
