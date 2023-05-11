@@ -280,6 +280,6 @@ class WaypointController extends Controller
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
-        dd('Waypoints updated. Check Database.');
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
     }
 }
