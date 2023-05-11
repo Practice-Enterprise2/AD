@@ -148,7 +148,21 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
-        $shipment->expense = request()->shipment_price;
+        $shipment_distance = request()->shipment_distance;
+        $volumetric_freight = 0;
+        $volumetric_freight_tarrif = 5;
+        $dense_cargo_tarrif = 4;
+        $expense_excl_VAT = 0;
+        $VAT_percentage = 0;
+        $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
+        if ($volumetric_freight > $shipment->weight) {
+            //Volumetric Air Freight rate
+            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
+        } else {
+            //Dense Cargo rate
+            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
+        }
+        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
 
