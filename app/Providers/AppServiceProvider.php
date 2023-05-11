@@ -51,9 +51,11 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('edit_any_user_info', 'Edit any user\'s info.');
         static::bootstrap_permission('edit_permissions', 'Edit all the authorization permissions.');
         static::bootstrap_permission('edit_roles', 'Edit all the authorization roles.');
+        static::bootstrap_permission('edit_all_shipments', 'Edit all the shipments.');
         static::bootstrap_permission('view_all_roles', 'View all the roles.');
         static::bootstrap_permission('view_all_permissions', 'View all the permissions.');
         static::bootstrap_permission('view_all_users', 'View all the users.');
+        static::bootstrap_permission('view_all_employees', 'View all the employees.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
         static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
@@ -69,11 +71,13 @@ class AppServiceProvider extends ServiceProvider
 
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
+        $role_employee->givePermissionTo('edit_all_shipments');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
+        $role_employee_hr->givePermissionTo('view_all_employees');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');

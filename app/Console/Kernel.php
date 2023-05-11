@@ -13,6 +13,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('app:delete-unverified-users')->daily();
+
+        //run payslip controller every month on the 25th at 2 am
+        $schedule->call('App\Http\Controllers\PayslipController@calculateSendPayslip')->monthlyOn(25, '2:00');
         $schedule->command('contracts:update')->daily();
     }
 
