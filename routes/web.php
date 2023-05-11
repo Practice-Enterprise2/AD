@@ -24,11 +24,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
-Route::view('/home', 'app')->name('home');
-
-Route::redirect('/', 'home');
-
+Route::view('/', 'landing-page')->name('landing-page');
+Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -114,6 +113,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
+    Route::view('/home', 'app')->name('home');
+
     Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
 
     Route::controller(ProfileController::class)->group(function () {
@@ -160,19 +161,14 @@ Route::middleware('auth')->group(function () {
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
 
-    //FAQ page
-    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
-    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // Email verification
     Route::view('/email/verify', 'auth.verify-email')
         ->name('verification.notice');
 });
-
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 require __DIR__.'/auth.php';

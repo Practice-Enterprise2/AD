@@ -24,25 +24,17 @@ Slots:
     href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
     rel="stylesheet" />
 
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js">
-  </script>
-
-  {{-- jQuery --}}
-  <script src="https://code.jquery.com/jquery-3.6.4.js"
-    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-    crossorigin="anonymous"></script>
-
   @isset($head)
     {{ $head }}
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/app.css', 'resources/js/layouts/app.js'])
   @livewireStyles
 </head>
 
 <body
-  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
+  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900 dark:text-white">
   @include('components.navigation')
 
   @if (isset($header))
