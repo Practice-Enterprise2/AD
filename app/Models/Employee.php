@@ -77,4 +77,9 @@ class Employee extends Model implements ValidatesAttributes
     {
         return $this->hasMany(Shift::class);
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);   
+    }
 }

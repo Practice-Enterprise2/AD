@@ -35,4 +35,9 @@ class Role extends SpatieRole implements ValidatesAttributes
         'description',
         'guard_name',
     ];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

@@ -8,7 +8,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var shifts = <?= json_encode($shifts) ?>;
+        
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
@@ -20,7 +20,7 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
           },
-          editable: false,
+          editable: true,
           dayMaxEvents: true, // when too many events in a day, show the popover
           events: <?php echo json_encode($shifts->map(function($shift) {
             return [
