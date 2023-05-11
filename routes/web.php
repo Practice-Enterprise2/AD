@@ -30,11 +30,13 @@ Route::redirect('/', 'home');
 
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 
-//TicketController
-Route::controller(TicketController::class)->group(function () {
-    Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
-    Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
-    Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+//TicketController when not logged in
+Route::middleware('guest')->group(function () {
+    Route::controller(TicketController::class)->group(function () {
+        Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+        Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
+        Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+    });
 });
 
 // Routes that require an authenticated session with a verified email.
