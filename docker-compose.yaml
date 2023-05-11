@@ -21,3 +21,5 @@ services:
       - .env
     build:
       context: .
+    ports:
+      - ${CONTAINER_WEBSOCKETS_PORT}:${LARAVEL_WEBSOCKETS_PORT}
