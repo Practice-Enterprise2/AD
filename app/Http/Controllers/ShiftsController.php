@@ -82,9 +82,9 @@ class ShiftsController extends Controller
      * Store a newly created resource in storage.
      */
    public function store(Request $request)
-{
+    {
     $data = $request->validate([
-        'user_id' => 'required|exists:users,id',
+        'user_id' => 'required|exists:user,id',
         'planned_start_time' => 'required|date_format:Y-m-d\TH:i',
         'planned_end_time' => 'required|date_format:Y-m-d\TH:i',
     ]);
@@ -95,8 +95,8 @@ class ShiftsController extends Controller
         'employee_id' => $data['user_id'],
     ]);
 
-    return redirect()->route('shifts.index');
-}
+        return redirect()->route('shifts.index');
+    }
 
     /**
      * Update the specified resource in storage.
