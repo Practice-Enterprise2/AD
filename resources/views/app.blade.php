@@ -24,11 +24,11 @@
         <x-canvas-tile url="/employeegraph" title="Employee Graph"
           description=" Visualize the company's employee count over time"></x-canvas-tile>
       @endcan
-      @auth
+      @can('edit_all_shipments')
         <x-canvas-tile title="Evaluate Shipment Requests"
           description="Evaluate incoming shipment requests"
           url="/shipments/requests"></x-canvas-tile>
-      @endauth
+      @endcan
       @auth
         <x-canvas-tile url="/shipments" title="Confirmed Shipments"
           description="show confirmed shipments"></x-canvas-tile>
