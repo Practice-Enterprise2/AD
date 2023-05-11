@@ -165,7 +165,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // Email verification
-
 });
 
 require __DIR__.'/auth.php';
