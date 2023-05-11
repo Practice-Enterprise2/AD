@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPSTORM_META\type;
 
 class ShipmentController extends Controller
 {
@@ -318,7 +319,28 @@ class ShipmentController extends Controller
         $countDec = DB::table('shipments')->where('status','Declined')->where('user_id', $id)->count();
 
         // Pie chart for overview of 
+        $types = DB::table('shipments')
+        ->select(DB::raw('type, COUNT(type) as typeTotal'))
+        ->where('user_id', $id)
+        ->groupBy('type')
+        ->get();
 
+        $labels = [];
+        $data = [];
+
+        foreach ($types as $type) {
+            $labels[] = $type->type;
+            $data[] = $type->typeTotal; 
+        }
+
+        // TODO: try to add this in a loop.
+        /* 
+        $typeStandard = DB::table('shipments')->where('user_id', $id)->where('type', 'Standard')->count();
+        $typeFragile = DB::table('shipments')->where('user_id', $id)->where('type', 'Fragile')->count();
+        $typeHazardous = DB::table('shipments')->where('user_id', $id)->where('type', 'Hazardous')->count();
+        $typeLiquid = DB::table('shipments')->where('user_id', $id)->where('type', 'Liquid')->count();      
+        $typeArray = [$typeStandard, $typeFragile, $typeHazardous, $typeLiquid];
+         */
 
         // Return the values
         return view('/shipments.dashboard',[
@@ -331,7 +353,9 @@ class ShipmentController extends Controller
             'countEx' => $countEx, 
             'countHaL' => $countHaL, 
             'countDel' => $countDel, 
-            'countDec' => $countDec
+            'countDec' => $countDec,
+            'data' => $data,
+            'labels' => $labels
         ]);
     }
 }
