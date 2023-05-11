@@ -6,20 +6,22 @@
           <h4 class="text-2xl font-bold dark:text-white">vacant jobs</h4><br>
           @foreach ($jobVacancies as $job)
           <div class="border-solid 	border-b border-sky-500 my-1">
-            <div class="mb-2 grid gap-2 md:grid-cols-2">
-                <p class="px-3 py-1">
-                    {{ $job->title }}
-                </p>
-                <p class="px-3 py-1">
-                    {{ $job->department }}
-                </p>
-            </div>
-            <p class="px-3 py-1">
-                {{ $job->description }}
-            </p>
-            <div class="gap-4 my-2 px-4 flex justify-end">
-                <a href="{{ route('apply', $job) }}" class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-gray-900">apply for job</a>
-            </div>
+                <form method="get" action="{{ route('open_job', $job->id) }}">
+                    <div class="mb-2 grid gap-2 md:grid-cols-2">
+                        <p class="px-3 py-1">
+                            {{ $job->title }}
+                        </p>
+                        <p class="px-3 py-1">
+                            {{ $job->department }}
+                        </p>
+                    </div>
+                    <p class="px-3 py-1">
+                        {{ $job->description }}
+                    </p>
+                    <div class="gap-4 my-2 px-4 flex justify-end">
+                        <button type="submit" class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-gray-900">apply for job</button>
+                    </div>
+                </form>
           </div>
           @endforeach
         </div>

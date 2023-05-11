@@ -21,6 +21,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
+use App\Models\JobVacancy;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -177,5 +178,8 @@ Route::view('/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('pe
 Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
 
 Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs'])->name('view_jobs');
+Route::get('/job/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
+
+Route::post('job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 require __DIR__.'/auth.php';
