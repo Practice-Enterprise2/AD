@@ -115,8 +115,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::view('/home', 'app')->name('home');
 
-    Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
-
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
         Route::patch('/profile', 'update')->name('profile.update');
@@ -167,8 +165,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
     // Email verification
-    Route::view('/email/verify', 'auth.verify-email')
-        ->name('verification.notice');
+
 });
 
 require __DIR__.'/auth.php';
