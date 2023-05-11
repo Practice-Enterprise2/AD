@@ -5,7 +5,7 @@
         class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <h4 class="text-2xl font-bold dark:text-white">add job</h4><br>
-          <form method="post" action="{{ route('sendEmployeeComplaint.add') }}">
+          <form method="post" action="{{ route('JobVacanciesController.add') }}">
             @csrf
             <div class="mb-2 grid gap-2 md:grid-cols-2">
               <x-text-input id="job_title" class="mt-1 block w-full p-[10px]"
