@@ -95,10 +95,6 @@
               {{ __('FAQ') }}
             </x-nav-link>
           @endauth
-            {{-- FAQ in the home page when NOT logged in --}}
-          {{-- <x-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
-            {{ __('FAQ') }}
-          </x-nav-link> --}}
         </div>
       </div>
 
@@ -239,7 +235,6 @@
       <div class="hidden lg:ml-6 lg:flex lg:items-center">
 
         @guest
-          {{-- QWE --}}
           <a class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
             href="{{ route('login') }}">{{ __('Login') }}</a>
           <a class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
