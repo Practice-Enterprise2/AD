@@ -29,7 +29,6 @@ class AirportSeeder extends Seeder
         $index = 0;
 
         while ($airports_added != 2) {
-
             $client = new Client();
             $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={YOUR_AIRLABS_KEY_HERE}");
             $airlab_object = array_slice(json_decode($response->getBody()->getContents())->response, $index, 1);
@@ -47,6 +46,7 @@ class AirportSeeder extends Seeder
             // if no street presented within the airport address object (which happened a couple times.)
             if (! isset($airport_address->addressLine)) {
                 $index++;
+
                 continue;
             }
 
@@ -58,7 +58,7 @@ class AirportSeeder extends Seeder
             $address = new Address();
             $address->street = $airport_address->addressLine;
             $address->house_number = '';
-            $address->postal_code = isset($airport_address->postalCode) ? $airport_address->postalCode : "";
+            $address->postal_code = isset($airport_address->postalCode) ? $airport_address->postalCode : '';
             $address->city = $airport_address->locality;
             $address->region = isset($airport_address->adminDivision) ? $airport_address->adminDivision : $this->country;
             $address->country = $this->country;
