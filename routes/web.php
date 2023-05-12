@@ -152,7 +152,7 @@ Route::middleware('auth')->group(function () {
 
     //Notification
     Route::get('/markAsRead', function () {
-        auth()->user()->unreadNotifications->markAsRead(); 
+        auth()->user()->unreadNotifications->markAsRead();
     });
     Route::get('/markAsRead/{id}', function ($id) {
         auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
@@ -166,7 +166,6 @@ Route::middleware('auth')->group(function () {
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 
-    
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);

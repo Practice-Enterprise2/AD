@@ -95,7 +95,7 @@
               {{ __('FAQ') }}
             </x-nav-link>
           @endauth
-            {{-- FAQ in the home page when NOT logged in --}}
+          {{-- FAQ in the home page when NOT logged in --}}
           {{-- <x-nav-link :href="route('faq.show')" :active="request()->routeIs('faq.show')">
             {{ __('FAQ') }}
           </x-nav-link> --}}
