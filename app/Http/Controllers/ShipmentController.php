@@ -8,6 +8,7 @@ use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
+use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
@@ -147,6 +148,7 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
+        $shipment_distance = request()->shipment_distance;
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -155,11 +157,12 @@ class ShipmentController extends Controller
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
         if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
         } else {
             //Dense Cargo rate
-            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
         }
+        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
         $shipment->push();
@@ -265,6 +268,13 @@ class ShipmentController extends Controller
             'status' => request()->status,
             'type' => request()->handling_type[0],
         ]);
+
+        if (request()->status == 'Awaiting Confirmation') {
+            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
+            foreach ($waypoints as $waypoint) {
+                $waypoint->delete();
+            }
+        }
 
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();

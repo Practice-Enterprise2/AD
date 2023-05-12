@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'landing-page')->name('landing-page');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -114,8 +116,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::view('/home', 'app')->name('home');
 
-    Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
-
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
         Route::patch('/profile', 'update')->name('profile.update');
@@ -163,14 +163,12 @@ Route::middleware('auth')->group(function () {
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
-    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
-    // Email verification
-    Route::view('/email/verify', 'auth.verify-email')
-        ->name('verification.notice');
-});
+    // employee graph
+    Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+    // Email verification
+});
 
 require __DIR__.'/auth.php';

@@ -235,6 +235,18 @@ class WaypointController extends Controller
             $current_waypoint = $shipment->waypoints()->where('status', 'Out For Client')->first();
         }
 
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Awaiting Action')->first();
+        }
+
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Received')->first();
+        }
+
+        if (is_null($current_waypoint)) {
+            $current_waypoint = $shipment->waypoints()->where('status', 'Out For Client')->first();
+        }
+
         // checking if it is the first waypoint
         if ($current_waypoint->current_address_id == $shipment->source_address_id) {
             // more validation needed later on. (EX: what if there are no transit addresses?)
@@ -243,6 +255,22 @@ class WaypointController extends Controller
         }
 
         if ($current_waypoint->next_address_id == $shipment->destination_address_id) {
+            if ($current_waypoint->status == 'Out For Delivery') {
+                $current_waypoint->status = 'Received';
+                $current_waypoint->update();
+            } elseif ($current_waypoint->status == 'Received') {
+                $current_waypoint->status = 'Out For Client';
+                $current_waypoint->update();
+
+                // Since it is not IN TRANSIT anymore
+                $shipment->status = 'Out For Delivery';
+                $shipment->update();
+            } elseif ($current_waypoint->status == 'Out For Client') {
+                $current_waypoint->status = 'Delivered';
+                $current_waypoint->update();
+                $shipment->status = 'Delivered';
+                $shipment->update();
+            }
             if ($current_waypoint->status == 'Out For Delivery') {
                 $current_waypoint->status = 'Received';
                 $current_waypoint->update();
@@ -274,6 +302,9 @@ class WaypointController extends Controller
                 $next_waypoint->update();
             }
         }
-        dd('Waypoints updated. Check Database.');
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
     }
 }

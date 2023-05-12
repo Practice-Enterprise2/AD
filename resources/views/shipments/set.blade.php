@@ -153,7 +153,13 @@
         @endif
         <div class="mt-2">
           <button id="add-depot"
+          <button id="add-depot"
             class="rounded-md bg-green-500 p-2 text-white hover:bg-green-600"
+            type="button">Add Branch</button>
+
+          <button id="add-airport"
+            class="rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
+            type="button">Add Airport</button>
             type="button">Add Branch</button>
 
           <button id="add-airport"
@@ -300,5 +306,6 @@
       });
     });
   </script>
+
 
 </x-app-layout>
