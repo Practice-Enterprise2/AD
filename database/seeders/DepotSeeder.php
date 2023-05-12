@@ -17,9 +17,9 @@ class DepotSeeder extends Seeder
         // DO MIND TO add addresses with which CITIES SHOULD HAVE AIRPORTS
         $addresses = collect([
             // Australia
-            ['street' => 'The Esplanade', 'house_number' => '', 'postal_code' => '4870', 'city' => 'Cairns', 'region' => 'Queensland', 'country' => 'Australia'],
-            ['street' => 'St Georges Terrace', 'house_number' => '', 'postal_code' => '6000', 'city' => 'Perth', 'region' => 'Western Australia', 'country' => 'Australia'],
-            ['street' => 'North Terrace', 'house_number' => '', 'postal_code' => '5000', 'city' => 'Adelaide', 'region' => 'South Australia', 'country' => 'Australia'],
+            // ['street' => 'The Esplanade', 'house_number' => '', 'postal_code' => '4870', 'city' => 'Cairns', 'region' => 'Queensland', 'country' => 'Australia'],
+            // ['street' => 'St Georges Terrace', 'house_number' => '', 'postal_code' => '6000', 'city' => 'Perth', 'region' => 'Western Australia', 'country' => 'Australia'],
+            // ['street' => 'North Terrace', 'house_number' => '', 'postal_code' => '5000', 'city' => 'Adelaide', 'region' => 'South Australia', 'country' => 'Australia'],
 
             // Türkiye
             ['street' => 'Abdülhakhamit Cd.', 'house_number' => '8', 'postal_code' => '34435', 'city' => 'Istanbul', 'region' => 'Istanbul', 'country' => 'Türkiye'],

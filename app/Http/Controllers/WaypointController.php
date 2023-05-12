@@ -109,7 +109,6 @@ class WaypointController extends Controller
                     $next_address->save();
                 }
                 $status = 'Awaiting Action';  // presents this is the current waypoint.
-                $status = 'Awaiting Action';  // presents this is the current waypoint.
             } else {
                 // $current_address = $waypoints[$i - 1];
                 $current_address = Address::query()->where([

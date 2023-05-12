@@ -29,33 +29,39 @@ class AirportSeeder extends Seeder
         $index = 0;
 
         while ($airports_added != 2) {
+
             $client = new Client();
-            $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={YOUR_AIRLABS_API_KEY_HERE}");
+            $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={YOUR_AIRLABS_KEY_HERE}");
             $airlab_object = array_slice(json_decode($response->getBody()->getContents())->response, $index, 1);
 
             $client = new Client();
-            $bingMaps_airportObject = $client->get("https://dev.virtualearth.net/REST/v1/LocationRecog/{$airlab_object[0]->lat},{$airlab_object[0]->lng}?key={YOUR_BING_MAPS_API_KEY_HERE}");
-            $airport_address = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->addressOfLocation[0];
+            $bingMaps_airportObject = $client->get("https://dev.virtualearth.net/REST/v1/LocationRecog/{$airlab_object[0]->lat},{$airlab_object[0]->lng}?key={YOUR_BINGMAPS_KEY_HERE}");
+
+            // $airport_address = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->addressOfLocation[0];
+            // dump($airport_address);
+
+            $airport_address_info = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->businessesAtLocation[0];
+            $airport_address = $airport_address_info->businessAddress;
+            dump($airport_address_info);
 
             // if no street presented within the airport address object (which happened a couple times.)
-            if (! $airport_address->addressLine) {
+            if (! isset($airport_address->addressLine)) {
                 $index++;
-
                 continue;
             }
 
             $airport = new Airport();
             $airport->iata_code = $airlab_object[0]->iata_code;
             $airport->name = $airlab_object[0]->name;
-            $airport->land = $airport_address->countryRegion; // wdym land?
+            $airport->land = $this->country;
 
             $address = new Address();
             $address->street = $airport_address->addressLine;
             $address->house_number = '';
-            $address->postal_code = $airport_address->postalCode;
+            $address->postal_code = isset($airport_address->postalCode) ? $airport_address->postalCode : "";
             $address->city = $airport_address->locality;
-            $address->region = $airport_address->adminDivision;
-            $address->country = $airport_address->countryRegion;
+            $address->region = isset($airport_address->adminDivision) ? $airport_address->adminDivision : $this->country;
+            $address->country = $this->country;
             $address->push();
 
             $airport->address_id = $address->id;
