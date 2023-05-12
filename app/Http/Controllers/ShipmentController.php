@@ -162,8 +162,8 @@ class ShipmentController extends Controller
         }
 
         $shipment->status = 'Awaiting Confirmation';
-
         $shipment->push();
+
         //After the shipment has been created, we will generate an invoice with the following Trait
         $this->generateInvoice();
 

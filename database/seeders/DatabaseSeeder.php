@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         AppServiceProvider::bootstrap_database();
 
         // it generates addresses and assign them into depots.
-        $this->call(DepotSeeder::class);
+        // (!) Depot Seeder will call AirportSeeder class to create Airports within the DB
+        $depot_seeder = new DepotSeeder();
+        // ONLY UNCOMMENT "$depot_seeder->run();" IF YOU PUT YOUR API KEYS WITHIN "/database/seeders/AirportSeeder.php"
+        // $depot_seeder->run();
     }
 }
