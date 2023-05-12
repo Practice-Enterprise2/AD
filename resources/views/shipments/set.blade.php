@@ -171,7 +171,7 @@
   </div>
 </x-app-layout>
 
-{{-- <script>
+  <script type="module">
     $(document).ready(function() {
         var count = 0;
         $('#add-waypoint').click(function() {
