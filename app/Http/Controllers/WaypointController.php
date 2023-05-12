@@ -222,7 +222,6 @@ class WaypointController extends Controller
             dd('Shipments is already Delivered!');
         }
 
-
         $current_waypoint = $shipment->waypoints()->where('status', 'Out For Delivery')->first();
 
         if (is_null($current_waypoint)) {
