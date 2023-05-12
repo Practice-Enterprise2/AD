@@ -109,6 +109,7 @@ class WaypointController extends Controller
                     $next_address->save();
                 }
                 $status = 'Awaiting Action';  // presents this is the current waypoint.
+                $status = 'Awaiting Action';  // presents this is the current waypoint.
             } else {
                 // $current_address = $waypoints[$i - 1];
                 $current_address = Address::query()->where([
@@ -221,6 +222,7 @@ class WaypointController extends Controller
             dd('Shipments is already Delivered!');
         }
 
+
         $current_waypoint = $shipment->waypoints()->where('status', 'Out For Delivery')->first();
 
         if (is_null($current_waypoint)) {
@@ -302,6 +304,10 @@ class WaypointController extends Controller
                 $next_waypoint->update();
             }
         }
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
