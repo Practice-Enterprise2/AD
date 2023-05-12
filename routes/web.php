@@ -10,7 +10,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -25,8 +24,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
-Route::view('/', 'landing-page')->name('landing-page');
-Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+Route::view('/home', 'app')->name('home');
+
+Route::redirect('/', 'home');
+
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 
 //TicketController when not logged in
@@ -116,7 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
-    Route::view('/home', 'app')->name('home');
+    Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
 
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
@@ -127,12 +128,12 @@ Route::middleware('auth')->group(function () {
     //ShipmentController
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
-    Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests')->middleware('permission:edit_all_shipments');
-    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate')->middleware('permission:edit_all_shipments');
+    Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
+    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
-    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('permission:edit_all_shipments');
-    Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update')->middleware('permission:edit_all_shipments');
-    Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy')->middleware('permission:edit_all_shipments');
+    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit');
+    Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update');
+    Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
     //contact and messages
@@ -158,9 +159,9 @@ Route::middleware('auth')->group(function () {
     });
 
     //WaypointController
-    Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set')->middleware('permission:edit_all_shipments');
-    Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
-    Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
+    Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
+    Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
+    Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
 
     //FAQ page
     Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
@@ -169,12 +170,14 @@ Route::middleware('auth')->group(function () {
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
+    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
-    // employee graph
-    Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
-
     // Email verification
+    Route::view('/email/verify', 'auth.verify-email')
+        ->name('verification.notice');
 });
+
+Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 require __DIR__.'/auth.php';

@@ -1,2 +1,2 @@
-import '../bootstrap';
+import './bootstrap';
 import * as te from 'tw-elements';

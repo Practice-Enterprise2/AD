@@ -8,7 +8,6 @@ use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
-use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
@@ -51,41 +50,6 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
-        // Validate request
-        $this->validate(request(), [
-            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
-            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
-            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
-            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
-            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
-            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
-            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
-            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
-            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
-            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
-            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
-            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
-            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
-            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
-            'shipment_weight' => Shipment::VALIDATION_RULES['weight'],
-            'shipment_length' => Shipment::VALIDATION_RULES['dimension.length'],
-            'shipment_width' => Shipment::VALIDATION_RULES['dimension.width'],
-            'shipment_height' => Shipment::VALIDATION_RULES['dimension.height'],
-        ],
-            [
-                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
-                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
-                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
-                'source_city.regex' => 'The source city field may only contain letters and spaces.',
-                'source_region.regex' => 'The source region field may only contain letters and spaces.',
-                'source_country.regex' => 'The source country field may only contain letters and spaces.',
-                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
-                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
-                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
-                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
-                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
-            ]);
-
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
@@ -148,7 +112,6 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
-        $shipment_distance = request()->shipment_distance;
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -157,12 +120,11 @@ class ShipmentController extends Controller
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
         if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
         } else {
             //Dense Cargo rate
-            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
         }
-        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
 
@@ -206,36 +168,6 @@ class ShipmentController extends Controller
 
     public function update(Request $request, Shipment $shipment): Redirector|RedirectResponse
     {
-        $this->validate(request(), [
-            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
-            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
-            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
-            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
-            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
-            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
-            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
-            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
-            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
-            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
-            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
-            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
-            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
-            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
-        ],
-            [
-                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
-                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
-                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
-                'source_city.regex' => 'The source city field may only contain letters and spaces.',
-                'source_region.regex' => 'The source region field may only contain letters and spaces.',
-                'source_country.regex' => 'The source country field may only contain letters and spaces.',
-                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
-                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
-                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
-                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
-                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
-            ]);
-
         $source_address = Address::query()->where([
             'id' => $shipment->source_address_id,
         ])->first();
@@ -268,13 +200,6 @@ class ShipmentController extends Controller
             'status' => request()->status,
             'type' => request()->handling_type[0],
         ]);
-
-        if (request()->status == 'Awaiting Confirmation') {
-            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
-            foreach ($waypoints as $waypoint) {
-                $waypoint->delete();
-            }
-        }
 
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();

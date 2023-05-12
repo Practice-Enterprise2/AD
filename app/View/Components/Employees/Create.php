@@ -2,12 +2,23 @@
 
 namespace App\View\Components\Employees;
 
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Create extends Component
 {
-    public function render(): View
+    /**
+     * Create a new component instance.
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
     {
         return view('components.employees.create');
     }

@@ -1,3 +1,5 @@
+@extends('layouts.header')
+
 <x-app-layout>
   <h1>Complaint Response</h1>
 

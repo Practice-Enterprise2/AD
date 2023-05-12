@@ -35,11 +35,11 @@ class User extends Authenticatable implements MustVerifyEmail, ValidatesAttribut
 {
     use HasApiTokens, Notifiable, SoftDeletes, HasRoles, AppValidatesAttributes;
 
-    public const VALIDATION_RULE_NAME = ['required', 'min:2', 'string', 'regex:/^[A-Za-z\s]+$/'];
+    public const VALIDATION_RULE_NAME = ['required', 'min:2'];
 
     public const VALIDATION_RULE_LAST_NAME = ['min:2'];
 
-    public const VALIDATION_RULE_EMAIL = ['required', 'email', 'unique:users,email'];
+    public const VALIDATION_RULE_EMAIL = ['required', 'email'];
 
     public const VALIDATION_RULE_EMAIL_VERIFIED_AT = ['date'];
 

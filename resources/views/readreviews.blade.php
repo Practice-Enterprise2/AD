@@ -1,4 +1,4 @@
-<x-public-layout>
+<x-app-layout>
   <style>
     h1 {
       font: bold;
@@ -85,4 +85,4 @@
       @endforeach
     </table>
   </div>
-</x-public-layout>
+</x-app-layout>

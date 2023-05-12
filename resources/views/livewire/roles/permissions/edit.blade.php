@@ -1,4 +1,3 @@
-{{-- Livewire component for editing permissions granted to a role --}}
 <div>
   <form wire:submit.prevent="add_permission">
     <label for="permission_to_add"><button>Add</button></label>

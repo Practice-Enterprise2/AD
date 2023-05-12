@@ -1,2 +1,0 @@
-# Files that shouldn't be included in the Docker build context
-.github/
