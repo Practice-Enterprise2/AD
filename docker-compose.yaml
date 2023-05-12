@@ -1,11 +1,25 @@
 services:
   bluesky-website:
     image: bluesky-website:0.1.0
+    command: ./artisan serve
+    depends_on:
+      - bluesky-website-websockets
     hostname: bluesky-website-container
     container_name: bluesky-website
     env_file:
-      - .env
+      - .env.docker
     build:
       context: .
     ports:
-      - 80:8000
+      - ${CONTAINER_WEBSERVER_PORT}:${SERVER_PORT}
+  bluesky-website-websockets:
+    image: bluesky-website:0.1.0
+    command: ./artisan websockets:serve
+    hostname: bluesky-website-websockets-container
+    container_name: bluesky-website-websockets
+    env_file:
+      - .env.docker
+    build:
+      context: .
+    ports:
+      - ${CONTAINER_WEBSOCKETS_PORT}:${LARAVEL_WEBSOCKETS_PORT}
