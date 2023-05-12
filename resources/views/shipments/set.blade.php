@@ -171,7 +171,7 @@
 
   </div>
 
-  <script>
+  <script type="module">
     $(document).ready(function() {
 
       var count = 0;
