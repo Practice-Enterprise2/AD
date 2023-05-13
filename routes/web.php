@@ -173,9 +173,8 @@ Route::middleware('auth')->group(function () {
     // end contracts and renew
     Route::get('/endcontract', [EmployeeViewController::class, 'end'])->name('contracts.end');
 
-    Route::post('/contracts/{employee}/determine', 'EmployeeContractController@determine')->name('contracts.determine');
-    Route::post('/contracts/{contract}/renew', 'EmployeeContractController@renew')->name('contracts.renew');
-
+    Route::post('/contracts/{employee}/determine', [EmployeeViewController::class, 'determine'])->name('contracts.determine');
+    Route::post('/contracts/{employee}/renew', [EmployeeViewController::class, 'renew'])->name('contracts.renew');
 });
 
 require __DIR__.'/auth.php';

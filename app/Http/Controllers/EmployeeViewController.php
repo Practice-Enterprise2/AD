@@ -102,14 +102,32 @@ class EmployeeViewController extends Controller
             return redirect()->back()->with('alert', 'Empty Username and Password');
         }
     }
-    public function end() {
-        $employees = Employee::all();
 
-        foreach ($employees as $employee) {
-            $employee->current_contract = $employee->contracts()->latest()->first();
-        }
-    
+    public function end()
+    {
+        $employees = Employee::whereHas('employee_contracts', function ($query) {
+            $query->whereNotNull('start_date')->whereNotNull('end_date');
+        })->with('employee_contracts')->get(['id']);
+
         return view('endcontract', compact('employees'));
+    }
+
+    public function determine($employee)
+    {
+        $employee = Employee::findOrFail($employee);
+        $contract = $employee->employee_contracts();
+        $contract->delete();
+
+        return redirect()->back()->with('success', 'Contract determined.');
+    }
+
+    public function renew($employee)
+    {
+        $employee = Employee::findOrFail($employee);
+        $contract = $employee->employee_contracts();
+        $contract->delete();
+
+        return redirect('/employee_add_contract');
     }
 }
 ?>
