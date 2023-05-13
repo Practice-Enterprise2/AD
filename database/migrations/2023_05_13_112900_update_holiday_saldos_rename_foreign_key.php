@@ -27,12 +27,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('holiday_saldos', function (Blueprint $table) {
-           $table->dropForeign(['contract_id']);
-           $table->dropColumn('contract_id');
+            $table->dropForeign(['contract_id']);
+            $table->dropColumn('contract_id');
         });
 
         Schema::table('holiday_saldos', function (Blueprint $table) {
-           $table->foreignId('contract_id')->constrained('contracts')->change();
+            $table->foreignId('contract_id')->constrained('contracts')->change();
         });
     }
 };
