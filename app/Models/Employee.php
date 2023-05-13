@@ -44,7 +44,6 @@ class Employee extends Model implements ValidatesAttributes
     protected $table = 'employees';
 
     protected $fillable = [
-        'user_id',
         'dateOfBirth',
         'jobTitle',
         'salary',

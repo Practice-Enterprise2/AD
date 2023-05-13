@@ -72,7 +72,6 @@ class User extends Authenticatable implements MustVerifyEmail, ValidatesAttribut
     ];
 
     protected $fillable = [
-        'address_id',
         'name',
         'last_name',
         'email',
