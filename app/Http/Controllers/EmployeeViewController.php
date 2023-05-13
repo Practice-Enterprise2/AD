@@ -152,15 +152,6 @@ class EmployeeViewController extends Controller
                 $address->save();
                 $addressId = FacadesDB::table('addresses')->where('street', $req->street)->where('house_number', $req->houseNumber)->value('id');
 
-                /* $user['address_id'] = $addressId;
-                $user['name'] = $req->firstName;
-                $user['last_name'] = $req->lastName;
-                $user['email'] = $req->mail;
-                $user['password'] = 'letmein';
-
-                User::create($user);
-                */
-
                 User::insert([
                     'address_id' => $addressId,
                     'name' => $req->name,
@@ -169,7 +160,7 @@ class EmployeeViewController extends Controller
                     'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
                     'phone' => $req->phoneNumber,
                     'role' => 2,
-                    'email_verified_at' => now(), // Optional: Set email_verified_at if you want to skip email verification
+                    'email_verified_at' => now(),
                     'updated_at' => now(),
                     'created_at' => now(),
                 ]);
