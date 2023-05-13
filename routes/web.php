@@ -19,6 +19,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_add', 'save')->name('save-employee');
         Route::get('/new_employee', 'showAdd')->name('employee.create');
         Route::post('/employee_edit', 'employeeEdit');
+        //Route::('/employee_edit_done', 'employeeEditSave')->name('employee-edit-save');
+        Route::post('/employee_edit_save', 'employeeEditSave');
+        Route::get('/employee_search', 'searchEmployee')->name("employee-search");
     });
 
     Route::controller(UserController::class)->group(function () {

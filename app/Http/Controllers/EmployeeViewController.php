@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\Users;
 use App\Models\Address;
 use App\Models\Employee;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
+use Psalm\Issue\RedundantCastGivenDocblockType;
 
 class EmployeeViewController extends Controller
 {
@@ -23,10 +25,16 @@ class EmployeeViewController extends Controller
 
     public function employeeEdit()
     {
-        $idforedit = $_POST['employeeId'];
+        $array = [];
+        $array['id'] = $_POST['employeeId'];
+        $array['name'] = $_POST['employeeFirstName'];
+        $array['lastName'] = $_POST['employeeLastName'];
+        $array['userID'] = $_POST['userId'];
 
-        return view('employee_edit', ['theid' => $idforedit]);
+
+        return view('employee_edit', ['array' => $array]);
     }
+    
 
     public function index(): View
     {
@@ -48,6 +56,90 @@ class EmployeeViewController extends Controller
         }
 
         return view('employee_view', ['employees' => $comboArray]);
+    }
+    public function employeeEditSave(Request $req)
+    {
+        $userID = $_POST["userId"];
+        if($req->name != "")
+        {
+            User::where('id', $userID)
+                ->update(['name' => $req->name]);
+               
+        }
+        if($req->last_name != "")
+        {
+            User::where('id', $userID)
+                ->update(['last_name' => $req->last_name]);
+               
+        }
+        if($req->email != "")
+        {
+            User::where('id', $userID)
+                ->update(['email' => $req->email]);
+               
+        }
+        if($req->phoneNumber != "")
+        {
+            User::where('id', $userID)
+                ->update(['phone' => $req->phoneNumber]);
+               
+        }
+        $addressID = FacadesDB::table('users')->where("id", $userID)->value("address_id");
+        if($req->street != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['street' => $req->street]);
+               
+        }
+        if($req->houseNumber != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['house_number' => $req->houseNumber]);
+        }
+        if($req->PostalCode != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['postal_code' => $req->PostalCode]);
+        }
+        if($req->city != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['city' => $req->city]);
+        }
+        if($req->province != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['region' => $req->province]);
+        }
+        if($req->country != "")
+        {
+            Address::where('id', $addressID)
+                ->update(['country' => $req->country]);
+        }
+        if($req->dateOfBirth != "")
+        {
+            Employee::where('user_id', $userID)
+                ->update(['dateOfBirth' => $req->dateOfBirth]);
+        }
+        if($req->jobTitle != "")
+        {
+            Employee::where('user_id', $userID)
+                ->update(['jobTitle' => $req->jobTitle]);
+        }
+        if($req->salary != "")
+        {
+            Employee::where('user_id', $userID)
+                ->update(['salary' => $req->salary]);
+        }
+        if($req->Iban!= "")
+        {
+            Employee::where('user_id', $userID)
+                ->update(['Iban' => $req->Iban]);
+        }
+
+
+        return $this->index();
+         
     }
 
     public function save(Request $req): RedirectResponse
@@ -161,6 +253,38 @@ class EmployeeViewController extends Controller
         } elseif (isset($_POST['submit']) && empty($_POST['naam']) && empty($_POST['password'])) {
             return redirect()->back()->with('alert', 'Empty Username and Password');
         }
+    }
+    public function searchEmployee(Request $req)
+    {
+        $query = $req->input('query');
+        $employees = FacadesDB::select('select * from employees');
+
+        $comboArray = [[]];
+        $results = [[]];
+        for ($i = 0; $i < count($employees); $i++) {
+            $comboArray[$i][0] = $employees[$i]->id;
+            $comboArray[$i][1] = $employees[$i]->user_id;
+            $temp = FacadesDB::table('users')->where('id', $employees[$i]->user_id)->first();
+            $comboArray[$i][2] = $temp->name;
+            $comboArray[$i][3] = $temp->last_name;
+            $comboArray[$i][4] = $temp->email;
+            $comboArray[$i][5] = $employees[$i]->dateOfBirth;
+            $comboArray[$i][6] = $employees[$i]->jobTitle;
+            $comboArray[$i][7] = $employees[$i]->salary;
+        }
+        $b=0;
+        for($i = 0; $i < count($comboArray); $i++) 
+        {
+            $tempname = $comboArray[$i][2]." ".$comboArray[$i][3];
+            if(strpos($tempname, $query) !== false)
+            {
+                
+                $results[$b] = $comboArray[$i];
+                $b+=1;
+            }
+        }
+
+        return view('employee_view', ['employees' => $results]);
     }
 }
 ?>
