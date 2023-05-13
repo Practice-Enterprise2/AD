@@ -77,7 +77,6 @@ class EmployeeViewController extends Controller
             }
             if (bcmod($numericIBAN, '97') == 1) {
                 $employee = new Employee();
-                $user = [];
                 $address = new Address();
 
                 $address->street = $req->street;
@@ -99,14 +98,27 @@ class EmployeeViewController extends Controller
                 */
 
                 User::insert([
-                    'name' => $req->name,
                     'address_id' => $addressId,
+                    'name' => $req->name,
+                    'last_name' => $req->last_name,
                     'email' => $req->email,
-                    'password' => Hash::make($req->password),
+                    'password' => '$2y$10$rNbFi625LejeDiIrcsMRaeCwnBSI1fo5IY4LZbvQh4NaGGIXwZeba',
+                    'phone' => $req->phoneNumber,
+                    'role' => 2,
                     'email_verified_at' => now(), // Optional: Set email_verified_at if you want to skip email verification
                     'updated_at' => now(),
-                    'created_at' => now()
+                    'created_at' => now(),
+
                 ]);
+
+                $userId = FacadesDB::table('users')->where("email", $req->email)->where("name", $req->name)->value("id");
+
+                $employee->user_id = $userId;
+                $employee->dateOfBirth = $req->dateOfBirth;
+                $employee->jobTitle = $req->jobTitle;
+                $employee->salary = $req->salary;
+                $employee->Iban = $req->Iban;
+                $employee->save();
             
                 return redirect()->back()->with('alert', 'complete creation'); 
             }
