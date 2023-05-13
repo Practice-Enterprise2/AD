@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +12,11 @@ return new class extends Migration
     {
         Schema::table('absences', function (Blueprint $table) {
             $table->dropForeign(['contract_id']);
-            $table->foreignId('employee_contract_id')->constrained()->change();
+            $table->dropColumn('contract_id');
+        });
+
+        Schema::table('absences', function (Blueprint $table) {
+            $table->foreignId('contract_id')->constrained('employee_contracts')->change();
         });
     }
 
@@ -23,7 +26,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('absences', function (Blueprint $table) {
-            $table->foreignId('employee_contract_id')->change();
+           $table->dropForeign(['contract_id']);
+           $table->dropColumn('contract_id');
+        });
+
+        Schema::table('absences', function (Blueprint $table) {
+           $table->foreignId('contract_id')->constrained('contracts')->change();
         });
     }
 };
