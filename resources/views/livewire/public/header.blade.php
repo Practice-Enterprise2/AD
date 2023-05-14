@@ -13,7 +13,8 @@
       <a href="{{ route('readreviews') }}"
         class="text-lg font-semibold">Reviews</a>
       <div class="border-r border-r-sky-900"></div>
-      <a href="{{ route('create-ticket') }}" class="text-lg font-semibold"> Contact Us</a>
+      <a href="{{ route('create-ticket') }}" class="text-lg font-semibold">
+        Contact Us</a>
     </div>
   </div>
   <div id="end" class="flex items-center gap-2">

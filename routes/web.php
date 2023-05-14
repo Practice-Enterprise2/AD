@@ -35,7 +35,7 @@ Route::middleware('guest')->group(function () {
     Route::controller(TicketController::class)->group(function () {
         Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
         Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
-        Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');        
+        Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
     });
 });
 
