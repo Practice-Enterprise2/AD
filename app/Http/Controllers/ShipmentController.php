@@ -13,10 +13,10 @@ use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
 use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse; // Traits for invoices
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,7 +24,7 @@ class ShipmentController extends Controller
 {
     use Invoices;
 
-    public function index(): View
+    public function index(): View|Factory
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
             ->whereNot('status', 'Declined')
@@ -35,7 +35,7 @@ class ShipmentController extends Controller
     }
 
     //create
-    public function create(): View
+    public function create(): View|Factory
     {
         // Generate list of dates for the next 7 days
         $deliveryDateStart = (new DateTime())->modify('+2 days');
@@ -51,40 +51,6 @@ class ShipmentController extends Controller
     //store
     public function store(): View|RedirectResponse
     {
-        // Validate request
-        $this->validate(request(), [
-            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
-            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
-            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
-            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
-            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
-            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
-            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
-            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
-            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
-            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
-            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
-            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
-            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
-            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
-            'shipment_weight' => Shipment::VALIDATION_RULES['weight'],
-            'shipment_length' => Shipment::VALIDATION_RULES['dimension.length'],
-            'shipment_width' => Shipment::VALIDATION_RULES['dimension.width'],
-            'shipment_height' => Shipment::VALIDATION_RULES['dimension.height'],
-        ],
-            [
-                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
-                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
-                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
-                'source_city.regex' => 'The source city field may only contain letters and spaces.',
-                'source_region.regex' => 'The source region field may only contain letters and spaces.',
-                'source_country.regex' => 'The source country field may only contain letters and spaces.',
-                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
-                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
-                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
-                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
-                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
-            ]);
 
         $source_address = Address::query()->where([
             'street' => request()->source_street,
@@ -138,7 +104,7 @@ class ShipmentController extends Controller
         $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
-        // Dimensions
+        //Dimensions
         $dimensions = new Dimension();
         $dimensions->length = request()->shipment_length;
         $dimensions->width = request()->shipment_width;
@@ -148,7 +114,6 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
-        $shipment_distance = request()->shipment_distance;
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -157,12 +122,11 @@ class ShipmentController extends Controller
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
         if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
+            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
         } else {
             //Dense Cargo rate
-            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
+            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
         }
-        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
 
@@ -170,13 +134,13 @@ class ShipmentController extends Controller
         //After the shipment has been created, we will generate an invoice with the following Trait
         $this->generateInvoice();
 
-        $last_invoice = Invoice::query()->orderBy('id', 'desc')->first();
+        $last_invoice = Invoice::orderBy('id', 'desc')->first();
         $last_invoice_id = $last_invoice->id;
         //Send mail
         return redirect()->route('mail.invoices', ['invoice' => $last_invoice_id]);
     }
 
-    public function requests(): View
+    public function requests(): View|Factory
     {
         // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
@@ -199,43 +163,13 @@ class ShipmentController extends Controller
         }
     }
 
-    public function edit(Shipment $shipment): View
+    public function edit(Shipment $shipment)
     {
         return view('shipments.edit', compact('shipment'));
     }
 
-    public function update(Request $request, Shipment $shipment): Redirector|RedirectResponse
+    public function update(Request $request, Shipment $shipment)
     {
-        $this->validate(request(), [
-            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
-            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
-            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
-            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
-            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
-            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
-            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
-            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
-            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
-            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
-            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
-            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
-            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
-            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
-        ],
-            [
-                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
-                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
-                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
-                'source_city.regex' => 'The source city field may only contain letters and spaces.',
-                'source_region.regex' => 'The source region field may only contain letters and spaces.',
-                'source_country.regex' => 'The source country field may only contain letters and spaces.',
-                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
-                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
-                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
-                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
-                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
-            ]);
-
         $source_address = Address::query()->where([
             'id' => $shipment->source_address_id,
         ])->first();
@@ -269,13 +203,6 @@ class ShipmentController extends Controller
             'type' => request()->handling_type[0],
         ]);
 
-        if (request()->status == 'Awaiting Confirmation') {
-            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
-            foreach ($waypoints as $waypoint) {
-                $waypoint->delete();
-            }
-        }
-
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();
             $source_user = User::query()->where('id', $shipment->user_id)->first();
@@ -286,23 +213,57 @@ class ShipmentController extends Controller
             ->with('success', 'Shipment updated successfully');
     }
 
-    public function destroy(Shipment $shipment): Redirector|RedirectResponse
+    public function destroy(Shipment $shipment)
     {
-        $shipment->status = 'Deleted';
-        $shipment->update();
+        // We can't delete the shipment completely, because we are using SoftDeletes.
+        // Because of this we will have shipment data in the database, but we will not be able to see it.
+        // Also we will not be able to delete the addresses, because they are used in the shipment.
+        // If we remove the SoftDeletes from the Shipment model, we will be able to delete the shipment and the addresses.
+        // If you uncomment the lines below, you will be able to delete the shipment and the addresses after removing the SoftDeletes from the Shipment model.
+
+        // $source_address = Address::query()->where([
+        //     'id' => $shipment->source_address_id,
+        // ])->first();
+
+        // $destination_address = Address::query()->where([
+        //     'id' => $shipment->destination_address_id,
+        // ])->first();
+
+        // foreach ($waypoints as $waypoint) {
+        //     $waypoint_address[] = Address::query()->where([
+        //         'id' => $waypoint->current_address_id,
+        //     ])->first();
+        // }
+
+        $waypoints = Waypoint::query()->where([
+            'shipment_id' => $shipment->id,
+        ])->get();
+
+        foreach ($waypoints as $waypoint) {
+            $waypoint->delete();
+        }
+
         $shipment->delete();
+
+        // $source_address->delete();
+        // $destination_address->delete();
+
+        // foreach ($waypoint_address as $address) {
+        //     $address->delete();
+        // }
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment deleted successfully');
     }
 
-    public function show(Shipment $shipment): View
+    public function show(Shipment $shipment)
     {
         return view('shipments.show', compact('shipment'));
     }
 
-    public function sendInvoiceMail(Invoice $invoice): View|RedirectResponse
+    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse
     {
+
         $subject = 'Your invoice for your latest shipment.';
         $user_id = auth()->user()->id;
         $emailke = auth()->user()->email;
@@ -332,7 +293,7 @@ class ShipmentController extends Controller
 
     // Bing Maps Locations API
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
-    public function track(): View
+    public function track()
     {
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
@@ -367,5 +328,6 @@ class ShipmentController extends Controller
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
+
     }
 }

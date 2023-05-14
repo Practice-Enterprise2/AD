@@ -20,6 +20,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\InvoiceController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -146,6 +147,10 @@ Route::middleware('auth')->group(function () {
 
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+    //Invoice overview
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice_overview');
+    Route::get('/invoices/{id}/payment', [InvoiceController::class, 'nav_pay'])->name('invoices.payment');
+    Route::get('/invoices/{id}/payment/success', [InvoiceController::class, 'pay'])->name('invoices.payment_success');
 
     //Notification
     Route::get('/markAsRead', function () {

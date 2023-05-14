@@ -7,6 +7,7 @@
           <ol>
             <li><a href="{{ route('pickups.create') }}">New Pickup ></a></li>
             <li><a href="{{ route('pickups.index') }}">My Pickups ></a></li>
+            <li><a href="{{ route('invoice_overview') }}">My Invoices ></a></li>
           </ol>
         </div>
       </div>
