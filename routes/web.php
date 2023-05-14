@@ -30,6 +30,15 @@ Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
 
+//TicketController when not logged in
+Route::middleware('guest')->group(function () {
+    Route::controller(TicketController::class)->group(function () {
+        Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+        Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
+        Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');        
+    });
+});
+
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
     /*
@@ -79,12 +88,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/admin/roles/{id}', 'update')->name('roles.update');
         Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
         Route::post('/admin/roles', 'store')->name('roles.store');
-    });
-
-    Route::controller(TicketController::class)->group(function () {
-        Route::get('/create-ticket', 'showForm')->name('create-ticket');
-        Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
-        Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
     });
 
     Route::controller(CustomerController::class)->group(function () {

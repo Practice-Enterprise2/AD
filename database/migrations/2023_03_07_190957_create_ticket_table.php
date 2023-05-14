@@ -13,12 +13,14 @@ return new class() extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('ticketID')->unique();
-            $table->tinyInteger('cstID');
-            $table->tinyInteger('employeeID');
+            $table->string('name');
+            $table->string('email', 255);
+            $table->tinyInteger('employeeID')->nullable();
             $table->string('issue', 64);
             $table->longText('description');
-            $table->longText('solution');
-            $table->set('status', ['solved', 'unsolved']);
+            $table->longText('solution')->nullable();
+            $table->set('status', ['solved', 'unsolved'])->default('unsolved');
+            $table->timestamps();
         });
     }
 

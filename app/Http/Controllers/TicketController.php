@@ -12,20 +12,22 @@ class TicketController extends Controller
 {
     public function showForm(): View
     {
-        return view('create-ticket');
+        return view('/contact/create-ticket');
     }
 
     public function store(Request $request): Redirector|RedirectResponse
     {
         $validatedData = $request->validate([
-            'cstID' => 'required',
+            'email' => 'required',
+            'name' => 'required',
             'issue' => 'required|max:64',
             'description' => 'required',
         ]);
 
         // create ticket
         $ticket = new Ticket();
-        $ticket->cstID = $validatedData['cstID'];
+        $ticket->email = $validatedData['email'];
+        $ticket->name = $validatedData['name'];
         $ticket->issue = $validatedData['issue'];
         $ticket->description = $validatedData['description'];
         $ticket->save();
@@ -37,6 +39,6 @@ class TicketController extends Controller
     {
         $ticket = session('ticket');
 
-        return view('submitted-ticket', ['ticket' => $ticket]);
+        return view('/contact/submitted-ticket', ['ticket' => $ticket]);
     }
 }
