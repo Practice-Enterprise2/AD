@@ -6,6 +6,8 @@
   <script type='text/javascript'>
     function GetMap() {
 
+     
+
       var locations = [
         new Microsoft.Maps.Location(50.853752, 4.380796),
         new Microsoft.Maps.Location(51.075579, 4.733860),

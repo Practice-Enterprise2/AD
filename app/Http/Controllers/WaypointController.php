@@ -17,7 +17,7 @@ class WaypointController extends Controller
 
     public function store(Shipment $shipment): View
     {
-        $this->validate(request(), [
+        /*$this->validate(request(), [
             'waypoints' => Waypoint::VALIDATION_RULES['array'],
             'waypoints.*.street' => Waypoint::VALIDATION_RULES['current_address.street'],
             'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['current_address.house_number'],
@@ -33,7 +33,7 @@ class WaypointController extends Controller
                 'waypoints.*.region.regex' => 'Please enter a valid region for waypoint.',
                 'waypoints.*.country.regex' => 'Please enter a valid country for waypoint.',
             ]
-        );
+        );*/
 
         $waypoints = collect(request()->waypoints);
 
