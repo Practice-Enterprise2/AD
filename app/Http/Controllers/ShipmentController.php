@@ -215,8 +215,11 @@ class ShipmentController extends Controller
             ->where('shipments.id', $id)
             ->select('*')
             ->get();
+        $shipment = Shipment::find($id);    
+        $waypointsCollection = $this->track($shipment);    
         return view('shipments_details', [
             'shipments' => $shipments,
+            'waypointsCollection' => $waypointsCollection
         ]);
     }
 
@@ -361,22 +364,21 @@ class ShipmentController extends Controller
 
     // Bing Maps Locations API
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
-    public function track(Shipment $shipment): View
+    public function track(Shipment $shipment)
     {
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
-        $currentWaypointsCollection = new Collection();
-        $nextWaypointsCollection = new Collection();
+        $waypointsCollection = collect();
         //dd($shipment->waypoints);
         // (!) don't forget to add your bing maps key here.
         $key = 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S';
         // address should be converted here, which will be used with the baseURL to send a request.
-        for ($i = 0; $i < count($shipment->waypoints); $i++){
-        $country = str_ireplace(' ', '%20', $shipment->waypoints[$i]->current_address->country);
-        $street = str_ireplace(' ', '%20', $shipment->waypoints[$i]->current_address->street);
-        $housenr = str_ireplace(' ', '%20', $shipment->waypoints[$i]->current_address->house_number);
-        $locality = str_ireplace(' ', '%20', $shipment->waypoints[$i]->current_address->city);
-        $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[$i]->current_address->postal_code);
+        
+        $country = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->country);
+        $street = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->street);
+        $housenr = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->house_number);
+        $locality = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->city);
+        $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->postal_code);
 
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
@@ -400,47 +402,45 @@ class ShipmentController extends Controller
             'latitude' => $latitude,
             'longitude' => $longitude
         ];
-        $currentWaypointsCollection->push($coords);
-        }
+        $waypointsCollection->push($coords);
+        
 
         for ($i = 0; $i < count($shipment->waypoints); $i++){
-            $country = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->country);
-            $street = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->street);
-            $housenr = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->house_number);
-            $locality = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->city);
-            $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->postal_code);
+            $country2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->country);
+            $street2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->street);
+            $housenr2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->house_number);
+            $locality2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->city);
+            $postalCode2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->postal_code);
     
             //request URL is created here + response is retrieved with the DATA
-            $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
-            .$street.'?output=xml&key='.$key;
-            $output = file_get_contents($findURL);
+            $findURL2 = $baseURL.'/'.$country2.'/'.$housenr2.'/'.$postalCode2.'/'.$locality2.'/'
+            .$street2.'?output=xml&key='.$key;
+            $output2 = file_get_contents($findURL2);
             //dd($findURL);
-            $response = new \SimpleXMLElement($output);
+            $response2 = new \SimpleXMLElement($output2);
     
             // DATA == latitude, longitude
-            $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
-            $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+            $latitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
+            $longitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
             
             // here is the implementation to reverse geocodes into address again.
             // for debugging purposes.
-            $centerPoint = $latitude.','.$longitude;
-            $revGeocodeURL = $baseURL.'/'.$centerPoint.'?output=xml&key='.$key;
-            $rgOutput = file_get_contents($revGeocodeURL);
-            $rgResponse = new \SimpleXMLElement($rgOutput);
-            $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+            $centerPoint2 = $latitude2.','.$longitude2;
+            $revGeocodeURL2 = $baseURL.'/'.$centerPoint2.'?output=xml&key='.$key;
+            $rgOutput2 = file_get_contents($revGeocodeURL2);
+            $rgResponse2 = new \SimpleXMLElement($rgOutput2);
+            $address2 = $rgResponse2->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
             $coords = [
-                'latitude' => $latitude,
-                'longitude' => $longitude
+                'latitude' => $latitude2,
+                'longitude' => $longitude2
             ];
-            $nextWaypointsCollection->push($coords);
+            $waypointsCollection->push($coords);
             }
 
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-        return view('shipments_details', [
-            'currentWaypointsCollection' => $currentWaypointsCollection,
-            'nextWaypointsCollection' => $nextWaypointsCollection,
-        ]);
+        
+        return $waypointsCollection;
     }
 }

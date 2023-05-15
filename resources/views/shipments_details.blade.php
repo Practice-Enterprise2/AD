@@ -4,16 +4,17 @@
     src="https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key='AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S'"
     async defer></script>
   <script type='text/javascript'>
+    var collection = @json($waypointsCollection);
+    var latitude = [];
+    var longitude = [];
+    var locations = [];
     function GetMap() {
-
-     
-
-      var locations = [
-        new Microsoft.Maps.Location(50.853752, 4.380796),
-        new Microsoft.Maps.Location(51.075579, 4.733860),
-        new Microsoft.Maps.Location(51.160911, 4.666846),
-        // add more locations here
-      ];
+      
+      for (var i = 0; i < collection.length; i++) {
+      latitude = parseFloat(Object.values(collection[i]['latitude'])[0]);
+      longitude = parseFloat(Object.values(collection[i]['longitude'])[0]);
+      locations[i] = new Microsoft.Maps.Location(latitude, longitude);
+      }
 
       var polyline = new Microsoft.Maps.Polyline(locations, {
         strokeColor: 'red',
