@@ -43,22 +43,23 @@ class JobVacanciesController extends Controller
         return view('Job-vacancies.apply_job', compact('job'));
     }
 
-    public function apply_job(Request $req, $job)
+    public function apply_job(Request $req)
     {
-        $job_details = JobVacancy::where('id', $job)->where('filled', false)->get();
-        if($job_details->count() == 0) {
-            return redirect()->route('view_jobs');
-        }
-
         $this->validate($req, [
-            'aplicant_name' => ['required', 'regex:/^[A-Za-z\s]+$/'],
-            'aplicant_email' => ['required', 'email'],
-            'job_description' => ['required', 'mimes:pdf', 'max:2048'],
+            'job_id' => ['required', 'numeric'],
+            'applicant_name' => ['required', 'regex:/^[A-Za-z\s]+$/'],
+            'applicant_email' => ['required', 'email'],
+            'applicant_cv' => ['required', 'ends_with:.pdf',  'max:2048'],
         ]);
         $applicationDate = now();
 
+        $job_details = JobVacancy::where('id', $req->job_id)->where('filled', false)->get();
+        if($job_details->count() == 0) {
+            return redirect()->route('view_jobs')->withErrors(['error' => 'The job was recently filled.']);
+        }
+
         $applyJob = AppliedPeople::create([
-            'job_vacancies_id' => $job,
+            'job_vacancies_id' => $req->job_id,
             'name' => $req->applicant_name,
             'contact_info' => $req->applicant_email,
             'cv' => $req->applicant_cv,
@@ -66,6 +67,6 @@ class JobVacanciesController extends Controller
         ]);
         $applyJob->save();
 
-        return redirect()->route('home');
+        return redirect()->route('view_jobs')->withErrors(['error' => 'Application is send.']);
     }
 }

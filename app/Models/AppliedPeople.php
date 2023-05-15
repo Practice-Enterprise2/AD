@@ -12,6 +12,7 @@ class AppliedPeople extends Model
     protected $table = 'applied_people';
 
     protected $fillable = [
+        'job_vacancies_id',
         'name',
         'contact_info',
         'cv',
