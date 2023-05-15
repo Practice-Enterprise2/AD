@@ -1,6 +1,6 @@
 <x-app-layout>
-  <x-employees.create/>
-  
+  <x-employees.create />
+
 </x-app-layout>
 {{-- vim: ft=html
 --}}
