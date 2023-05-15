@@ -172,14 +172,21 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
-//job vacancies
+
+
+//job vacancies hr
 Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs');
+
 Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add');
 Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
 
+Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants');
+Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv');
+Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
+
+//job vacancies person
 Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
 Route::get('/job/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
-
 Route::post('job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 require __DIR__.'/auth.php';

@@ -38,6 +38,51 @@ class JobVacanciesController extends Controller
         return redirect()->back();
     }
 
+    public function view_applicants($job)
+    {
+        $applicants = AppliedPeople::where('job_vacancies_id', $job)->get();
+        foreach ($applicants as $applicant)
+        {
+            $applicant->job = $job;
+        }
+
+        return view('Job-vacancies.view_applicants', compact('applicants'));
+    }
+
+    public function mark_filled(Request $req)
+    {
+        $req->job_id;
+        $jobVacancy = JobVacancy::find($req->job_id);
+
+        if ($jobVacancy) {
+            $jobVacancy->filled = true; // Update the 'filled' field to true
+            $jobVacancy->save();
+        }
+
+        return redirect()->route('hr_view_jobs');
+    }
+
+    public function open_cv($applicant)
+    {
+        $person = AppliedPeople::where('id', $applicant)->first();
+        $cvPath = storage_path("app/public/".$person->cv);
+
+        if (file_exists($cvPath)) {
+            // Get the file content
+            $fileContents = file_get_contents($cvPath);
+
+            // Generate a response with the file content and appropriate headers
+            return response($fileContents, 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="cv.pdf"');
+
+        } else {
+            // Handle the case when the file does not exist
+            abort(404, 'PDF file not found');
+        }
+    }
+
+
     public function get_jobs_applicant()
     {
         $jobVacancies = JobVacancy::where('filled', false)->get();
@@ -62,7 +107,7 @@ class JobVacanciesController extends Controller
             'job_id' => ['required', 'numeric'],
             'applicant_name' => ['required', 'regex:/^[A-Za-z\s]+$/'],
             'applicant_email' => ['required', 'email'],
-            'applicant_cv' => ['required', 'ends_with:.pdf',  'max:2048'],
+            'applicant_cv' => ['required', 'file', 'mimes:pdf',  'max:2048'],
         ]);
         $applicationDate = now();
 
@@ -71,11 +116,21 @@ class JobVacanciesController extends Controller
             return redirect()->route('view_jobs')->withErrors(['error' => 'The job was recently filled.']);
         }
 
+        $lastApplicant = AppliedPeople::latest()->first();
+        if ($lastApplicant == "") {
+            $lastApplicantID = 1;
+        } else {
+            $lastApplicantID = $lastApplicant->id + 1;
+        }
+
+        $file = $lastApplicantID.'-'.$req->applicant_name.'.pdf';
+        $cvPath = $req->file('applicant_cv')->storeAs('cv', $file, 'public');
+
         $applyJob = AppliedPeople::create([
             'job_vacancies_id' => $req->job_id,
             'name' => $req->applicant_name,
             'contact_info' => $req->applicant_email,
-            'cv' => $req->applicant_cv,
+            'cv' => $cvPath,
             'application_date' => $applicationDate,
         ]);
         $applyJob->save();

@@ -23,7 +23,7 @@
                                     <td class="mt-3 text-center h-10">{{ $job->department }}</td>
                                     <td class="mt-3 text-center h-10">{{ $job->applicantCount }}</td>
                                     <td class="mt-3 text-center h-10" style="width: 100px;">
-                                        <a href="{{ route('open_job', $job->id) }}" class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-gray-900 text-center">
+                                        <a href="{{ route('view_applicants', $job->id) }}" class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-gray-900 text-center">
                                             view
                                         </a>
                                     </td>

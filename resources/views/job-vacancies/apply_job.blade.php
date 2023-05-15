@@ -6,7 +6,7 @@
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <h4 class="text-2xl font-bold dark:text-white">apply for job</h4><br>
           <form method="post"
-            action="{{ route('JobVacanciesController.apply') }}">
+            action="{{ route('JobVacanciesController.apply') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="job_id" id="job_id"
               value="{{ $job }}">
