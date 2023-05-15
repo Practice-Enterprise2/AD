@@ -1,4 +1,5 @@
 <x-app-layout>
+  <x-employees.create />
   <style>
     .employee-add-fix:after {
       visibility: hidden;
