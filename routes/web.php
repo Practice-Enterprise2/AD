@@ -173,10 +173,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 //job vacancies
-Route::view('/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:edit_any_user_info');
-Route::post('/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
+Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs');
+Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add');
+Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
 
-Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs'])->name('view_jobs');
+Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
 Route::get('/job/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
 
 Route::post('job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');

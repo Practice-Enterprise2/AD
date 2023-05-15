@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class JobVacanciesController extends Controller
 {
+    public function get_jobs_hr()
+    {
+        $jobVacancies = JobVacancy::where('filled', false)->get();
+
+        foreach ($jobVacancies as $job)
+        {
+            $job->applicantCount = AppliedPeople::where('job_vacancies_id', $job->id)->count();
+        }
+
+        return view('job-vacancies.view_jobs_hr', compact('jobVacancies'));
+    }
+
     public function add_job(Request $req)
     {
         $this->validate($req, [
@@ -26,11 +38,11 @@ class JobVacanciesController extends Controller
         return redirect()->back();
     }
 
-    public function get_jobs()
+    public function get_jobs_applicant()
     {
         $jobVacancies = JobVacancy::where('filled', false)->get();
 
-        return view('job-vacancies.view_jobs', compact('jobVacancies'));
+        return view('job-vacancies.view_jobs_applicants', compact('jobVacancies'));
     }
 
     public function open_job($job)
