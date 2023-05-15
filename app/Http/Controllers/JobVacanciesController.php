@@ -29,6 +29,7 @@ class JobVacanciesController extends Controller
     public function get_jobs()
     {
         $jobVacancies = JobVacancy::where('filled', false)->get();
+
         return view('job-vacancies.view_jobs', compact('jobVacancies'));
     }
 
@@ -36,7 +37,7 @@ class JobVacanciesController extends Controller
     {
         $job_details = JobVacancy::where('id', $job)->where('filled', false)->get();
 
-        if($job_details->count() == 0) {
+        if ($job_details->count() == 0) {
             return redirect()->route('view_jobs');
         }
 
@@ -54,7 +55,7 @@ class JobVacanciesController extends Controller
         $applicationDate = now();
 
         $job_details = JobVacancy::where('id', $req->job_id)->where('filled', false)->get();
-        if($job_details->count() == 0) {
+        if ($job_details->count() == 0) {
             return redirect()->route('view_jobs')->withErrors(['error' => 'The job was recently filled.']);
         }
 

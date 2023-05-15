@@ -21,7 +21,6 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
-use App\Models\JobVacancy;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
