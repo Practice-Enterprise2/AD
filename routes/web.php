@@ -172,8 +172,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
-
-
 //job vacancies hr
 Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs');
 

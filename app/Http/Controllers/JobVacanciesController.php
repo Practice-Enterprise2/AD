@@ -12,8 +12,7 @@ class JobVacanciesController extends Controller
     {
         $jobVacancies = JobVacancy::where('filled', false)->get();
 
-        foreach ($jobVacancies as $job)
-        {
+        foreach ($jobVacancies as $job) {
             $job->applicantCount = AppliedPeople::where('job_vacancies_id', $job->id)->count();
         }
 
@@ -41,8 +40,7 @@ class JobVacanciesController extends Controller
     public function view_applicants($job)
     {
         $applicants = AppliedPeople::where('job_vacancies_id', $job)->get();
-        foreach ($applicants as $applicant)
-        {
+        foreach ($applicants as $applicant) {
             $applicant->job = $job;
         }
 
@@ -65,7 +63,7 @@ class JobVacanciesController extends Controller
     public function open_cv($applicant)
     {
         $person = AppliedPeople::where('id', $applicant)->first();
-        $cvPath = storage_path("app/public/".$person->cv);
+        $cvPath = storage_path('app/public/'.$person->cv);
 
         if (file_exists($cvPath)) {
             // Get the file content
@@ -73,15 +71,13 @@ class JobVacanciesController extends Controller
 
             // Generate a response with the file content and appropriate headers
             return response($fileContents, 200)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="cv.pdf"');
-
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="cv.pdf"');
         } else {
             // Handle the case when the file does not exist
             abort(404, 'PDF file not found');
         }
     }
-
 
     public function get_jobs_applicant()
     {
@@ -117,7 +113,7 @@ class JobVacanciesController extends Controller
         }
 
         $lastApplicant = AppliedPeople::latest()->first();
-        if ($lastApplicant == "") {
+        if ($lastApplicant == '') {
             $lastApplicantID = 1;
         } else {
             $lastApplicantID = $lastApplicant->id + 1;
