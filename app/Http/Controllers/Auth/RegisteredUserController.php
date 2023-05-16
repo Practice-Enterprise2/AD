@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Address;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
         // HACK: This solves the fact that the `unique` validation rule doesn't
         // take soft deletion into account.
 
-        if (!User::query()->where('email', $request->email)->first()) {
+        if (! User::query()->where('email', $request->email)->first()) {
             // Create the address
             $address = Address::query()->create([
                 'street' => $request->street,
@@ -54,21 +54,21 @@ class RegisteredUserController extends Controller
                 'postal_code' => $request->postal_code,
                 'country' => $request->country,
             ]);
-        
+
             $address_id = $address->id;
-        
+
             $user = new User();
-            $user ->name = $request['name'];
-            $user ->email = $request['email'];
-            $user ->password = Hash::make($request['password']);
-            $user ->address_id = $address_id;
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->password = Hash::make($request['password']);
+            $user->address_id = $address_id;
             $user->save();
 
             // TODO: Enable this once the mail server is up and running.
             /* event(new Registered($user)); */
-        
+
             Auth::login($user);
-        
+
             $user->assignRole('user');
 
             return redirect(RouteServiceProvider::HOME);
