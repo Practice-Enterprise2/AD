@@ -73,6 +73,16 @@
     </div>
 
     <div class="mt-4">
+      <x-input-label for="postal_code" :value="__('Postal Code')" />
+
+      <x-text-input id="postal_code" class="mt-1 block w-full"
+        type="text" name="postal_code" required
+        autocomplete="postal-code" />
+
+      <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
+    </div>
+
+    <div class="mt-4">
       <x-input-label for="country" :value="__('Country')" />
 
       <x-text-input id="country" class="mt-1 block w-full"

@@ -31,7 +31,7 @@ class Address extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_REGION = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
+    public const VALIDATION_RULE_REGION = ['string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
     public const VALIDATION_RULE_COUNTRY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
