@@ -9,6 +9,7 @@ use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
+use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
@@ -29,6 +30,11 @@ Route::view('/', 'landing-page')->name('landing-page');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
 Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
+
+//job vacancies person
+Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
+Route::get('/viewJobs/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
+Route::post('/viewJobs/job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
