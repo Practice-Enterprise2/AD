@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Database\Eloquent\ValidatesAttributes;
+use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -17,19 +19,30 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Address extends Model
+class Address extends Model implements ValidatesAttributes
 {
-    public const VALIDATION_RULE_STREET = ['required', 'min:2'];
+    use AppValidatesAttributes;
 
-    public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'min:1'];
+    public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_POSTAL_CODE = ['required', 'min:2'];
+    public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'string', 'min:1'];
 
-    public const VALIDATION_RULE_CITY = ['required', 'min:2'];
+    public const VALIDATION_RULE_POSTAL_CODE = ['required', 'string', 'regex:/^[A-Za-z0-9\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_REGION = ['required', 'min:2'];
+    public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
 
-    public const VALIDATION_RULE_COUNTRY = ['required', 'min:2'];
+    public const VALIDATION_RULE_REGION = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
+
+    public const VALIDATION_RULE_COUNTRY = ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'min:2'];
+
+    public const VALIDATION_RULES = [
+        'street' => self::VALIDATION_RULE_STREET,
+        'house_number' => self::VALIDATION_RULE_HOUSE_NUMBER,
+        'postal_code' => self::VALIDATION_RULE_POSTAL_CODE,
+        'city' => self::VALIDATION_RULE_CITY,
+        'region' => self::VALIDATION_RULE_REGION,
+        'country' => self::VALIDATION_RULE_COUNTRY,
+    ];
 
     protected $attributes = [
         'house_number' => '',

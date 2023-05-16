@@ -8,6 +8,11 @@ use Illuminate\View\Component;
 
 class SidebarLayout extends Component
 {
+    public function __construct(
+        public bool $always_show_title = false
+    ) {
+    }
+
     /**
      * Get the view / contents that represent the component.
      */

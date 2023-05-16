@@ -9,12 +9,12 @@
   </aside>
   <div role="main" class="w-full bg-white dark:bg-gray-700 md:hidden"
     x-show="!sidebar_visible" x-cloak>
-    <div class="flex dark:bg-gray-900">
-      <button x-on:click="sidebar_visible = !sidebar_visible"
-        class="ml-2 text-3xl font-extrabold">
+    <div
+      class="flex border-b border-gray-400 bg-gray-100 p-2 text-3xl font-bold dark:border-gray-600 dark:bg-gray-800">
+      <button x-on:click="sidebar_visible = !sidebar_visible" class="ml-2">
         &lt</button>
       @isset($title)
-        <h1 class="flex-grow text-center text-4xl font-extrabold">
+        <h1 class="flex-grow text-center">
           {{ $title }}</h1>
       @endisset
     </div>
@@ -32,6 +32,13 @@
   </aside>
   <div role="main"
     class="m-1 mr-0.5 hidden flex-grow rounded-lg border border-gray-400 bg-white dark:border-gray-600 dark:bg-gray-700 md:block">
+    @if ($always_show_title)
+      @isset($title)
+        <div
+          class="rounded-t-lg border-b border-gray-400 bg-gray-100 p-2 text-3xl font-bold dark:border-gray-600 dark:bg-gray-800">
+          {{ $title }}</div>
+      @endisset
+    @endif
     <div class="p-2">
       {{ $slot }}
     </div>

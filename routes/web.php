@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -19,16 +20,14 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
-Route::view('/home', 'app')->name('home');
-
-Route::redirect('/', 'home');
-
+Route::view('/', 'landing-page')->name('landing-page');
+Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
 Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
+Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -37,7 +36,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
     Route::view('/respond', 'respond');
 
     /*
@@ -61,10 +59,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
         Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts');
     });
-
     Route::controller(EmployeeViewController::class)->group(function () {
-        Route::get('/employee_overview', 'index');
-        Route::post('/employee_add', 'save');
+        Route::get('/employee_overview', 'index')->name('employee.overview')->middleware('permission:view_employee_count');
+        Route::post('/employee_add', 'save')->name('save-employee')->middleware('permission:add_employee');
+        Route::get('/new_employee', 'showAdd')->name('employee.create')->middleware('permission:add_employee');
+        Route::post('/employee_edit', 'employeeEdit');
+        Route::post('/employee_edit_save', 'employeeEditSave');
+        Route::get('/employee_search', 'searchEmployee')->name('employee-search');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -100,6 +101,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/security', 'security')->name('security')->middleware('permission:view_detailed_server_info');
             Route::get('/users', 'users')->name('users')->middleware('permission:view_all_users');
             Route::get('/users/{user}/edit', 'users_edit')->name('users.edit')->middleware('permission:edit_any_user_info');
+            Route::get('/employees', 'employees')->name('employees')->middleware('permission:view_all_employees');
+            Route::get('/employees/create', 'employees_create')->name('employees.create')->middleware('permission:add_employee');
             Route::get('/roles', 'roles')->name('roles')->middleware('permission:view_all_roles');
             Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create')->middleware('permission:create_role');
             Route::get('/roles/{role}/edit', 'roles_edit')->name('roles.edit')->middleware('permission:edit_roles');
@@ -113,7 +116,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
-    Route::view('/email/verify', 'auth.verify-email')->name('verification.notice');
+    Route::view('/home', 'app')->name('home');
 
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
@@ -124,12 +127,12 @@ Route::middleware('auth')->group(function () {
     //ShipmentController
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
-    Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
-    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
+    Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests')->middleware('permission:edit_all_shipments');
+    Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate')->middleware('permission:edit_all_shipments');
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
-    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit');
-    Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update');
-    Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy');
+    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('permission:edit_all_shipments');
+    Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update')->middleware('permission:edit_all_shipments');
+    Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy')->middleware('permission:edit_all_shipments');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
     //contact and messages
@@ -155,23 +158,19 @@ Route::middleware('auth')->group(function () {
     });
 
     //WaypointController
-    Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set'); //create
-    Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store');
-    Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint');
+    Route::get('shipments/requests/evaluate/{shipment}/set', [WaypointController::class, 'create'])->name('shipments.requests.evaluate.set')->middleware('permission:edit_all_shipments');
+    Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
+    Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
 
-    //FAQ page
-    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
     //review page
     Route::get('/review', [ReviewController::class, 'show'])->name('review');
     Route::post('/review_add', [ReviewController::class, 'save']);
-    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
     Route::get('/filterreview', [ReviewController::class, 'filter']);
 
-    // Email verification
-    Route::view('/email/verify', 'auth.verify-email')
-        ->name('verification.notice');
-});
+    // employee graph
+    Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+    // Email verification
+});
 
 require __DIR__.'/auth.php';

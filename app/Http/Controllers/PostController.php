@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function ticketsubmit(): View|Factory
+    public function ticketsubmit(): View
     {
         return view('ticketsubmit');
     }
