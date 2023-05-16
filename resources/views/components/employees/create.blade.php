@@ -1,19 +1,9 @@
-<style>
-  .employee-add-fix:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
-</style>
 <div class="mx-auto">
   <h1 class="m-5 text-center">New Employee</h1>
   <div class="bg-gray-200 p-8">
     <form method="post" action="employee_add" accept-charset="UTF-8">
       @csrf
-      <div class="employee-add-fix">
+      <div class="clearfix">
         <div id="left" class="float-left w-60">
           <label for="firstName">First name:</label>
           <br><br>
