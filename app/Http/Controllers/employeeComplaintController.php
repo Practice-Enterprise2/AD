@@ -39,7 +39,7 @@ class employeeComplaintController extends Controller
 
         Mail::send(['mail' => 'mail.test_mail'], $data, function ($message) use ($firstname, $lastname, $email, $jobtitle, $location, $shortDis, $discription) {
             $message->to('martinx1606@gmail.com')
-                    ->subject('complaint - '.$shortDis);
+                ->subject('complaint - '.$shortDis);
             $message->text("Discription of the incident:\n".$discription."\n\nlocation of the incident:\n".$location."\n\n\nfirstname: ".$firstname."\nlastname: ".$lastname."\nemail: ".$email."\njobtitle: ".$jobtitle);
         });
 
