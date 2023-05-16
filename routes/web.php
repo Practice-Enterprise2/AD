@@ -116,6 +116,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
         });
     });
+
+    //job vacancies hr
+    Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_edit_vacant_jobs');
+    Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_edit_vacant_jobs');
+    Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
+    Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:add_edit_vacant_jobs');
+    Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:add_edit_vacant_jobs');
+    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
 });
 
 // Routes that require an authenticated session.
@@ -175,14 +183,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
     // Email verification
-
-    //job vacancies hr
-    Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_edit_vacant_jobs');
-    Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_edit_vacant_jobs');
-    Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
-    Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:add_edit_vacant_jobs');
-    Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:add_edit_vacant_jobs');
-    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
 });
 
 require __DIR__.'/auth.php';
