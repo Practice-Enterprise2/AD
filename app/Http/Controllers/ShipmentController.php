@@ -379,6 +379,7 @@ class ShipmentController extends Controller
         $housenr = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->house_number);
         $locality = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->city);
         $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->postal_code);
+        
 
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
@@ -411,7 +412,7 @@ class ShipmentController extends Controller
             $housenr2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->house_number);
             $locality2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->city);
             $postalCode2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->postal_code);
-    
+            $status = $shipment->waypoints[$i]->status;
             //request URL is created here + response is retrieved with the DATA
             $findURL2 = $baseURL.'/'.$country2.'/'.$housenr2.'/'.$postalCode2.'/'.$locality2.'/'
             .$street2.'?output=xml&key='.$key;
@@ -432,12 +433,12 @@ class ShipmentController extends Controller
             $address2 = $rgResponse2->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
             $coords = [
                 'latitude' => $latitude2,
-                'longitude' => $longitude2
+                'longitude' => $longitude2,
+                'status' => $status
             ];
             $waypointsCollection->push($coords);
             }
-
-
+  
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
         

@@ -8,6 +8,8 @@
     var latitude = [];
     var longitude = [];
     var locations = [];
+    var status = "";
+    var polyline;
     function GetMap() {
       
       for (var i = 0; i < collection.length; i++) {
@@ -20,6 +22,7 @@
         strokeColor: 'red',
         strokeThickness: 3
       });
+        
 
 
       var map = new Microsoft.Maps.Map('#map', {
