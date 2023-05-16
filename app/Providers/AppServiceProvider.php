@@ -59,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
+        static::bootstrap_permission('add_edit_job', 'add and edit vacant jobs');
 
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
@@ -74,6 +75,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
+        $role_employee_hr->givePermissionTo('add_edit_job');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');
