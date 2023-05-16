@@ -114,7 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // employee Complaints
     Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
-    Route::post('sendEmployeeComplaint', [employeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint.employee');
+    Route::post('/employeeComplaint/send', [employeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint.employee');
 });
 
 // Routes that require an authenticated session.
