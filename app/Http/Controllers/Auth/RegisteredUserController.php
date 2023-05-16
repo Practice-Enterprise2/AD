@@ -44,9 +44,8 @@ class RegisteredUserController extends Controller
 
         // HACK: This solves the fact that the `unique` validation rule doesn't
         // take soft deletion into account.
-        if (! User::query()->where('email', $request->email)->first()) {
-            
 
+        if (!User::query()->where('email', $request->email)->first()) {
             // Create the address
             $address = Address::query()->create([
                 'street' => $request->street,
@@ -55,21 +54,21 @@ class RegisteredUserController extends Controller
                 'postal_code' => $request->postal_code,
                 'country' => $request->country,
             ]);
-
+        
             $address_id = $address->id;
-
-            $user = User::query()->create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'address_id' => $address_id,
-            ]);
+        
+            $user = new User();
+            $user ->name = $request['name'];
+            $user ->email = $request['email'];
+            $user ->password = Hash::make($request['password']);
+            $user ->address_id = $address_id;
+            $user->save();
 
             // TODO: Enable this once the mail server is up and running.
             /* event(new Registered($user)); */
-
+        
             Auth::login($user);
-
+        
             $user->assignRole('user');
 
             return redirect(RouteServiceProvider::HOME);
