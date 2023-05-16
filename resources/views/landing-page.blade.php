@@ -32,7 +32,8 @@
     <div class="flex h-[400px] justify-between gap-8 bg-gray-100 sm:rounded-lg">
       <div class="flex flex-col items-start gap-8 px-4 py-16 sm:px-16">
         <div>
-          <h1 class="text-2xl font-bold text-gray-700">Want to work at BlueSky</h1>
+          <h1 class="text-2xl font-bold text-gray-700">Want to work at BlueSky
+          </h1>
           <h2 class="text-lg text-gray-500">Come and join our dynamic team</h2>
         </div>
         <a href="{{ route('view_jobs') }}"
