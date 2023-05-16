@@ -35,6 +35,10 @@
         <x-canvas-tile :url="route('contact.index')" title="Problems"
           description="Respond to questions that the users have"></x-canvas-tile>
       @endcan
+      @can('add_edit_vacant_jobs')
+        <x-canvas-tile :url="route('employeegraph')" title="Employee Graph"
+          description=" Visualize the company's employee count over time"></x-canvas-tile>
+      @endcan
       <x-canvas-tile :url="route('contact.create')" title="Contact Us"
         description="Get in touch with us"></x-canvas-tile>
       <x-canvas-tile :url="route('complaints.messages')" title="Messages"
