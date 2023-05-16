@@ -34,7 +34,7 @@ class JobVacanciesController extends Controller
         ]);
         $jobVacancy->save();
 
-        return redirect()->back();
+        return redirect()->route('hr_view_jobs');
     }
 
     public function view_applicants($job)
