@@ -43,6 +43,6 @@ class employeeComplaintController extends Controller
             $message->text("Discription of the incident:\n".$discription."\n\nlocation of the incident:\n".$location."\n\n\nfirstname: ".$firstname."\nlastname: ".$lastname."\nemail: ".$email."\njobtitle: ".$jobtitle);
         });
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 }
