@@ -71,22 +71,71 @@ class EmployeeController extends Controller
         $contract->start_date = $req->startdate;
         $contract->end_date = $req->stopdate;
         $contract->save();
-        sleep(2);
-        $contractId = DB::table('employee_contracts')->where('employee_id', $req->employeeID)->value('id');
+        $employeeContractId = DB::table('employee_contracts')->latest()->value('id');
         $startyear =  intval($req->startdate.substr(0,4));
         $stopyear = intval($req->stopdate.substr(0,4));
-        for($i = $startyear; $i<$stopyear; $i++)
+        $b=0;
+        for($i = $startyear; $i<=$stopyear; $i++)
         {
-            $year = $startyear+$i-1;
+            
+            //$year = $startyear+$i-1;
             $holidaySaldo = new HolidaySaldo();
-            $holidaySaldo->contract_id = $contractId;
-            $holidaySaldo->allowed_days = $req->days.$i;
-            $holidaySaldo->year = $i+1;
+            $holidaySaldo->employee_contract_id = $employeeContractId;
+            $holidaySaldo->allowed_days = $req->{'days' . $b};
+            $holidaySaldo->year = $i;
             $holidaySaldo->type = 1;
             $holidaySaldo->save();
+            $b+=1;
         }
 
         return redirect()->back()->with('alert', 'complete creation');
+    }
+    public function searchEmployeeContract(Request $req)
+    {
+        $queryF = "";
+        $queryL = "";
+        $comboArray = [[]];
+        $temp = [];
+        if($req->queryF)
+        {
+            $queryF = $req->input('queryF');
+        }
+        if($req->queryL)
+        {
+            $queryL = $req->input('queryF');
+        }
+        if($queryF != "" && $queryL != "")
+        {
+            $employeeUsers = DB::table('users')->where('name', $queryF)->where('last_name', $queryL)->get();
+        }
+        if($queryF != "" && $queryL == "")
+        {
+            $employeeUsers = DB::table('users')->where('name', $queryF)->get();
+        }
+        if($queryF == "" && $queryL != "")
+        {
+            $employeeUsers = DB::table('users')->where('last_name', $queryL)->get();
+        }
+        if($employeeUsers)
+        {
+            for($i = 0 ; $i < count($employeeUsers); $i++)
+            {
+                $contractsPerUser = DB::table('employee_contracts')->where('employee_id', $employeeUsers[$i]->id)->get();
+                for($b = 0; $b<count($contractsPerUser); $b++)
+                {
+                    $comboArray[$b]['id'] = $contractsPerUser[$b]->id;
+                    $comboArray[$b]['employee_id'] = $contractsPerUser[$b]->employee_id;
+                    $comboArray[$b]['start_date'] = $contractsPerUser[$b]->start_date;
+                    $comboArray[$b]['stop_date'] = $contractsPerUser[$b]->end_date;
+                    $comboArray[$b]['name'] = $employeeUsers[$i]->name;
+                    $comboArray[$b]['last_name'] = $employeeUsers[$i]->last_name;
+                }
+
+                return view('employee_view_contracts', ['comboArray' => $comboArray]);
+            }
+
+        }
+
     }
 
 }
