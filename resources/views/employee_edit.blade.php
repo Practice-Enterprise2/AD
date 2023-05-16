@@ -1,14 +1,4 @@
 <x-app-layout>
-  <style>
-    .employee-edit-fix:after {
-      visibility: hidden;
-      display: block;
-      font-size: 0;
-      content: " ";
-      clear: both;
-      height: 0;
-    }
-  </style>
   <div class="mx-auto">
     <h1 class="m-5 text-center">Employee Edit</h1>
     <h1 class="m-5 text-center">{{ $array['name'] }} {{ $array['lastName'] }}
@@ -17,7 +7,7 @@
       <form method="post" action="employee_edit_save" accept-charset="UTF-8">
         <input type="hidden" name="userId" value="{{ $array['userID'] }}">
         @csrf
-        <div class="employee-add-fix">
+        <div class="clearfix">
           <div id="left" class="float-left w-60">
             <label for="firstName">First name:</label>
             <br><br>
