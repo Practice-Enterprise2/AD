@@ -14,11 +14,11 @@
             <div class="mb-2 grid gap-2 md:grid-cols-2">
               <x-text-input id="applicant_first_name"
                 class="mt-1 block w-full p-[10px]" type="text"
-                name="applicant_first_name" :value="old('applicant_first_name')" placeholder="name*"
+                name="applicant_first_name" :value="old('applicant_first_name')" placeholder="first name*"
                 required />
               <x-text-input id="applicant_last_name"
                 class="mt-1 block w-full p-[10px]" type="text"
-                name="applicant_last_name" :value="old('applicant_last_name')" placeholder="name*"
+                name="applicant_last_name" :value="old('applicant_last_name')" placeholder="last name*"
                 required />
               <x-input-error :messages="$errors->get('applicant_first_name')" class="mt-2" />
               <x-input-error :messages="$errors->get('applicant_last_name')" class="mt-2" />

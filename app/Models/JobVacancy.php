@@ -14,9 +14,4 @@ class JobVacancy extends Model
         'description',
         'filled_at',
     ];
-
-    public function appliedPeople(): HasMany
-    {
-        return $this->hasMany(AppliedPeople::class);
-    }
 }

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AppliedPeople extends Model
+class vacancyApplications extends Model
 {
     protected $fillable = [
-        'name',
-        'contact_info',
+        'first_name',
+        'last_name',
+        'email',
         'cv',
         'application_date',
     ];

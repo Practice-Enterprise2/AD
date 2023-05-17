@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AppliedPeople;
+use App\Models\vacancyApplications;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class JobVacanciesController extends Controller
         $jobVacancies = JobVacancy::where('filled', false)->get();
 
         foreach ($jobVacancies as $job) {
-            $job->applicantCount = AppliedPeople::where('job_vacancies_id', $job->id)->count();
+            $job->applicantCount = vacancyApplications::where('job_vacancies_id', $job->id)->count();
         }
 
         return view('job-vacancies.view_jobs_hr', compact('jobVacancies'));
@@ -39,7 +39,7 @@ class JobVacanciesController extends Controller
 
     public function view_applicants($job)
     {
-        $applicants = AppliedPeople::where('job_vacancies_id', $job)->get();
+        $applicants = vacancyApplications::where('job_vacancies_id', $job)->get();
         foreach ($applicants as $applicant) {
             $applicant->job = $job;
         }
@@ -62,7 +62,7 @@ class JobVacanciesController extends Controller
 
     public function open_cv($applicant)
     {
-        $person = AppliedPeople::where('id', $applicant)->first();
+        $person = vacancyApplications::where('id', $applicant)->first();
         $cvPath = storage_path('app/public/'.$person->cv);
 
         if (file_exists($cvPath)) {
@@ -113,7 +113,7 @@ class JobVacanciesController extends Controller
             return redirect()->route('view_jobs')->withErrors(['error' => 'The job was recently filled.']);
         }
 
-        $lastApplicant = AppliedPeople::latest()->first();
+        $lastApplicant = vacancyApplications::latest()->first();
         if ($lastApplicant == '') {
             $lastApplicantID = 1;
         } else {
@@ -123,14 +123,13 @@ class JobVacanciesController extends Controller
         $file = $lastApplicantID.'-'.$req->applicant_name.'.pdf';
         $cvPath = $req->file('applicant_cv')->storeAs('cv', $file, 'public');
 
-        $applyJob = AppliedPeople::create([
-            'job_vacancies_id' => $req->job_id,
-            'first_name' => $req->applicant_first_name,
-            'last_name' => $req->applicant_last_name,
-            'email' => $req->applicant_email,
-            'cv' => $cvPath,
-            'application_date' => $applicationDate,
-        ]);
+        $applyJob = new vacancyApplications();
+        $applyJob->setAttribute('job_vacancies_id', $req->job_id);
+        $applyJob->setAttribute('first_name', $req->applicant_first_name);
+        $applyJob->setAttribute('last_name', $req->applicant_last_name);
+        $applyJob->setAttribute('email', $req->applicant_email);
+        $applyJob->setAttribute('cv', $cvPath);
+        $applyJob->setAttribute('application_date', $applicationDate);
         $applyJob->save();
 
         return redirect()->route('view_jobs')->withErrors(['error' => 'Application is send.']);
