@@ -22,6 +22,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Models\Review;
 use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'landing-page')->name('landing-page');
 Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index')->can('viewAny', Review::class);
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -119,9 +120,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(ReviewController::class)->group(function () {
-        Route::get('/review', 'show')->name('review');
-        Route::post('/reviews', 'save')->name('reviews.create');
-        Route::get('/filterreview', 'filter')->name('reviews.filter');
+        Route::get('/reviews/create', 'create')->name('reviews.create')->can('create', Review::class);
+        Route::post('/reviews', 'store')->name('reviews.store')->can('create', Review::class);
     });
 
     Route::controller(WaypointController::class)->group(function () {

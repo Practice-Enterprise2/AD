@@ -63,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
         static::bootstrap_permission('view_reviews', 'the reviews of the customers');
+        static::bootstrap_permission('edit_any_review', 'Edit any of the reviews, regardless of who created them.');
+        static::bootstrap_permission('delete_any_review', 'Delete any review, regardless of who created them.');
         static::bootstrap_permission('view_all_shipments', 'View all the shipments, regardless of who they belong to.');
         static::bootstrap_permission('delete_any_shipment', 'Delete any of the shipments, regardless of who they belong to.');
         static::bootstrap_permission('accept_any_shipment', 'Accept any shipment for shipping.');
@@ -97,6 +99,8 @@ class AppServiceProvider extends ServiceProvider
         $role_management->givePermissionTo('view_reviews');
         $role_management->givePermissionTo('view_all_shipments');
         $role_management->givePermissionTo('delete_any_shipment');
+        $role_management->givePermissionTo('edit_any_review');
+        $role_management->givePermissionTo('delete_any_review');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {

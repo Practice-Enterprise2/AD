@@ -4,35 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ReviewController extends Controller
 {
-    public function show(): View
+    public function create(): View
     {
         return view('review');
     }
 
-    public function save(Request $req): View
+    /**
+     * Store the review and 'redirect' the user to their profile page.
+     */
+    public function store(Request $req): RedirectResponse
     {
         $review = new Review();
         $review->rating = $req->rating;
         $review->comment = $req->comment;
         $review->save();
 
-        return view('app');
+        return redirect()->route('home');
     }
 
-    public function index(): View
-    {
-        $reviews = FacadesDB::select('select * from reviews');
-        $rating = null;
-
-        return view('reviews.index', ['review' => $reviews, 'rating' => $rating]);
-    }
-
-    public function filter(Request $request): View
+    /**
+     * Return a view showing all the reviews with the given rating.
+     */
+    public function index(Request $request): View
     {
         $reviews = FacadesDB::select('select * from reviews');
         $rating = $request->input('rating');
