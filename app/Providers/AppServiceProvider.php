@@ -63,6 +63,9 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
         static::bootstrap_permission('view_reviews', 'the reviews of the customers');
+        static::bootstrap_permission('view_all_shipments', 'View all the shipments, regardless of who they belong to.');
+        static::bootstrap_permission('delete_any_shipment', 'Delete any of the shipments, regardless of who they belong to.');
+        static::bootstrap_permission('accept_any_shipment', 'Accept any shipment for shipping.');
 
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
@@ -72,9 +75,11 @@ class AppServiceProvider extends ServiceProvider
         $role_user = static::bootstrap_role('user');
         $role_management = static::bootstrap_role('management');
 
+        // Assign the necessary permissions to all the roles.
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
         $role_employee->givePermissionTo('edit_all_shipments');
+        $role_employee->givePermissionTo('accept_any_shipment');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
@@ -90,6 +95,8 @@ class AppServiceProvider extends ServiceProvider
 
         $role_management->givePermissionTo('view_employee_count');
         $role_management->givePermissionTo('view_reviews');
+        $role_management->givePermissionTo('view_all_shipments');
+        $role_management->givePermissionTo('delete_any_shipment');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {
