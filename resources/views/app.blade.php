@@ -1,18 +1,16 @@
 {{-- -*-html-*- --}}
 
 <x-app-layout>
-  <div class="flex items-center justify-center">
-    <div
-      class="mx-auto grid grid-cols-4 items-center justify-center gap-8 md:grid-cols-4"
-      style="height: 80vh; width: 80vw;">
-      <x-canvas-tile title="Dashboard" :url="route('dashboard')"
-        description="To the dashboard"></x-canvas-tile>
+  <x-content-layout>
+    <div class="mx-auto flex flex-wrap justify-center gap-8">
       @can('view_general_employee_content')
         <x-canvas-tile title="Employee" :url="route('employee.overview')"
           description="Explore and search for employees in the company"></x-canvas-tile>
       @endcan
       <x-canvas-tile :url="route('shipments.create')" title="Shipment Requests"
         description="Request new shipments and track their progress"></x-canvas-tile>
+      <x-canvas-tile :url="route('pickups.create')" title="Order Package Pickup"
+        description="Get your package from your doorstep to your recipient"></x-canvas-tile>
       @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',
         'view_detailed_server_info', 'edit_roles'])
         <x-canvas-tile :url="route('control-panel')" title="Control Panel"
@@ -29,6 +27,8 @@
       @endcan
       <x-canvas-tile :url="route('shipments.index')" title="Confirmed Shipments"
         description="show confirmed shipments"></x-canvas-tile>
+      <x-canvas-tile :url="route('pickups.index')" title="Pickups"
+        description="See all your package pickups"></x-canvas-tile>
       @can('view_reviews')
         <x-canvas-tile :url="route('reviews.index')" title="Customer Complaints"
           description="Stay informed about all customer complaints and reviews"></x-canvas-tile>
@@ -50,5 +50,5 @@
       <x-canvas-tile :url="route('reviews.create')" title="Review Us"
         description="If you want to share your experience, you can leave a review"></x-canvas-tile>
     </div>
-  </div>
+  </x-content-layout>
 </x-app-layout>

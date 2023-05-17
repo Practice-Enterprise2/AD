@@ -15,7 +15,8 @@
       </svg>
     </div>
   @endif
-  <h2 class="mb-2 text-center text-lg font-bold">{{ $title }}</h2>
+  <h2 class="mb-2 text-center text-lg font-bold text-gray-950">
+    {{ $title }}</h2>
   <h3 class="mb-2 text-center text-sm font-medium text-gray-600">
     {{ $description }}</h3>
 </div>

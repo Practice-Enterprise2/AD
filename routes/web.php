@@ -39,7 +39,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      * Normal views, that can optionally take extra data.
      */
 
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::view('/respond', 'respond');
 
     /*

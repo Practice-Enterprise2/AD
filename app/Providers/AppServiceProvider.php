@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_employees', 'View all the employees.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
         static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
-        static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
+        static::bootstrap_permission('view_general_employee_content', 'See general employee content...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
