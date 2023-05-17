@@ -38,7 +38,7 @@
 
         {{-- Account button popup menu --}}
         <div x-show="open"
-          class="absolute right-0 flex w-[200px] flex-col items-stretch gap-2 rounded-lg border border-sky-900 bg-sky-950">
+          class="absolute right-0 flex w-[200px] flex-col items-stretch gap-2 overflow-hidden rounded-lg border border-sky-900 bg-sky-950">
           <a href="{{ route('home') }}"
             class="p-2 text-lg hover:bg-sky-900">Profile</a>
           <form action="/logout" method="POST">
