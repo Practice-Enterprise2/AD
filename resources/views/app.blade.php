@@ -41,8 +41,8 @@
         description="Get in touch with us"></x-canvas-tile>
       <x-canvas-tile :url="route('complaints.messages')" title="Messages"
         description="Stay connected with us"></x-canvas-tile>
-      <x-canvas-tile :url="route('faq.show')" title="FAQ"
-        description="Quick answers to common questions"></x-canvas-tile>
+      <x-canvas-tile :url="route('help')" title="Help"
+        description="Get help with common questions"></x-canvas-tile>
       @if (Route::has('login'))
         <x-canvas-tile :url="route('profile.edit')" title="Profile"
           description="Preview your public profile and make changes as needed"></x-canvas-tile>

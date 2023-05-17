@@ -10,7 +10,7 @@
       <h1 class="text-2xl font-bold">BlueSky</h1>
     </a>
     <div class="hidden items-stretch gap-4 sm:flex">
-      <a href="{{ route('faq.show') }}" class="text-lg font-semibold">About</a>
+      <a href="{{ route('help') }}" class="text-lg font-semibold">Help</a>
       <div class="border-r border-r-sky-900"></div>
       <a href="{{ route('reviews.index') }}"
         class="text-lg font-semibold">Reviews</a>
@@ -73,7 +73,7 @@
       <a href="{{ route('login') }}" class="p-2 text-lg">Sign In</a>
       <a href="{{ route('register') }}" class="p-2 text-lg">Sign Up</a>
     @endauth
-    <a href="{{ route('faq.show') }}" class="p-2 text-lg">About</a>
+    <a href="{{ route('help') }}" class="p-2 text-lg">Help</a>
     <a href="{{ route('reviews.index') }}" class="p-2 text-lg">Reviews</a>
     @auth
       <form action="/logout" method="POST">

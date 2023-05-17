@@ -11,7 +11,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
-use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -29,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 // Publicly available routes.
 Route::view('/', 'landing-page')->name('landing-page');
-Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
