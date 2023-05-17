@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\vacancyApplications;
 use App\Models\JobVacancy;
+use App\Models\vacancyApplications;
 use Illuminate\Http\Request;
 
 class JobVacanciesController extends Controller

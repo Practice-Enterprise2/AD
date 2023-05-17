@@ -14,21 +14,21 @@
             <div class="mb-2 grid gap-2 md:grid-cols-2">
               <x-text-input id="applicant_first_name"
                 class="mt-1 block w-full p-[10px]" type="text"
-                name="applicant_first_name" :value="old('applicant_first_name')" placeholder="first name*"
-                required />
+                name="applicant_first_name" :value="old('applicant_first_name')"
+                placeholder="first name*" required />
               <x-text-input id="applicant_last_name"
                 class="mt-1 block w-full p-[10px]" type="text"
-                name="applicant_last_name" :value="old('applicant_last_name')" placeholder="last name*"
-                required />
+                name="applicant_last_name" :value="old('applicant_last_name')"
+                placeholder="last name*" required />
               <x-input-error :messages="$errors->get('applicant_first_name')" class="mt-2" />
               <x-input-error :messages="$errors->get('applicant_last_name')" class="mt-2" />
             </div>
             <div class="flex items-center gap-4">
-            <x-text-input id="applicant_email"
-              class="mt-1 block w-full p-[10px]" type="email"
-              name="applicant_email" :value="old('applicant_email')" placeholder="e-mail*"
-              required />
-            <x-input-error :messages="$errors->get('applicant_email')" class="mt-2" />
+              <x-text-input id="applicant_email"
+                class="mt-1 block w-full p-[10px]" type="email"
+                name="applicant_email" :value="old('applicant_email')" placeholder="e-mail*"
+                required />
+              <x-input-error :messages="$errors->get('applicant_email')" class="mt-2" />
               <x-text-input id="applicant_cv" class="mt-1 block w-full p-[10px]"
                 type="file" name="applicant_cv" :value="old('applicant_cv')"
                 accept=".pdf" required /></br>

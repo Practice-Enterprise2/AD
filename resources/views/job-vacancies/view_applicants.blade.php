@@ -31,7 +31,8 @@
             </tr>
             @foreach ($applicants as $applicant)
               <tr>
-                <td class="mt-3 h-10 text-center">{{ $applicant->first_name }} {{ $applicant->last_name }}</td>
+                <td class="mt-3 h-10 text-center">{{ $applicant->first_name }}
+                  {{ $applicant->last_name }}</td>
                 <td class="mt-3 h-10 text-center">
                   {{ $applicant->email }}</td>
                 <td class="mt-3 h-10 text-center"><a
