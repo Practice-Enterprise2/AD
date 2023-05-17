@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliedPeople extends Model
 {
-    use HasFactory;
-
-    protected $table = 'applied_people';
-
     protected $fillable = [
-        'job_vacancies_id',
         'name',
         'contact_info',
         'cv',
