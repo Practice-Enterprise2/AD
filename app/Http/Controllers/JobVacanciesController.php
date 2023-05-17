@@ -101,7 +101,7 @@ class JobVacanciesController extends Controller
     {
         $this->validate($req, [
             'job_id' => ['required', 'numeric'],
-            'applicant_last_name' => ['required', 'alpha'],
+            'applicant_first_name' => ['required', 'alpha'],
             'applicant_last_name' => ['required', 'alpha'],
             'applicant_email' => ['required', 'email'],
             'applicant_cv' => ['required', 'file', 'mimes:pdf',  'max:2048'],
