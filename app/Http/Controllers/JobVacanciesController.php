@@ -101,7 +101,8 @@ class JobVacanciesController extends Controller
     {
         $this->validate($req, [
             'job_id' => ['required', 'numeric'],
-            'applicant_name' => ['required', 'regex:/^[A-Za-z\s]+$/'],
+            'applicant_last_name' => ['required', 'alpha'],
+            'applicant_last_name' => ['required', 'alpha'],
             'applicant_email' => ['required', 'email'],
             'applicant_cv' => ['required', 'file', 'mimes:pdf',  'max:2048'],
         ]);
@@ -124,8 +125,9 @@ class JobVacanciesController extends Controller
 
         $applyJob = AppliedPeople::create([
             'job_vacancies_id' => $req->job_id,
-            'name' => $req->applicant_name,
-            'contact_info' => $req->applicant_email,
+            'first_name' => $req->applicant_first_name,
+            'last_name' => $req->applicant_last_name,
+            'email' => $req->applicant_email,
             'cv' => $cvPath,
             'application_date' => $applicationDate,
         ]);
