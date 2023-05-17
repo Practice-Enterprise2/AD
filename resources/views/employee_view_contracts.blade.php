@@ -48,9 +48,7 @@
 
       <p>start date: {{ $combo['start_date'] }}</p>
       <p>end date: {{$combo['stop_date'] }}</p>
-      <button
-        class="mb-2 mr-2 rounded-full bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700">download
-        contract</button>
+      <a class="btn btn-primary" href="{{ URL::to('/employee_view_contracts/pdf') }}">Export to PDF</a>
     </div>
     
       @endforeach

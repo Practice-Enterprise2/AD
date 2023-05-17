@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class EmployeeController extends Controller
 {
@@ -144,5 +145,11 @@ class EmployeeController extends Controller
     
         return view('employee_view_contracts', ['comboArray' => $comboArray]);
     }
+    public function createEmployeeContractPDF(){
+        $data = EmployeeContract::all();
+        view()->share('contract', $data);
+        $pdf = PDF::loadView('pdf_view', $data);
+        return $pdf->downlaod('pdf_file.pdf');
 
+    }
 }
