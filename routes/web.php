@@ -66,7 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/new_employee', 'showAdd')->name('employee.create')->middleware('permission:add_employee');
         Route::post('/employee_edit', 'employeeEdit');
         Route::post('/employee_edit_save', 'employeeEditSave');
-        Route::get('/employee_search', 'searchEmployee')->name('employee-search');
+        Route::get('/employee_search', 'searchEmployeeContract')->name('employee-search');
     });
 
     Route::controller(UserController::class)->group(function () {

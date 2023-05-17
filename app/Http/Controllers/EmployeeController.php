@@ -92,37 +92,43 @@ class EmployeeController extends Controller
     }
     public function searchEmployeeContract(Request $req)
     {
-        $queryF = "";
-        $queryL = "";
-        $comboArray = [[]];
-        $temp = [];
-        if($req->queryF)
+        
+        $comboArray = array();
+        if($req->filled('queryF'))
         {
             $queryF = $req->input('queryF');
         }
-        if($req->queryL)
+        if($req->filled('queryL'))
         {
-            $queryL = $req->input('queryF');
+            $queryL = $req->input('queryL');
         }
-        if($queryF != "" && $queryL != "")
+        
+        
+        if(isset($queryF) && isset($queryL))
         {
             $employeeUsers = DB::table('users')->where('name', $queryF)->where('last_name', $queryL)->get();
         }
-        if($queryF != "" && $queryL == "")
+        if(isset($queryF) && !isset($queryL))
         {
             $employeeUsers = DB::table('users')->where('name', $queryF)->get();
         }
-        if($queryF == "" && $queryL != "")
+        if(!isset($queryF) && isset($queryL))
         {
             $employeeUsers = DB::table('users')->where('last_name', $queryL)->get();
         }
-        if($employeeUsers)
+        
+        
+        if(isset($employeeUsers))
         {
             for($i = 0 ; $i < count($employeeUsers); $i++)
             {
-                $contractsPerUser = DB::table('employee_contracts')->where('employee_id', $employeeUsers[$i]->id)->get();
+                $employeeID = DB::table('employees')->where('user_id', $employeeUsers[$i]->id)->value('id');
+                
+                $contractsPerUser = DB::table('employee_contracts')->where('employee_id', $employeeID)->get();
+        
                 for($b = 0; $b<count($contractsPerUser); $b++)
                 {
+                    
                     $comboArray[$b]['id'] = $contractsPerUser[$b]->id;
                     $comboArray[$b]['employee_id'] = $contractsPerUser[$b]->employee_id;
                     $comboArray[$b]['start_date'] = $contractsPerUser[$b]->start_date;
@@ -131,11 +137,12 @@ class EmployeeController extends Controller
                     $comboArray[$b]['last_name'] = $employeeUsers[$i]->last_name;
                 }
 
-                return view('employee_view_contracts', ['comboArray' => $comboArray]);
+                
             }
 
         }
-
+    
+        return view('employee_view_contracts', ['comboArray' => $comboArray]);
     }
 
 }
