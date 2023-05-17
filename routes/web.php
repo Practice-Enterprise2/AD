@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::controller(PickupController::class)->group(function () {
-        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
+        Route::get('/pickups/create', 'create')->name('pickups.create');
         Route::get('/pickups', 'index')->name('pickups.index');
         Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     });

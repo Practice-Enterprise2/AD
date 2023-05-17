@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PickupController extends Controller
 {
@@ -17,8 +19,18 @@ class PickupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(int|null $shipment_id = null): View
+    public function create(Request $request): View
     {
+        $shipment_id = $request->input('shipment_id');
+
+        if ($shipment_id != null) {
+            $shipment_id = (int) $shipment_id;
+
+            if ($shipment_id == null) {
+                abort(Response::HTTP_BAD_REQUEST, 'The request contains an invalid shipment id');
+            }
+        }
+
         return view('pickup_creation_form', [
             'shipment_id' => $shipment_id,
         ]);

@@ -51,7 +51,7 @@ class Create extends Component
             $query->where('status', '=', 'completed');
         }, '=', 0)->where('user_id', '=', Auth::id())->get();
 
-        if ($shipment_id != null && Shipment::query()->where('user_id', '=', Auth::id())->find($shipment_id) !== null && ! $this->shipments_eligible_for_pickup_creation->contains('id', '=', $shipment_id)) {
+        if ($shipment_id != null && Shipment::query()->where('user_id', '=', Auth::id())->find($shipment_id) != null && $this->shipments_eligible_for_pickup_creation->contains('id', '=', $shipment_id)) {
             $this->pickup_shipment_id = $shipment_id;
         }
     }
