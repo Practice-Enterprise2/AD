@@ -249,13 +249,31 @@ class EmployeeViewController extends Controller
 
     public function end()
     {
-        $employees = Employee::whereHas('employee_contracts', function ($query) {
-            $query->whereNotNull('start_date')->whereNotNull('end_date');
-        })->with('employee_contracts')->get(['id']);
-
-        return view('endcontract', compact('employees'));
+            $employees = Employee::whereHas('employee_contracts', function ($query) {
+                $query->whereNotNull('start_date')->whereNotNull('end_date');
+            })
+            ->with(['employee_contracts', 'user' => function ($query) {
+                $query->select('id', 'name', 'last_name');
+            }])
+            ->get(['id', 'user_id']); // Retrieve 'user_id' column
+        
+        $employeeIds = $employees->pluck('user_id')->toArray(); // Use 'user_id' column instead of 'employee_id'
+        
+        $users = User::whereIn('id', $employeeIds)->get();
+        
+        $employeesWithUsers = $employees->map(function ($employee) use ($users) {
+            $user = $users->firstWhere('id', $employee->user_id);
+            if ($user) {
+                $employee->user = $user;
+                $employee->name = $user->name;
+                $employee->last_name = $user->last_name;
+            }
+            return $employee;
+        });
+        
+        return view('endcontract', compact('employeesWithUsers'));
     }
-
+    
     public function determine($employee)
     {
         $employee = Employee::findOrFail($employee);
