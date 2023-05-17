@@ -31,7 +31,8 @@
           class="h-10 w-10"></x-heroicon-o-user-circle></a>
 
       {{-- Account button (medium displays and above) --}}
-      <div x-data="{ open: false }" class="relative hidden sm:block">
+      <div x-data="{ open: false }" class="relative hidden sm:block"
+        x-on:click.outside="open = false">
         <button x-on:click="open = !open"><x-heroicon-o-user-circle
             class="h-10 w-10"></x-heroicon-o-user-circle></button>
 
