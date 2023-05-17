@@ -12,7 +12,7 @@
     <div class="hidden items-stretch gap-4 sm:flex">
       <a href="{{ route('faq.show') }}" class="text-lg font-semibold">About</a>
       <div class="border-r border-r-sky-900"></div>
-      <a href="{{ route('readreviews') }}"
+      <a href="{{ route('reviews.index') }}"
         class="text-lg font-semibold">Reviews</a>
     </div>
   </div>
@@ -74,7 +74,7 @@
       <a href="{{ route('register') }}" class="p-2 text-lg">Sign Up</a>
     @endauth
     <a href="{{ route('faq.show') }}" class="p-2 text-lg">About</a>
-    <a href="{{ route('readreviews') }}" class="p-2 text-lg">Reviews</a>
+    <a href="{{ route('reviews.index') }}" class="p-2 text-lg">Reviews</a>
     @auth
       <form action="/logout" method="POST">
         @csrf

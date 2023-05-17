@@ -47,7 +47,7 @@
   </style>
   <h1>Customer Reviews</h1>
 
-  <form method="GET" action="/filterreview">
+  <form method="GET" action="{{ route('reviews.filter') }}">
     <label for="rating">Filter by Rating:</label>
     <select id="rating" name="rating">
       <option value="">All Ratings</option>

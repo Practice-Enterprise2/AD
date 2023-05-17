@@ -3,6 +3,7 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
@@ -29,8 +30,8 @@ use Illuminate\Support\Facades\Route;
 // Publicly available routes.
 Route::view('/', 'landing-page')->name('landing-page');
 Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
-Route::get('/airlines', 'App\Http\Controllers\ApiController@apiCall')->name('airlines.apiCall');
-Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
+Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -120,7 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/review', 'show')->name('review');
-        Route::post('/review_add', 'save')->name('reviews.create');
+        Route::post('/reviews', 'save')->name('reviews.create');
         Route::get('/filterreview', 'filter')->name('reviews.filter');
     });
 

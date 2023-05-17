@@ -24,12 +24,12 @@ class ReviewController extends Controller
         return view('app');
     }
 
-    public function showread(): View
+    public function index(): View
     {
         $reviews = FacadesDB::select('select * from reviews');
         $rating = null;
 
-        return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
+        return view('reviews.index', ['review' => $reviews, 'rating' => $rating]);
     }
 
     public function filter(Request $request): View
@@ -37,6 +37,6 @@ class ReviewController extends Controller
         $reviews = FacadesDB::select('select * from reviews');
         $rating = $request->input('rating');
 
-        return view('readreviews', ['review' => $reviews, 'rating' => $rating]);
+        return view('reviews.index', ['review' => $reviews, 'rating' => $rating]);
     }
 }

@@ -30,7 +30,7 @@
       <x-canvas-tile :url="route('shipments.index')" title="Confirmed Shipments"
         description="show confirmed shipments"></x-canvas-tile>
       @can('view_reviews')
-        <x-canvas-tile :url="route('readreviews')" title="Customer Complaints"
+        <x-canvas-tile :url="route('reviews.index')" title="Customer Complaints"
           description="Stay informed about all customer complaints and reviews"></x-canvas-tile>
       @endcan
       @can('view_all_complaints')
