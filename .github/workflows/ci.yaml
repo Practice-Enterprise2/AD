@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  check_formatting:
-    name: Check Formatting
+  test:
+    name: Run Tests
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
@@ -20,3 +20,6 @@ jobs:
       - name: Check Formatting
         run: |
           php artisan format --test
+      - name: Try Caching Routes
+        run: |
+          php artisan route:cache
