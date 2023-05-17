@@ -19,16 +19,6 @@ return new class extends Migration
             $table->boolean('filled')->default(false);
             $table->timestamps();
         });
-
-        Schema::create('applied_people', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('job_vacancies_id')->constrained();
-            $table->string('name');
-            $table->string('contact_info');
-            $table->binary('cv');
-            $table->timestamp('application_date');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -36,7 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applied_people');
         Schema::dropIfExists('job_vacancies');
     }
 };
