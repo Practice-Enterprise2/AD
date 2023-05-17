@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class PickupController extends Controller
 {
@@ -26,21 +25,6 @@ class PickupController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): string
-    {
-        return "Requested Pickup $id";
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(int $pickup_id): View
@@ -48,19 +32,5 @@ class PickupController extends Controller
         return view('pickup_edit', [
             'pickup_id' => $pickup_id,
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
     }
 }
