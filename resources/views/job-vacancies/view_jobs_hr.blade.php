@@ -27,10 +27,12 @@
                   <td class="mt-3 h-10 text-center">{{ $job->applicantCount }}
                   </td>
                   <td class="mt-3 h-10 text-center" style="width: 100px;">
-                    <a href="{{ route('view_applicants', $job->id) }}"
-                      class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-center text-gray-900">
-                      view
-                    </a>
+                    @can('edit_vacant_jobs')
+                      <a href="{{ route('view_applicants', $job->id) }}"
+                        class="block rounded-lg bg-gray-200 px-[16px] py-[6px] text-center text-gray-900">
+                        view
+                      </a>
+                    @endcan
                   </td>
                 </tr>
               @endforeach

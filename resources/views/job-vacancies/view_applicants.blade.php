@@ -27,13 +27,13 @@
               <th class="h-13 border-b-2 text-center text-lg">Name</th>
               <th class="h-13 border-b-2 text-center text-lg">Contact Info
               </th>
-              <th class="h-13 border-b-2 text-center text-lg">CV<x /th>
+              <th class="h-13 border-b-2 text-center text-lg">CV</th>
             </tr>
             @foreach ($applicants as $applicant)
               <tr>
-                <td class="mt-3 h-10 text-center">{{ $applicant->name }}</td>
+                <td class="mt-3 h-10 text-center">{{ $applicant->first_name }} {{ $applicant->last_name }}</td>
                 <td class="mt-3 h-10 text-center">
-                  {{ $applicant->contact_info }}</td>
+                  {{ $applicant->email }}</td>
                 <td class="mt-3 h-10 text-center"><a
                     href="{{ route('open_cv', $applicant->id) }}"
                     target="_blank">cv</a></td>
