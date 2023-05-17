@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div x-data="{ sidebar_visible: 0 }" class="flex flex-row items-stretch">
   <aside class="w-full bg-white dark:bg-gray-700 md:hidden"
     x-show="sidebar_visible" x-cloak>

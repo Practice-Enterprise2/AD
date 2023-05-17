@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div
   class="relative flex h-[64px] items-center justify-between bg-sky-950 px-2 text-white"
   x-data="{ hamburger_open: false }">

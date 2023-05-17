@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @if (!empty($url))
   <a href="{{ $url }}"
     class="mx-4 my-4 h-40 w-60 overflow-hidden rounded-lg bg-blue-100 transition-colors duration-200 ease-in-out hover:bg-blue-200">

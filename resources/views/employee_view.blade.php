@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="mx-auto">
     <h1 class="m-8 text-center">Employees Overview</h1>

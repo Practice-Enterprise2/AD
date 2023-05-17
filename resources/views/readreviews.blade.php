@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-public-layout>
   <style>
     h1 {
