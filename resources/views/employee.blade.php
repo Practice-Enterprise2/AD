@@ -3,10 +3,10 @@
     <div
       class="mx-auto grid grid-cols-4 items-center justify-center gap-8 md:grid-cols-4"
       style="height: 80vh; width: 80vw;">
-      @can('add_edit_vacant_jobs')
+      @canany(['add_vacant_jobs', 'edit_vacant_jobs'])
         <x-canvas-tile :url="route('hr_view_jobs')" title="HR Vacant Jobs"
           description="Add and edit job vacancies"></x-canvas-tile>
-      @endcan
+      @endrole
     </div>
   </div>
 </x-app-layout>
