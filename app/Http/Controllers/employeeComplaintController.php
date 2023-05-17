@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class employeeComplaintController extends Controller
+class EmployeeComplaintController extends Controller
 {
     public function sendComplaint(Request $req)
     {

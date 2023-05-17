@@ -5,7 +5,7 @@
         class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <h4 class="text-2xl font-bold dark:text-white">complaint</h4><br>
-          <form action="{{ route('sendEmployeeComplaint.employee') }}"
+          <form action="{{ route('sendEmployeeComplaint') }}"
             method="post">
             @csrf
             <div class="mb-6 grid gap-2 md:grid-cols-2">
