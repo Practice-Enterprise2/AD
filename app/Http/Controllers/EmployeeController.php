@@ -145,11 +145,11 @@ class EmployeeController extends Controller
     
         return view('employee_view_contracts', ['comboArray' => $comboArray]);
     }
+    //run -> composer require barryvdh/laravel-dompdf <- for it to work
     public function createEmployeeContractPDF(){
-        $data = EmployeeContract::all();
-        view()->share('contract', $data);
-        $pdf = PDF::loadView('pdf_view', $data);
-        return $pdf->downlaod('pdf_file.pdf');
-
+        
+        
+        $pdf = PDF::loadView('employee_contract_detail', ['contract' => $contract]);
+        return $pdf->download('EmployeeContract.pdf');
     }
 }
