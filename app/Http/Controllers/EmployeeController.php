@@ -145,11 +145,40 @@ class EmployeeController extends Controller
     
         return view('employee_view_contracts', ['comboArray' => $comboArray]);
     }
+    public function employeeContractDetails(Request $req)
+    {
+        $data = array();
+        $contractID = $req->contractID;
+        $contract = DB::table('employee_contracts')->where('id', $contractID)->first();
+        $employee = DB::table('employees')->where('id', $contract->employee_id)->first();
+        $user = DB::table('users')->where('id', $employee->user_id)->first();
+        $data["contractID"] = $contractID;
+        $data["name"] = $user->name;
+        $data["last_name"] = $user->last_name;
+        $data["startdate"] = $contract->start_date;
+        $data["stopdate"] = $contract->end_date;
+        $data["created_at"] = $contract->created_at;
+        $data["position"] = $employee->jobTitle;
+        $data["salary"] = $employee->salary;
+        return view('employee_contract_details', ['data' => $data]);
+    }
     //run -> composer require barryvdh/laravel-dompdf <- for it to work
-    public function createEmployeeContractPDF(){
+    public function createEmployeeContractPDF(Request $req){
+        $data = array();
+        $contractID = $req->contractID;
+        $contract = DB::table('employee_contracts')->where('id', $contractID)->first();
+        $employee = DB::table('employees')->where('id', $contract->employee_id)->first();
+        $user = DB::table('users')->where('id', $employee->user_id)->first();
+        $data["contractID"] = $contractID;
+        $data["name"] = $user->name;
+        $data["last_name"] = $user->last_name;
+        $data["startdate"] = $contract->start_date;
+        $data["stopdate"] = $contract->end_date;
+        $data["created_at"] = $contract->created_at;
+        $data["position"] = $employee->jobTitle;
+        $data["salary"] = $employee->salary;
         
-        
-        $pdf = PDF::loadView('employee_contract_detail', ['contract' => $contract]);
+        $pdf = PDF::loadView('pdf/employeeContract', ['data' => $data]);
         return $pdf->download('EmployeeContract.pdf');
     }
 }

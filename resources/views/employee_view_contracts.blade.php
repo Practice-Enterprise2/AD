@@ -19,39 +19,69 @@
       </form>
   </div>
   @if(@isset($contracts))
+  <table class="mx-auto w-2/4 mt-20">
+    <th>Contract ID</th>
+    <th>Employee ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
   @foreach ($contracts as $contract)
-    <div class="mx-auto w-2/6 bg-white text-center m-5">
+    <tr class="h-11">
+    
+      <td><p>{{ $contract['contractID'] }}</p></td>
+      <td><p>{{ $contract['employeeID'] }}</p></td>
+      <td><p>{{ $contract['name'] }}</p></td>
+      <td><p>{{ $contract['lastname'] }}</p></td>
 
-      <p>contract ID: {{ $contract['contractID'] }}</p>
-      <p>employee id: {{ $contract['employeeID'] }}</p>
-      <p>first name: {{ $contract['name'] }}</p>
-      <p>last name: {{ $contract['lastname'] }}</p>
-
-      <p>start date: {{ $contract['startdate'] }}</p>
-      <p>end date: {{ $contract['enddate'] }}</p>
-      <button
-        class="mb-2 mr-2 rounded-full bg-gray-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700">download
-        contract</button>
-    </div>
+      <td><p>{{ $contract['startdate'] }}</p></td>
+      <td><p>{{ $contract['enddate'] }}</p></td>
+      <td>
+      <form action="{{ route('employee-contract-details') }}" method="POST"
+        class="inline-block text-center">@csrf
+        <input type="hidden" name="contractID" value="{{$contract['contractID']}}">
+        <button type="submit"
+          class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">View Details
+        </button>
+      </form>
+      </td>
+    
+    </tr>
   @endforeach
+  </table>
   @endif
   @if(@isset($comboArray))
+  <table>
+    <th>Contract ID</th>
+    <th>Employee ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
     @foreach($comboArray as $combo)
-     
+     <tr>
       
     <div class="mx-auto w-2/6 bg-white text-center m-5">
 
-      <p>contract ID: {{ $combo['id'] }}</p>
-      <p>employee id: {{ $combo['employee_id'] }}</p>
-      <p>first name: {{ $combo['name'] }}</p>
-      <p>last name: {{ $combo['last_name']}}</p>
+    <td><p>{{ $combo['id'] }}</p></td>
+    <td><p>{{ $combo['employee_id'] }}</p></td>
+    <td><p>{{ $combo['name'] }}</p></td>
+    <td><p>{{ $combo['last_name']}}</p></td>
 
-      <p>start date: {{ $combo['start_date'] }}</p>
-      <p>end date: {{$combo['stop_date'] }}</p>
-      <a class="btn btn-primary" href="{{ URL::to('/employee_view_contracts/pdf') }}">Export to PDF</a>
+    <td><p>{{ $combo['start_date'] }}</p></td>
+    <td><p>{{$combo['stop_date'] }}</p></td>
+    <td>
+      <form action="{{ route('employee-contract-details') }}" method="POST"
+        class="inline-block text-center">@csrf
+        <input type="hidden" name="contractID" value="{{$combo['id']}}">
+        <button type="submit"
+          class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">View Details
+        </button>
+      </form>
+      </td>
     </div>
-    
+    </tr>
       @endforeach
-    
+</table>
   @endif
 </x-app-layout>

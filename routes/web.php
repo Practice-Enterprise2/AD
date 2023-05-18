@@ -58,8 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employee_add_contract', 'create_contract_index')->name('create-contract-index');
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
         Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts');
+        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details');
         Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search');
-        Route::get('/employee_view_contracts/pdf', 'createEmployeeContractPDF');
+        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract');
     });
     Route::controller(EmployeeViewController::class)->group(function () {
         Route::get('/employee_overview', 'index')->name('employee.overview')->middleware('permission:view_employee_count');
