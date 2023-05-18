@@ -70,14 +70,15 @@
           the
           of
           Employer.</p>
-          @if(@isset($data2))
+        @if (@isset($data2))
           <br>
           <p class="text-sm">4. Vacation days: <br>
-              @foreach($data2 as $d)
-                  vacation days for {{$d['year']}}: {{$d['allowed_days']}} <br>
-              @endforeach
+            @foreach ($data2 as $d)
+              vacation days for {{ $d['year'] }}: {{ $d['allowed_days'] }}
+              <br>
+            @endforeach
           </p>
-          @endif
+        @endif
       </div>
 
     </div>

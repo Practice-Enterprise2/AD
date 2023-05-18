@@ -67,6 +67,20 @@ class EmployeeController extends Controller
 
     public function contract_save(Request $req): RedirectResponse
     {
+        if ($req->startdate > $req->stopdate) {
+            return redirect()->back()->withErrors(['alert' => 'End date cannot be before start date!']);
+        }
+
+        $existingEmployeeContracts = DB::table('employee_contracts')->where('employee_id', $req->employeeID)->get();
+        $check = 1;
+        for ($b = 0; $b < count($existingEmployeeContracts); $b++) {
+            if ($existingEmployeeContracts[$b]->end_date > $req->startdate) {
+                $check = 0;
+            }
+        }
+        if ($check == 0) {
+            return redirect()->back()->withErrors(['alert' => 'Employee already has a running contract on that starting date!']);
+        }
         if ($req->startdate >= date('Y-m-d')) {
             $startyear = intval($req->startdate.substr(0, 4));
             $stopyear = intval($req->stopdate.substr(0, 4));
@@ -162,13 +176,12 @@ class EmployeeController extends Controller
         $data['position'] = $employee->jobTitle;
         $data['salary'] = $employee->salary;
 
-        $holidaysList = array();
-        for($i = 0; $i < count($holidays); $i++)
-        {
-            $holidaysList[$i]["year"] = $holidays[$i]->year;
-            $holidaysList[$i]["allowed_days"] = $holidays[$i]->allowed_days;
-
+        $holidaysList = [];
+        for ($i = 0; $i < count($holidays); $i++) {
+            $holidaysList[$i]['year'] = $holidays[$i]->year;
+            $holidaysList[$i]['allowed_days'] = $holidays[$i]->allowed_days;
         }
+
         return view('employee_contract_details', ['data' => $data, 'data2' => $holidaysList]);
     }
 
@@ -189,12 +202,10 @@ class EmployeeController extends Controller
         $data['created_at'] = $contract->created_at;
         $data['position'] = $employee->jobTitle;
         $data['salary'] = $employee->salary;
-        $holidaysList = array();
-        for($i = 0; $i < count($holidays); $i++)
-        {
-            $holidaysList[$i]["year"] = $holidays[$i]->year;
-            $holidaysList[$i]["allowed_days"] = $holidays[$i]->allowed_days;
-
+        $holidaysList = [];
+        for ($i = 0; $i < count($holidays); $i++) {
+            $holidaysList[$i]['year'] = $holidays[$i]->year;
+            $holidaysList[$i]['allowed_days'] = $holidays[$i]->allowed_days;
         }
 
         $pdf = PDF::loadView('pdf/employeeContract', ['data' => $data, 'data2' => $holidaysList]);
