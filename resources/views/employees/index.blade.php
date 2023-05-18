@@ -21,36 +21,22 @@
         all</a>
     </div>
     @foreach ($employees as $employee)
-      <div class="userpanel m-5 bg-white p-8 dark:text-gray-950">
-        <form method="post" action="employee_edit" accept-charset="UTF-8">
-          <input type="hidden" name="employeeId" value="{{ $employee->id }}">
-          <input type="hidden" name="userId"
-            value="{{ $employee->user->id }}">
-          <input type="hidden" name="employeeFirstName"
-            value="{{ $employee->user->name }}">
-          <input type="hidden" name="employeeLastName"
-            value="{{ $employee->last_name }}">
-          @csrf
-          <div class="innerpanel1">
-            <p>ID: {{ $employee->id }}</p>
-            <p>User_id: {{ $employee->user_id }}</p>
-            <p>First name: {{ $employee->user->name }}</p>
-            <p>Last name: {{ $employee->user->last_name }}</p>
-          </div>
-          <div class="innerpanel2">
-            <p>Employee Email: {{ $employee->email }}</p>
-            <p>User Email: {{ $employee->user->email }}</p>
-            <p>Birth date: {{ $employee->dateOfBirth }}</p>
-            <p>Job title: {{ $employee->jobTitle }}</p>
-            <p>Salary: {{ $employee->salary }}</p>
-          </div>
-          <div class="theEditButton mt-3 text-center" style="clear:right">
-            <button type="submit" id="editButton"
-              class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">Edit</button>
-          </div>
-        </form>
+      <div class="rounded bg-white p-4 dark:bg-gray-800">
+        <div>
+          <p>ID: {{ $employee->id }}</p>
+          <p>User_id: {{ $employee->user_id }}</p>
+          <p>First name: {{ $employee->user->name }}</p>
+          <p>Last name: {{ $employee->user->last_name }}</p>
+          <p>User Email: {{ $employee->user->email }}</p>
+          <p>Birth date: {{ $employee->dateOfBirth }}</p>
+          <p>Job title: {{ $employee->jobTitle }}</p>
+          <p>Salary: {{ $employee->salary }}</p>
+        </div>
+        <a href="{{ route('employees.edit', ['employee' => $employee->id]) }}"
+          class="mx-auto block rounded bg-gray-200 p-2 text-center dark:bg-gray-600">Edit</a>
       </div>
     @endforeach
+  </div>
 </x-app-layout>
 {{-- vim: ft=html
 --}}
