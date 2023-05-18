@@ -27,7 +27,7 @@
           <h2 class="text-lg text-gray-500">Know Why People Choose to Ship With
             BlueSky</h2>
         </div>
-        <a href="{{ route('readreviews') }}"
+        <a href="{{ route('reviews.index') }}"
           class="rounded bg-blue-500 p-2 font-bold text-white">Reviews</a>
       </div>
     </div>

@@ -10,9 +10,9 @@
       <h1 class="text-2xl font-bold">BlueSky</h1>
     </a>
     <div class="hidden items-stretch gap-4 sm:flex">
-      <a href="{{ route('faq.show') }}" class="text-lg font-semibold">About</a>
+      <a href="{{ route('help') }}" class="text-lg font-semibold">Help</a>
       <div class="border-r border-r-sky-900"></div>
-      <a href="{{ route('readreviews') }}"
+      <a href="{{ route('reviews.index') }}"
         class="text-lg font-semibold">Reviews</a>
     </div>
   </div>
@@ -31,13 +31,14 @@
           class="h-10 w-10"></x-heroicon-o-user-circle></a>
 
       {{-- Account button (medium displays and above) --}}
-      <div x-data="{ open: false }" class="relative hidden sm:block">
+      <div x-data="{ open: false }" class="relative hidden sm:block"
+        x-on:click.outside="open = false">
         <button x-on:click="open = !open"><x-heroicon-o-user-circle
             class="h-10 w-10"></x-heroicon-o-user-circle></button>
 
         {{-- Account button popup menu --}}
         <div x-show="open"
-          class="absolute right-0 flex w-[200px] flex-col items-stretch gap-2 rounded-lg border border-sky-900 bg-sky-950">
+          class="absolute right-0 flex w-[200px] flex-col items-stretch gap-2 overflow-hidden rounded-lg border border-sky-900 bg-sky-950">
           <a href="{{ route('home') }}"
             class="p-2 text-lg hover:bg-sky-900">Profile</a>
           <form action="/logout" method="POST">
@@ -73,8 +74,8 @@
       <a href="{{ route('login') }}" class="p-2 text-lg">Sign In</a>
       <a href="{{ route('register') }}" class="p-2 text-lg">Sign Up</a>
     @endauth
-    <a href="{{ route('faq.show') }}" class="p-2 text-lg">About</a>
-    <a href="{{ route('readreviews') }}" class="p-2 text-lg">Reviews</a>
+    <a href="{{ route('help') }}" class="p-2 text-lg">Help</a>
+    <a href="{{ route('reviews.index') }}" class="p-2 text-lg">Reviews</a>
     @auth
       <form action="/logout" method="POST">
         @csrf
