@@ -67,29 +67,48 @@ class EmployeeController extends Controller
 
     public function contract_save(Request $req): RedirectResponse
     {
-        $contract = new EmployeeContract();
-        $contract->employee_id = $req->employeeID;
-        $contract->start_date = $req->startdate;
-        $contract->end_date = $req->stopdate;
-        $contract->save();
-        $employeeContractId = DB::table('employee_contracts')->latest()->value('id');
-        $startyear =  intval($req->startdate.substr(0,4));
-        $stopyear = intval($req->stopdate.substr(0,4));
-        $b=0;
-        for($i = $startyear; $i<=$stopyear; $i++)
+        if($req->startdate >= date("Y-m-d"))
         {
-            
-            //$year = $startyear+$i-1;
-            $holidaySaldo = new HolidaySaldo();
-            $holidaySaldo->employee_contract_id = $employeeContractId;
-            $holidaySaldo->allowed_days = $req->{'days' . $b};
-            $holidaySaldo->year = $i;
-            $holidaySaldo->type = 1;
-            $holidaySaldo->save();
-            $b+=1;
-        }
+            $startyear =  intval($req->startdate.substr(0,4));
+            $stopyear = intval($req->stopdate.substr(0,4));
+            $dayscheck = 1;
+            $b=0;
+            for($i = $startyear; $i<=$stopyear; $i++)
+            {
+                if($req->{'days' . $b} > 50)
+                {
+                    $dayscheck = 0;
+                }
+                $b+=1;
+            }
+            if($dayscheck == 1)
+            {
+                $contract = new EmployeeContract();
+                $contract->employee_id = $req->employeeID;
+                $contract->start_date = $req->startdate;
+                $contract->end_date = $req->stopdate;
+                $contract->save();
+                $employeeContractId = DB::table('employee_contracts')->latest()->value('id');
+                $startyear =  intval($req->startdate.substr(0,4));
+                $stopyear = intval($req->stopdate.substr(0,4));
+                $b=0;
+                for($i = $startyear; $i<=$stopyear; $i++)
+                {
+                    
+                    
+                    $holidaySaldo = new HolidaySaldo();
+                    $holidaySaldo->employee_contract_id = $employeeContractId;
+                    $holidaySaldo->allowed_days = $req->{'days' . $b};
+                    $holidaySaldo->year = $i;
+                    $holidaySaldo->type = 1;
+                    $holidaySaldo->save();
+                    $b+=1;
+                }
 
-        return redirect()->back()->with('alert', 'complete creation');
+                return redirect()->back()->with('alert', 'Succes!');
+            }
+        }
+        return redirect()->back()->withErrors(['alert' => 'Invalid data!']);
     }
     public function searchEmployeeContract(Request $req)
     {

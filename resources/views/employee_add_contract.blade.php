@@ -33,11 +33,16 @@
   </script>
   <div class="m-auto w-2/5 bg-white text-center">
     <h1 class="p-8 text-center text-xl">New Employee Contract</h1>
-
+    @if($errors->any())
+        <h2 class="text-red-600 text-xl">{{$errors->first()}}</h2>
+      @endif
+    @if (\Session::has('alert'))
+    <h2 class="text-lime-400 text-xl">{!! \Session::get('alert') !!}</h2>
+    @endif
     <form method="post" action="employee_add_contract_done"
       accept-charset="UTF-8">
       @csrf
-
+      
       <label for="employeeID">Select an employee:</label>
       <select name="employeeID" id="employeeID" required>
         @foreach ($users as $user)
