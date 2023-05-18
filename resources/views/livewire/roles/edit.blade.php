@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div>
   <form id="role-form" wire:submit.prevent="save"
     class="grid w-full grid-cols-12 gap-3">

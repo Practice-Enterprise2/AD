@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="mt-6 flex flex-col items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">

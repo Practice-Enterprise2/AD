@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-public-layout>
   <div class="mx-auto flex flex-col gap-8 sm:container sm:py-16">
     <div class="flex h-[400px] justify-between gap-8 bg-gray-100 sm:rounded-lg">

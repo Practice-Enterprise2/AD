@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div class="mx-auto">
   <h1 class="m-5 text-center">New Employee</h1>
   <div class="bg-gray-200 p-8">

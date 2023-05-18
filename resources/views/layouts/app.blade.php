@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 {{--
 Slots:
 - (?string) $title: Set the page title, or null for the default title

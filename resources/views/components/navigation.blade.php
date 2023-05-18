@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <nav x-data="{ open: false }"
   class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
 
