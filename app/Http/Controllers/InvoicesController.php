@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\DB ;
 class InvoicesController extends Controller
 {
     public function viewAllInvoices()
-    {
-        $invoices = DB::table('invoices')->get();
-        
-        return view('invoiceslist', ['invoices' => $invoices]);
+    {        
+        return view('invoiceslist');
     }
     public function viewInvoiceDetails(Request $req)
     {
