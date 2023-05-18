@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\InvoiceList;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -69,7 +70,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_edit_save', 'employeeEditSave');
         Route::get('/employee_search', 'searchEmployee')->name('employee-search');
     });
-
+    Route::controller(InvoicesController::class)->group(function(){
+        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list');
+        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details');
+    });
+    Route::get('/invoices_list', [InvoicesController::class, 'viewAllInvoices'])->name('invoice-list');
     Route::controller(UserController::class)->group(function () {
         Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
         Route::put('/admin/users/{id}', 'update')->name('users.update');
