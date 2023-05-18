@@ -41,7 +41,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
-    Route::view('/employees/create', 'employees.create')->name('employees.create')->can('create', Employee::class);
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -55,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employees', 'index')->name('employees.index')->middleware('permission:view_employee_count');
+        Route::get('/employees/create', 'create')->name('employees.create')->can('create', Employee::class);
         Route::post('/employees', 'store')->name('employees.store')->can('create', Employee::class);
         Route::get('/employees/{employee}/edit', 'edit')->name('employees.edit');
         Route::post('/employees/{employee}', 'update')->name('employees.update');
