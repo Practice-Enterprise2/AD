@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/respond', 'respond');
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
     Route::view('/employee_add_contract', 'employee_add_contract')->name('contract-index');
-    Route::view('/employees', 'employee_view')->name('employees.index')->middleware('permission:view_employee_count');
+    Route::view('/employees', 'employees.index')->name('employees.index')->middleware('permission:view_employee_count');
 
     /*
      * Controllers that require custom code to be run for a request.

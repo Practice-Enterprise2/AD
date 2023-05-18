@@ -222,7 +222,7 @@ class EmployeeViewController extends Controller
             }
         }
 
-        return view('employee_view', ['employees' => $results]);
+        return view('employees.index', ['employees' => $results]);
     }
 }
 ?>

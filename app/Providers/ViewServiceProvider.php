@@ -20,6 +20,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('employee_view', EmployeeViewComposer::class);
+        View::composer('employees.index', EmployeeViewComposer::class);
     }
 }
