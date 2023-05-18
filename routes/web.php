@@ -21,6 +21,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Models\Employee;
 use App\Models\Review;
 use App\Models\Shipment;
 use App\Models\User;
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/respond', 'respond');
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
     Route::view('/employee_add_contract', 'employee_add_contract')->name('contract-index');
+    Route::view('/employees/create', 'employees.create')->name('employees.create')->can('create', Employee::class);
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -54,8 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employees', 'index')->name('employees.index')->middleware('permission:view_employee_count');
-        Route::post('/employee_add', 'save')->name('save-employee')->middleware('permission:add_employee');
-        Route::get('/new_employee', 'showAdd')->name('employee.create')->middleware('permission:add_employee');
+        Route::post('/employees', 'store')->name('employees.store')->can('create', Employee::class);
         Route::post('/employee_edit', 'employeeEdit');
         Route::post('/employee_edit_save', 'employeeEditSave');
         Route::get('/employee_search', 'searchEmployee')->name('employee-search');

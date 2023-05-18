@@ -48,9 +48,9 @@ class EmployeeController extends Controller
         return redirect()->back()->with('alert', 'complete creation');
     }
 
-    public function showAdd(): View
+    public function create(): View
     {
-        return view('add_employee');
+        return view('employees.create');
     }
 
     public function employeeEdit(): View
@@ -128,7 +128,7 @@ class EmployeeController extends Controller
         return $this->index();
     }
 
-    public function save(Request $req): RedirectResponse
+    public function store(Request $req): RedirectResponse
     {
         $IBAN = $req->Iban;
         $countries = ['al' => 28, 'ad' => 24, 'at' => 20, 'az' => 28, 'bh' => 22, 'be' => 16, 'ba' => 20, 'br' => 29, 'bg' => 22, 'cr' => 21, 'hr' => 21, 'cy' => 28, 'cz' => 24, 'dk' => 18, 'do' => 28, 'ee' => 20, 'fo' => 18, 'fi' => 18, 'fr' => 27, 'ge' => 22, 'de' => 22, 'gi' => 23, 'gr' => 27, 'gl' => 18, 'gt' => 28, 'hu' => 28, 'is' => 26, 'ie' => 22, 'il' => 23, 'it' => 27, 'jo' => 30, 'kz' => 20, 'kw' => 30, 'lv' => 21, 'lb' => 28, 'li' => 21, 'lt' => 20, 'lu' => 20, 'mk' => 19, 'mt' => 31, 'mr' => 27, 'mu' => 30, 'mc' => 27, 'md' => 24, 'me' => 22, 'nl' => 18, 'no' => 15, 'pk' => 24, 'ps' => 29, 'pl' => 28, 'pt' => 25, 'qa' => 29, 'ro' => 24, 'sm' => 27, 'sa' => 24, 'rs' => 22, 'sk' => 24, 'si' => 19, 'es' => 24, 'se' => 24, 'ch' => 21, 'tn' => 24, 'tr' => 26, 'ae' => 23, 'gb' => 22, 'vg' => 24,
@@ -193,42 +193,6 @@ class EmployeeController extends Controller
         }
 
         return redirect()->back()->with('alert', 'Invalid IBAN!');
-    }
-
-    public function store(Request $request): View
-    {
-        if (! empty($_POST['naam']) && ! empty($_POST['password'])) {
-            $name = htmlspecialchars($_POST['email']);
-            $pswd = htmlspecialchars($_POST['password']);
-
-            $host = 'localhost';
-            $user = 'root';
-            $password = '';
-            $database = 'laravel';
-
-            $link = mysqli_connect($host, $user, $password) or exit('Error: No connection to the host');
-            mysqli_select_db($link, $database) or exit('Error: no database found');
-
-            $quer = "Select * From employees Where mail = '$name'";
-            $res = mysqli_query($link, $quer);
-            $row = mysqli_fetch_assoc($res);
-            $ammount = mysqli_num_rows($res);
-            if ($ammount > 0) {
-                if ($pswd == $row['password']) {
-                    $type = $row['jobTitle'];
-                    $request->session()->put('name', $name);
-                    $request->session()->put('Type', $type);
-
-                    return view('/');
-                } else {
-                    return redirect()->back()->with('alert', 'Incorrect password!');
-                }
-            } else {
-                return redirect()->back()->with('alert', 'Incorrect Username!');
-            }
-        } elseif (isset($_POST['submit']) && empty($_POST['naam']) && empty($_POST['password'])) {
-            return redirect()->back()->with('alert', 'Empty Username and Password');
-        }
     }
 
     public function searchEmployee(Request $req): View
