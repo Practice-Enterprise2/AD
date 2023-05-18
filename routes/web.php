@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'landing-page')->name('landing-page');
 Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index')->can('viewAny', Review::class);
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
