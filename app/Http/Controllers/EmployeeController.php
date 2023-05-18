@@ -150,6 +150,7 @@ class EmployeeController extends Controller
         $data = [];
         $contractID = $req->contractID;
         $contract = DB::table('employee_contracts')->where('id', $contractID)->first();
+        $holidays = DB::table('holiday_saldos')->where('employee_contract_id', $contractID)->get();
         $employee = DB::table('employees')->where('id', $contract->employee_id)->first();
         $user = DB::table('users')->where('id', $employee->user_id)->first();
         $data['contractID'] = $contractID;
@@ -161,7 +162,14 @@ class EmployeeController extends Controller
         $data['position'] = $employee->jobTitle;
         $data['salary'] = $employee->salary;
 
-        return view('employee_contract_details', ['data' => $data]);
+        $holidaysList = array();
+        for($i = 0; $i < count($holidays); $i++)
+        {
+            $holidaysList[$i]["year"] = $holidays[$i]->year;
+            $holidaysList[$i]["allowed_days"] = $holidays[$i]->allowed_days;
+
+        }
+        return view('employee_contract_details', ['data' => $data, 'data2' => $holidaysList]);
     }
 
     //run -> composer require barryvdh/laravel-dompdf <- for it to work
@@ -170,6 +178,7 @@ class EmployeeController extends Controller
         $data = [];
         $contractID = $req->contractID;
         $contract = DB::table('employee_contracts')->where('id', $contractID)->first();
+        $holidays = DB::table('holiday_saldos')->where('employee_contract_id', $contractID)->get();
         $employee = DB::table('employees')->where('id', $contract->employee_id)->first();
         $user = DB::table('users')->where('id', $employee->user_id)->first();
         $data['contractID'] = $contractID;
@@ -180,8 +189,15 @@ class EmployeeController extends Controller
         $data['created_at'] = $contract->created_at;
         $data['position'] = $employee->jobTitle;
         $data['salary'] = $employee->salary;
+        $holidaysList = array();
+        for($i = 0; $i < count($holidays); $i++)
+        {
+            $holidaysList[$i]["year"] = $holidays[$i]->year;
+            $holidaysList[$i]["allowed_days"] = $holidays[$i]->allowed_days;
 
-        $pdf = PDF::loadView('pdf/employeeContract', ['data' => $data]);
+        }
+
+        $pdf = PDF::loadView('pdf/employeeContract', ['data' => $data, 'data2' => $holidaysList]);
 
         return $pdf->download('Employee-'.$data['last_name'].'-'.$data['name'].'-Contract.pdf');
     }
