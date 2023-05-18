@@ -4,7 +4,7 @@
   <x-content-layout>
     <div class="mx-auto flex flex-wrap justify-center gap-8">
       @can('view_general_employee_content')
-        <x-canvas-tile title="Employee" :url="route('employee.overview')"
+        <x-canvas-tile title="Employee" :url="route('employees.index')"
           description="Explore and search for employees in the company"></x-canvas-tile>
       @endcan
       <x-canvas-tile :url="route('shipments.create')" title="Shipment Requests"

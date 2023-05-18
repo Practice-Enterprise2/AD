@@ -40,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/respond', 'respond');
+    Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
+    Route::view('/employee_add_contract', 'employee_add_contract')->name('contract-index');
+    Route::view('/employees', 'employee_view')->name('employees.index')->middleware('permission:view_employee_count');
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -52,14 +55,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(EmployeeController::class)->group(function () {
-        Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
-        Route::get('/overview_employee', 'employees')->name('employee-overview');
-        Route::get('/employee_add_contract', 'contract_index')->name('contract-index');
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
     });
 
     Route::controller(EmployeeViewController::class)->group(function () {
-        Route::get('/employee_overview', 'index')->name('employee.overview')->middleware('permission:view_employee_count');
         Route::post('/employee_add', 'save')->name('save-employee')->middleware('permission:add_employee');
         Route::get('/new_employee', 'showAdd')->name('employee.create')->middleware('permission:add_employee');
         Route::post('/employee_edit', 'employeeEdit');
