@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\View\Composers\EmployeeViewComposer;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -16,10 +14,9 @@ class ViewServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap services.
+     * Set up all the view composers.
      */
     public function boot(): void
     {
-        View::composer('employees.index', EmployeeViewComposer::class);
     }
 }
