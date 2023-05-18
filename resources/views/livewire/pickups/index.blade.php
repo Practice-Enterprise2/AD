@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div class="flex justify-center">
   <table>
     <tr class="border-2 border-black dark:border-white">

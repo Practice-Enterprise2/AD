@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="flex items-center justify-center">
     <div
@@ -6,7 +8,7 @@
       <x-canvas-tile title="Dashboard" :url="route('dashboard')"
         description="To the dashboard"></x-canvas-tile>
       @can('view_general_employee_content')
-        <x-canvas-tile title="Employee" :url="route('employee')"
+        <x-canvas-tile title="Employee" :url="route('employee.overview')"
           description="Explore and search for employees in the company"></x-canvas-tile>
       @endcan
       <x-canvas-tile :url="route('shipments.create')" title="Shipment Requests"

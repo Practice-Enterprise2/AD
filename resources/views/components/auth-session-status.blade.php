@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @props(['status'])
 
 @if ($status)

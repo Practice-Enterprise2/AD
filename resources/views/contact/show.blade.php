@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div
     class="flex w-screen flex-col items-center justify-center text-gray-900 dark:text-gray-100">

@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div
   class="airport-selector relative relative inline-flex flex-col justify-center text-gray-500">
   <div class="relative">
