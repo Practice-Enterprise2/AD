@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 {{--
 Slots:
 - (?string) $title: Set the page title, or null for the default title
@@ -29,12 +31,12 @@ Slots:
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/app.css', 'resources/js/layouts/app.js'])
   @livewireStyles
 </head>
 
 <body
-  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900">
+  class="flex h-screen flex-col justify-stretch bg-gray-100 font-sans antialiased dark:bg-gray-900 dark:text-white">
   @include('components.navigation')
 
   @if (isset($header))

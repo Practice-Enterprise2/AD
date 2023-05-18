@@ -1,61 +1,85 @@
-<div>
-  <h1 class="pt-[50px] text-center">New Employee</h1>
-  <form method="post" action="employee_add" accept-charset="UTF-8"
-    class="pt-[50px] text-center">
-    @csrf
-    <div id="left">
-      <label for="firstName">First name:</label>
-      <input type="text" id="firstName" name="firstName" class="mb-[20px]"
-        required><br>
-      <label for="lastName">Last name:</label>
-      <input type="text" id="lastName" name="lastName" class="mb-[20px]"
-        required><br>
-      <label for="street">street:</label>
-      <input type="text" id="street" name="street" class="mb-[20px]"
-        required><br>
-      <label for="province">province:</label>
-      <input type="text" id="province" name="province" class="mb-[20px]"
-        required><br>
-      <label for="city">city:</label>
-      <input type="text" id="city" name="city" class="mb-[20px]"
-        required><br>
-      <label for="postalCode">postalcode:</label>
-      <input type="number" id="postalCode" name="postalCode" class="mb-[20px]"
-        required><br>
-      <label for="phonenumber">phonenumber:</label>
-      <input type="tel" id="phoneNumber" name="phoneNumber"
-        class="mb-[20px]" required><br>
-    </div>
-    <div id="right">
-      <label for="mail">mail:</label>
-      <input type="email" id="mail" name="mail" class="mb-[20px]"
-        required><br>
-      <label for="dateOfBirth">date of birth:</label>
-      <input type="date" id="dateOfBirth" name="dateOfBirth"
-        class="mb-[20px]" required><br>
-      <label for="jobTitle">job title:</label>
-      <input type="text" id="jobTitle" name="jobTitle" class="mb-[20px]"
-        required><br>
-      <label for="salary">salary:</label>
-      <input type="number" id="salary" name="salary" class="mb-[20px]"
-        required><br>
-      <label for="password">password:</label>
-      <input type="password" id="password" name="password" class="mb-[20px]"
-        required><br>
-      <label for="Iban">Iban:</label>
-      <input type="int" id="Iban" name="Iban" class="mb-[20px]"
-        required><br>
-      <label for="isActive">active:</label>
-      <select name="isActive" id="isActive" value="yes">
-        <option value="yes">yes</option>
-        <option value="no">no</option>
-      </select>
-    </div>
-    <br>
-    <a href="{{ route('home') }}">Back</a>
-    <button type="reset"
-      class="bg-red m-[50px] w-[200px] rounded-[250px] p-[15px] text-2xl hover:bg-violet-500 hover:text-black">reset</button>
-    <button type="submit"
-      class="bg-red m-[50px] w-[200px] rounded-[250px] p-[15px] text-2xl hover:bg-violet-500 hover:text-black">New</button>
-  </form>
+{{-- -*-html-*- --}}
+
+<div class="mx-auto">
+  <h1 class="m-5 text-center">New Employee</h1>
+  <div class="bg-gray-200 p-8">
+    <form method="post" action="employee_add" accept-charset="UTF-8">
+      @csrf
+      <div class="clearfix">
+        <div id="left" class="float-left w-60">
+          <label for="firstName">First name:</label>
+          <br><br>
+
+          <label for="lastName">Last name:</label>
+          <br><br>
+          <label for="mail">mail:</label>
+          <br><br>
+          <label for="street">street:</label>
+          <br><br>
+          <label for="houseNumber">house number:</label>
+          <br><br>
+          <label for="province">province:</label>
+          <br><br>
+          <label for="city">city:</label>
+          <br><br>
+          <label for="postalCode">postalcode:</label><br><br>
+          <label for="country">country:</label>
+          <br><br>
+          <label for="phonenumber">phonenumber:</label>
+          <br><br>
+          <label for="dateOfBirth">date of birth:</label><br><br>
+          <label for="jobTitle">job title:</label><br><br>
+          <label for="salary">salary:</label><br><br>
+          <label for="password">password:</label><br><br>
+          <label for="Iban">Iban:</label>
+        </div>
+        <div id="right" class="float-left">
+
+          <input type="text" id="Name" name="name" required><br><br>
+
+          <input type="text" id="lastName" name="last_name"
+            required><br><br>
+
+          <input type="email" id="mail" name="email" required><br><br>
+
+          <input type="text" id="street" name="street" required><br><br>
+
+          <input type="text" id="houseNumber" name="houseNumber"
+            required><br><br>
+
+          <input type="text" id="province" name="province" required><br><br>
+
+          <input type="text" id="city" name="city" required><br><br>
+
+          <input type="number" id="postalCode" name="postalCode"
+            required><br><br>
+
+          <input type="text" id="country" name="country" required><br><br>
+
+          <input type="tel" id="phoneNumber" name="phoneNumber"
+            required><br><br>
+
+          <input type="date" id="dateOfBirth" name="dateOfBirth"
+            required><br><br>
+
+          <input type="text" id="jobTitle" name="jobTitle" required><br><br>
+
+          <input type="number" id="salary" name="salary" required><br><br>
+
+          <input type="password" id="password" name="password"
+            required><br><br>
+
+          <input type="int" id="Iban" name="Iban" required><br><br>
+        </div>
+      </div>
+      <div class="mt-2 text-center">
+        <a href="{{ route('employee.overview') }}"
+          class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">Back</a>
+        <button type="reset"
+          class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">reset</button>
+        <button type="submit"
+          class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">New</button>
+      </div>
+    </form>
+  </div>
 </div>

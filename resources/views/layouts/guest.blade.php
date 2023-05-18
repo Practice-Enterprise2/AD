@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -15,7 +17,7 @@
     rel="stylesheet" />
 
   {{-- Scripts --}}
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/guest.css', 'resources/js/layouts/guest.js'])
 </head>
 
 <body class="font-sans text-gray-900 antialiased">

@@ -1,4 +1,6 @@
-<x-app-layout>
+{{-- -*-html-*- --}}
+
+<x-public-layout>
   <style>
     h1 {
       font: bold;
@@ -85,4 +87,4 @@
       @endforeach
     </table>
   </div>
-</x-app-layout>
+</x-public-layout>

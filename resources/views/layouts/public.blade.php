@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -15,12 +17,14 @@
   @endisset
 
   {{-- Scripts --}}
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/layouts/public.css', 'resources/js/layouts/public.js'])
   @livewireStyles
 </head>
 
 <body>
-  @include('components.public.header')
+  <header class="sticky top-0">
+    @livewire('public.header')
+  </header>
 
   <main>
     {{ $slot }}

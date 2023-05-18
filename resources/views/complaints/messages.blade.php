@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @php
   use App\Models\User;
 @endphp
@@ -45,6 +47,11 @@
       });
 
       function loadMessage(chatID) {
+        console.log(Object.keys(Echo.connector.channels));
+        let channelNames = Object.keys(Echo.connector.channels);
+        channelNames.forEach((channelName) => {
+          Echo.leave(channelName);
+        });
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState === XMLHttpRequest.DONE) {

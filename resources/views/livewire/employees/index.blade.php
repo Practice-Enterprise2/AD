@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div>
   <table>
     <tr class="border-2 border-black dark:border-white">
