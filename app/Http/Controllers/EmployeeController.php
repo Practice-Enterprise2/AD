@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Address;
 use App\Models\Employee;
-use App\Models\EmployeeContract;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,17 +35,6 @@ class EmployeeController extends Controller
         }
 
         return view('employees.index', ['employees' => $employees]);
-    }
-
-    public function contract_save(Request $req): RedirectResponse
-    {
-        $contract = new EmployeeContract();
-        $contract->employee_id = $req->employeeID;
-        $contract->start_date = $req->startdate;
-        $contract->end_date = $req->stopdate;
-        $contract->save();
-
-        return redirect()->back()->with('alert', 'complete creation');
     }
 
     public function create(): View
