@@ -56,12 +56,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee', 'employee_page')->name('employee')->middleware('permission:view_general_employee_content');
         Route::get('/overview_employee', 'employees')->name('employee-overview');
-        Route::get('/employee_add_contract', 'create_contract_index')->name('create-contract-index');
-        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
-        Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts');
-        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details');
-        Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search');
-        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract');
+        Route::get('/employee_add_contract', 'contract_index')->name('contract-index')->middleware('permission:add_employee');
+        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract')->middleware('permission:add_employee');
+        Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts')->middleware('permission:add_employee');
+        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:add_employee');
+        Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:add_employee');
+        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:add_employee');
     });
     Route::controller(EmployeeViewController::class)->group(function () {
         Route::get('/employee_overview', 'index')->name('employee.overview')->middleware('permission:view_employee_count');

@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         return view('employee_view_contracts', ['contracts' => $users]);
     }
 
-    public function create_contract_index(): View|Factory
+    public function contract_index(): View|Factory
     {
         $i = 0;
         $employees = DB::table('employees')->get();
