@@ -18,15 +18,15 @@
             <div class="mt-7">
                 <h2 class="text-center">Customer Info:</h2>
             </div>
-            <div class="border-2 border-solid">
+            <div class="border-2 border-solid flex">
 
-                <div class="w-[200px] h-[150px] border-2 border-solid float-left">
+                <div class="w-[200px] h-[150px] ">
                     <p>First Name:</p>
                     <p>Last Name:</p>
                     <p>Email:</p>
                     <p>Phone:</p>
                 </div>
-                <div class="border-2 border-solid">
+                <div class="">
                     <p>{{$data["user"]->name}}&nbsp;</p>
                     <p>{{$data["user"]->last_name}}&nbsp;</p>
                     <p>{{$data["user"]->email}}&nbsp;</p>
@@ -34,9 +34,9 @@
                 </div>
             </div>
             <h2 class="text-center">Invoice Info:</h2>
-            <div class="border-2 border-solid">
+            <div class="border-2 border-solid flex">
 
-                <div class="w-[200px] border-2 border-solid float-left">
+                <div class="w-[200px] ">
                     <p>Invoice Code:</p>
                     <p>Due Date:</p>
                     <p>Total Price:</p>
@@ -44,7 +44,7 @@
                     <p>Payment Status:</p>
                     <p>Created At:</p>
                 </div>
-                <div class="border-2 border-solid">
+                <div class="">
                     <p>{{$data["invoice"]->invoice_code}}</p>
                     <p>{{$data["invoice"]->due_date}}</p>
                     <p>{{$data["invoice"]->total_price}} Euro</p>
@@ -139,13 +139,13 @@
             <h2 class="text-center">Dimensions:</h2>
             <div class="border-2 border-solid">
 
-                <div class="w-[200px] h-[150px] border-2 border-solid float-left">
+                <div class="w-[200px] h-[150px]  float-left">
                     <p>Length:</p>
                     <p>Width:</p>
                     <p>Height:</p>
                     
                 </div>
-                <div class="border-2 border-solid">
+                <div class="">
                     <p>{{$data["dimensions"]->length}}&nbsp;</p>
                     <p>{{$data["dimensions"]->width}}&nbsp;</p>
                     <p>{{$data["dimensions"]->height}}&nbsp;</p>
@@ -154,5 +154,5 @@
             </div>
         </div>
             
-    </div>
+    
 </x-app-layout>
