@@ -40,7 +40,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      * Normal views, that can optionally take extra data.
      */
 
-    Route::view('/respond', 'respond');
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
     Route::view('/employees/create', 'employees.create')->name('employees.create')->can('create', Employee::class);
 
