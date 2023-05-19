@@ -213,9 +213,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
-    Route::get('/shipmentGraphs', function () {
-        return view('graphs');
-    })->name('shipmentGraphs');
+
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
 

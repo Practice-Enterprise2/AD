@@ -133,11 +133,6 @@
               <x-dropdown-link :href="route('shipments.showshipments')">
                 {{ __('Show Shipments') }}
              </x-dropdown-link>
-             @can('view_shipmentgraphs')
-               <x-dropdown-link :href="route('shipmentGraphs')">
-                 {{ __('Shipment graphs') }}
-               </x-dropdown-link>
-             @endcan
             </x-slot>
           </x-dropdown>
         @endauth
