@@ -20,7 +20,6 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
 use App\Models\Employee;
-use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 

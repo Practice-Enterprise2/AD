@@ -16,11 +16,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse; // Traits for invoices
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
-
-use function PHPSTORM_META\type;
 
 class ShipmentController extends Controller
 {
@@ -305,39 +303,39 @@ class ShipmentController extends Controller
 
         // Count total shipment of user.
         $id = Auth::user()->id;
-        $countUser = DB::table('shipments')->where('user_id',$id)->count();
+        $countUser = DB::table('shipments')->where('user_id', $id)->count();
 
         // Gathering count of each status
         $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->where('user_id', $id)->count();
-        $countAwaPick = DB::table('shipments')->where('status','Awaiting Pickup')->where('user_id', $id)->count();
-        $countInTran = DB::table('shipments')->where('status','In Transit')->where('user_id', $id)->count();
-        $countOutFDel = DB::table('shipments')->where('status','Out For Delivery')->where('user_id', $id)->count();
-        $countDelivered = DB::table('shipments')->where('status','Delivered')->where('user_id', $id)->count();
-        $countEx = DB::table('shipments')->where('status','Exception')->where('user_id', $id)->count();
-        $countHaL = DB::table('shipments')->where('status','Held At Location')->where('user_id', $id)->count();
-        $countDel = DB::table('shipments')->where('status','Deleted')->where('user_id', $id)->count();
-        $countDec = DB::table('shipments')->where('status','Declined')->where('user_id', $id)->count();
+        $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->where('user_id', $id)->count();
+        $countInTran = DB::table('shipments')->where('status', 'In Transit')->where('user_id', $id)->count();
+        $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->where('user_id', $id)->count();
+        $countDelivered = DB::table('shipments')->where('status', 'Delivered')->where('user_id', $id)->count();
+        $countEx = DB::table('shipments')->where('status', 'Exception')->where('user_id', $id)->count();
+        $countHaL = DB::table('shipments')->where('status', 'Held At Location')->where('user_id', $id)->count();
+        $countDel = DB::table('shipments')->where('status', 'Deleted')->where('user_id', $id)->count();
+        $countDec = DB::table('shipments')->where('status', 'Declined')->where('user_id', $id)->count();
 
-        // Pie chart for overview of 
+        // Pie chart for overview of
         $types = DB::table('shipments')
-        ->select(DB::raw('type, COUNT(type) as typeTotal'))
-        ->where('user_id', $id)
-        ->groupBy('type')
-        ->get();
+            ->select(DB::raw('type, COUNT(type) as typeTotal'))
+            ->where('user_id', $id)
+            ->groupBy('type')
+            ->get();
 
         $labels = [];
         $data = [];
         foreach ($types as $type) {
             $labels[] = $type->type;
-            $data[] = $type->typeTotal; 
+            $data[] = $type->typeTotal;
         }
 
         // Block chart data
         $expenses = DB::table('shipments')
-        ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
-        ->where('user_id', $id)
-        ->groupBy('expense')
-        ->get();
+            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+            ->where('user_id', $id)
+            ->groupBy('expense')
+            ->get();
 
         $blockLabels = [];
         $blockData = [];
@@ -346,32 +344,31 @@ class ShipmentController extends Controller
             $blockData[] = $expense->exepenseTotal;
         }
 
-        // 5 laterst shipments      
+        // 5 laterst shipments
         $latest = DB::table('shipments')
-        ->select('id', 'expense', 'receiver_name', 'status')
-        ->where('user_id', $id)
-        ->orderBy('created_at', 'desc')
-        ->limit(5)
-        ->get();
-    
+            ->select('id', 'expense', 'receiver_name', 'status')
+            ->where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
 
         // Return the values
-        return view('/shipments.dashboard',[
+        return view('/shipments.dashboard', [
             'countUser' => $countUser,
-            'countAwaConf' => $countAwaConf, 
-            'countAwaPick' => $countAwaPick, 
-            'countInTran' => $countInTran, 
-            'countOutFDel' => $countOutFDel, 
-            'countDelivered' => $countDelivered, 
-            'countEx' => $countEx, 
-            'countHaL' => $countHaL, 
-            'countDel' => $countDel, 
+            'countAwaConf' => $countAwaConf,
+            'countAwaPick' => $countAwaPick,
+            'countInTran' => $countInTran,
+            'countOutFDel' => $countOutFDel,
+            'countDelivered' => $countDelivered,
+            'countEx' => $countEx,
+            'countHaL' => $countHaL,
+            'countDel' => $countDel,
             'countDec' => $countDec,
             'data' => $data,
             'labels' => $labels,
             'blockLabels' => $blockLabels,
             'blockData' => $blockData,
-            'latest' => $latest
+            'latest' => $latest,
         ]);
     }
 }
