@@ -73,6 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(InvoicesController::class)->group(function(){
         Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list');
         Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details');
+        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail');
     });
     Route::get('/invoices_list', [InvoicesController::class, 'viewAllInvoices'])->name('invoice-list');
     Route::controller(UserController::class)->group(function () {
