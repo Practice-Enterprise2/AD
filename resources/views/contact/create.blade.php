@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
 
   <section class="bg-white dark:bg-gray-900">

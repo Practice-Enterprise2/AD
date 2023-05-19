@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_employees', 'View all the employees.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
         static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
-        static::bootstrap_permission('view_general_employee_content', 'See general employee content like dashboards, links to dashoards, schedules...');
+        static::bootstrap_permission('view_general_employee_content', 'See general employee content...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
@@ -80,9 +80,11 @@ class AppServiceProvider extends ServiceProvider
         $role_user = static::bootstrap_role('user');
         $role_management = static::bootstrap_role('management');
 
+        // Assign the necessary permissions to all the roles.
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
         $role_employee->givePermissionTo('edit_all_shipments');
+        $role_employee->givePermissionTo('accept_any_shipment');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
@@ -91,6 +93,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee_hr->givePermissionTo('view_all_employees');
         $role_employee_hr->givePermissionTo('add_vacant_jobs');
         $role_employee_hr->givePermissionTo('edit_vacant_jobs');
+        $role_employee_hr->givePermissionTo('edit_any_employee');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');
@@ -100,6 +103,11 @@ class AppServiceProvider extends ServiceProvider
 
         $role_management->givePermissionTo('view_employee_count');
         $role_management->givePermissionTo('view_reviews');
+        $role_management->givePermissionTo('view_all_shipments');
+        $role_management->givePermissionTo('delete_any_shipment');
+        $role_management->givePermissionTo('edit_any_review');
+        $role_management->givePermissionTo('delete_any_review');
+        $role_management->givePermissionTo('edit_any_employee');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {

@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="flex items-center justify-center">
     <div
@@ -7,6 +9,10 @@
         <x-canvas-tile :url="route('hr_view_jobs')" title="HR Vacant Jobs"
           description="Add and edit job vacancies"></x-canvas-tile>
       @endrole
+      @can('view_general_employee_content')
+        <x-canvas-tile :url="route('employee_complaints')" title="Complaint"
+          description="Submit a complaint about an event on the workfloor"></x-canvas-tile>
+      @endcan
     </div>
   </div>
 </x-app-layout>
