@@ -10,7 +10,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
-use App\Http\Controllers\InvoiceList;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\InvoicesController;
@@ -40,7 +39,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::view('/respond', 'respond');
-    
 
     /*
      * Routes that offer functionality for resources.
@@ -70,10 +68,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_edit_save', 'employeeEditSave');
         Route::get('/employee_search', 'searchEmployee')->name('employee-search');
     });
-    Route::controller(InvoicesController::class)->group(function(){
-        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list');
-        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details');
-        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail');
+    Route::controller(InvoicesController::class)->group(function () {
+        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list')->middleware('permission:view_general_employee_content');
+        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_general_employee_content');
+        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_general_employee_content');
     });
     Route::get('/invoices_list', [InvoicesController::class, 'viewAllInvoices'])->name('invoice-list');
     Route::controller(UserController::class)->group(function () {
