@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_general_employee_content');
         Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_general_employee_content');
     });
-    Route::get('/invoices_list', [InvoicesController::class, 'viewAllInvoices'])->name('invoice-list');
+
     Route::controller(UserController::class)->group(function () {
         Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
         Route::put('/admin/users/{id}', 'update')->name('users.update');
