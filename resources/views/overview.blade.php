@@ -1,6 +1,8 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
 
-  <!-- example -->
+  {{-- example --}}
   <div style="display:flex; align-items:baseline; width:80%">
 
     <table>

@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div class="flex justify-center">
   <form wire:submit.prevent="save"
     class="grid w-10/12 grid-cols-1 gap-4 gap-y-2 lg:max-w-5xl lg:grid-cols-5">
