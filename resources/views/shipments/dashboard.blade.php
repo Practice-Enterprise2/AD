@@ -76,22 +76,58 @@
               </div>
               
           </div>
-          <div class="w-1/3 bg-gray-800 rounded shadow-lg text-lg font-bold">
+        <div class="w-1/3 bg-gray-800 rounded shadow-lg text-lg font-bold">
             <h1 class="col-span-2 p-4 text-white font-bold text-2xl underline">Types</h1>
             <div>
                 <canvas id="typeChart"></canvas>
             </div>
-          </div>
         </div>
+    </div>
       
-        <div class="flex mb-8">
-          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4">Panel 4</div>
-          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg">Panel 5</div>
+    <div class="flex mb-8">
+        <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4">
+            <h1 class="col-span-2 p-4 text-white font-bold text-2xl underline">Expense Chart</h1>
+            <canvas id="barChart" class="w-1/4"></canvas>    
         </div>
-      
-      </div>
-      
+    
+        <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg">
+            <h1 class="p-4 text-white font-bold text-2xl underline">Last 5 Shipments</h1>
+        </div>
+    </div>
+
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+      {{-- Bar Chart Script --}}
+      <script>
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var labels = <?php echo json_encode($blockLabels); ?>;
+        var data = <?php echo json_encode($blockData); ?>;
+
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+
+      {{-- Pie chart Script --}}
       <script>
           var ctx = document.getElementById('typeChart').getContext('2d');
           var labels = <?php echo json_encode($labels); ?>;
@@ -102,7 +138,7 @@
               data: {
                   labels: labels,
                   datasets: [{
-                      label: 'Sales by Product',
+                      label: 'Amount of Cargo Type',
                       data: data,
                       backgroundColor: [
                           'rgba(255, 99, 132, 0.2)',
@@ -142,7 +178,8 @@
               }
           });
       </script>
-      
+
+     
 
 </x-app-layout>
 

@@ -327,10 +327,23 @@ class ShipmentController extends Controller
 
         $labels = [];
         $data = [];
-
         foreach ($types as $type) {
             $labels[] = $type->type;
             $data[] = $type->typeTotal; 
+        }
+
+        // Block chart data
+        $expenses = DB::table('shipments')
+        ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+        ->where('user_id', $id)
+        ->groupBy('expense')
+        ->get();
+
+        $blockLabels = [];
+        $blockData = [];
+        foreach ($expenses as $expense) {
+            $blockLabels[] = $expense->expense;
+            $blockData[] = $expense->exepenseTotal;
         }
 
         // TODO: try to add this in a loop.
@@ -355,7 +368,9 @@ class ShipmentController extends Controller
             'countDel' => $countDel, 
             'countDec' => $countDec,
             'data' => $data,
-            'labels' => $labels
+            'labels' => $labels,
+            'blockLabels' => $blockLabels,
+            'blockData' => $blockData
         ]);
     }
 }
