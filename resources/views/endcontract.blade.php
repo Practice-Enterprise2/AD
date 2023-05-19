@@ -9,10 +9,10 @@
               <th
                 class="bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
                 id</th>
-                <th
+              <th
                 class="bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
                 firstname</th>
-                <th
+              <th
                 class="bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
                 lastname</th>
               <th
@@ -32,11 +32,13 @@
                 <td class="whitespace-no-wrap px-6 py-4">{{ $employee->id }}
                 </td>
                 @if ($employee->user)
-                <td class="whitespace-no-wrap px-6 py-4">{{ $employee->user->name }}</td>
-                <td class="whitespace-no-wrap px-6 py-4">{{ $employee->user->last_name }}</td>
+                  <td class="whitespace-no-wrap px-6 py-4">
+                    {{ $employee->user->name }}</td>
+                  <td class="whitespace-no-wrap px-6 py-4">
+                    {{ $employee->user->last_name }}</td>
                 @else
-                <td class="whitespace-no-wrap px-6 py-4">N/A</td>
-                <td class="whitespace-no-wrap px-6 py-4">N/A</td>
+                  <td class="whitespace-no-wrap px-6 py-4">N/A</td>
+                  <td class="whitespace-no-wrap px-6 py-4">N/A</td>
                 @endif
                 </td>
                 <td class="whitespace-no-wrap px-6 py-4">
