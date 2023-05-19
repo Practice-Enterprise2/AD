@@ -8,11 +8,11 @@
         </div>
 
         <div class="flex mb-8">
-          <div class="w-1/3 p-4 bg-gray-800 rounded shadow-lg mr-4 text-xl font-bold">
+          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4 text-xl font-bold">
             <h1 class="p-4 text-white font-bold text-2xl underline">Amount of Shipments</h1>
             <div class="text-7xl font-bold text-center mt-12">{{ $countUser }} </div>
           </div>
-          <div class="w-1/3 p-4 bg-gray-800 rounded shadow-lg mr-4">
+          <div class="w-1/2 p-4 bg-gray-800 rounded shadow-lg mr-4">
             <div class="grid grid-cols-2 gap-2 text-sm">
                 <h1 class="col-span-2 p-4 text-white font-bold text-2xl underline">Shipments per status</h1>
                 
@@ -81,12 +81,7 @@
               </div>
               
           </div>
-        <div class="w-1/3 bg-gray-800 rounded shadow-lg text-lg font-bold">
-            <h1 class="col-span-2 p-4 text-white font-bold text-2xl underline">Types</h1>
-            <div>
-                <canvas id="typeChart"></canvas>
-            </div>
-        </div>
+
     </div>
       
     <div class="flex mb-8">
@@ -125,7 +120,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
 {{-- Bar Chart Script --}}
 <script>
   var blockCtx = document.getElementById('barChart').getContext('2d');
@@ -152,5 +146,6 @@
           }
       }
   });
+
 
 </script>
