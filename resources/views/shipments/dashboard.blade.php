@@ -3,8 +3,8 @@
         <h1 class="text-2xl font-bold mb-8">Dashboard</h1>    
         
         <div class="m-2">
-            <button class="bg-gray-800 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 transition duration-500 ease-in-out" >Request Shipment</button>
-            <button class="bg-gray-800 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 transition duration-500 ease-in-out">Shipment Overview</button>
+            <a href="{{ url('/shipments/create') }}"><button class="bg-gray-800 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 transition duration-500 ease-in-out" >Request Shipment</button></a>
+            <a href="{{ url('/shipments') }}"><button class="bg-gray-800 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 transition duration-500 ease-in-out">Shipment Overview</button></a>
         </div>
 
         <div class="flex mb-8">
