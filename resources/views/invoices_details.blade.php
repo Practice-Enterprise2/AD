@@ -17,6 +17,10 @@
         </button>
       </form>
     @endif
+    @if (\Session::has('success'))
+      {!! \Session::get('success') !!}
+    @endif
+
   </div>
   <div class="mx-auto w-[810px] bg-white p-[10px]">
     <div class="mt-7">
