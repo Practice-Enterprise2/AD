@@ -20,9 +20,11 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\refundController;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+
 
 // Publicly available routes.
 Route::view('/', 'landing-page')->name('landing-page');
@@ -169,6 +171,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
 
     // Email verification
-});
+
+    // refund 
+    Route::get('/refund/create_refund',function () {
+        return view('/refund/create_refund');
+    });
+    Route::get('/refund/create_refund', [refundController::class, 'index']);
+    Route::post('/refund/create_refund', [refundController::class, 'store'])->name('Refund.us.store');   
+}); 
 
 require __DIR__.'/auth.php';
