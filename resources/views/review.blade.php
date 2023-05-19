@@ -87,7 +87,7 @@
       thoughts? Your feedback will help us improve our service and provide a
       better experience for our customers in the future.<br> Thank you!
     <p>
-    <form method="POST" action="review_add">
+    <form method="POST" action="{{ route('reviews.store') }}">
       @csrf
 
       <div>

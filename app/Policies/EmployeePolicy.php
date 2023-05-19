@@ -34,6 +34,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
+        return $user->can('edit_any_employee');
     }
 
     /**

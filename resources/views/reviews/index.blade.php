@@ -47,20 +47,16 @@
   </style>
   <h1>Customer Reviews</h1>
 
-  <form method="GET" action="/filterreview">
+  <form method="GET" action="{{ route('reviews.index') }}">
     <label for="rating">Filter by Rating:</label>
     <select id="rating" name="rating">
-      <option value="">All Ratings</option>
-      <option value="1"{{ $rating == '1' ? ' selected' : '' }}>1 Star
-      </option>
-      <option value="2"{{ $rating == '2' ? ' selected' : '' }}>2 Stars
-      </option>
-      <option value="3"{{ $rating == '3' ? ' selected' : '' }}>3 Stars
-      </option>
-      <option value="4"{{ $rating == '4' ? ' selected' : '' }}>4 Stars
-      </option>
-      <option value="5"{{ $rating == '5' ? ' selected' : '' }}>5 Stars
-      </option>
+      <option value>All Ratings</option>
+      @for ($i = 1; $i <= 5; $i++)
+        <option value="{{ $i }}"
+          {{ $rating == $i ? ' selected' : '' }}>
+          {{ $i }} Star{{ $i > 1 ? 's' : '' }}
+        </option>
+      @endfor
     </select>
     <button type="submit">Filter</button>
   </form>
@@ -88,3 +84,5 @@
     </table>
   </div>
 </x-public-layout>
+{{-- vim: ft=html
+--}}
