@@ -346,14 +346,14 @@ class ShipmentController extends Controller
             $blockData[] = $expense->exepenseTotal;
         }
 
-        // TODO: try to add this in a loop.
-        /* 
-        $typeStandard = DB::table('shipments')->where('user_id', $id)->where('type', 'Standard')->count();
-        $typeFragile = DB::table('shipments')->where('user_id', $id)->where('type', 'Fragile')->count();
-        $typeHazardous = DB::table('shipments')->where('user_id', $id)->where('type', 'Hazardous')->count();
-        $typeLiquid = DB::table('shipments')->where('user_id', $id)->where('type', 'Liquid')->count();      
-        $typeArray = [$typeStandard, $typeFragile, $typeHazardous, $typeLiquid];
-         */
+        // 5 laterst shipments      
+        $latest = DB::table('shipments')
+        ->select('id', 'expense', 'receiver_name', 'status')
+        ->where('user_id', $id)
+        ->orderBy('created_at', 'desc')
+        ->limit(5)
+        ->get();
+    
 
         // Return the values
         return view('/shipments.dashboard',[
@@ -370,7 +370,8 @@ class ShipmentController extends Controller
             'data' => $data,
             'labels' => $labels,
             'blockLabels' => $blockLabels,
-            'blockData' => $blockData
+            'blockData' => $blockData,
+            'latest' => $latest
         ]);
     }
 }
