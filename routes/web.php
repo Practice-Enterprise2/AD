@@ -3,6 +3,7 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\AiGraphController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
@@ -173,6 +174,7 @@ Route::middleware('auth')->group(function () {
 
     // employee graph
     Route::get('/employeegraph', [GraphController::class, 'index'])->name('employeegraph');
+    Route::get('/ai-graph', [AIGraphController::class, 'index'])->name('ai-graph')->middleware('permission:view_order_graph');
 
     // Email verification
 });
