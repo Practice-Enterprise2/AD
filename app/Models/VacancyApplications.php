@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vacancyApplications extends Model
+class VacancyApplications extends Model
 {
     protected $fillable = [
         'first_name',

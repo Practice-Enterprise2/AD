@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobVacancy;
-use App\Models\vacancyApplications;
+use App\Models\VacancyApplications;
 use Illuminate\Http\Request;
 
 class JobVacanciesController extends Controller
@@ -13,7 +13,7 @@ class JobVacanciesController extends Controller
         $jobVacancies = JobVacancy::where('filled', false)->get();
 
         foreach ($jobVacancies as $job) {
-            $job->applicantCount = vacancyApplications::where('job_vacancies_id', $job->id)->count();
+            $job->applicantCount = VacancyApplications::where('job_vacancies_id', $job->id)->count();
         }
 
         return view('job-vacancies.view_jobs_hr', compact('jobVacancies'));
@@ -39,7 +39,7 @@ class JobVacanciesController extends Controller
 
     public function view_applicants($job)
     {
-        $applicants = vacancyApplications::where('job_vacancies_id', $job)->get();
+        $applicants = VacancyApplications::where('job_vacancies_id', $job)->get();
         foreach ($applicants as $applicant) {
             $applicant->job = $job;
         }
@@ -62,7 +62,7 @@ class JobVacanciesController extends Controller
 
     public function open_cv($applicant)
     {
-        $person = vacancyApplications::where('id', $applicant)->first();
+        $person = VacancyApplications::where('id', $applicant)->first();
         $cvPath = storage_path('app/public/'.$person->cv);
 
         if (file_exists($cvPath)) {
@@ -101,7 +101,7 @@ class JobVacanciesController extends Controller
     {
         $this->validate($req, [
             'job_id' => ['required', 'numeric'],
-            'applicant_last_name' => ['required', 'alpha'],
+            'applicant_first_name' => ['required', 'alpha'],
             'applicant_last_name' => ['required', 'alpha'],
             'applicant_email' => ['required', 'email'],
             'applicant_cv' => ['required', 'file', 'mimes:pdf',  'max:2048'],
@@ -113,7 +113,7 @@ class JobVacanciesController extends Controller
             return redirect()->route('view_jobs')->withErrors(['error' => 'The job was recently filled.']);
         }
 
-        $lastApplicant = vacancyApplications::latest()->first();
+        $lastApplicant = VacancyApplications::latest()->first();
         if ($lastApplicant == '') {
             $lastApplicantID = 1;
         } else {
@@ -123,7 +123,7 @@ class JobVacanciesController extends Controller
         $file = $lastApplicantID.'-'.$req->applicant_name.'.pdf';
         $cvPath = $req->file('applicant_cv')->storeAs('cv', $file, 'public');
 
-        $applyJob = new vacancyApplications();
+        $applyJob = new VacancyApplications();
         $applyJob->setAttribute('job_vacancies_id', $req->job_id);
         $applyJob->setAttribute('first_name', $req->applicant_first_name);
         $applyJob->setAttribute('last_name', $req->applicant_last_name);
