@@ -132,7 +132,7 @@
               @endcan
               <x-dropdown-link :href="route('shipments.showshipments')">
                 {{ __('Show Shipments') }}
-             </x-dropdown-link>
+              </x-dropdown-link>
             </x-slot>
           </x-dropdown>
         @endauth

@@ -27,6 +27,8 @@
       @endcan
       <x-canvas-tile :url="route('shipments.index')" title="Confirmed Shipments"
         description="show confirmed shipments"></x-canvas-tile>
+      <x-canvas-tile :url="route('shipments.showshipments')" title="Show Shipments"
+        description="show your shipments"></x-canvas-tile>
       <x-canvas-tile :url="route('pickups.index')" title="Pickups"
         description="See all your package pickups"></x-canvas-tile>
       @can('view_reviews')

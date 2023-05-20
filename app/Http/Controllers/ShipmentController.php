@@ -19,7 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Collection;
 
 class ShipmentController extends Controller
 {
@@ -218,11 +217,12 @@ class ShipmentController extends Controller
             ->where('shipments.id', $id)
             ->select('*')
             ->get();
-        $shipment = Shipment::find($id);    
-        $waypointsCollection = $this->track($shipment);    
+        $shipment = Shipment::find($id);
+        $waypointsCollection = $this->track($shipment);
+
         return view('shipments_details', [
             'shipments' => $shipments,
-            'waypointsCollection' => $waypointsCollection
+            'waypointsCollection' => $waypointsCollection,
         ]);
     }
 
@@ -387,13 +387,12 @@ class ShipmentController extends Controller
         // (!) don't forget to add your bing maps key here.
         $key = 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S';
         // address should be converted here, which will be used with the baseURL to send a request.
-        
+
         $country = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->country);
         $street = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->street);
         $housenr = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->house_number);
         $locality = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->city);
         $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->postal_code);
-        
 
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
@@ -405,7 +404,7 @@ class ShipmentController extends Controller
         // DATA == latitude, longitude
         $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
         $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
-        
+
         // here is the implementation to reverse geocodes into address again.
         // for debugging purposes.
         $centerPoint = $latitude.','.$longitude;
@@ -415,12 +414,11 @@ class ShipmentController extends Controller
         $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
         $coords = [
             'latitude' => $latitude,
-            'longitude' => $longitude
+            'longitude' => $longitude,
         ];
         $waypointsCollection->push($coords);
-        
 
-        for ($i = 0; $i < count($shipment->waypoints); $i++){
+        for ($i = 0; $i < count($shipment->waypoints); $i++) {
             $country2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->country);
             $street2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->street);
             $housenr2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->house_number);
@@ -433,11 +431,11 @@ class ShipmentController extends Controller
             $output2 = file_get_contents($findURL2);
             //dd($findURL);
             $response2 = new \SimpleXMLElement($output2);
-    
+
             // DATA == latitude, longitude
             $latitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
             $longitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
-            
+
             // here is the implementation to reverse geocodes into address again.
             // for debugging purposes.
             $centerPoint2 = $latitude2.','.$longitude2;
@@ -448,14 +446,14 @@ class ShipmentController extends Controller
             $coords = [
                 'latitude' => $latitude2,
                 'longitude' => $longitude2,
-                'status' => $status
+                'status' => $status,
             ];
             $waypointsCollection->push($coords);
-            }
-  
+        }
+
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
-        
+
         return $waypointsCollection;
     }
 }

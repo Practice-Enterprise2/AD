@@ -42,6 +42,7 @@ class Shipment extends Model implements ValidatesAttributes
         'delivery_date',
         'status',
     ];
+
     public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 
     public const VALIDATION_RULE_SHIPMENT_DATE = ['required'];

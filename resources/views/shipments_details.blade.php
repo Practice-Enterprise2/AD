@@ -10,19 +10,20 @@
     var locations = [];
     var status = "";
     var polyline;
+
     function GetMap() {
-      
+
       for (var i = 0; i < collection.length; i++) {
-      latitude = parseFloat(Object.values(collection[i]['latitude'])[0]);
-      longitude = parseFloat(Object.values(collection[i]['longitude'])[0]);
-      locations[i] = new Microsoft.Maps.Location(latitude, longitude);
+        latitude = parseFloat(Object.values(collection[i]['latitude'])[0]);
+        longitude = parseFloat(Object.values(collection[i]['longitude'])[0]);
+        locations[i] = new Microsoft.Maps.Location(latitude, longitude);
       }
 
       var polyline = new Microsoft.Maps.Polyline(locations, {
         strokeColor: 'red',
         strokeThickness: 3
       });
-        
+
 
 
       var map = new Microsoft.Maps.Map('#map', {

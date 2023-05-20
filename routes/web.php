@@ -232,11 +232,11 @@ Route::middleware('auth')->group(function () {
     });
 
     //ShipmentController
+    Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
     Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests')->middleware('permission:edit_all_shipments');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate')->middleware('permission:edit_all_shipments');
-    Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('permission:edit_all_shipments');
     Route::patch('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('shipments.update')->middleware('permission:edit_all_shipments');
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy')->middleware('permission:edit_all_shipments');
@@ -246,7 +246,6 @@ Route::middleware('auth')->group(function () {
     // Route::get('shipments/{user_id}/get_shipments') (User $user)
 
     Route::get('shipments/get_shipments/{shipment}/shipment_overview', [ShipmentController::class, 'track'])->name('shipments.track');
-
 
     //contact and messages
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
@@ -272,32 +271,32 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/markAsRead/{id}', function ($id) {
         auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
-    Route::controller(ContactController::class)->group(function () {
-        Route::get('/contact', 'create')->name('contact.create');
-        Route::post('/contact', 'store')->name('contact.store');
-        Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
-        Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
-        Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
+        Route::controller(ContactController::class)->group(function () {
+            Route::get('/contact', 'create')->name('contact.create');
+            Route::post('/contact', 'store')->name('contact.store');
+            Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
+            Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
+            Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
+        });
+
+        Route::controller(ComplaintsController::class)->group(function () {
+            Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
+            Route::get('/messages', 'messages')->name('complaints.messages');
+            Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
+            Route::post('/chat-message', 'sendMessage');
+        });
+
+        Route::controller(NotificationController::class)->group(function () {
+            Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
+            Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+        });
     });
 
-    Route::controller(ComplaintsController::class)->group(function () {
-        Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
-        Route::get('/messages', 'messages')->name('complaints.messages');
-        Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
-        Route::post('/chat-message', 'sendMessage');
-    });
+    Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
-    Route::controller(NotificationController::class)->group(function () {
-        Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
-        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
-    });
+    // Email verification
+    /*Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })>middleware('auth')->name('verification.notice');*/
 });
-
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
-
-// Email verification
-/*Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})>middleware('auth')->name('verification.notice');*/
-
 require __DIR__.'/auth.php';
