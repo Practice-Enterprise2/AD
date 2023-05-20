@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 space-y-6 rounded-md bg-white p-6 shadow-md">
@@ -252,23 +254,27 @@
             {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
           </div>
           <div class="mb-2 flex justify-end">
-            <form action="{{ route('shipments.edit', $shipment->id) }}"
-              method="GET">
-              @csrf
-              <button
-                class="me-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                type="submit">
-                Edit</button>
-            </form>
-            <form action="{{ route('shipments.destroy', $shipment->id) }}"
-              method="POST">
-              @csrf
-              @method('DELETE')
-              <button
-                class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                type="submit">
-                Delete</button>
-            </form>
+            @can('edit_all_shipments')
+              <form action="{{ route('shipments.edit', $shipment->id) }}"
+                method="GET">
+                @csrf
+                <button
+                  class="me-1 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  type="submit">
+                  Edit</button>
+              </form>
+            @endcan
+            @can('delete_any_shipment')
+              <form action="{{ route('shipments.destroy', $shipment->id) }}"
+                method="POST">
+                @csrf
+                @method('DELETE')
+                <button
+                  class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  type="submit">
+                  Delete</button>
+              </form>
+            @endcan
           </div>
         </div>
 

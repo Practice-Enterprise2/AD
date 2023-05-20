@@ -1,0 +1,7 @@
+@import '../main.css';
+
+input,
+textarea,
+select {
+    @apply text-black;
+}

@@ -9,7 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "barryvdh/laravel-dompdf": "^2.0",
         "beyondcode/laravel-websockets": "^1.14.0",
+        "blade-ui-kit/blade-heroicons": "^2.1",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",

@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <style>
     :root {
@@ -172,8 +174,7 @@
       </form>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
+  <script type="module">
     $(document).ready(function() {
       // Hide the VAT Number <tr> initially if "Single" is selected
       if ($('#single').prop('checked')) {
