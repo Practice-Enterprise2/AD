@@ -52,7 +52,6 @@ Route::controller(PickupController::class)->group(function () {
     Route::get('/pickups', 'index')->name('pickups.index');
     Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     Route::controller(PickupController::class)->group(function () {
-        Route::get('/pickups/create/{shipment_id?}', 'create')->name('pickups.create');
         Route::get('/pickups', 'index')->name('pickups.index');
         Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     });
@@ -66,7 +65,6 @@ Route::controller(PickupController::class)->group(function () {
      */
 
     Route::controller(PickupController::class)->group(function () {
-        Route::get('/pickups/create', 'create')->name('pickups.create');
         Route::get('/pickups', 'index')->name('pickups.index');
         Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     });
@@ -234,7 +232,6 @@ Route::middleware('auth')->group(function () {
     //ShipmentController
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
-    Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests')->middleware('permission:edit_all_shipments');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate')->middleware('permission:edit_all_shipments');
     Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit')->middleware('permission:edit_all_shipments');
