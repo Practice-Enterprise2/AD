@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EmployeeContract;
 use App\Models\HolidaySaldo;
+use App\Models\Position;
+use DateTime;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -86,9 +88,28 @@ class EmployeeController extends Controller
             $stopyear = intval($req->stopdate.substr(0, 4));
             $dayscheck = 1;
             $b = 0;
+
+            $startdate = new DateTime($req->startdate);
+            $stopdate = new DateTime($req->stopdate);
+
+            $daysInStartYear = (clone $startdate)->modify('last day of December')->diff($startdate)->days;
+            $daysInEndYear = (clone $stopdate)->modify('first day of January')->diff($stopdate)->days;
+
             for ($i = $startyear; $i <= $stopyear; $i++) {
-                if ($req->{'days'.$b} > 50) {
-                    $dayscheck = 0;
+                if ($i == $startyear) {
+                    if ($req->{'days'.$b} > $daysInStartYear) {
+                        $dayscheck = 0;
+                    }
+                }
+                if ($i == $stopyear) {
+                    if ($req->{'days'.$b} > $daysInEndYear) {
+                        $dayscheck = 0;
+                    }
+                }
+                if ($i != $stopyear && $i != $startyear) {
+                    if ($req->{'days'.$b} > 50) {
+                        $dayscheck = 0;
+                    }
                 }
                 $b += 1;
             }
@@ -111,6 +132,21 @@ class EmployeeController extends Controller
                     $holidaySaldo->save();
                     $b += 1;
                 }
+                $newJobTitle = $req->input('position');
+                $jobtitle = DB::table('positions')->where('name', $newJobTitle)->first();
+                if ($jobtitle === null) {
+                    $position = new Position();
+                    $position->name = $newJobTitle;
+                    $position->save();
+                }
+                $position = DB::table('positions')->where('name', $newJobTitle)->first();
+
+                DB::table('position_to_employee_contract')->insert([
+                    'start_date' => $req->startdate,
+                    'end_date' => $req->stopdate,
+                    'position_id' => $position->id,
+                    'employee_contract_id' => $employeeContractId,
+                ]);
 
                 return redirect()->back()->with('alert', 'Succes!');
             }

@@ -42,7 +42,6 @@
     <form method="post" action="employee_add_contract_done"
       accept-charset="UTF-8">
       @csrf
-
       <label for="employeeID">Select an employee:</label>
       <select name="employeeID" id="employeeID" required>
         @foreach ($users as $user)
@@ -50,6 +49,14 @@
             {{ $user['lastname'] }}</option>
         @endforeach
       </select>
+      <br>
+      <label for="position">For position/job title:</label>
+      <input type="text" name="position" id="position"
+        class="rounded border-2">
+      <br>
+      <label for="salary">Salary per month</label>
+      <input type="text" name="salary" id="salary"
+        class="rounded border-2">
       <br>
 
       <label for="startdate">Start date:</label>
