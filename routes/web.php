@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
@@ -32,6 +33,11 @@ Route::view('/', 'landing-page')->name('landing-page');
 Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+
+//job vacancies person
+Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
+Route::get('/viewJobs/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
+Route::post('/viewJobs/job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 // Routes that require an authenticated session with a verified email.
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -107,6 +113,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
+    Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_vacant_jobs|edit_vacant_jobs');
+    Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_vacant_jobs');
+    Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
+    Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:edit_vacant_jobs');
+    Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:edit_vacant_jobs');
+    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
     Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
     Route::post('/employeeComplaint/send', [EmployeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint');
 
