@@ -172,7 +172,6 @@ Route::middleware('auth')->group(function () {
 
     // ShipmentController
     Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
-    Route::post('/shipments/store', [ShipmentController::class, 'store'])->name('shipments.store');
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
     Route::get('/shdipments/dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
