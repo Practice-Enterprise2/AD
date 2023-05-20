@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <header class="sticky top-0">
+  <header class="sticky top-0 z-10">
     @livewire('public.header')
   </header>
 

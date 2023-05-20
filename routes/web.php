@@ -128,7 +128,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(AIGraphController::class)->group(function () {
-        Route::get('/ai-graph', 'index')->middleware('permission:view_order_graph')->name('ai-graph');
+        Route::get('/ai-graph', 'index')->middleware('permission:view_all_orders')->name('ai-graph');
     });
 
     Route::controller(ReviewController::class)->group(function () {

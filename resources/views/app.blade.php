@@ -20,7 +20,7 @@
         <x-canvas-tile title="Employee Graph" :url="route('employeegraph')"
           description=" Visualize the company's employee count over time"></x-canvas-tile>
       @endcan
-      @can('view_order_graph')
+      @can('view_all_orders')
         <x-canvas-tile :url="route('ai-graph')" title="AI Order Graph"
           description="View the AI order graph"></x-canvas-tile>
       @endcan
