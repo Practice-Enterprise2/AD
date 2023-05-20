@@ -127,16 +127,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(ShipmentController::class)->group(function () {
         Route::get('/shipments', 'index')->name('shipments.index')->can('viewAny', Shipment::class);
+        Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
+        Route::post('shipments/requests/{shipment}/evaluate', 'evaluate')->name('shipments.requests.evaluate')->can('accept', 'shipment');
         Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
         Route::post('/shipments', 'store')->name('shipments.store')->can('create', Shipment::class);
         Route::get('/shipments/{shipment}', 'show')->name('shipments.show')->can('view', 'shipment');
         Route::get('/shipments/{shipment}/edit', 'edit')->name('shipments.edit')->can('update', 'shipment');
         Route::match(['PUT', 'PATCH'], '/shipments/{shipment}', 'update')->name('shipments.update')->can('update', 'shipment');
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
-
-        Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
-        Route::post('shipments/requests/{shipment}/evaluate', 'evaluate')->name('shipments.requests.evaluate')->can('accept', 'shipment');
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
+
+        Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
 });
 
