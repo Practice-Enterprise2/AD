@@ -323,11 +323,11 @@ class ShipmentController extends Controller
             ->groupBy('type')
             ->get();
 
-        $labels = [];
-        $data = [];
+        $pieLabels = [];
+        $pieData = [];
         foreach ($types as $type) {
-            $labels[] = $type->type;
-            $data[] = $type->typeTotal;
+            $pieLabels[] = $type->type;
+            $pieData[] = $type->typeTotal;
         }
 
         // Block chart data
@@ -344,7 +344,7 @@ class ShipmentController extends Controller
             $blockData[] = $expense->exepenseTotal;
         }
 
-        // 5 laterst shipments
+        // 5 latest shipments
         $latest = DB::table('shipments')
             ->select('id', 'expense', 'receiver_name', 'status')
             ->where('user_id', $id)
@@ -364,8 +364,8 @@ class ShipmentController extends Controller
             'countHaL' => $countHaL,
             'countDel' => $countDel,
             'countDec' => $countDec,
-            'data' => $data,
-            'labels' => $labels,
+            'pieData' => $pieData,
+            'pieLabels' => $pieLabels,
             'blockLabels' => $blockLabels,
             'blockData' => $blockData,
             'latest' => $latest,
