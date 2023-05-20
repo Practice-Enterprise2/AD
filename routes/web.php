@@ -63,9 +63,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
     });
     Route::controller(InvoicesController::class)->group(function () {
-        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list')->middleware('permission:view_general_employee_content');
-        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_general_employee_content');
-        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_general_employee_content');
+        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list')->middleware('permission:view_all_invoices');
+        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_all_invoices');
+        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_all_invoices');
     });
 
     Route::controller(UserController::class)->group(function () {

@@ -51,11 +51,10 @@ class InvoicesController extends Controller
         $data['user'] = $user;
         $data['sourceAddress'] = $sourceAddress;
         $data['destAddress'] = $destAddress;
-        //to test i use my email otherwise i use $data['user']->email
         Mail::send('invoice_details_mail', ['data' => $data], function ($message) use ($data) {
-            $message->to('r0890051@student.thomasmore.be', $data['user']->name.' '.$data['user']->last_name)->subject('Invoice to be paid');
+            $message->to($data['user']->email, $data['user']->name.' '.$data['user']->last_name)->subject('Invoice to be paid');
         });
 
-        return redirect('/invoices_list')->with('success', 'email sent!');
+        return redirect()->route('invoice-list')->with('success', 'email sent!');
     }
 }
