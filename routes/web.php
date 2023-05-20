@@ -126,7 +126,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(GraphController::class)->group(function () {
         Route::get('/employeegraph', 'index')->middleware('permission:view_employee_count')->name('employeegraph');
     });
-//Route::get('/ai-graph', [AIGraphController::class, 'index'])->name('ai-graph')->middleware('permission:view_order_graph');
+    
+    Route::controller(AIGraphController::class)->group(function () {
+        Route::get('/ai-graph', 'index')->middleware('permission:view_order_graph')->name('ai-graph');
+    });
+    
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/reviews/create', 'create')->name('reviews.create')->can('create', Review::class);
         Route::post('/reviews', 'store')->name('reviews.store')->can('create', Review::class);
