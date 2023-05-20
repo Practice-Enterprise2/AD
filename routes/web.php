@@ -203,27 +203,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/markAsRead/{id}', function ($id) {
         auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
 
-    Route::controller(ContactController::class)->group(function () {
-        Route::get('/contact', 'create')->name('contact.create');
-        Route::post('/contact', 'store')->name('contact.store');
-        Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
-        Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
-        Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
+        Route::controller(ContactController::class)->group(function () {
+            Route::get('/contact', 'create')->name('contact.create');
+            Route::post('/contact', 'store')->name('contact.store');
+            Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
+            Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
+            Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
+        });
+
+        Route::controller(ComplaintsController::class)->group(function () {
+            Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
+            Route::get('/messages', 'messages')->name('complaints.messages');
+            Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
+            Route::post('/chat-message', 'sendMessage');
+        });
+
+        Route::controller(NotificationController::class)->group(function () {
+            Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
+            Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+        });
     });
-
-    Route::controller(ComplaintsController::class)->group(function () {
-        Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
-        Route::get('/messages', 'messages')->name('complaints.messages');
-        Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
-        Route::post('/chat-message', 'sendMessage');
-    });
-
-    Route::controller(NotificationController::class)->group(function () {
-        Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
-        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
-    });
-});
-
-require __DIR__.'/auth.php';
-
+    require __DIR__.'/auth.php';
 });

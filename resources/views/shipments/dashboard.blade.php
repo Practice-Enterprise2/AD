@@ -12,7 +12,8 @@
     </div>
 
     <div class="mb-8 flex">
-      <div class="mr-4 w-1/3 rounded bg-gray-800 p-4 text-xl font-bold shadow-lg">
+      <div
+        class="mr-4 w-1/3 rounded bg-gray-800 p-4 text-xl font-bold shadow-lg">
         <h1 class="p-4 text-2xl font-bold text-white underline">Amount of
           Shipments</h1>
         <div class="mt-12 text-center text-7xl font-bold">{{ $countUser }}
@@ -89,21 +90,23 @@
       </div>
 
       <div class="mr-4 w-1/3 rounded bg-gray-800 p-4 shadow-lg">
-        <h1 class="col-span-2 p-4 text-2xl font-bold text-white underline">Type of Cargo Chart</h1>
-          <div class=" h-64">
-            <canvas id="pieChart" class="mx-auto"></canvas>
-          </div>
+        <h1 class="col-span-2 p-4 text-2xl font-bold text-white underline">Type
+          of Cargo Chart</h1>
+        <div class="h-64">
+          <canvas id="pieChart" class="mx-auto"></canvas>
+        </div>
       </div>
 
     </div>
 
     <div class="mb-8 flex">
-      <div class="mr-4 w-1/2 h-fit rounded bg-gray-800 p-4 shadow-lg">
-        <h1 class="col-span-2 p-4 text-2xl font-bold text-white underline">Expense Chart</h1>
+      <div class="mr-4 h-fit w-1/2 rounded bg-gray-800 p-4 shadow-lg">
+        <h1 class="col-span-2 p-4 text-2xl font-bold text-white underline">
+          Expense Chart</h1>
         <canvas id="barChart" class="h-fit"></canvas>
       </div>
 
-      <div class="w-1/2 h-fit rounded bg-gray-800 p-4 shadow-lg">
+      <div class="h-fit w-1/2 rounded bg-gray-800 p-4 shadow-lg">
         <h1 class="p-4 text-2xl font-bold text-white underline">Last 5 Shipments
         </h1>
         <div
@@ -134,7 +137,7 @@
   var blockCtx = document.getElementById('barChart').getContext('2d');
   var blockLabels = @php echo json_encode($blockLabels); @endphp;
   var blockData = @php echo json_encode($blockData); @endphp;
- 
+
   var pieCtx = document.getElementById('pieChart').getContext('2d');
   var pieLabels = @php echo json_encode($pieLabels); @endphp;
   var pieData = @php echo json_encode($pieData); @endphp;
@@ -179,13 +182,13 @@
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',        
+          'rgba(75, 192, 192, 1)',
         ],
         borderWidth: 1
       }]
     },
     options: {
-      
+
     }
   });
 </script>
