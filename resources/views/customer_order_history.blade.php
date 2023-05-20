@@ -1,12 +1,10 @@
 <x-app-layout>
   <script>
     function details(nr) {
-
-      //var rows = document.getElementById('rowinvoice'+nr);
       var rows = document.getElementsByClassName('rowinvoice' + nr);
       var butt = document.getElementById('detailsinvoice' + nr);
       if (butt.innerHTML == "Open Details") {
-        //row.classList.remove("hidden");
+
         for (let i = 0; i < rows.length; i++) {
           rows[i].classList.remove("hidden");
         }
