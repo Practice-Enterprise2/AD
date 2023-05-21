@@ -72,17 +72,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
+        Route::post('/admin/users', 'store')->name('users.store');
         Route::put('/admin/users/{id}', 'update')->name('users.update');
         Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
-        Route::post('/admin/users', 'store')->name('users.store');
         Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
     });
 
     Route::controller(RoleController::class)->group(function () {
         Route::get('/admin/roles', 'index')->name('roles');
+        Route::post('/admin/roles', 'store')->name('roles.store');
         Route::put('/admin/roles/{id}', 'update')->name('roles.update');
         Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
-        Route::post('/admin/roles', 'store')->name('roles.store');
     });
 
     Route::controller(TicketController::class)->group(function () {
@@ -118,9 +118,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_vacant_jobs|edit_vacant_jobs');
     Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_vacant_jobs');
     Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
+    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
     Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:edit_vacant_jobs');
     Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:edit_vacant_jobs');
-    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
     Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
     Route::post('/employeeComplaint/send', [EmployeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint');
 
@@ -128,7 +128,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employeegraph', 'index')->middleware('permission:view_employee_count')->name('employeegraph');
     });
 
-    Route::controller(AIGraphController::class)->group(function () {
+    Route::controller(AiGraphController::class)->group(function () {
         Route::get('/ai-graph', 'index')->middleware('permission:view_all_orders')->name('ai-graph');
     });
 
@@ -147,13 +147,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/shipments', 'index')->name('shipments.index')->can('viewAny', Shipment::class);
         Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
         Route::post('/shipments', 'store')->name('shipments.store')->can('create', Shipment::class);
+        Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
+        Route::post('shipments/requests/{shipment}/evaluate', 'evaluate')->name('shipments.requests.evaluate')->can('accept', 'shipment');
         Route::get('/shipments/{shipment}', 'show')->name('shipments.show')->can('view', 'shipment');
         Route::get('/shipments/{shipment}/edit', 'edit')->name('shipments.edit')->can('update', 'shipment');
         Route::match(['PUT', 'PATCH'], '/shipments/{shipment}', 'update')->name('shipments.update')->can('update', 'shipment');
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
 
-        Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
-        Route::post('shipments/requests/{shipment}/evaluate', 'evaluate')->name('shipments.requests.evaluate')->can('accept', 'shipment');
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
     });
 });
