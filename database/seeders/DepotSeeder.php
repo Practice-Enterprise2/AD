@@ -73,10 +73,12 @@ class DepotSeeder extends Seeder
             $depot->push();
 
             // Seeding the airports table with it's addresses.
-            if ($address->country != $temp_country) {
-                $temp_country = $address->country;
-                $airport_seeder = new AirportSeeder($temp_country);
-                $airport_seeder->run();
+            if (env('AIRLABS_KEY')) {
+                if ($address->country != $temp_country) {
+                    $temp_country = $address->country;
+                    $airport_seeder = new AirportSeeder($temp_country);
+                    $airport_seeder->run();
+                }
             }
         }
     }

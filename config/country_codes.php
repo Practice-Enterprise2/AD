@@ -1,6 +1,12 @@
 <?php
 
 return [
+    // AIRLABS API KEY HERE:
+    'AIRLABS_API_KEY' => '',
+
+    // BING MAPS API KEY HERE:
+    'BINGMAPS_API_KEY' => '',
+
     'AFGHANISTAN' => 'AF',
     // 'AKROTIRI' => '*',
     'ALBANIA' => 'AL',

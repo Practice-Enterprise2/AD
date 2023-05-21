@@ -347,11 +347,10 @@ class ShipmentController extends Controller
         $waypoints = $shipment->waypoints;
         $waypoints_geocodes = collect([]);
 
+        // ADD YOUR API KEY TO ".env" file.
+        $bingmaps_api_key = env('BINGMAPS_KEY');
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
-
-        // (!) don't forget to add your bing maps key here.
-        $key = '{API_KEY}';
 
         for ($i = 0; $i < count($waypoints); $i++) {
             $current_address = Address::find($waypoints[$i]->current_address_id);

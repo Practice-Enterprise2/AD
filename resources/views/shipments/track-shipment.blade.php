@@ -129,6 +129,6 @@
     });
   }
 </script>
-<script type='text/javascript'
-  src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key={API_KEY}'
+<script type='text/javascript' {{-- ADD YOUR API KEY TO ".env" FILE  --}}
+  src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key={{ env('BINGMAPS_KEY') }}'
   async defer></script>

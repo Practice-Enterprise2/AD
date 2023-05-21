@@ -19,18 +19,19 @@ class AirportSeeder extends Seeder
     public function run(): void
     {
         $airLabs_countryCode = config('country_codes')[strtoupper($this->country)];
-
+        $airlabs_api_key = env('AIRLABS_KEY');
+        $bingmaps_api_key = env('BINGMAPS_KEY');
         $airports_added = 0;
         $index = 0;
 
         // 2 airports for each country
         while ($airports_added != 2) {
             $client = new Client();
-            $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={API_KEY}");
+            $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={$airlabs_api_key}");
             $airlab_object = array_slice(json_decode($response->getBody()->getContents())->response, $index, 1);
 
             $client = new Client();
-            $bingMaps_airportObject = $client->get("https://dev.virtualearth.net/REST/v1/LocationRecog/{$airlab_object[0]->lat},{$airlab_object[0]->lng}?key={API_KEY}");
+            $bingMaps_airportObject = $client->get("https://dev.virtualearth.net/REST/v1/LocationRecog/{$airlab_object[0]->lat},{$airlab_object[0]->lng}?key={$bingmaps_api_key}");
 
             $airport_address_info = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->businessesAtLocation;
 
