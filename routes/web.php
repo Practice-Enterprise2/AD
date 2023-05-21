@@ -7,6 +7,7 @@ use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeViewController;
 use App\Http\Controllers\FaqController;
@@ -111,6 +112,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/log', 'log')->name('log')->middleware('permission:view_detailed_server_info');
         });
     });
+
+    // employee Complaints
+    Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
+    Route::post('/employeeComplaint/send', [EmployeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint');
 });
 
 // Routes that require an authenticated session.
