@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Address;
+use App\Models\Depot;
 use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
@@ -13,10 +14,10 @@ use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse; // Traits for invoices
+use Illuminate\Contracts\View\View; // Traits for invoices
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,7 +25,7 @@ class ShipmentController extends Controller
 {
     use Invoices;
 
-    public function index(): View|Factory
+    public function index(): View
     {
         $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
             ->whereNot('status', 'Declined')
@@ -44,11 +45,51 @@ class ShipmentController extends Controller
             $deliveryDates[] = $i->format('Y-m-d');
         }
 
-        return view('shipments.create', compact('deliveryDates'));
+        // good old Database-Fundamentals query here:
+        $countries = Depot::join('addresses', 'depots.address_id', '=', 'addresses.id')
+            ->distinct()
+            ->pluck('addresses.country');
+
+        return view('shipments.create', compact('deliveryDates', 'countries'));
     }
 
     public function store(): View|RedirectResponse
     {
+        // Validate request
+        $this->validate(request(), [
+            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
+            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
+            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
+            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
+            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
+            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
+            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
+            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
+            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
+            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
+            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
+            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
+            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
+            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
+            'shipment_weight' => Shipment::VALIDATION_RULES['weight'],
+            'shipment_length' => Shipment::VALIDATION_RULES['dimension.length'],
+            'shipment_width' => Shipment::VALIDATION_RULES['dimension.width'],
+            'shipment_height' => Shipment::VALIDATION_RULES['dimension.height'],
+        ],
+            [
+                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
+                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
+                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
+                'source_city.regex' => 'The source city field may only contain letters and spaces.',
+                'source_region.regex' => 'The source region field may only contain letters and spaces.',
+                'source_country.regex' => 'The source country field may only contain letters and spaces.',
+                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
+                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
+                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
+                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
+                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
+            ]);
+
         $source_address = Address::query()->where([
             'street' => request()->source_street,
             'house_number' => request()->source_housenumber,
@@ -101,7 +142,7 @@ class ShipmentController extends Controller
         $shipment->shipment_date = date('Y-m-d', strtotime(request()->input('delivery_date')));
         $shipment->delivery_date = date('Y-m-d', strtotime(request()->input('shipment_date')));
 
-        //Dimensions
+        // Dimensions
         $dimensions = new Dimension();
         $dimensions->length = request()->shipment_length;
         $dimensions->width = request()->shipment_width;
@@ -111,6 +152,7 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
+        $shipment_distance = request()->shipment_distance;
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -119,11 +161,12 @@ class ShipmentController extends Controller
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
         if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
         } else {
             //Dense Cargo rate
-            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
         }
+        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
 
@@ -131,13 +174,13 @@ class ShipmentController extends Controller
         //After the shipment has been created, we will generate an invoice with the following Trait
         $this->generateInvoice();
 
-        $last_invoice = Invoice::orderBy('id', 'desc')->first();
+        $last_invoice = Invoice::query()->orderBy('id', 'desc')->first();
         $last_invoice_id = $last_invoice->id;
         //Send mail
         return redirect()->route('mail.invoices', ['invoice' => $last_invoice_id]);
     }
 
-    public function requests(): View|Factory
+    public function requests(): View
     {
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
 
@@ -162,13 +205,43 @@ class ShipmentController extends Controller
         }
     }
 
-    public function edit(Shipment $shipment)
+    public function edit(Shipment $shipment): View
     {
         return view('shipments.edit', compact('shipment'));
     }
 
-    public function update(Request $request, Shipment $shipment)
+    public function update(Request $request, Shipment $shipment): Redirector|RedirectResponse
     {
+        $this->validate(request(), [
+            'receiver_name' => Shipment::VALIDATION_RULES['user.name'],
+            'receiver_email' => Shipment::VALIDATION_RULES['user.email'],
+            'source_street' => Shipment::VALIDATION_RULES['source_address.street'],
+            'source_housenumber' => Shipment::VALIDATION_RULES['source_address.house_number'],
+            'source_postalcode' => Shipment::VALIDATION_RULES['source_address.postal_code'],
+            'source_city' => Shipment::VALIDATION_RULES['source_address.city'],
+            'source_region' => Shipment::VALIDATION_RULES['source_address.region'],
+            'source_country' => Shipment::VALIDATION_RULES['source_address.country'],
+            'destination_street' => Shipment::VALIDATION_RULES['destination_address.street'],
+            'destination_housenumber' => Shipment::VALIDATION_RULES['destination_address.house_number'],
+            'destination_postalcode' => Shipment::VALIDATION_RULES['destination_address.postal_code'],
+            'destination_city' => Shipment::VALIDATION_RULES['destination_address.city'],
+            'destination_region' => Shipment::VALIDATION_RULES['destination_address.region'],
+            'destination_country' => Shipment::VALIDATION_RULES['destination_address.country'],
+        ],
+            [
+                'receiver_name.regex' => 'The receiver name field may only contain letters and spaces.',
+                'source_street.regex' => 'The source street field may only contain letters, numbers and spaces.',
+                'source_postalcode.regex' => 'The source postal code field may only contain letters, numbers and spaces.',
+                'source_city.regex' => 'The source city field may only contain letters and spaces.',
+                'source_region.regex' => 'The source region field may only contain letters and spaces.',
+                'source_country.regex' => 'The source country field may only contain letters and spaces.',
+                'destination_street.regex' => 'The destination street field may only contain letters, numbers and spaces.',
+                'destination_postalcode.regex' => 'The destination postal code field may only contain letters, numbers and spaces.',
+                'destination_city.regex' => 'The destination city field may only contain letters and spaces.',
+                'destination_region.regex' => 'The destination region field may only contain letters and spaces.',
+                'destination_country.regex' => 'The destination country field may only contain letters and spaces.',
+            ]);
+
         $source_address = Address::query()->where([
             'id' => $shipment->source_address_id,
         ])->first();
@@ -202,6 +275,13 @@ class ShipmentController extends Controller
             'type' => request()->handling_type[0],
         ]);
 
+        if (request()->status == 'Awaiting Confirmation') {
+            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
+            foreach ($waypoints as $waypoint) {
+                $waypoint->delete();
+            }
+        }
+
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();
             $source_user = User::query()->where('id', $shipment->user_id)->first();
@@ -212,7 +292,7 @@ class ShipmentController extends Controller
             ->with('success', 'Shipment updated successfully');
     }
 
-    public function destroy(Shipment $shipment)
+    public function destroy(Shipment $shipment): Redirector|RedirectResponse
     {
         $this->authorize('delete', $shipment);
 
@@ -220,25 +300,18 @@ class ShipmentController extends Controller
         $shipment->update();
         $shipment->delete();
 
-        // $source_address->delete();
-        // $destination_address->delete();
-
-        // foreach ($waypoint_address as $address) {
-        //     $address->delete();
-        // }
-
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment deleted successfully');
     }
 
-    public function show(Shipment $shipment)
+    public function show(Shipment $shipment): View
     {
         $this->authorize('view', $shipment);
 
         return view('shipments.show', compact('shipment'));
     }
 
-    public function sendInvoiceMail(Invoice $invoice): View|Factory|RedirectResponse
+    public function sendInvoiceMail(Invoice $invoice): View|RedirectResponse
     {
         $subject = 'Your invoice for your latest shipment.';
         $user_id = auth()->user()->id;
@@ -269,40 +342,96 @@ class ShipmentController extends Controller
 
     // Bing Maps Locations API
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
-    public function track()
+    public function track(Shipment $shipment)
     {
+        $waypoints = $shipment->waypoints;
+        $waypoints_geocodes = collect([]);
+
+        // ADD YOUR API KEY TO ".env" file.
+        $bingmaps_api_key = env('BINGMAPS_KEY');
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
 
-        // (!) don't forget to add your bing maps key here.
-        $key = 'your_bing_maps_key';
+        for ($i = 0; $i < count($waypoints); $i++) {
+            $current_address = Address::find($waypoints[$i]->current_address_id);
 
-        // address should be converted here, which will be used with the baseURL to send a request.
-        $country = str_ireplace(' ', '%20', request()->country);
-        $street = str_ireplace(' ', '%20', request()->street);
-        $state = str_ireplace(' ', '%20', request()->state);
-        $locality = str_ireplace(' ', '%20', request()->city);
-        $postalCode = str_ireplace(' ', '%20', request()->zipcode);
+            // some addresses includes "." for to shorten the names WHICH is not allower within the REQUEST.
+            $current_country = str_replace('.', '', trim($current_address->country));
+            $country = str_ireplace(' ', '%20', $current_country);
+
+            $current_street = str_replace('.', '', trim($current_address->street));
+            $street = str_ireplace(' ', '%20', $current_street);
+
+            $current_state = str_replace('.', '', trim($current_address->region));
+            $state = str_ireplace(' ', '%20', $current_state);
+
+            $current_locality = str_replace('.', '', trim($current_address->city));
+            $locality = str_ireplace(' ', '%20', $current_locality);
+
+            $current_postalCode = str_replace('.', '', trim($current_address->postal_code));
+            $postalCode = str_ireplace(' ', '%20', $current_postalCode);
+
+            //request URL is created here + response is retrieved with the DATA
+            $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
+            .$street.'?output=xml&key='.$key;
+
+            dump($findURL);
+            $output = file_get_contents($findURL);
+            $response = new \SimpleXMLElement($output);
+
+            $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude->__toString();
+            $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude->__toString();
+
+            $waypoints_geocodes[$i] = [
+                'type' => 'current_address',
+                'waypoint_id' => $waypoints[$i]->id,
+                'waypoint_status' => $waypoints[$i]->status,
+                'waypoint' => $waypoints[$i],
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ];
+        }
+
+        $destination_address = Address::find($waypoints->last()->next_address_id);
+
+        $destination_country = str_replace('.', '', $destination_address->country);
+        $country = str_ireplace(' ', '%20', $destination_country);
+
+        $destination_street = str_replace('.', '', $destination_address->street);
+        $street = str_ireplace(' ', '%20', $destination_street);
+
+        $destination_state = str_replace('.', '', $destination_address->region);
+        $state = str_ireplace(' ', '%20', $destination_state);
+
+        $destination_locality = str_replace('.', '', $destination_address->city);
+        $locality = str_ireplace(' ', '%20', $destination_locality);
+
+        $destination_postalCode = str_replace('.', '', $destination_address->postal_code);
+        $postalCode = str_ireplace(' ', '%20', $destination_postalCode);
 
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
         .$street.'?output=xml&key='.$key;
+
+        dump($findURL);
+
         $output = file_get_contents($findURL);
         $response = new \SimpleXMLElement($output);
 
-        // DATA == latitude, longitude
-        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
-        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude->__toString();
+        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude->__toString();
 
-        // here is the implementation to reverse geocodes into address again.
-        // for debugging purposes.
-        $centerPoint = $latitude.','.$longitude;
-        $revGeocodeURL = $baseURL.'/'.$centerPoint.'?output=xml&key='.$key;
-        $rgOutput = file_get_contents($revGeocodeURL);
-        $rgResponse = new \SimpleXMLElement($rgOutput);
-        $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+        $waypoints_geocodes[count($waypoints)] = [
+            'type' => 'next_address',
+            'waypoint_id' => $waypoints[count($waypoints) - 1]->id,
+            'waypoint_status' => $waypoints[count($waypoints) - 1]->status,
+            'waypoint' => $waypoints[count($waypoints) - 1],
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ];
 
-        // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
-        // returnSomething...
+        dump($waypoints_geocodes);
+
+        return view('shipments.track-shipment', compact('waypoints_geocodes', 'shipment'));
     }
 }
