@@ -10,10 +10,9 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use PDF;
-use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
@@ -50,6 +49,7 @@ class EmployeeController extends Controller
 
         return redirect()->back()->with('alert', 'complete creation');
     }
+
     public function end()
     {
         $employees = Employee::whereHas('employee_contracts', function ($query) {
@@ -116,6 +116,7 @@ class EmployeeController extends Controller
 
         return redirect('/employee_add_contract');
     }
+
     public function create(): View
     {
         return view('employees.create');
