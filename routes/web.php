@@ -4,18 +4,15 @@
 // group.
 
 use App\Http\Controllers\AiGraphController;
-use App\Http\Controllers\AiGraphController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderHistoryController;
-use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
-use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -38,11 +35,6 @@ Route::view('/', 'landing-page')->name('landing-page');
 Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-
-//job vacancies person
-Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
-Route::get('/viewJobs/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
-Route::post('/viewJobs/job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 //job vacancies person
 Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
@@ -85,7 +77,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/admin/users', 'show')->name('users')->can('viewAny', User::class);
         Route::post('/admin/users', 'store')->name('users.store');
-        Route::post('/admin/users', 'store')->name('users.store');
         Route::put('/admin/users/{id}', 'update')->name('users.update');
         Route::delete('/admin/users/{id}', 'destroy')->name('users.destroy');
         Route::put('/users/{user}/toggle-lock', 'toggleLock')->name('users.toggle-lock');
@@ -93,7 +84,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(RoleController::class)->group(function () {
         Route::get('/admin/roles', 'index')->name('roles');
-        Route::post('/admin/roles', 'store')->name('roles.store');
         Route::post('/admin/roles', 'store')->name('roles.store');
         Route::put('/admin/roles/{id}', 'update')->name('roles.update');
         Route::delete('/admin/roles/{id}', 'destroy')->name('roles.destroy');
@@ -135,21 +125,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
     Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:edit_vacant_jobs');
     Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:edit_vacant_jobs');
-    Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_vacant_jobs|edit_vacant_jobs');
-    Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_vacant_jobs');
-    Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
-    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
-    Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:edit_vacant_jobs');
-    Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:edit_vacant_jobs');
     Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
     Route::post('/employeeComplaint/send', [EmployeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint');
 
     Route::controller(GraphController::class)->group(function () {
         Route::get('/employeegraph', 'index')->middleware('permission:view_employee_count')->name('employeegraph');
-    });
-
-    Route::controller(AiGraphController::class)->group(function () {
-        Route::get('/ai-graph', 'index')->middleware('permission:view_all_orders')->name('ai-graph');
     });
 
     Route::controller(AiGraphController::class)->group(function () {
@@ -177,6 +157,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/shipments/{shipment}/edit', 'edit')->name('shipments.edit')->can('update', 'shipment');
         Route::match(['PUT', 'PATCH'], '/shipments/{shipment}', 'update')->name('shipments.update')->can('update', 'shipment');
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
+
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
         Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
@@ -218,10 +199,6 @@ Route::middleware('auth')->group(function () {
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
         Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
-    });
-
-    Route::controller(CustomerOrderHistoryController::class)->group(function () {
-        Route::get('/order_history', 'index')->name('order-history');
     });
 
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
