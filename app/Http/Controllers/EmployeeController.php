@@ -69,6 +69,7 @@ class EmployeeController extends Controller
 
     public function contract_save(Request $req): RedirectResponse
     {
+        
         if ($req->startdate > $req->stopdate) {
             return redirect()->back()->withErrors(['alert' => 'End date cannot be before start date!']);
         }
@@ -87,7 +88,7 @@ class EmployeeController extends Controller
             $startyear = intval($req->startdate.substr(0, 4));
             $stopyear = intval($req->stopdate.substr(0, 4));
             $dayscheck = 1;
-            $b = 0;
+           
 
             $startdate = new DateTime($req->startdate);
             $stopdate = new DateTime($req->stopdate);
@@ -95,21 +96,30 @@ class EmployeeController extends Controller
             $daysInStartYear = (clone $startdate)->modify('last day of December')->diff($startdate)->days;
             $daysInEndYear = (clone $stopdate)->modify('first day of January')->diff($stopdate)->days;
 
+            $b = 0;
             for ($i = $startyear; $i <= $stopyear; $i++) {
-                if ($i == $startyear) {
-                    if ($req->{'days'.$b} > $daysInStartYear) {
-                        $dayscheck = 0;
+                if(($req->{'days'.$b} >= 0))
+                {
+                    if ($i == $startyear) {
+                        if ($req->{'days'.$b} > $daysInStartYear) {
+                            $dayscheck = 0;
+                        }
+                        
+                    }
+                    if ($i == $stopyear) {
+                        if ($req->{'days'.$b} > $daysInEndYear) {
+                            $dayscheck = 0;
+                        }
+                    }
+                    if ($i != $stopyear && $i != $startyear) {
+                        if ($req->{'days'.$b} > 50) {
+                            $dayscheck = 0;
+                        }
                     }
                 }
-                if ($i == $stopyear) {
-                    if ($req->{'days'.$b} > $daysInEndYear) {
-                        $dayscheck = 0;
-                    }
-                }
-                if ($i != $stopyear && $i != $startyear) {
-                    if ($req->{'days'.$b} > 50) {
-                        $dayscheck = 0;
-                    }
+                else
+                {
+                    return redirect()->back()->withErrors(['alert' => 'Invalid data in vacation days!']);
                 }
                 $b += 1;
             }
@@ -132,7 +142,14 @@ class EmployeeController extends Controller
                     $holidaySaldo->save();
                     $b += 1;
                 }
-                $newJobTitle = $req->input('position');
+                if(strlen($req->input('position')) >= 3 && strlen($req->input('position'))< 25 && !is_numeric($req->input('position')))
+                {
+                    $newJobTitle = $req->input('position');
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['alert' => 'Invalid data in job title field!']);
+                }
                 $jobtitle = DB::table('positions')->where('name', $newJobTitle)->first();
                 if ($jobtitle === null) {
                     $position = new Position();
@@ -148,6 +165,17 @@ class EmployeeController extends Controller
                     'employee_contract_id' => $employeeContractId,
                 ]);
 
+                if($req->salary < 20000 && $req->salary > 1000 )
+                {
+                    $newSalary = $req->input('salary');
+                    
+                    DB::table('employees')->where('id', $contract->employee_id)->update(['salary' => $newSalary]);
+                    
+                }
+                else
+                {
+                    return redirect()->back()->withErrors(['alert' => 'Invalid salary!']);
+                }
                 return redirect()->back()->with('alert', 'Succes!');
             }
         }

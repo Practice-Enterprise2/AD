@@ -39,7 +39,7 @@
     @if (\Session::has('alert'))
       <h2 class="text-xl text-lime-400">{!! \Session::get('alert') !!}</h2>
     @endif
-    <form method="post" action="employee_add_contract_done"
+    <form method="post" action="{{ route('employee-add-contract') }}"
       accept-charset="UTF-8">
       @csrf
       <label for="employeeID">Select an employee:</label>
@@ -52,11 +52,11 @@
       <br>
       <label for="position">For position/job title:</label>
       <input type="text" name="position" id="position"
-        class="rounded border-2">
+        class="rounded border-2" required>
       <br>
       <label for="salary">Salary per month</label>
-      <input type="text" name="salary" id="salary"
-        class="rounded border-2">
+      <input type="number" name="salary" id="salary"
+        class="rounded border-2" required>
       <br>
 
       <label for="startdate">Start date:</label>
