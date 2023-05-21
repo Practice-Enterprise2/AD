@@ -75,38 +75,36 @@
       @foreach ($comboArray as $combo)
         <tr>
 
-          
+          <td>
+            <p>{{ $combo['id'] }}</p>
+          </td>
+          <td>
+            <p>{{ $combo['employee_id'] }}</p>
+          </td>
+          <td>
+            <p>{{ $combo['name'] }}</p>
+          </td>
+          <td>
+            <p>{{ $combo['last_name'] }}</p>
+          </td>
 
-            <td>
-              <p>{{ $combo['id'] }}</p>
-            </td>
-            <td>
-              <p>{{ $combo['employee_id'] }}</p>
-            </td>
-            <td>
-              <p>{{ $combo['name'] }}</p>
-            </td>
-            <td>
-              <p>{{ $combo['last_name'] }}</p>
-            </td>
-
-            <td>
-              <p>{{ $combo['start_date'] }}</p>
-            </td>
-            <td>
-              <p>{{ $combo['stop_date'] }}</p>
-            </td>
-            <td>
-              <form action="{{ route('employee-contract-details') }}"
-                method="POST" class="inline-block text-center">@csrf
-                <input type="hidden" name="contractID"
-                  value="{{ $combo['id'] }}">
-                <button type="submit"
-                  class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">View
-                  Details
-                </button>
-              </form>
-            </td>
+          <td>
+            <p>{{ $combo['start_date'] }}</p>
+          </td>
+          <td>
+            <p>{{ $combo['stop_date'] }}</p>
+          </td>
+          <td>
+            <form action="{{ route('employee-contract-details') }}"
+              method="POST" class="inline-block text-center">@csrf
+              <input type="hidden" name="contractID"
+                value="{{ $combo['id'] }}">
+              <button type="submit"
+                class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">View
+                Details
+              </button>
+            </form>
+          </td>
 
         </tr>
       @endforeach
