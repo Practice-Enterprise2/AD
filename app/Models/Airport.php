@@ -36,8 +36,7 @@ class Airport extends Model implements ValidatesAttributes
         'land' => self::VALIDATION_RULE_LAND,
     ];
 
-    use HasFactory;
-    use Sortable;
+
 
     protected $table = 'airports';
 

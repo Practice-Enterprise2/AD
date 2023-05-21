@@ -54,6 +54,10 @@
       @endif
       <x-canvas-tile :url="route('reviews.create')" title="Review Us"
         description="If you want to share your experience, you can leave a review"></x-canvas-tile>
+      @can('contract_manager')
+      <x-canvas-tile :url="route('contract_list')" title="Contract List"
+        description="An overview of the contract between the airlines"></x-canvas-tile>
+      @endcan
     </div>
   </x-content-layout>
 </x-app-layout>

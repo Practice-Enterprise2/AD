@@ -42,7 +42,10 @@ class UpdateContractsCommand extends Command
                 ->value('email');
 
             // Send email notification to manager
-            //Mail::to($managerEmail)->send(new ContractExpiryNotification($contract->id));
+            Mail::send('contract_expiry', ['contractId' => $contract->id], function ($message) use ($managerEmail) {
+                $message->to($managerEmail)
+                    ->subject('Contract Expiry Notification');
+            });
             DB::table('contracts')
                 ->where('end_date', $today)
                 ->update(['is_active' => 0]);

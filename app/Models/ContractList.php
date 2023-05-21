@@ -8,9 +8,8 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Contractlist extends Model
 {
-    use HasFactory;
-    use Sortable;
 
+    use Sortable;
     // if your key name is not 'id'
     // you can also set this to null if you don't have a primary key
 
