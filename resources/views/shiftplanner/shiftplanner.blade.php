@@ -2,11 +2,43 @@
   <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset='utf-8' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
+      function getEmployeeIdByName(employees, name) {
+        var employeeId = null;
+        employees.forEach(function(employee) {
+        if (employee.name === name) {
+          employeeId = employee.id;
+        }
+        });
+        return employeeId;
+      }
+
+      function getStartTimeByName(employees, name) {
+        var startTime = null;
+        employees.forEach(function(employee) {
+        if (employee.name === name) {
+          startTime = employee.startTime;
+        }
+        });
+        return startTime;
+      }
+
+      function getEndTimeByName(employees, name) {
+        var endTime = null;
+        employees.forEach(function(employee) {
+        if (employee.name === name) {
+          endTime = employee.endTime;
+        }
+        });
+        return endTime;
+      }
+
+
+      
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -43,9 +75,11 @@
         new FullCalendar.Draggable(containerEl, {
           itemSelector: '.fc-event',
           eventData: function(eventEl) {
+            console.log(eventEl.startTime);
             return {
               title: eventEl.innerText.trim(),
-              allDay: true
+              startTime: now(),
+              
             };
           }
         });
@@ -56,45 +90,39 @@
           //console.log(events);
             //var employees = '{{$employees}}';
             var employees = <?php echo json_encode($shifts->map(function($shift) {
-            return [
-              'id' => $shift->employee->user->id,
-              'name' => $shift->employee->user->name,
-              'planned_start_time' => date('Y-m-d', strtotime($shift->planned_start_time)),
-              'planned_end-time' => date('Y-m-d', strtotime($shift->planned_end_time)),
-            ];
-          })->toArray());?>;
+              return [
+                'id' => $shift->employee->user->id,
+                'name' => $shift->employee->user->name,
+                'planned_start_time' => date('Y-m-d', strtotime($shift->planned_start_time)),
+                'planned_end-time' => date('Y-m-d', strtotime($shift->planned_end_time)),
+              ];
+            })->toArray());?>;
+
+            var emps = <?php echo json_encode($employees->map(function($emp) {
+              return [
+                'id' => $emp->id,
+                'name' => $emp->name,
+              ];
+            })->toArray());?>;
             //console.log(employees);
             events.forEach(function(event) {
-              console.log(event.title.employee_id);
-            var formData = new FormData();
-            formData.append('planned_start_time', moment(event.startTime).format('YYYY-MM-DD HH:mm:ss'))
-
-            //add 24h to start time or sth
-            formData.append('planned_end_time', moment(event.endTime).format('YYYY-MM-DD HH:mm:ss'));
-            formData.append('actual_start_time', null);
-            formData.append('actual_end_time', null);
-            formData.append('employee_id', event.extendedProps.employee_id);
+              console.log(event.startTime); //employee name
+              var formData = new FormData();
+              formData.append('planned_start_time', getStartTimeByName(employees, event.title));
+              //add 24h to start time or sth
+              formData.append('planned_end_time', getEndTimeByName(employees, event.title));
+              formData.append('actual_start_time', null);
+              formData.append('actual_end_time', null);
+              formData.append('employee_id', getEmployeeIdByName(employees, event.title));
+            console.log(formData);
             //console.log(formData); // Log FormData to console
             fetch('/shifts', {
-              
               method: 'POST',
               body: formData,
               headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
               }
-            })
-            /*.then(response => {
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log(data);
-            })
-            .catch(error => {
-              console.error('There was an error:', error);
-            });*/
+            }) 
           });
         });
       });
