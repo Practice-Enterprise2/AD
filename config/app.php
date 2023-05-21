@@ -179,7 +179,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -196,6 +195,8 @@ return [
 
         // QR Code
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        //PDF
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*

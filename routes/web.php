@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -24,7 +25,6 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Http\Controllers\InvoiceController;
 use App\Models\Employee;
 use App\Models\Review;
 use App\Models\Shipment;
@@ -199,6 +199,13 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
         Route::get('/order_history', 'index')->name('order-history');
+    });
+    Route::controller(InvoiceController::class)->group(function () {
+        //Invoice overview & payment
+        Route::get('/invoices', 'index')->name('invoice_overview');
+        Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
+        Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
+        Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
     });
 });
 
