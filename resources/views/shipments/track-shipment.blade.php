@@ -12,10 +12,10 @@
 
       </h2>
       <h2 class="mb-4 text-lg font-medium">Track Shipment</h2>
-      <div id="myMap" style="width:100%;height:300px;"
+      <div id="myMap" style="width:100%;height:500px;"
         class="m-2 border border-black"></div>
 
-      {{-- <p>{{ $shipment }}</p> --}}
+      <p>{{ $shipment }}</p>
     </div>
   </div>
 </x-app-layout>

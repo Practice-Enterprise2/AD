@@ -48,11 +48,18 @@
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Country:</label>
-              <input
+              <select
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="source_country" onkeyup="disableSubmit();"
-                value="{{ old('source_country') }}">
+                name="source_country" onchange="disableSubmit();">
+                <option value="">Select a country</option>
+                @foreach ($countries as $country)
+                  <option value="{{ $country }}"
+                    @if (old('source_country') == $country) selected @endif>
+                    {{ $country }}</option>
+                @endforeach
+              </select>
             </div>
+
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>
@@ -107,12 +114,18 @@
             <div class="mb-2 flex">
               <label
                 class="inline-flex w-1/3 items-center text-black">Country:</label>
-              <input
+              <select
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
-                type="text" name="destination_country"
-                onkeyup="disableSubmit();"
-                value="{{ old('destination_country') }}">
+                name="destination_country" onchange="disableSubmit();">
+                <option value="">Select a country</option>
+                @foreach ($countries as $country)
+                  <option value="{{ $country }}"
+                    @if (old('destination_country') == $country) selected @endif>
+                    {{ $country }}</option>
+                @endforeach
+              </select>
             </div>
+
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Postal
                 Code:</label>

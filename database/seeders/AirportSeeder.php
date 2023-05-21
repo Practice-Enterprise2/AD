@@ -16,10 +16,6 @@ class AirportSeeder extends Seeder
         $this->country = $country;
     }
 
-        //only 6 airport is enough for out project?
-        // $airlab_objects = array_slice(json_decode($response->getBody()->getContents())->response, 0, 6);
-        // dd($airlab_objects);
-
     public function run(): void
     {
         $airLabs_countryCode = config('country_codes')[strtoupper($this->country)];
@@ -27,6 +23,7 @@ class AirportSeeder extends Seeder
         $airports_added = 0;
         $index = 0;
 
+        // 2 airports for each country
         while ($airports_added != 2) {
             $client = new Client();
             $response = $client->get("https://airlabs.co/api/v9/airports?country_code={$airLabs_countryCode}&api_key={API_KEY}");
@@ -34,9 +31,6 @@ class AirportSeeder extends Seeder
 
             $client = new Client();
             $bingMaps_airportObject = $client->get("https://dev.virtualearth.net/REST/v1/LocationRecog/{$airlab_object[0]->lat},{$airlab_object[0]->lng}?key={API_KEY}");
-
-            // $airport_address = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->addressOfLocation[0];
-            // dump($airport_address);
 
             $airport_address_info = json_decode($bingMaps_airportObject->getBody()->getContents())->resourceSets[0]->resources[0]->businessesAtLocation;
 

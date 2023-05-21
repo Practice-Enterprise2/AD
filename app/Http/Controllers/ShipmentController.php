@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Address;
+use App\Models\Depot;
 use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
@@ -13,8 +14,8 @@ use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse; // Traits for invoices
+use Illuminate\Contracts\View\View; // Traits for invoices
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,12 @@ class ShipmentController extends Controller
             $deliveryDates[] = $i->format('Y-m-d');
         }
 
-        return view('shipments.create', compact('deliveryDates'));
+        // good old Database-Fundamentals query here:
+        $countries = Depot::join('addresses', 'depots.address_id', '=', 'addresses.id')
+            ->distinct()
+            ->pluck('addresses.country');
+
+        return view('shipments.create', compact('deliveryDates', 'countries'));
     }
 
     public function store(): View|RedirectResponse
@@ -339,9 +345,7 @@ class ShipmentController extends Controller
     public function track(Shipment $shipment)
     {
         $waypoints = $shipment->waypoints;
-        // dd($waypoints);
         $waypoints_geocodes = collect([]);
-        // dd($waypoints[0]->current_address_id);
 
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
@@ -372,14 +376,12 @@ class ShipmentController extends Controller
             $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
             .$street.'?output=xml&key='.$key;
 
-            // dump($findURL);
+            dump($findURL);
             $output = file_get_contents($findURL);
             $response = new \SimpleXMLElement($output);
 
             $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude->__toString();
             $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude->__toString();
-
-            // dd($latitude);
 
             $waypoints_geocodes[$i] = [
                 'type' => 'current_address',
@@ -412,7 +414,7 @@ class ShipmentController extends Controller
         $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
         .$street.'?output=xml&key='.$key;
 
-        // dump($findURL);
+        dump($findURL);
 
         $output = file_get_contents($findURL);
         $response = new \SimpleXMLElement($output);
@@ -429,7 +431,6 @@ class ShipmentController extends Controller
             'longitude' => $longitude,
         ];
 
-        // dd($waypoints_geocodes);
         dump($waypoints_geocodes);
 
         return view('shipments.track-shipment', compact('waypoints_geocodes', 'shipment'));
