@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PickupController extends Controller
 {
@@ -18,26 +19,21 @@ class PickupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(int|null $shipment_id = null): View
+    public function create(Request $request): View
     {
+        $shipment_id = $request->input('shipment_id');
+
+        if ($shipment_id != null) {
+            $shipment_id = (int) $shipment_id;
+
+            if ($shipment_id == null) {
+                abort(Response::HTTP_BAD_REQUEST, 'The request contains an invalid shipment id');
+            }
+        }
+
         return view('pickup_creation_form', [
             'shipment_id' => $shipment_id,
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): string
-    {
-        return "Requested Pickup $id";
     }
 
     /**
@@ -48,19 +44,5 @@ class PickupController extends Controller
         return view('pickup_edit', [
             'pickup_id' => $pickup_id,
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
     }
 }
