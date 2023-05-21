@@ -1,3 +1,4 @@
+version: '3'
 services:
   bluesky-website:
     image: bluesky-website:0.1.0

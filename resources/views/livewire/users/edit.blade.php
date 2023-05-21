@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div>
   <form wire:submit.prevent="save" class="grid w-full grid-cols-12 gap-4">
     <div class="col-span-6">
