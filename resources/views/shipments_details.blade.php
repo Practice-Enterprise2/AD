@@ -1,7 +1,7 @@
 <x-app-layout>
 
   <script type='text/javascript'
-    src="https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key='AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S'"
+    src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S'
     async defer></script>
   <script type='text/javascript'>
     var collection = @json($waypointsCollection);
