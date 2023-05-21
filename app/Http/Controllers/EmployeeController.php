@@ -69,7 +69,6 @@ class EmployeeController extends Controller
 
     public function contract_save(Request $req): RedirectResponse
     {
-        
         if ($req->startdate > $req->stopdate) {
             return redirect()->back()->withErrors(['alert' => 'End date cannot be before start date!']);
         }
@@ -88,7 +87,6 @@ class EmployeeController extends Controller
             $startyear = intval($req->startdate.substr(0, 4));
             $stopyear = intval($req->stopdate.substr(0, 4));
             $dayscheck = 1;
-           
 
             $startdate = new DateTime($req->startdate);
             $stopdate = new DateTime($req->stopdate);
@@ -98,13 +96,11 @@ class EmployeeController extends Controller
 
             $b = 0;
             for ($i = $startyear; $i <= $stopyear; $i++) {
-                if(($req->{'days'.$b} >= 0))
-                {
+                if (($req->{'days'.$b} >= 0)) {
                     if ($i == $startyear) {
                         if ($req->{'days'.$b} > $daysInStartYear) {
                             $dayscheck = 0;
                         }
-                        
                     }
                     if ($i == $stopyear) {
                         if ($req->{'days'.$b} > $daysInEndYear) {
@@ -116,9 +112,7 @@ class EmployeeController extends Controller
                             $dayscheck = 0;
                         }
                     }
-                }
-                else
-                {
+                } else {
                     return redirect()->back()->withErrors(['alert' => 'Invalid data in vacation days!']);
                 }
                 $b += 1;
@@ -142,12 +136,9 @@ class EmployeeController extends Controller
                     $holidaySaldo->save();
                     $b += 1;
                 }
-                if(strlen($req->input('position')) >= 3 && strlen($req->input('position'))< 25 && !is_numeric($req->input('position')))
-                {
+                if (strlen($req->input('position')) >= 3 && strlen($req->input('position')) < 25 && ! is_numeric($req->input('position'))) {
                     $newJobTitle = $req->input('position');
-                }
-                else
-                {
+                } else {
                     return redirect()->back()->withErrors(['alert' => 'Invalid data in job title field!']);
                 }
                 $jobtitle = DB::table('positions')->where('name', $newJobTitle)->first();
@@ -165,17 +156,14 @@ class EmployeeController extends Controller
                     'employee_contract_id' => $employeeContractId,
                 ]);
 
-                if($req->salary < 20000 && $req->salary > 1000 )
-                {
+                if ($req->salary < 20000 && $req->salary > 1000) {
                     $newSalary = $req->input('salary');
-                    
+
                     DB::table('employees')->where('id', $contract->employee_id)->update(['salary' => $newSalary]);
-                    
-                }
-                else
-                {
+                } else {
                     return redirect()->back()->withErrors(['alert' => 'Invalid salary!']);
                 }
+
                 return redirect()->back()->with('alert', 'Succes!');
             }
         }
