@@ -4,6 +4,7 @@ import axios from 'axios';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import $ from 'jquery';
+import Chart from 'chart.js/auto';
 
 const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -32,7 +33,7 @@ window.Echo = echo;
 window.Alpine = Alpine;
 window.$ = $;
 window.jQuery = $;
-
+window.Chart = Chart;
 // Set common Axios request headers
 axios_headers['X-CSRF-Token'] = csrfToken;
 axios_headers['X-Requested-With'] = 'XMLHttpRequest';
