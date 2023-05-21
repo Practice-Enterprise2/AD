@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div class="flex flex-col gap-2">
   @canany(['view_detailed_server_info'])
     <div>

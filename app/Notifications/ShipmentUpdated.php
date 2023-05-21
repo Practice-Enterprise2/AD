@@ -55,7 +55,7 @@ class ShipmentUpdated extends Notification
             ->greeting('Shipment Updated')
             ->subject('Shipment '.$this->shipment->id.' has been updated')
             ->line('Shipment '.$this->shipment->id.' has been updated.')
-            ->action('View Shipment', url('/shipments/'.$this->shipment->id))
+            ->action('View Shipment', route('shipments.show', ['shipment' => $this->shipment->id]))
             ->line('Thank you for using our application!')
             ->salutation('Regards, '.config('app.name'));
     }
