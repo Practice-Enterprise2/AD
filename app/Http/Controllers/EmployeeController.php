@@ -6,16 +6,16 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Address;
 use App\Models\Employee;
 use App\Models\EmployeeContract;
+use App\Models\HolidaySaldo;
+use App\Models\Position;
 use App\Models\User;
+use DateTime;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\Factory;
-use App\Models\HolidaySaldo;
-use App\Models\Position;
-use DateTime;
 use PDF;
 
 class EmployeeController extends Controller
