@@ -54,6 +54,8 @@
       @endif
       <x-canvas-tile :url="route('reviews.create')" title="Review Us"
         description="If you want to share your experience, you can leave a review"></x-canvas-tile>
+      <x-canvas-tile :url="route('invoice_overview')" title="Invoices"
+        description="View your invoices here"></x-canvas-tile>
     </div>
   </x-content-layout>
 </x-app-layout>
