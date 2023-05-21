@@ -3,11 +3,13 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\AiGraphController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
@@ -126,6 +128,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employeegraph', 'index')->middleware('permission:view_employee_count')->name('employeegraph');
     });
 
+    Route::controller(AIGraphController::class)->group(function () {
+        Route::get('/ai-graph', 'index')->middleware('permission:view_all_orders')->name('ai-graph');
+    });
+
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/reviews/create', 'create')->name('reviews.create')->can('create', Review::class);
         Route::post('/reviews', 'store')->name('reviews.store')->can('create', Review::class);
@@ -188,6 +194,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
         Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+    });
+
+    Route::controller(CustomerOrderHistoryController::class)->group(function () {
+        Route::get('/order_history', 'index')->name('order-history');
     });
 });
 

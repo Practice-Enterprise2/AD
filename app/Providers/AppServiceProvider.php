@@ -72,6 +72,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('accept_any_shipment', 'Accept any shipment for shipping.');
         static::bootstrap_permission('edit_any_employee', 'Edit all of the information on any employee.');
 
+        static::bootstrap_permission('view_all_orders', 'View graph order prediction.');
         // Create the minimum required roles (user groups).
         $role_admin = static::bootstrap_role('admin', 'User group that is granted all permissions. USE WITH CAUTION!');
         $role_employee = static::bootstrap_role('employee');
@@ -108,6 +109,7 @@ class AppServiceProvider extends ServiceProvider
         $role_management->givePermissionTo('edit_any_review');
         $role_management->givePermissionTo('delete_any_review');
         $role_management->givePermissionTo('edit_any_employee');
+        $role_management->givePermissionTo('view_all_orders');
 
         // Create the minimum required users.
         if (! User::query()->where('email', 'admin@local.test')->first()) {
