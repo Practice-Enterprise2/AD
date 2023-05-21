@@ -25,7 +25,7 @@
     <p class="mb-4"><span class="font-semibold">End Date:</span>
       {{ $contract->end_date }}</p>
     <p class="mb-4"><span class="font-semibold">Determination Date:</span>
-      {{ date('Y-m-d H:i:s') }}</p>
+      {{ date('Y-m-d H:i:s') }}</p>   
 
     <h2 class="mb-4 mt-8 text-xl font-bold">Employment Terms:</h2>
     <p>This contract of determination is entered into by and between the
