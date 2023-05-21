@@ -64,14 +64,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employees', 'index')->name('employees.index')->middleware('permission:view_employee_count');
         Route::post('/employees', 'store')->name('employees.store')->can('create', Employee::class);
-        Route::get('/employees/{employee}/edit', 'edit')->name('employees.edit');
-        Route::post('/employees/{employee}', 'update')->name('employees.update')->middleware('permission:add_employee');
-        Route::get('/employee_add_contract', 'contract_index')->name('contract.index')->middleware('permission:add_employee');
-        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract')->middleware('permission:add_employee');
-        Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts')->middleware('permission:add_employee');
-        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:add_employee');
-        Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:add_employee');
-        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:add_employee');
+        Route::get('/employees/{employee}/edit', 'edit')->name('employees.edit')->middleware('permission:edit_any_employee');
+        Route::post('/employees/{employee}', 'update')->name('employees.update')->middleware('permission:edit_any_employee');
+        Route::get('/employee_add_contract', 'contract_index')->name('contract.index')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract')->middleware('permission:change_employee_contracts');
+        Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:change_employee_contracts');
+        Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:change_employee_contracts');
     });
 
     Route::controller(UserController::class)->group(function () {
