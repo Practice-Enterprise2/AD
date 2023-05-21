@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 {{-- Livewire component for editing permissions granted to a role --}}
 <div>
   <form wire:submit.prevent="add_permission">

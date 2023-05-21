@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
 
   <div class="my-4 flex items-center justify-center">

@@ -8,6 +8,7 @@ use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
 use App\Models\User;
+use App\Models\Waypoint;
 use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
@@ -33,7 +34,6 @@ class ShipmentController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
-    //create
     public function create(): View
     {
         // Generate list of dates for the next 7 days
@@ -47,7 +47,6 @@ class ShipmentController extends Controller
         return view('shipments.create', compact('deliveryDates'));
     }
 
-    //store
     public function store(): View|RedirectResponse
     {
         // Validate request
@@ -147,6 +146,7 @@ class ShipmentController extends Controller
         $shipment->dimension_id = $dimensions->id;
 
         // Calculate shipping cost
+        $shipment_distance = request()->shipment_distance;
         $volumetric_freight = 0;
         $volumetric_freight_tarrif = 5;
         $dense_cargo_tarrif = 4;
@@ -155,11 +155,12 @@ class ShipmentController extends Controller
         $volumetric_freight += (($dimensions->length * $dimensions->width * $dimensions->height) / 5000);
         if ($volumetric_freight > $shipment->weight) {
             //Volumetric Air Freight rate
-            $shipment->expense = $volumetric_freight * $volumetric_freight_tarrif;
+            $expense = $volumetric_freight * $volumetric_freight_tarrif * $shipment_distance;
         } else {
             //Dense Cargo rate
-            $shipment->expense = $shipment->weight * $dense_cargo_tarrif;
+            $expense = $shipment->weight * $dense_cargo_tarrif * $shipment_distance;
         }
+        $shipment->expense = ceil($expense);
 
         $shipment->status = 'Awaiting Confirmation';
 
@@ -175,13 +176,15 @@ class ShipmentController extends Controller
 
     public function requests(): View
     {
-        // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
-        // dd("Catch");
-        // dd($shipments);
-        return view('/shipments.requests', compact('shipments'));
+
+        return view('shipments.requests', compact('shipments'));
     }
 
+    /**
+     * Decline a shipment or redirect the user to the page to confirm the
+     * shipment by adding extra information.
+     */
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
@@ -266,6 +269,13 @@ class ShipmentController extends Controller
             'type' => request()->handling_type[0],
         ]);
 
+        if (request()->status == 'Awaiting Confirmation') {
+            $waypoints = Waypoint::query()->where('shipment_id', $shipment->id)->get();
+            foreach ($waypoints as $waypoint) {
+                $waypoint->delete();
+            }
+        }
+
         if ($shipment->wasChanged()) {
             $shipmentChanges = $shipment->getChanges();
             $source_user = User::query()->where('id', $shipment->user_id)->first();
@@ -278,6 +288,8 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment): Redirector|RedirectResponse
     {
+        $this->authorize('delete', $shipment);
+
         $shipment->status = 'Deleted';
         $shipment->update();
         $shipment->delete();
@@ -288,6 +300,8 @@ class ShipmentController extends Controller
 
     public function show(Shipment $shipment): View
     {
+        $this->authorize('view', $shipment);
+
         return view('shipments.show', compact('shipment'));
     }
 

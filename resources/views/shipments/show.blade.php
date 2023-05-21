@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 space-y-6 rounded-md bg-white p-6 shadow-md">
@@ -251,8 +253,8 @@
           <div class="mb-4 flex justify-end border p-2">
             {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
           </div>
-          @can('edit_all_shipments')
-            <div class="mb-2 flex justify-end">
+          <div class="mb-2 flex justify-end">
+            @can('edit_all_shipments')
               <form action="{{ route('shipments.edit', $shipment->id) }}"
                 method="GET">
                 @csrf
@@ -261,6 +263,8 @@
                   type="submit">
                   Edit</button>
               </form>
+            @endcan
+            @can('delete_any_shipment')
               <form action="{{ route('shipments.destroy', $shipment->id) }}"
                 method="POST">
                 @csrf
@@ -270,8 +274,8 @@
                   type="submit">
                   Delete</button>
               </form>
-            </div>
-          @endcan
+            @endcan
+          </div>
         </div>
 
       </div>

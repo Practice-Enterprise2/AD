@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <nav x-data="{ open: false }"
   class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
 
@@ -18,11 +20,6 @@
           <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             {{ __('Home') }}
           </x-nav-link>
-          @auth
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-              {{ __('Dashboard') }}
-            </x-nav-link>
-          @endauth
           @can('view_general_employee_content')
             <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
               {{ __('Employee') }}
@@ -209,12 +206,6 @@
       <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
         {{ __('Home') }}
       </x-responsive-nav-link>
-      @auth
-        <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-          {{ __('Dashboard') }}
-        </x-responsive-nav-link>
-      @endauth
-
       @can('view_general_employee_content')
         <x-responsive-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
           {{ __('Employee') }}
