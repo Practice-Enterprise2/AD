@@ -159,6 +159,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
 
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
+        Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
 });
 
