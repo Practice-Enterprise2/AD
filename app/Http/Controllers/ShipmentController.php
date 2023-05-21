@@ -34,8 +34,7 @@ class ShipmentController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
-    //create
-    public function create(): View|Factory
+    public function create(): View
     {
         // Generate list of dates for the next 7 days
         $deliveryDateStart = (new DateTime())->modify('+2 days');
@@ -48,7 +47,6 @@ class ShipmentController extends Controller
         return view('shipments.create', compact('deliveryDates'));
     }
 
-    //store
     public function store(): View|RedirectResponse
     {
 
@@ -142,13 +140,15 @@ class ShipmentController extends Controller
 
     public function requests(): View|Factory
     {
-        // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
-        // dd("Catch");
-        // dd($shipments);
-        return view('/shipments.requests', compact('shipments'));
+
+        return view('shipments.requests', compact('shipments'));
     }
 
+    /**
+     * Decline a shipment or redirect the user to the page to confirm the
+     * shipment by adding extra information.
+     */
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
@@ -215,34 +215,10 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment)
     {
-        // We can't delete the shipment completely, because we are using SoftDeletes.
-        // Because of this we will have shipment data in the database, but we will not be able to see it.
-        // Also we will not be able to delete the addresses, because they are used in the shipment.
-        // If we remove the SoftDeletes from the Shipment model, we will be able to delete the shipment and the addresses.
-        // If you uncomment the lines below, you will be able to delete the shipment and the addresses after removing the SoftDeletes from the Shipment model.
+        $this->authorize('delete', $shipment);
 
-        // $source_address = Address::query()->where([
-        //     'id' => $shipment->source_address_id,
-        // ])->first();
-
-        // $destination_address = Address::query()->where([
-        //     'id' => $shipment->destination_address_id,
-        // ])->first();
-
-        // foreach ($waypoints as $waypoint) {
-        //     $waypoint_address[] = Address::query()->where([
-        //         'id' => $waypoint->current_address_id,
-        //     ])->first();
-        // }
-
-        $waypoints = Waypoint::query()->where([
-            'shipment_id' => $shipment->id,
-        ])->get();
-
-        foreach ($waypoints as $waypoint) {
-            $waypoint->delete();
-        }
-
+        $shipment->status = 'Deleted';
+        $shipment->update();
         $shipment->delete();
 
         // $source_address->delete();
@@ -258,6 +234,8 @@ class ShipmentController extends Controller
 
     public function show(Shipment $shipment)
     {
+        $this->authorize('view', $shipment);
+
         return view('shipments.show', compact('shipment'));
     }
 
