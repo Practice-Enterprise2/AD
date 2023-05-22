@@ -182,7 +182,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -196,8 +196,6 @@ return [
 
         // QR Code
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        // to PDF
-        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
