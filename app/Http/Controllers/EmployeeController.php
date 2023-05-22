@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\File;
 use PDF;
 
@@ -104,7 +105,7 @@ class EmployeeController extends Controller
 
             return response()->download($pdfPath)->deleteFileAfterSend(true);
         } else {
-            return redirect('/home')->back()->with('error', 'No contract found.');
+            return redirect()->route('/home')->back()->with('error', 'No contract found.');
         }
     }
 
@@ -114,7 +115,7 @@ class EmployeeController extends Controller
         $contract = $employee->employee_contracts();
         $contract->delete();
 
-        return redirect('/employee_add_contract');
+        return redirect()->route('/employee_add_contract');
     }
 
     public function create(): View

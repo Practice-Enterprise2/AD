@@ -68,6 +68,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employees/{employee}/edit', 'edit')->name('employees.edit');
         Route::post('/employees/{employee}', 'update')->name('employees.update');
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
+        Route::get('/endcontract', [EmployeeController::class, 'end'])->name('contracts.end');
+        Route::post('/contracts/{employee}/determine', [EmployeeController::class, 'determine'])->name('contracts.determine');
+        Route::post('/contracts/{employee}/renew', [EmployeeController::class, 'renew'])->name('contracts.renew');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -199,12 +202,6 @@ Route::middleware('auth')->group(function () {
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
         Route::get('/order_history', 'index')->name('order-history');
     });
-
-    // end contracts and renew
-    Route::get('/endcontract', [EmployeeController::class, 'end'])->name('contracts.end');
-
-    Route::post('/contracts/{employee}/determine', [EmployeeController::class, 'determine'])->name('contracts.determine');
-    Route::post('/contracts/{employee}/renew', [EmployeeController::class, 'renew'])->name('contracts.renew');
 });
 
 require __DIR__.'/auth.php';
