@@ -12,7 +12,7 @@
 
       </h2>
       <h2 class="mb-4 text-lg font-medium">Track Shipment</h2>
-      <div id="myMap" style="width:60%;height:300px;"
+      <div id="myMap" style="width:100%;height:500px;"
         class="m-2 border border-black"></div>
 
       <p>{{ $shipment }}</p>
@@ -51,89 +51,84 @@
       customMapStyle: myStyle
     });
 
+    var waypoints = {!! json_encode($waypoints_geocodes) !!};
 
-    // NEED DYNAMIC Locations
-    var leuven = new Microsoft.Maps.Location(50.8798, 4.7005); // Leuven
-    var mechelen = new Microsoft.Maps.Location(51.0259, 4.4775); // Mechelen
-    var brussels = new Microsoft.Maps.Location(50.8503, 4.3517); // Brussels
-    var istanbul = new Microsoft.Maps.Location(41.0082, 28.9784); // Istanbul
+    var polylineCoordinates = [];
+    var pushpins = [];
 
 
-    // ---- SINGLE-COLOR-RED ---- //
-    // var line = new Microsoft.Maps.Polyline([leuven, mechelen, brussels, istanbul], {
-    //     strokeColor: 'red',
-    //     strokeThickness: 3
-    // });
-    // map.entities.push(line);
+    for (var i = 0; i < waypoints.length; i++) {
+      var waypoint = waypoints[i];
+      var latitude = waypoint.latitude;
+      var longitude = waypoint.longitude;
+
+      var location = new Microsoft.Maps.Location(latitude, longitude);
+      polylineCoordinates.push(location);
+
+      if (polylineCoordinates.length > 1 && polylineCoordinates.length <
+        waypoints.length) {
+        if (waypoint.waypoint_status == "In Transit") {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'red',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        } else if (waypoint.waypoint_status == "Out For Delivery") {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'yellow',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        } else {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'green',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        }
+      } else if (polylineCoordinates.length == waypoints.length) {
+        if (waypoint.waypoint_status == "Out For Client") {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'yellow',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        } else if (waypoint.waypoint_status == "Delivered") {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'green',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        } else {
+          var polyline = new Microsoft.Maps.Polyline([polylineCoordinates[i -
+            1], polylineCoordinates[i]], {
+            strokeColor: 'red',
+            strokeThickness: 3
+          });
+          map.entities.push(polyline);
+        }
+      }
 
 
-    // PUSHPINS ADJUST LATER ON
-    // var pushpinLeuven = new Microsoft.Maps.Pushpin(leuven, {
-    //     title: "Leuven",
-    //     description: "Leuven is a historic university city located in Flemish Brabant, Belgium."
-    // });
-    // var pushpinMechelen = new Microsoft.Maps.Pushpin(mechelen, {
-    //     title: "Mechelen",
-    //     description: "Mechelen is a city in the province of Antwerp, Belgium with a rich cultural heritage."
-    // });
-    // var pushpinBrussels = new Microsoft.Maps.Pushpin(brussels, {
-    //     title: "Brussels",
-    //     description: "Brussels is the capital city of Belgium and the European Union, known for its stunning architecture and delicious chocolate."
-    // });
-    // var pushpinIstanbul = new Microsoft.Maps.Pushpin(istanbul, {
-    //     title: "Istanbul",
-    //     description: "Istanbul is a transcontinental city in Turkey, straddling Europe and Asia, and rich in history and culture."
-    // });
+      var pushpin = new Microsoft.Maps.Pushpin(location, {
+        title: waypoint.waypoint.name,
+        description: waypoint.waypoint.description
+      });
 
+      pushpins.push(pushpin);
+      map.entities.push(pushpin);
+    }
 
-    // ---- MULTIPLE COLORS ---- //
-    var polyline1 = new Microsoft.Maps.Polyline([leuven, mechelen], {
-      strokeColor: 'green',
-      strokeThickness: 3
-    });
-
-    var polyline2 = new Microsoft.Maps.Polyline([mechelen, brussels], {
-      strokeColor: 'blue',
-      strokeThickness: 3
-    });
-
-    var polyline3 = new Microsoft.Maps.Polyline([brussels, istanbul], {
-      strokeColor: 'red',
-      strokeThickness: 3
-    });
-    map.entities.push(polyline1);
-    map.entities.push(polyline2);
-    map.entities.push(polyline3);
-    map.entities.push(pushpinLeuven);
-    map.entities.push(pushpinMechelen);
-    map.entities.push(pushpinBrussels);
-    map.entities.push(pushpinIstanbul);
-
-
-
-    // PUSHPIN EVENTS EXAMPLE //
-    // Microsoft.Maps.Events.addHandler(pushpinLeuven, 'click', function () { highlight('pushpinClick', pushpinLeuven); });
-    // Microsoft.Maps.Events.addHandler(pushpinMechelen, 'click', function () { highlight('pushpinClick', pushpinMechelen); });
-    // Microsoft.Maps.Events.addHandler(pushpinBrussels, 'click', function () { highlight('pushpinClick', pushpinBrussels); });
-    // Microsoft.Maps.Events.addHandler(pushpinIstanbul, 'click', function () { highlight('pushpinClick', pushpinIstanbul); });
-
-    // VIEW RANGE
     map.setView({
-      bounds: Microsoft.Maps.LocationRect.fromLocations([leuven, mechelen,
-        brussels, istanbul
-      ])
+      bounds: Microsoft.Maps.LocationRect.fromLocations(polylineCoordinates)
     });
   }
-
-  // function highlight(id, pushpin) {
-  //     //Highlight the mouse event div to indicate that the event has fired.
-
-  //     document.getElementById(id).style.background = 'LightGreen';
-  //     alert(`${pushpin.getTitle()} h'been clicked!`);
-  //     //Remove the highlighting after a second.
-  //     setTimeout(function () { document.getElementById(id).style.background = 'white'; }, 1000);
-  // }
 </script>
-<script type='text/javascript'
-  src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[YOUR_BING_MAPS_KEY]'
+<script type='text/javascript' {{-- ADD YOUR API KEY TO ".env" FILE  --}}
+  src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key={{ env('BINGMAPS_KEY') }}'
   async defer></script>
