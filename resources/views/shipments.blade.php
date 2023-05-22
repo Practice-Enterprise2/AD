@@ -5,6 +5,8 @@
   <!-- using a counter to make unique button id's -->
   <script>
     var i = 0;
+    var shipId = 0;
+    
   </script>
 
   <!-- Modal -->
@@ -18,9 +20,10 @@
         <h1 class="mb-4 text-2xl font-bold">Confirmation</h1>
         <p class="mb-4">Are you sure you want to cancel the shipment?</p>
         <div class="relative bottom-0 flex w-full justify-center pb-6">
-          <a href="#"><button
+          <a><button
               class="mr-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-              id="confirmCancelButton">
+              id="confirmCancelButton"
+              onclick="toggleDiv()">
               Yes
             </button></a>
           <button
@@ -32,11 +35,12 @@
       </div>
     </div>
   </div>
+  
+
 
   <div class="flex justify-center">
     <div class="w-full">
       <h1 class="mb-4 text-center text-3xl font-semibold">Shipment Tracking</h1>
-
       <div class="overflow-x-auto">
         <table
           class="table-sortable mx-auto table-auto border-collapse border border-gray-400">
@@ -104,7 +108,7 @@
                       <div
                         class="rounded-md border-2 border-yellow-900 bg-yellow-500 py-2 text-center text-base font-bold text-white">
                         Held At Location</div>
-                    @elseif ($shipment->status == 'Canceled')
+                    @elseif ($shipment->status == 'Declined')
                       <div
                         class="rounded-md border-2 border-red-900 bg-red-500 py-2 text-center text-base font-bold text-white">
                         Canceled</div>
@@ -120,7 +124,6 @@
                     <button
                       class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300"
                       id="cancelButton">Cancel</button>
-
                     <!--  Script that hides / unhides the modal -->
                     <script>
                       var button = document.getElementById('cancelButton');
@@ -130,26 +133,23 @@
                       console.log(cancelButton);
                       i++;
 
+                      // cancel modal
                       var modal = document.getElementById('cancelModal');
                       var confirmCancelButton = document.getElementById('confirmCancelButton');
                       var cancelCancelButton = document.getElementById('cancelCancelButton');
 
                       button.addEventListener('click', function() {
                         console.log("Hello, cancel button!");
+                        shipId = "{{$shipment->id}}";
                         modal.classList.remove('hidden');
                       });
-                      confirmCancelButton.addEventListener('click', function() {
-                        // Add cancelation code to controller.
-                        var shipmentId = {{ $shipment->id }};
-                        var routeUrl = "{{ route('shipments.cancel', ':id') }}".replace(':id',
-                          shipmentId);
-                        modal.classList.add('hidden');
-
-
-                        window.location.href = routeUrl;
+                      confirmCancelButton.addEventListener('click', function() {         
+                        modal.classList.add('hidden');            
                       });
                       cancelCancelButton.addEventListener('click', function() {
                         modal.classList.add('hidden');
+                      });
+                      okButton.addEventListener('click', function() {
                       });
                     </script>
                   </td>
@@ -201,7 +201,7 @@
                         <div
                           class="rounded-md border-2 border-yellow-900 bg-yellow-500 py-2 text-center text-base font-bold text-white">
                           Held At Location</div>
-                      @elseif ($shipment->status == 'Canceled')
+                      @elseif ($shipment->status == 'Declined')
                         <div
                           class="rounded-md border-2 border-red-900 bg-red-500 py-2 text-center text-base font-bold text-white">
                           Canceled</div>
@@ -225,8 +225,26 @@
             @endif
           </tbody>
         </table>
-
       </div>
+        <div class="mx-auto border-2 border-blue-600 bg-blue-400 w-2/5 p-3 text-center rounded-lg mt-4" style="display: none" id="invisibleDiv">
+            <h1 class="text-xl">Cancel Info</h1>
+            <h2 class="">{{$error}}
+        </h2>
+        </div>
+
+        <script>
+         function toggleDiv() {
+            var div = document.getElementById('invisibleDiv');
+            div.style.display = (div.style.display === 'none') ? 'block' : 'none';
+            
+            if (div.style.display === 'block') {
+                setTimeout(function() {
+                    div.style.display = 'none';
+                }, 5000);
+            }
+          }
+        </script>	
+
 
     </div>
   </div>
