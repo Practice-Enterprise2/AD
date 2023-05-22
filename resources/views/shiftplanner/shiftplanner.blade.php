@@ -7,6 +7,20 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
+
+function getCurrentDateTime() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = String(now.getMonth() + 1).padStart(2, '0');
+  var day = String(now.getDate()).padStart(2, '0');
+  var hours = String(now.getHours()).padStart(2, '0');
+  var minutes = String(now.getMinutes()).padStart(2, '0');
+  var seconds = String(now.getSeconds()).padStart(2, '0');
+
+  var dateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+  return dateTime;
+}
+
       function getEmployeeIdByName(employees, name) {
         var employeeId = null;
         employees.forEach(function(employee) {
@@ -37,6 +51,22 @@
         return endTime;
       }
 
+      var employees = <?php echo json_encode($shifts->map(function($shift) {
+              return [
+                'id' => $shift->employee->user->id,
+                'name' => $shift->employee->user->name,
+                'planned_start_time' => date('Y-m-d', strtotime($shift->planned_start_time)),
+                'planned_end-time' => date('Y-m-d', strtotime($shift->planned_end_time)),
+              ];
+            })->toArray());?>;
+
+            var emps = <?php echo json_encode($employees->map(function($emp) {
+              return [
+                'id' => $emp->id,
+                'name' => $emp->user->name,
+              ];
+            })->toArray());?>;
+
 
       
       document.addEventListener('DOMContentLoaded', function() {
@@ -65,57 +95,66 @@
             info.event.setAllDay(true);
           },
           eventClick: function(info) {
+            event.startTime = getCurrentDateTime();
+            event.endTime = getCurrentDateTime();
+            console.log(event.startTime);
             if(confirm("Are you sure you want to delete this event?")) {
               info.event.remove();
             }
-          }
+          },
+
+          eventDrop: function(info) {
+            var droppedEvent = info.event;
+            var droppedDate = info.event.start;
+            console.log('Event dropped on: ', droppedDate);
+            // You can perform additional actions here based on the dropped date
+            // For example, you can extract the day, month, and year from the dropped date
+            var day = droppedDate.getDate();
+            var month = droppedDate.getMonth() + 1;
+            var year = droppedDate.getFullYear();
+                
+            var dateTimeS = year + '-' + month + '-' + day + ' ' + '07' + ':' + '00' + ':' + '00';
+            var dateTimeE = year + '-' + month + '-' + day + ' ' + '15' + ':' + '00' + ':' + '00';
+            console.log('Day:', day);
+            console.log('Month:', month);
+            console.log('Year:', year);
+
+            console.log(dateTimeS);
+                
+            // ... Perform your desired actions based on the dropped date
+          },
         });
         calendar.render();
         var containerEl = document.getElementById('external-events');
         new FullCalendar.Draggable(containerEl, {
-          itemSelector: '.fc-event',
-          eventData: function(eventEl) {
-            console.log(eventEl.startTime);
-            return {
-              title: eventEl.innerText.trim(),
-              startTime: now(),
-              
-            };
-          }
+        itemSelector: '.fc-event',
+        eventData: function(eventEl) {
+          var title = eventEl.innerText.trim();
+          var startTime = getCurrentDateTime(); // Set the start time in the format 'Y-M-D HH:MM:SS'
+          event.startTime = startTime;
+          //console.log(startTime);
+          var endTime = ''; // Set the end time in the format 'Y-M-D HH:MM:SS'
+          return {
+            title: title,
+            start: startTime,
+            end: endTime
+            
+          };
+        }
         });
-
         // Save button functionality
         document.getElementById('save-button').addEventListener('click', function() {
           var events = calendar.getEvents();
           //console.log(events);
-            //var employees = '{{$employees}}';
-            var employees = <?php echo json_encode($shifts->map(function($shift) {
-              return [
-                'id' => $shift->employee->user->id,
-                'name' => $shift->employee->user->name,
-                'planned_start_time' => date('Y-m-d', strtotime($shift->planned_start_time)),
-                'planned_end-time' => date('Y-m-d', strtotime($shift->planned_end_time)),
-              ];
-            })->toArray());?>;
-
-            var emps = <?php echo json_encode($employees->map(function($emp) {
-              return [
-                'id' => $emp->id,
-                'name' => $emp->name,
-              ];
-            })->toArray());?>;
-            //console.log(employees);
             events.forEach(function(event) {
-              console.log(event.startTime); //employee name
+              console.log(event.startTime);
               var formData = new FormData();
-              formData.append('planned_start_time', getStartTimeByName(employees, event.title));
-              //add 24h to start time or sth
+              formData.append('planned_start_time', getCurrentDateTime());
               formData.append('planned_end_time', getEndTimeByName(employees, event.title));
               formData.append('actual_start_time', null);
               formData.append('actual_end_time', null);
               formData.append('employee_id', getEmployeeIdByName(employees, event.title));
-            console.log(formData);
-            //console.log(formData); // Log FormData to console
+              console.log(getEmployeeIdByName(emps, event.title));
             fetch('/shifts', {
               method: 'POST',
               body: formData,
