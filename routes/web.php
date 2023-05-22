@@ -139,7 +139,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(ShipmentController::class)->group(function () {
         Route::get('/shipments', 'index')->name('shipments.index')->can('viewAny', Shipment::class);
-        Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
         Route::post('/shipments', 'store')->name('shipments.store')->can('create', Shipment::class);
         Route::get('/shipments/{shipment}', 'show')->name('shipments.show')->can('view', 'shipment');
         Route::get('/shipments/{shipment}/edit', 'edit')->name('shipments.edit')->can('update', 'shipment');
@@ -171,7 +170,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // ShipmentController
-    Route::get('/shipments/create', [ShipmentController::class, 'create'])->name('shipments.create');
+    Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
     Route::get('/shdipments/dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
