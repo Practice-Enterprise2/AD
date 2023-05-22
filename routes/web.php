@@ -172,7 +172,7 @@ Route::middleware('auth')->group(function () {
     // ShipmentController
     Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
     Route::get('shipments/requests', [ShipmentController::class, 'requests'])->name('shipments.requests');
-    Route::get('/shdipments/dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
+    Route::get('/shipments/dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
     Route::post('shipments/requests/{shipment}/evaluate', [ShipmentController::class, 'evaluate'])->name('shipments.requests.evaluate');
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('shipments.edit');
