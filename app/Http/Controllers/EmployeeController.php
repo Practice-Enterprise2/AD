@@ -15,7 +15,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\File;
 use PDF;
 
@@ -348,7 +347,6 @@ class EmployeeController extends Controller
 
         return redirect()->route('/employee_add_contract');
     }
-
 
     public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
     {
