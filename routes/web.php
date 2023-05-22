@@ -245,7 +245,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
         Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
     });
-    
+
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
         Route::get('/order_history', 'index')->name('order-history');
     });
@@ -257,6 +257,5 @@ Route::middleware('auth')->group(function () {
         Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
     });
 });
-
 
 require __DIR__.'/auth.php';
