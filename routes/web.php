@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -49,7 +50,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::view('/respond', 'respond');
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
-    Route::view('/employee_add_contract', 'employee_add_contract')->name('contract-index');
     Route::view('/employees/create', 'employees.create')->name('employees.create')->can('create', Employee::class);
 
     /*
@@ -71,6 +71,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/endcontract', [EmployeeController::class, 'end'])->name('contracts.end');
         Route::post('/contracts/{employee}/determine', [EmployeeController::class, 'determine'])->name('contracts.determine');
         Route::post('/contracts/{employee}/renew', [EmployeeController::class, 'renew'])->name('contracts.renew');
+        Route::get('/employees/{employee}/edit', 'edit')->name('employees.edit')->middleware('permission:edit_any_employee');
+        Route::post('/employees/{employee}', 'update')->name('employees.update')->middleware('permission:edit_any_employee');
+        Route::get('/employee_add_contract', 'contract_index')->name('contract.index')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract')->middleware('permission:change_employee_contracts');
+        Route::get('/employee_view_contracts', 'view_contracts_index')->name('employee-view-contracts')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:change_employee_contracts');
+        Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:change_employee_contracts');
+        Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:change_employee_contracts');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -158,6 +166,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
 
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
+        Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
 });
 
@@ -201,6 +210,13 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
         Route::get('/order_history', 'index')->name('order-history');
+    });
+    Route::controller(InvoiceController::class)->group(function () {
+        //Invoice overview & payment
+        Route::get('/invoices', 'index')->name('invoice_overview');
+        Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
+        Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
+        Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
     });
 });
 
