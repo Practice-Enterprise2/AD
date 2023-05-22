@@ -221,5 +221,17 @@ Route::middleware('auth')->group(function () {
             Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
         });
     });
-    require __DIR__.'/auth.php';
 });
+
+Route::controller(CustomerOrderHistoryController::class)->group(function () {
+    Route::get('/order_history', 'index')->name('order-history');
+});
+Route::controller(InvoiceController::class)->group(function () {
+    //Invoice overview & payment
+    Route::get('/invoices', 'index')->name('invoice_overview');
+    Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
+    Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
+    Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
+});
+
+require __DIR__.'/auth.php';
