@@ -51,6 +51,7 @@ class EmployeeController extends Controller
 
     public function edit(int $employee): View
     {
+        $employee = Employee::query()->findOrFail($employee);
         return view('employees.edit', ['employee' => $employee]);
     }
 
