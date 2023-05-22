@@ -7,21 +7,12 @@ use App\Models\refund;
   
 class refundController extends Controller
 {
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
+
     public function index()
     {
         return view('refund/create_refund');
     }
-  
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
+
     public function store(Request $request)
     {
         $request->validate([

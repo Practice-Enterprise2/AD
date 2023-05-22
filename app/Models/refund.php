@@ -24,7 +24,7 @@ class Refund extends Model
   
         static::created(function ($item) {
                 
-            $adminEmail = "your_admin_email@gmail.com";
+            $adminEmail = "cptn989@gmail.com";
             Mail::to($adminEmail)->send(new ContactMail($item));
         });
     }
