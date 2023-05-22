@@ -15,6 +15,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\File;
 use PDF;
 
@@ -41,6 +43,12 @@ class EmployeeController extends Controller
         }
 
         return view('employees.index', ['employees' => $employees]);
+    }
+    public function create(): View {
+        return view('employees.create');
+    }
+    public function edit(int $employee): View {
+        return view('employees.edit', ['employee' => $employee]);
     }
 
     public function contract_save(Request $req): RedirectResponse
