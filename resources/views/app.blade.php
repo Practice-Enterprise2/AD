@@ -56,6 +56,10 @@
         description="If you want to share your experience, you can leave a review"></x-canvas-tile>
       <x-canvas-tile :url="route('invoice_overview')" title="Invoices"
         description="View your invoices here"></x-canvas-tile>
+      @can('change_employee_contracts') 
+      <x-canvas-tile :url="route('employee-view-contracts')" title="Contracts"
+        description="View All the contracts here"></x-canvas-tile>
+      @endcan
     </div>
   </x-content-layout>
 </x-app-layout>
