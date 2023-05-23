@@ -20,7 +20,6 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
-use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +36,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/new_employee', 'add_employee')->name('employee.create')->can('create', Employee::class);
     Route::view('/respond', 'respond');
 
     /*
@@ -60,10 +58,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/employee_add_contract', 'contract_index')->name('contract-index');
         Route::post('/employee_add_contract_done', 'contract_save')->name('employee-add-contract');
     });
-
     Route::controller(EmployeeViewController::class)->group(function () {
-        Route::get('/employee_overview', 'index');
-        Route::post('/employee_add', 'save');
+        Route::get('/employee_overview', 'index')->name('employee.overview')->middleware('permission:view_employee_count');
+        Route::post('/employee_add', 'save')->name('save-employee')->middleware('permission:add_employee');
+        Route::get('/new_employee', 'showAdd')->name('employee.create')->middleware('permission:add_employee');
+        Route::post('/employee_edit', 'employeeEdit');
+        Route::post('/employee_edit_save', 'employeeEditSave');
+        Route::get('/employee_search', 'searchEmployee')->name('employee-search');
     });
 
     Route::controller(UserController::class)->group(function () {
