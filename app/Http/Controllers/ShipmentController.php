@@ -34,7 +34,6 @@ class ShipmentController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
-    //create
     public function create(): View
     {
         // Generate list of dates for the next 7 days
@@ -48,7 +47,6 @@ class ShipmentController extends Controller
         return view('shipments.create', compact('deliveryDates'));
     }
 
-    //store
     public function store(): View|RedirectResponse
     {
         // Validate request
@@ -178,13 +176,15 @@ class ShipmentController extends Controller
 
     public function requests(): View
     {
-        // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
-        // dd("Catch");
-        // dd($shipments);
-        return view('/shipments.requests', compact('shipments'));
+
+        return view('shipments.requests', compact('shipments'));
     }
 
+    /**
+     * Decline a shipment or redirect the user to the page to confirm the
+     * shipment by adding extra information.
+     */
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
@@ -288,6 +288,8 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment): Redirector|RedirectResponse
     {
+        $this->authorize('delete', $shipment);
+
         $shipment->status = 'Deleted';
         $shipment->update();
         $shipment->delete();
@@ -298,6 +300,8 @@ class ShipmentController extends Controller
 
     public function show(Shipment $shipment): View
     {
+        $this->authorize('view', $shipment);
+
         return view('shipments.show', compact('shipment'));
     }
 

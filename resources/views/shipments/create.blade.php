@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="mt-6 flex flex-col items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">
@@ -158,9 +160,10 @@
             </div>
           </div>
         </div>
-        <div class="mb-4">
-          <label class="mb-2 block font-medium text-gray-700">Handling
-            Type</label>
+        <div class="my-10">
+          <label
+            class="mb-2 block font-medium text-gray-700 underline">Handling
+            Type:</label>
           <div class="flex flex-col">
             <label class="inline-flex items-center">
               <input type="radio" class="form-radio" name="handling_type[]"
@@ -184,13 +187,13 @@
             </label>
           </div>
         </div>
-        <div class="mb-4">
-          <label class="mb-2 block font-medium text-gray-700">Package
-            details</label>
+        <div class="my-10">
+          <label class="mb-2 block font-medium text-gray-700 underline">Package
+            details:</label>
           <div class="flex w-1/2 flex-col">
             <div class="mb-2 flex">
               <label class="inline-flex w-1/3 items-center text-black">Total
-                weight:</label>
+                weight: (kg)</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_weight" id="shipment_weight"
@@ -198,8 +201,8 @@
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
-              <label
-                class="inline-flex w-1/3 items-center text-black">Length:</label>
+              <label class="inline-flex w-1/3 items-center text-black">Length:
+                (cm)</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_length" id="shipment_length"
@@ -207,8 +210,8 @@
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
-              <label
-                class="inline-flex w-1/3 items-center text-black">Height:</label>
+              <label class="inline-flex w-1/3 items-center text-black">Height:
+                (cm)</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_height" id="shipment_height"
@@ -216,8 +219,8 @@
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
-              <label
-                class="inline-flex w-1/3 items-center text-black">Width:</label>
+              <label class="inline-flex w-1/3 items-center text-black">Width:
+                (cm)</label>
               <input
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_width" id="shipment_width"
@@ -225,8 +228,8 @@
                 onkeyup="calculateShipmentPrice()">
             </div>
             <div class="mb-2 flex">
-              <label
-                class="inline-flex w-1/3 items-center text-black">Expense:</label>
+              <label class="inline-flex w-1/3 items-center text-black">Expense:
+                (Euro)</label>
               <input readonly
                 class="ml-auto w-2/3 rounded-md border border-gray-400 p-1 text-black"
                 type="text" name="shipment_price" id="shipment_price"
