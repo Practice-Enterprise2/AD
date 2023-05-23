@@ -250,14 +250,12 @@
               </div>
             @endforeach
           </div>
-          <a
-                  class="me-1 rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-                   href="{{route('shipments.update-waypoint', ['shipment' => $shipment->id])}}">
-                  Confirm</a>
-                  <a
-                  class="me-1 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-                   href="{{route('shipments.exception-waypoint', ['shipment' => $shipment->id])}}">
-                  Exception</a>
+          <a class="me-1 rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+            href="{{ route('shipments.update-waypoint', ['shipment' => $shipment->id]) }}">
+            Confirm</a>
+          <a class="me-1 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            href="{{ route('shipments.exception-waypoint', ['shipment' => $shipment->id]) }}">
+            Exception</a>
         </div>
 
       </div>

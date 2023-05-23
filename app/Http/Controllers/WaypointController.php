@@ -13,20 +13,21 @@ use Illuminate\Contracts\View\View;
 
 class WaypointController extends Controller
 {
-
-    public function confirmWaypoint(string $shipment){
+    public function confirmWaypoint(string $shipment)
+    {
         $shipmentData = Shipment::where('id', $shipment)->first();
+
         return view('shipments.confirm-waypoint', [
-            'shipment' => $shipmentData
+            'shipment' => $shipmentData,
         ]);
     }
-    
-    public function exceptionWaypoint(string $shipment){
 
+    public function exceptionWaypoint(string $shipment)
+    {
         $shipmentData = Shipment::where('id', $shipment)->first();
-        $shipmentData->status = "Exception";
+        $shipmentData->status = 'Exception';
         $shipmentData->update();
-        dd("This shipment status has become Exception!!!!");
+        dd('This shipment status has become Exception!!!!');
     }
 
     public function create(Shipment $shipment): View
@@ -238,8 +239,7 @@ class WaypointController extends Controller
         if ($shipment->status == 'Delivered') {
             dd('Shipments is already Delivered!');
         }
-        if($shipment->status == "Exception")
-        {
+        if ($shipment->status == 'Exception') {
             dd('This Shipments has Exception status!!!!!');
         }
         $current_waypoint = $shipment->waypoints()->where('status', 'Out For Delivery')->first();
