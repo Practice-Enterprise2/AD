@@ -23,13 +23,13 @@ class Address extends Model implements ValidatesAttributes
 {
     use AppValidatesAttributes;
 
-    public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s\p{L}]+$/u', 'min:2'];
+    public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s\p{L}\-]+$/u', 'min:2'];
 
     public const VALIDATION_RULE_HOUSE_NUMBER = ['required', 'string', 'min:1'];
 
     public const VALIDATION_RULE_POSTAL_CODE = ['required', 'string', 'regex:/^[A-Za-z0-9\s\p{L}]+$/u', 'min:2'];
 
-    public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[\p{L}\s]+$/u', 'min:2'];
+    public const VALIDATION_RULE_CITY = ['required', 'string', 'regex:/^[\p{L}\s\-]+$/u', 'min:2'];
 
     public const VALIDATION_RULE_REGION = ['required', 'string', 'regex:/^[\p{L}\s\-]+$/u', 'min:2'];
 
