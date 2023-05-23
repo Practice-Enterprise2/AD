@@ -71,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('delete_any_shipment', 'Delete any of the shipments, regardless of who they belong to.');
         static::bootstrap_permission('accept_any_shipment', 'Accept any shipment for shipping.');
         static::bootstrap_permission('edit_any_employee', 'Edit all of the information on any employee.');
+        static::bootstrap_permission('view_all_invoices', 'View a list of all invoices and be able to resend the invoice email');
         static::bootstrap_permission('change_employee_contracts', 'View the contracts of all employees and be able to create new contracts');
 
         static::bootstrap_permission('view_all_orders', 'View graph order prediction.');
@@ -87,6 +88,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee->givePermissionTo('view_all_complaints');
         $role_employee->givePermissionTo('edit_all_shipments');
         $role_employee->givePermissionTo('accept_any_shipment');
+        $role_employee->givePermissionTo('view_all_invoices');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
