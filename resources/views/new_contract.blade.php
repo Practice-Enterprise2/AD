@@ -29,38 +29,7 @@
     }
 
     /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 48px;
-      bottom: 0;
-      left: 0;
-      padding: 58px 0 0;
-      /* Height of navbar */
-      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-      width: 240px;
-      z-index: 600;
-    }
 
-    @media (max-width: 991.98px) {
-      .sidebar {
-        width: 100%;
-      }
-    }
-
-    .sidebar .active {
-      border-radius: 5px;
-      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    }
-
-    .sidebar-sticky {
-      position: relative;
-      top: 0;
-      height: calc(100vh - 48px);
-      padding-top: 0.5rem;
-      overflow-x: hidden;
-      overflow-y: auto;
-      /* Scrollable contents if viewport is shorter than content. */
-    }
 
     .container {
       border-radius: 5px;
@@ -70,18 +39,7 @@
       margin: auto;
     }
 
-    .sidebar-container {
-      /* Adjust the following properties as needed */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 250px;
-      /* Adjust the width as per your design */
-      height: 100%;
-      z-index: 100;
-      /* Make sure the sidebar appears above other elements if necessary */
-      /* Add any other required styling */
-    }
+
 
     input {
       width: 100%;
@@ -100,14 +58,38 @@
       font-size: 150%;
       text-decoration: underline;
     }
+    .sidebar{
+      margin-bottom: 50px;
+    }
   </style>
 
   <!-- Sidebar -->
   <!--Main layout-->
   <main style="margin-top: 58px">
+  
     <div class="container pt-4">
       <div class="">
         <div class="container">
+        <div class="sidebar">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contract_list') }}">
+                        -Contract List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('new_contract') }}">
+                        -New Contract
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('edit_contract') }}">
+                        -Edit Contract
+                    </a>
+                </li>
+            </ul>
+        </div>
           <h1>Create new contract:</h1>
 
           <form action="plaats" method="post">

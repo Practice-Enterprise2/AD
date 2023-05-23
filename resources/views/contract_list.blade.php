@@ -10,40 +10,6 @@
       }
     }
 
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 48px;
-      bottom: 0;
-      left: 0;
-      padding: 58px 0 0;
-      /* Height of navbar */
-      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-      width: 240px;
-      z-index: 600;
-    }
-
-    @media (max-width: 991.98px) {
-      .sidebar {
-        width: 100%;
-      }
-    }
-
-    .sidebar .active {
-      border-radius: 5px;
-      box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    }
-
-    .sidebar-sticky {
-      position: relative;
-      top: 0;
-      height: calc(100vh - 48px);
-      padding-top: 0.5rem;
-      overflow-x: hidden;
-      overflow-y: auto;
-      /* Scrollable contents if viewport is shorter than content. */
-    }
-
     form,
     h1 {
       margin-left: 400px;
@@ -62,13 +28,38 @@
     tr:nth-child(2n) {
       background-color: lightgrey;
     }
+    .nav-item{
+      margin: 10px;
+    }
+   .sidebar{
+    position: relative;
+    float: left;
+    margin-right: 20px;
+   }
   </style>
   <div class="">
-    <!-- Sidebar -->
-
-    <!-- Sidebar -->
-    <!--Main layout-->
-    <main style="margin-top: 58px">
+    <main style="margin-top: 20px">
+    <div class="sidebar">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contract_list') }}">
+                        -Contract List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('new_contract') }}">
+                        -New Contract
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('edit_contract') }}">
+                        -Edit Contract
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
       <div class="container pt-4">
         <div class="">
           <h1 class="font-weight-bold"><b>Contract List</b></h1>

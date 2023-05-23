@@ -68,39 +68,7 @@ if (!isset($_GET["q"]))
         }
       }
 
-      /* Sidebar */
-      .sidebar {
-        position: fixed;
-        top: 48px;
-        bottom: 0;
-        left: 0;
-        padding: 58px 0 0;
-        /* Height of navbar */
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-        width: 240px;
-        z-index: 600;
-      }
 
-      @media (max-width: 991.98px) {
-        .sidebar {
-          width: 100%;
-        }
-      }
-
-      .sidebar .active {
-        border-radius: 5px;
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-      }
-
-      .sidebar-sticky {
-        position: relative;
-        top: 0;
-        height: calc(100vh - 48px);
-        padding-top: 0.5rem;
-        overflow-x: hidden;
-        overflow-y: auto;
-        /* Scrollable contents if viewport is shorter than content. */
-      }
 
       .container {
         border-radius: 5px;
@@ -119,6 +87,7 @@ if (!isset($_GET["q"]))
         padding: 8px;
         box-sizing: border-box;
       }
+
     </style>
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
   </head>
@@ -129,6 +98,26 @@ if (!isset($_GET["q"]))
   <main style="margin-top: 58px">
     <div class="container pt-4">
       <div class="container">
+      <div class="sidebars">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contract_list') }}">
+                        -Contract List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('new_contract') }}">
+                        -New Contract
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('edit_contract') }}">
+                        -Edit Contract
+                    </a>
+                </li>
+            </ul>
+        </div>
         <form action="edit" method="GET">
 
           <label for="contNumber">Contract number:</label>
