@@ -344,6 +344,11 @@ class ShipmentController extends Controller
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
     public function track(Shipment $shipment)
     {
+        // NEED FIX -> How to assign permission? (for owning user and employees at the same time?)
+        if (auth()->user()->id != $shipment->user->id) {
+            return redirect()->back()->with('alert', 'Shipment with id:'.$shipment->id.' doesn\'t belong to you!');
+        }
+
         $waypoints = $shipment->waypoints;
         $waypoints_geocodes = collect([]);
 
@@ -373,7 +378,7 @@ class ShipmentController extends Controller
 
             //request URL is created here + response is retrieved with the DATA
             $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
-            .$street.'?output=xml&key='.$key;
+            .$street.'?output=xml&key='.$bingmaps_api_key;
 
             dump($findURL);
             $output = file_get_contents($findURL);
@@ -411,7 +416,7 @@ class ShipmentController extends Controller
 
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
-        .$street.'?output=xml&key='.$key;
+        .$street.'?output=xml&key='.$bingmaps_api_key;
 
         dump($findURL);
 
@@ -433,5 +438,14 @@ class ShipmentController extends Controller
         dump($waypoints_geocodes);
 
         return view('shipments.track-shipment', compact('waypoints_geocodes', 'shipment'));
+    }
+
+    // shows user's shipments.
+    public function listShipments()
+    {
+        // dd(auth()->user()->shipments);
+        $shipments = auth()->user()->shipments;
+
+        return view('shipments.list-shipments', compact('shipments'));
     }
 }
