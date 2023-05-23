@@ -164,7 +164,7 @@ Route::controller(CustomerController::class)->group(function () {
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
         Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
-});
+
 
 // Routes that require an authenticated session.
 Route::middleware('auth')->group(function () {
