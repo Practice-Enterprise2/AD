@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div>
   <input name="search" type="text" wire:model="search" autocomplete="off"
     placeholder="Search">

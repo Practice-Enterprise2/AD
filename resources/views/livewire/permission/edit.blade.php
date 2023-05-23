@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 {{-- Livewire component for editing a permission --}}
 <div>
   <form id="permission-form" wire:submit.prevent="save"

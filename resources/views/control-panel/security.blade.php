@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <x-control-panel-layout>
     <x-slot:title>{{ __('Security') }}</x-slot:title>

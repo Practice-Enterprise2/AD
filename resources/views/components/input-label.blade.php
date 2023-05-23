@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @props(['value'])
 
 <label

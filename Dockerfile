@@ -28,7 +28,6 @@ RUN apt-get install -y php8.1-mysql
 ENV NODE_VERSION=18.15.0
 RUN apt install -y curl
 
-#         ⌄ this little man is me right now
 RUN curl -o /root/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh
 RUN cat /root/nvm-install.sh | bash
 ENV NVM_DIR=/root/.nvm
@@ -67,4 +66,4 @@ RUN npm ci
 RUN composer install
 RUN npm run build
 
-ENTRYPOINT ["php", "artisan", "serve"]
+# This container is multi use, so no ENTRYPOINT/CMD is defined

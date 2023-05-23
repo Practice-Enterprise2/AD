@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "gunzip": "^1.2.2",
         "highcharts": "^11.0.1",
         "jquery": "^3.6.4",
