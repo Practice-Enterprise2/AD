@@ -172,10 +172,6 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
 });
 
-Route::get('/airlineoverview', [AirlineController::class, 'Airlineoverview']);
-
-Route::get('airlineoverview/{key}', [AirlineController::class, 'overviewperAirline']);
-
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
 // Shipment Pages
@@ -205,6 +201,21 @@ Route::get('/paymentSuccess', function () {
 // Airport Routes
 
 // Depot routes
+
+Route::get('/airlineoverview', [AirlineController::class, 'index'])->name('Airlines')->middleware('permission:view_general_airline_content');
+
+Route::get('overviewperairline/{key}', [AirlineController::class, 'overviewperairline'])->middleware('permission:view_general_airline_content');
+
+Route::get('/addAirline', [AirlineController::class, 'addAirlinepage'])->middleware('permission:edit_airline_content');
+
+Route::post('addAirlineform', [AirlineController::class, 'addAirline'])->middleware('permission:edit_airline_content');
+
+Route::get('/editAirline/{key}', [AirlineController::class, 'editAirlinepage'])->middleware('permission:edit_airline_content');
+
+Route::post('/editAirlineform/{key}', [AirlineController::class, 'editAirline'])->middleware('permission:edit_airline_content');
+
+Route::get('deleteAirline/{key}', [AirlineController::class, 'deleteAirline'])->middleware('permission:edit_airline_content');
+
 
 Route::get('/DepotManagement', [DepotController::class, 'index'])->name('Depots')->middleware('permission:view_general_depot_content');
 

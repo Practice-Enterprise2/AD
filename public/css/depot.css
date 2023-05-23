@@ -43,6 +43,12 @@ name {
     border-top: 1px solid lightblue;
 }
 
+label {
+    display:inline-block;
+    min-width: 6rem;
+    text-align:right;
+}
+
 .dataCard div,
 .legendDiv div {
     min-width: 250px;
