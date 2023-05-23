@@ -109,10 +109,10 @@
                     class="absolute bottom-0 left-0 right-0 mb-3 h-2.5 rounded-full bg-black dark:border-b-gray-900">
                   </div> <!-- Gray Line -->
 
-                  @if ($shipment->status == 'Canceled' || $shipment->status == 'Exception')
+                  @if ($shipment->status == 'Declined' || $shipment->status == 'Exception')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div>Canceled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 dark:bg-red-500">
                       </div> <!-- Status 1: Green -->
@@ -203,7 +203,7 @@
                   @if ($shipment->status == 'In Transit')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div>Canceled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
