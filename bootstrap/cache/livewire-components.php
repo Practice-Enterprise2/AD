@@ -6,6 +6,7 @@
   'pickups.create' => 'App\\Http\\Livewire\\Pickups\\Create',
   'pickups.edit' => 'App\\Http\\Livewire\\Pickups\\Edit',
   'pickups.index' => 'App\\Http\\Livewire\\Pickups\\Index',
+  'public.header' => 'App\\Http\\Livewire\\Public\\Header',
   'role.create' => 'App\\Http\\Livewire\\Role\\Create',
   'roles' => 'App\\Http\\Livewire\\Roles',
   'roles.edit' => 'App\\Http\\Livewire\\Roles\\Edit',

@@ -1,8 +1,7 @@
 <html>
 
 <head>
-  <script src="http://code.jquery.com/jquery.min.js"></script>
-
+  <script src="{{asset('js/jquery.js')}}"></script>
   <title>Overview per depot</title>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/depot.css') }}">
 </head>
@@ -26,7 +25,8 @@
           </div>
         </div>
         <script>
-          $(document).ready(function() {
+          jQuery(document).ready(function($) {
+            
             var chart = {
               plotBackgroundColor: null,
               plotBorderWidth: null,
@@ -90,9 +90,7 @@
             });
           }
         </script>
-        <script type='text/javascript'
-          src='https://www.bing.com/api/maps/mapcontrol?key=Ar73l2OORU8TsJzUcyYXHU-_VUNJeHiKKQ8v2hsKpvVUf795R7bEoKfBgAfF_Rsn&callback=loadMapScenario'
-          async defer></script>
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Ar73l2OORU8TsJzUcyYXHU-_VUNJeHiKKQ8v2hsKpvVUf795R7bEoKfBgAfF_Rsn&callback=loadMapScenario' async defer></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
       @endif
     @endforeach
