@@ -14,6 +14,7 @@ use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -73,6 +74,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:change_employee_contracts');
         Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:change_employee_contracts');
         Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:change_employee_contracts');
+    });
+
+    Route::controller(InvoicesController::class)->group(function () {
+        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list')->middleware('permission:view_all_invoices');
+        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_all_invoices');
+        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_all_invoices');
     });
 
     Route::controller(UserController::class)->group(function () {
