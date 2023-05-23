@@ -277,12 +277,6 @@ class WaypointController extends Controller
             }
         }
 
-        dd('waypoint with id: '.$current_waypoint->id.' state changed');
-
-        $shipmentChanges = $shipment->getChanges();
-        $source_user = User::query()->where('id', $shipment->user_id)->first();
-        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
-        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
