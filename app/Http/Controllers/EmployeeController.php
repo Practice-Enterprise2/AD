@@ -344,8 +344,9 @@ class EmployeeController extends Controller
         $pdf->save($pdfPath);
 
         if ($contract) {
+            DB::table('position_to_employee_contract')->where('employee_contract_id',$contract->id)->delete();
+            DB::table('holiday_saldos')->where('employee_contract_id', $contract->id)->delete();
             $contract->delete();
-
             return response()->download($pdfPath)->deleteFileAfterSend(true);
         } else {
             return redirect()->route('/home')->back()->with('error', 'No contract found.');
@@ -356,6 +357,8 @@ class EmployeeController extends Controller
     {
         $employee = Employee::findOrFail($employee);
         $contract = $employee->employee_contracts();
+        DB::table('position_to_employee_contract')->where('employee_contract_id',$contract->id)->delete();
+        DB::table('holiday_saldos')->where('employee_contract_id', $contract->id)->delete();
         $contract->delete();
 
         return redirect()->route('/employee_add_contract');
