@@ -6,7 +6,6 @@
   <script>
     var i = 0;
     var shipId = 0;
-    
   </script>
 
   <!-- Modal -->
@@ -22,8 +21,7 @@
         <div class="relative bottom-0 flex w-full justify-center pb-6">
           <a><button
               class="mr-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-              id="confirmCancelButton"
-              onclick="toggleDiv()">
+              id="confirmCancelButton" onclick="toggleDiv()">
               Yes
             </button></a>
           <button
@@ -35,8 +33,6 @@
       </div>
     </div>
   </div>
-  
-
 
   <div class="flex justify-center">
     <div class="w-full">
@@ -140,17 +136,16 @@
 
                       button.addEventListener('click', function() {
                         console.log("Hello, cancel button!");
-                        shipId = "{{$shipment->id}}";
+                        shipId = "{{ $shipment->id }}";
                         modal.classList.remove('hidden');
                       });
-                      confirmCancelButton.addEventListener('click', function() {         
-                        modal.classList.add('hidden');            
+                      confirmCancelButton.addEventListener('click', function() {
+                        modal.classList.add('hidden');
                       });
                       cancelCancelButton.addEventListener('click', function() {
                         modal.classList.add('hidden');
                       });
-                      okButton.addEventListener('click', function() {
-                      });
+                      okButton.addEventListener('click', function() {});
                     </script>
                   </td>
                 </tr>
@@ -226,25 +221,26 @@
           </tbody>
         </table>
       </div>
-        <div class="mx-auto border-2 border-blue-600 bg-blue-400 w-2/5 p-3 text-center rounded-lg mt-4" style="display: none" id="invisibleDiv">
-            <h1 class="text-xl">Cancel Info</h1>
-            <h2 class="">{{$error}}
+      <div
+        class="mx-auto mt-4 w-2/5 rounded-lg border-2 border-blue-600 bg-blue-400 p-3 text-center"
+        style="display: none" id="invisibleDiv">
+        <h1 class="text-xl">Cancel Info</h1>
+        <h2 class="">{{ $error }}
         </h2>
-        </div>
+      </div>
 
-        <script>
-         function toggleDiv() {
-            var div = document.getElementById('invisibleDiv');
-            div.style.display = (div.style.display === 'none') ? 'block' : 'none';
-            
-            if (div.style.display === 'block') {
-                setTimeout(function() {
-                    div.style.display = 'none';
-                }, 5000);
-            }
+      <script>
+        function toggleDiv() {
+          var div = document.getElementById('invisibleDiv');
+          div.style.display = (div.style.display === 'none') ? 'block' : 'none';
+
+          if (div.style.display === 'block') {
+            setTimeout(function() {
+              div.style.display = 'none';
+            }, 5000);
           }
-        </script>	
-
+        }
+      </script>
 
     </div>
   </div>

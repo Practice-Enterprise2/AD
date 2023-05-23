@@ -19,7 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 
 class ShipmentController extends Controller
 {
@@ -202,19 +201,19 @@ class ShipmentController extends Controller
 
     public function showshipments()
     {
-        
         $shipments = DB::table('shipments')
             ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
             ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
             ->get();
         $shipments = Shipment::sortable()->paginate(20);
         $id = DB::table('shipments')
-        ->select('shipments.id')
-        ->get();
+            ->select('shipments.id')
+            ->get();
         $error = $this->cancel($id);
-        return view('shipments', 
-        ['shipments' => $shipments,
-         'error' => $error]);
+
+        return view('shipments',
+            ['shipments' => $shipments,
+                'error' => $error]);
     }
 
     public function showShipments_details($id)
@@ -236,42 +235,42 @@ class ShipmentController extends Controller
     // Cancel a shipment with modal
     public function cancel($id)
     {
-
-        $errorMessage = "";
+        $errorMessage = '';
 
         // Get status of the shipment with Id
         $shipmentToCancel = DB::select('SELECT status FROM shipments WHERE id = 1');
-        
+
         if ($shipmentToCancel = 'Awaiting Confirmation' || $shipmentToCancel = 'Awaiting Pickup' || $shipmentToCancel = 'Held At Location') {
             // Can cancel ==> SUCCES
-            $errorMessage = "Succes! shipment has been canceled.";
+            $errorMessage = 'Succes! shipment has been canceled.';
             DB::update("UPDATE shipments SET status = 'Declined' WHERE id = ?", [$id]);
-        } else if ($shipmentToCancel = 'Delivered') {
+        } elseif ($shipmentToCancel = 'Delivered') {
             // Package already delivered
             $errorMessage = "Can't be canceled! Package is already delivered.";
-        } else if ($shipmentToCancel = 'Deleted') {
+        } elseif ($shipmentToCancel = 'Deleted') {
             // You package has been canceled by Blue Sky
             $errorMessage = "Can't be canceled! Package has been canceled by BlueSky";
-        } else if ($shipmentToCancel = 'Declined') {
+        } elseif ($shipmentToCancel = 'Declined') {
             // Shipment already cancelled
             $errorMessage = "Can't be canceled! Package is already canceled";
-        } else if ($shipmentToCancel = 'Exception') {
-            // wait for HR to check 
-            $errorMessage = "This shipment is an exception, please wait for hr to review this!";
+        } elseif ($shipmentToCancel = 'Exception') {
+            // wait for HR to check
+            $errorMessage = 'This shipment is an exception, please wait for hr to review this!';
         } else {
             $errorMessage = "Can't be Canceled! package is in tranport and on its way";
         }
         // Wait 5 secconds before going to the return page
         // sleep(5);
-                        
+
         // Navigate back to shipments page and load all data
         $shipments = DB::table('shipments')
             ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
             ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
             ->get();
-    
+
         $showError = true;
-        return $errorMessage;        
+
+        return $errorMessage;
     }
 
     public function edit(Shipment $shipment): View
