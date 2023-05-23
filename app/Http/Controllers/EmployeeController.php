@@ -344,9 +344,10 @@ class EmployeeController extends Controller
         $pdf->save($pdfPath);
 
         if ($contract) {
-            DB::table('position_to_employee_contract')->where('employee_contract_id',$contract->id)->delete();
+            DB::table('position_to_employee_contract')->where('employee_contract_id', $contract->id)->delete();
             DB::table('holiday_saldos')->where('employee_contract_id', $contract->id)->delete();
             $contract->delete();
+
             return response()->download($pdfPath)->deleteFileAfterSend(true);
         } else {
             return redirect()->route('home')->back()->with('error', 'No contract found.');
@@ -357,17 +358,16 @@ class EmployeeController extends Controller
     {
         $employee = Employee::findOrFail($employeeId);
         $contract = $employee->employee_contracts()->first();
-        
+
         if ($contract) {
             DB::table('position_to_employee_contract')->where('employee_contract_id', $contract->id)->delete();
             DB::table('holiday_saldos')->where('employee_contract_id', $contract->id)->delete();
             $contract->delete();
-            
+
             return redirect()->route('contract.index');
         } else {
             return redirect()->route('/ontract.index')->with('error', 'No contract found.');
         }
-        
     }
 
     public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
