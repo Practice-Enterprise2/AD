@@ -19,13 +19,15 @@
         "@fullcalendar/core": "^6.1.5",
         "@fullcalendar/daygrid": "^6.1.5",
         "@fullcalendar/timegrid": "^6.1.5",
-        "fullcalendar": "^6.1.5",
         "chart.js": "^4.3.0",
+        "fullcalendar": "^6.1.5",
         "gunzip": "^1.2.2",
         "jquery": "^3.6.4",
         "laravel-echo": "^1.15.0",
         "pusher-js": "^8.0.2",
-        "tw-elements": "^1.0.0-beta1"
+        "to-regex-range": "^5.0.1",
+        "tw-elements": "^1.0.0-beta1",
+        "vite-plugin-full-reload": "^1.0.5"
     },
     "optionalDependencies": {
         "blade-formatter": "^1.32.12",
