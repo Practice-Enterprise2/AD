@@ -29,6 +29,4 @@ class CreateShiftRequest extends FormRequest
             'actual_end_time' => 'nullable|date_format:Y-m-d H:i:s',
         ];
     }
-
-    
 }

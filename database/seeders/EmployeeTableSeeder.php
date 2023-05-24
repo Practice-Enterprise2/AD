@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Employee;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeTableSeeder extends Seeder
@@ -22,7 +22,7 @@ class EmployeeTableSeeder extends Seeder
             'salary' => 50000,
             'Iban' => 'GB29NWBK60161331926819',
         ]);
-        
+
         Employee::create([
             'user_id' => 2,
             'dateOfBirth' => '1995-05-05',
@@ -30,7 +30,6 @@ class EmployeeTableSeeder extends Seeder
             'salary' => 40000,
             'Iban' => 'GB29NWBK60161331926820',
         ]);
-        
 
         DB::table('employees')->insert([
             [

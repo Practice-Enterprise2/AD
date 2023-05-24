@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Position;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -26,7 +25,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param mixed  $id
+     * @param  mixed  $id
      */
     public function update(Request $request, $id): JsonResponse
     {

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id

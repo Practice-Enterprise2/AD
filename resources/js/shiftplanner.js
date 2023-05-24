@@ -2,7 +2,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -10,30 +10,33 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
         },
         events: [],
-        eventDidMount: function(info) {
+        eventDidMount: function (info) {
             // Add a tooltip with the employee's name
             var tooltip = new Tooltip(info.el, {
                 title: info.event.title,
                 placement: 'top',
                 trigger: 'hover',
-                container: 'body'
+                container: 'body',
             });
-        }
+        },
     });
 
     // Fetch the shift data from the server
     fetch('/shifts')
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
             // Map the data to FullCalendar events
-            var events = data.map(shift => {
+            var events = data.map((shift) => {
                 return {
-                    title: shift.employee.firstName + ' ' + shift.employee.lastName,
+                    title:
+                        shift.employee.firstName +
+                        ' ' +
+                        shift.employee.lastName,
                     start: shift.planned_start_time,
-                    end: shift.planned_end_time
+                    end: shift.planned_end_time,
                 };
             });
 

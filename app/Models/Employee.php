@@ -83,6 +83,6 @@ class Employee extends Model implements ValidatesAttributes
 
     public function role()
     {
-        return $this->belongsTo(Role::class);   
+        return $this->belongsTo(Role::class);
     }
 }
