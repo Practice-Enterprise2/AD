@@ -46,6 +46,7 @@ class RegisteredUserController extends Controller
         // take soft deletion into account.
 
         if (! User::query()->where('email', $request->email)->first()) {
+            // Check if address already exists
             $address = Address::query()
                 ->where('street', $request->street)
                 ->where('house_number', $request->house_number)
@@ -54,6 +55,7 @@ class RegisteredUserController extends Controller
                 ->where('country', $request->country)
                 ->first();
 
+            // If the $address contains NULL, it creates a new address entry in the DB
             if ($address) {
                 // The address already exists in the database
                 $address_id = $address->id;
@@ -69,6 +71,7 @@ class RegisteredUserController extends Controller
                 $address_id = $newAddress->id;
             }
 
+            // Create user
             $user = new User();
             $user->name = $request['name'];
             $user->email = $request['email'];
