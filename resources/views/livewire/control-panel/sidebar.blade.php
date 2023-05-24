@@ -77,6 +77,13 @@
       </x-nav-link>
     </div>
   @endcanany
+  @canany(['view_depots'])
+    <div>
+    <x-nav-link class="w-full rounded bg-gray-200 p-3 text-xl dark:bg-gray-600"
+        :href="route('Depots')">
+        {{ __('Depots') }}
+      </x-nav-link>
+  @endcanany
 </div>
 {{-- vim: ft=html
 --}}

@@ -2,75 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\airport;
+use App\Models\Airport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AirportController extends Controller
 {
-    public function airportFiltering(Request $request)
+    // GET Airports
+    public function index()
     {
-        $filter = $request->query('filter');
+        $airports = DB::select('select * from airports');
 
-        if (! empty($filter)) {
-            $airports = airport::sortable()
-                ->where('name', 'like', '%'.$filter.'%')
-                ->paginate(15);
-        } else {
-            $airports = airport::sortable()
-                ->paginate(15);
-        }
-
-        return view('airportList', ['airports' => $airports]);
+        return view('AirportManagement', ['airports' => $airports]);
     }
 
-    public static function getAirports()
+    // POST Airports
+    public function addData(Request $request)
     {
-        $airports = airport::all();
+        $airports_old = new Airport;
+        $airports_old->iata = $request->iata;
+        $airports_old->name = $request->name;
+        $airports_old->size = $request->size;
+        $airports_old->tracks = $request->tracks;
+        $airports_old->save();
 
-        return $airports;
+        return redirect('addAirport');
     }
 
-    public function addAirport(Request $request)
+    // PUT Airports
+    public function updateAirport(Request $request, $id)
     {
-        $addItem = new airport;
-        $addItem->iata_code = $request->iata_code;
-        $addItem->name = $request->name;
-        $addItem->land = $request->land;
-        $addItem->address_id = $request->address_id;
+        $iata = $request->iata;
+        $name = $request->name;
+        $size = $request->size;
+        $tracks = $request->tracks;
 
-        $addItem->save();
+        DB::update("UPDATE `airports` SET `IATA` = '$iata', `name` = '$name', `address_id` = '14', `created_at` = NULL, `updated_at` = NULL WHERE `airports`.`id` = 1");
+        DB::update("UPDATE `airports` SET `IATA` = '$iata', `name` = '$name', `size` = '$size', `tracks` = '$tracks' WHERE `airports`.`ID` = ?", [$id]);
 
-        return redirect('airportList');
+        return redirect('airport-management');
     }
 
-    public function deleteAirport($id)
+    // DELETE Airports
+    public function deleteAirport($ID)
     {
-        $data = airport::find($id);
-        $data->deleted_at = \Carbon\Carbon::now()->toDateTimeString();
-        $data->save();
+        DB::delete('delete from airports where IATA = ?', [$ID]);
 
-        return redirect('airportList');
-    }
-
-    public function editAirport($id)
-    {
-        $data = airport::find($id);
-
-        return view('editAirportList', ['data' => $data]);
-    }
-
-    public function updateAirport(Request $request)
-    {
-        $updateItem = airport::find($request->id);
-
-        $updateItem->iata_code = $request->iata_code;
-        $updateItem->name = $request->name;
-
-        $updateItem->land = $request->land;
-        $updateItem->address_id = $request->address_id;
-
-        $updateItem->save();
-
-        return redirect('airportList');
+        return redirect('/airport-management')->with('status', 'Data Deleted Succesfully');
     }
 }

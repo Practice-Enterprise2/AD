@@ -14,9 +14,12 @@ return new class() extends Migration
         Schema::create('depots', function (Blueprint $table) {
             $table->id();
             $table->string('code', 10);
-            $table->foreignId('address_id')->constrained();
+            $table->foreignid('address_id');
             $table->integer('size');
+            $table->integer('amountFilled');
             $table->timestamps();
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

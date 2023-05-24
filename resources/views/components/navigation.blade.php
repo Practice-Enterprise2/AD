@@ -20,6 +20,16 @@
           <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             {{ __('Home') }}
           </x-nav-link>
+          @if ($showContactBtn)
+            <x-nav-link :href="route('create-ticket')" :active="request()->routeIs('create-ticket')">
+              {{ __('Contact Us') }}
+            </x-nav-link>
+          @endif
+          @auth
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+              {{ __('Dashboard') }}
+            </x-nav-link>
+          @endauth
           @can('view_general_employee_content')
             <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
               {{ __('Employee') }}

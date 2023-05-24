@@ -18,6 +18,7 @@
     "dependencies": {
         "chart.js": "^4.3.0",
         "gunzip": "^1.2.2",
+        "highcharts": "^11.0.1",
         "jquery": "^3.6.4",
         "laravel-echo": "^1.15.0",
         "pusher-js": "^8.0.2",
