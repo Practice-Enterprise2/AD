@@ -36,10 +36,25 @@ class Airport extends Model implements ValidatesAttributes
         'land' => self::VALIDATION_RULE_LAND,
     ];
 
+
+
+    protected $table = 'airports';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'iata_code',
         'name',
         'land',
+        'address_id',
+    ];
+
+    public $sortable = [
+        'id',
+        'iata_code',
+        'name',
+        'land',
+        'address_id',
     ];
 
     public function address(): BelongsTo

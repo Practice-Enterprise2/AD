@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
@@ -34,16 +35,49 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'street' => ['required', 'string', 'max:255'],
+            'house_number' => ['required', 'string', 'max:20'],
+            'city' => ['required', 'string', 'max:100'],
+            'postal_code' => ['required', 'string', 'max:20'],
+            'country' => ['required', 'string', 'max:100'],
         ]);
 
         // HACK: This solves the fact that the `unique` validation rule doesn't
         // take soft deletion into account.
+
         if (! User::query()->where('email', $request->email)->first()) {
-            $user = User::query()->create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+            // Check if address already exists
+            $address = Address::query()
+                ->where('street', $request->street)
+                ->where('house_number', $request->house_number)
+                ->where('city', $request->city)
+                ->where('postal_code', $request->postal_code)
+                ->where('country', $request->country)
+                ->first();
+
+            // If the $address contains NULL, it creates a new address entry in the DB
+            if ($address) {
+                // The address already exists in the database
+                $address_id = $address->id;
+            } else {
+                // The address doesn't exist, create a new one
+                $newAddress = Address::query()->create([
+                    'street' => $request->street,
+                    'house_number' => $request->house_number,
+                    'city' => $request->city,
+                    'postal_code' => $request->postal_code,
+                    'country' => $request->country,
+                ]);
+                $address_id = $newAddress->id;
+            }
+
+            // Create user
+            $user = new User();
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->password = Hash::make($request['password']);
+            $user->address_id = $address_id;
+            $user->save();
 
             // TODO: Enable this once the mail server is up and running.
             /* event(new Registered($user)); */
