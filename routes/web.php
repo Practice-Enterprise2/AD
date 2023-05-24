@@ -156,7 +156,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(ShipmentController::class)->group(function () {
-        Route::get('/shipments', 'index')->name('shipments.index')->can('viewAny', Shipment::class);
+        Route::get('/shipments', 'index')->name('shipments.index');
         Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
         Route::post('/shipments', 'store')->name('shipments.store')->can('create', Shipment::class);
         Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
