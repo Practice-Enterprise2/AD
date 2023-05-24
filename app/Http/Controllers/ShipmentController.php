@@ -27,7 +27,7 @@ class ShipmentController extends Controller
 
     public function index(): View
     {
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('employee')) {
+        if (auth()->user()->can('view_all_shipments')) {
             $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
                 ->whereNot('status', 'Declined')
                 ->whereNot('status', 'Deleted')
