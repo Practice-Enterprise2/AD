@@ -29,7 +29,7 @@ class DepotController extends Controller
 
     public function overviewperDepot(int $id)
     {
-        $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.addressid');
+        $data = DB::select('select d.*, a.street, a.house_number, a.postal_code,a.city,a.region,a.country from addresses a RIGHT join depots d on a.id = d.address_id');
 
         return view('overviewperdepot', ['data' => $data, 'id' => $id]);
     }
@@ -63,7 +63,7 @@ class DepotController extends Controller
 
     public function editDepot(Request $request, int $id)
     {
-        DB::insert('UPDATE depots set code = ?, addressid = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->addressid, $request->size, $request->filled, now(), $id]);
+        DB::insert('UPDATE depots set code = ?, address_id = ?, size = ?, amountFilled = ?, updated_at = ? where id = ?', [$request->code, $request->addressid, $request->size, $request->filled, now(), $id]);
 
         header('Location: /DepotManagement');
         exit();

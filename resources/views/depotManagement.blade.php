@@ -44,7 +44,7 @@
             <div class="airportCard">
               <div class="dataCard">
                 <div class="name">{{ $data->code }}</div>
-                <div class="location">{{ $data->addressid }}</div>
+                <div class="location">{{ $data->address_id }}</div>
                 <div class="size">{{ $data->size }}</div>
                 <div class="size">{{ $data->amountFilled }}</div>
                 <div><a

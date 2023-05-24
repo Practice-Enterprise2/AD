@@ -13,7 +13,7 @@
           value="{{ $depot->code }}"> <br> <br>
         <label for="addressid">Address id:</label>
         <input type="text" name="addressid" placeholder="Depot address"
-          value="{{ $depot->addressid }}"> <br> <br>
+          value="{{ $depot->address_id }}"> <br> <br>
         <label for="size">Size:</label>
         <input type="text" name="size" placeholder="Depot size"
           value="{{ $depot->size }}"> <br> <br>
