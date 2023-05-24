@@ -166,7 +166,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/shipments/{shipment}/edit', 'edit')->name('shipments.edit')->can('update', 'shipment');
         Route::match(['PUT', 'PATCH'], '/shipments/{shipment}', 'update')->name('shipments.update')->can('update', 'shipment');
         Route::delete('/shipments/{shipment}', 'destroy')->name('shipments.destroy')->can('delete', 'shipment');
-
         Route::get('/mail/invoices/{invoice}', 'sendInvoiceMail')->name('mail.invoices');
         Route::get('/shipments/{shipment}/track-shipment', 'track')->name('shipments.track');
     });
@@ -242,7 +241,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
     Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
     });
+    Route::get('/employee/shifts', [ShiftsController::class, 'showEmployeeShifts'])
+    ->name('shiftplanner.employeeshifts')
+    ->middleware('auth');
 
+    Route::middleware(['auth'])->group(function () {
+        // Your existing routes here
+    
+        // Add the following routes for shift start and stop actions
+        Route::post('/employee/shifts/{shift}/start', [ShiftsController::class, 'start'])->name('shifts.start');
+        Route::post('/employee/shifts/{shift}/stop', [ShiftsController::class, 'stop'])->name('shifts.stop');
+    });
 
 
 

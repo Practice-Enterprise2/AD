@@ -99,7 +99,16 @@
           ); ?>,
 
           eventReceive: function(info) {
-            console.log('ayo');
+            var eventData = info.event;
+            var droppedDate = eventData.start;
+            var currentDate = new Date(); // Get the current date
+
+            if (droppedDate < currentDate) {
+              if (!confirm("Dropping an event in the past. Are you sure?")) {
+                info.revert(); // Revert the drop
+                return;
+              }
+            }
           },
 
           eventClick: function(info) {
@@ -127,37 +136,22 @@
             }
           },
           eventDrop: function(info) {
-            var droppedEvent = info.event;
-            var droppedDate = info.event.start;
-            console.log('Event dropped on: ', droppedDate);
-            // You can perform additional actions here based on the dropped date
-            // For example, you can extract the day, month, and year from the dropped date
-            var day = droppedDate.getDate();
-            var month = droppedDate.getMonth() + 1;
-            var year = droppedDate.getFullYear();
+            var eventData = info.event;
+            var droppedDate = eventData.start;
+            var currentDate = new Date(); // Get the current date
 
-            var dateTimeS = year + '-' + month + '-' + day + ' ' + '07' +
-              ':' + '00' + ':' + '00';
-            var dateTimeE = year + '-' + month + '-' + day + ' ' + '15' +
-              ':' + '00' + ':' + '00';
-            console.log('Day:', day);
-            console.log('Month:', month);
-            console.log('Year:', year);
-
-            info.event.start = dateTimeS;
-            info.event.end = dateTimeE;
-
-            // ... Perform your desired actions based on the dropped date
+            if (droppedDate < currentDate) {
+              if (!confirm("Dropping an event in the past. Are you sure?")) {
+                info.revert(); // Revert the drop
+                return;
+              }
+            }
           },
 
           eventResize: function(info) {
-            alert(info.event.title + " end is now " + info.event.end
-              .toISOString());
-
-            if (!confirm("is this okay?")) {
+            if (!confirm("Confirm times?")) {
               info.revert();
             }
-
           }
         });
         calendar.render();

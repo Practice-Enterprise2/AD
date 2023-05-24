@@ -31,6 +31,17 @@ class ShiftsController extends Controller
         return response()->json($shiftsCount);
     }
 
+    public function showEmployeeShifts()
+{
+    // Retrieve the authenticated user
+    $user = auth()->user();
+
+    // Retrieve the shifts for the user
+    $shifts = Shift::where('employee_id', $user->id)->get();
+
+    return view('shiftplanner/employeeshift', compact('shifts'));
+}
+
     public function showDayView($date)
     {
         // Convert the date from the route parameter to a DateTime object
@@ -147,6 +158,24 @@ class ShiftsController extends Controller
         $shift->delete();
 
         return redirect()->route('shifts.index');
+    }
+
+    public function start(Shift $shift)
+    {
+        // Perform logic to start the shift
+        $shift->actual_start_time = now();
+        $shift->save();
+
+        return redirect()->back();
+    }
+
+    public function stop(Shift $shift)
+    {
+        // Perform logic to stop the shift
+        $shift->actual_end_time = now();
+        $shift->save();
+
+        return redirect()->back();
     }
 
     public function delete(Request $request)
