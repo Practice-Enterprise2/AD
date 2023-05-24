@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
         // it generates addresses and assign them into depots.
         $this->call(DepotSeeder::class);
         $this->call(AiGraphSeeder::class);
+        $this->call(airportTableSeeder::class);
+        $this->call(airlineSeeder::class);
+        $this->call(airportContractSeeder::class);
     }
 }
