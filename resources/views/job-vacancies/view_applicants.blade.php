@@ -35,7 +35,7 @@
                   {{ $applicant->last_name }}</td>
                 <td class="mt-3 h-10 text-center">
                   {{ $applicant->email }}</td>
-                <td class="mt-3 h-10 text-center"><a
+                <td class="mt-3 h-10 text-center underline"><a
                     href="{{ route('open_cv', $applicant->id) }}"
                     target="_blank">cv</a></td>
               </tr>
