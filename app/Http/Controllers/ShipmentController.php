@@ -208,6 +208,8 @@ class ShipmentController extends Controller
 
     public function showshipments()
     {
+        $test = "";
+
         $shipments = DB::table('shipments')
             ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
             ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
@@ -219,8 +221,9 @@ class ShipmentController extends Controller
         $error = $this->cancel($id);
 
         return view('shipments',
-            ['shipments' => $shipments,
-                'error' => $error]);
+            [
+                'shipments' => $shipments,
+            ]);
     }
 
     public function showShipments_details($id)
@@ -249,24 +252,72 @@ class ShipmentController extends Controller
         // Count total shipment of user.
         $id = Auth::user()->id;
         $countUser = DB::table('shipments')->where('user_id', $id)->count();
+        $roleUser = Auth::user()->role;
 
         // Gathering count of each status
-        $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->where('user_id', $id)->count();
-        $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->where('user_id', $id)->count();
-        $countInTran = DB::table('shipments')->where('status', 'In Transit')->where('user_id', $id)->count();
-        $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->where('user_id', $id)->count();
-        $countDelivered = DB::table('shipments')->where('status', 'Delivered')->where('user_id', $id)->count();
-        $countEx = DB::table('shipments')->where('status', 'Exception')->where('user_id', $id)->count();
-        $countHaL = DB::table('shipments')->where('status', 'Held At Location')->where('user_id', $id)->count();
-        $countDel = DB::table('shipments')->where('status', 'Deleted')->where('user_id', $id)->count();
-        $countDec = DB::table('shipments')->where('status', 'Declined')->where('user_id', $id)->count();
+        if ($roleUser == 1) {            
+            // Count of all shipments
+            $countUser = DB::table('shipments')->count();
+            // Count of all statusses            
+            $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->count();
+            $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->count();
+            $countInTran = DB::table('shipments')->where('status', 'In Transit')->count();
+            $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->count();
+            $countDelivered = DB::table('shipments')->where('status', 'Delivered')->count();
+            $countEx = DB::table('shipments')->where('status', 'Exception')->count();
+            $countHaL = DB::table('shipments')->where('status', 'Held At Location')->count();
+            $countDel = DB::table('shipments')->where('status', 'Deleted')->count();
+            $countDec = DB::table('shipments')->where('status', 'Declined')->count();
+            //count of All Types                 
+            $types = DB::table('shipments')
+            ->select(DB::raw('type, COUNT(type) as typeTotal'))           
+            ->groupBy('type')
+            ->get();
+            // all expense
+            $expenses = DB::table('shipments')
+            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+            ->groupBy('expense')
+            ->get();
+            // Last 5 shipments            
+            $latest = DB::table('shipments')
+            ->select('id', 'expense', 'receiver_name', 'status')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
 
-        // Pie chart for overview of
-        $types = DB::table('shipments')
+        } else if($roleUser != 1) {
+            // count of all shipments per user
+            $countUser = DB::table('shipments')->where('user_id', $id)->count();
+            // count of all statusses per shipment
+            $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->where('user_id', $id)->count();
+            $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->where('user_id', $id)->count();
+            $countInTran = DB::table('shipments')->where('status', 'In Transit')->where('user_id', $id)->count();
+            $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->where('user_id', $id)->count();
+            $countDelivered = DB::table('shipments')->where('status', 'Delivered')->where('user_id', $id)->count();
+            $countEx = DB::table('shipments')->where('status', 'Exception')->where('user_id', $id)->count();
+            $countHaL = DB::table('shipments')->where('status', 'Held At Location')->where('user_id', $id)->count();
+            $countDel = DB::table('shipments')->where('status', 'Deleted')->where('user_id', $id)->count();
+            $countDec = DB::table('shipments')->where('status', 'Declined')->where('user_id', $id)->count();
+            // count of all types per user
+            $types = DB::table('shipments')
             ->select(DB::raw('type, COUNT(type) as typeTotal'))
             ->where('user_id', $id)
             ->groupBy('type')
             ->get();
+            // Expense per user
+            $expenses = DB::table('shipments')
+            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+            ->where('user_id', $id)
+            ->groupBy('expense')
+            ->get();
+            // last 5 shipments of that user
+            $latest = DB::table('shipments')
+            ->select('id', 'expense', 'receiver_name', 'status')
+            ->where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+        }
 
         $pieLabels = [];
         $pieData = [];
@@ -274,28 +325,12 @@ class ShipmentController extends Controller
             $pieLabels[] = $type->type;
             $pieData[] = $type->typeTotal;
         }
-
-        // Block chart data
-        $expenses = DB::table('shipments')
-            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
-            ->where('user_id', $id)
-            ->groupBy('expense')
-            ->get();
-
         $blockLabels = [];
         $blockData = [];
         foreach ($expenses as $expense) {
             $blockLabels[] = $expense->expense;
             $blockData[] = $expense->exepenseTotal;
         }
-
-        // 5 latest shipments
-        $latest = DB::table('shipments')
-            ->select('id', 'expense', 'receiver_name', 'status')
-            ->where('user_id', $id)
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
 
         // Return the values
         return view('shipments.dashboard', [
@@ -357,6 +392,12 @@ class ShipmentController extends Controller
         $showError = true;
 
         return $errorMessage;
+    }
+    public function cancel2($id) : View
+    {
+        return view('shipments.cancel', [
+            'shipment' => $shipment
+        ]);
     }
 
     public function edit(Shipment $shipment): View
