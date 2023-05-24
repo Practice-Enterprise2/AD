@@ -50,11 +50,11 @@ class WaypointController extends Controller
         return view('shipments.set', compact(['shipment', 'depots', 'airports']));
     }
 
-    public function store(Shipment $shipment): View
+    public function store(Shipment $shipment)
     {
         $shipment_exist = Waypoint::where('shipment_id', $shipment->id)->first();
         if ($shipment_exist) {
-            dd("Waypoints for shipment with id: {$shipment->id} already assigned!");
+            return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipment with id: {$shipment->id} already assigned!");
         }
 
         $waypoint_ids = collect(request()->waypoints);
@@ -231,7 +231,8 @@ class WaypointController extends Controller
 
         $shipment->status = 'Awaiting Pickup';
         $shipment->update();
-        dd('Check Waypoints Table');
+
+        return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipement with id: {$shipment->id} set!");
     }
 
     public function update(Shipment $shipment): void
