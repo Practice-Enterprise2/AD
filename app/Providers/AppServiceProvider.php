@@ -61,6 +61,8 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_general_employee_content', 'See general employee content...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
+        static::bootstrap_permission('view_own_shipments', 'view their shipments');
+        static::bootstrap_permission('view_shipmentgraphs', 'view shipment graphs');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
         static::bootstrap_permission('view_reviews', 'the reviews of the customers');
         static::bootstrap_permission('add_vacant_jobs', 'add a vacant job');
@@ -86,6 +88,8 @@ class AppServiceProvider extends ServiceProvider
         // Assign the necessary permissions to all the roles.
         $role_employee->givePermissionTo('view_general_employee_content');
         $role_employee->givePermissionTo('view_all_complaints');
+        $role_employee->givePermissionTo('view_all_shipments');
+        $role_employee->givePermissionTo('view_shipmentgraphs');
         $role_employee->givePermissionTo('edit_all_shipments');
         $role_employee->givePermissionTo('accept_any_shipment');
 
@@ -93,6 +97,8 @@ class AppServiceProvider extends ServiceProvider
         $role_employee_hr->givePermissionTo('edit_roles');
         $role_employee_hr->givePermissionTo('view_all_roles');
         $role_employee_hr->givePermissionTo('edit_any_user_info');
+        $role_employee_hr->givePermissionTo('view_all_shipments');
+        $role_employee_hr->givePermissionTo('view_shipmentgraphs');
         $role_employee_hr->givePermissionTo('view_all_employees');
         $role_employee_hr->givePermissionTo('add_vacant_jobs');
         $role_employee_hr->givePermissionTo('edit_vacant_jobs');
@@ -100,9 +106,12 @@ class AppServiceProvider extends ServiceProvider
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');
+        $role_employee_it->givePermissionTo('view_all_shipments');
+        $role_employee_it->givePermissionTo('view_shipmentgraphs');
 
         $role_user->givePermissionTo('edit_own_user_info');
         $role_user->givePermissionTo('delete_own_user_account');
+        $role_user->givePermissionTo('view_own_shipments');
 
         $role_management->givePermissionTo('view_employee_count');
         $role_management->givePermissionTo('view_reviews');

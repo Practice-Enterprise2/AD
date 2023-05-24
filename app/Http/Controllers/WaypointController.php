@@ -27,6 +27,23 @@ class WaypointController extends Controller
 
     public function store(Shipment $shipment): View
     {
+        $this->validate(request(), [
+            'waypoints' => Waypoint::VALIDATION_RULES['array'],
+            'waypoints.*.street' => Waypoint::VALIDATION_RULES['current_address.street'],
+            'waypoints.*.house_number' => Waypoint::VALIDATION_RULES['current_address.house_number'],
+            'waypoints.*.postal_code' => Waypoint::VALIDATION_RULES['current_address.postal_code'],
+            'waypoints.*.city' => Waypoint::VALIDATION_RULES['current_address.city'],
+            'waypoints.*.region' => Waypoint::VALIDATION_RULES['current_address.region'],
+            'waypoints.*.country' => Waypoint::VALIDATION_RULES['current_address.country'],
+        ],
+            [
+                'waypoints.*.street.regex' => 'Please enter a valid street for waypoint.',
+                'waypoints.*.postal_code.regex' => 'Please enter a valid postal code for waypoint.',
+                'waypoints.*.city.regex' => 'Please enter a valid city for waypoint.',
+                'waypoints.*.region.regex' => 'Please enter a valid region for waypoint.',
+                'waypoints.*.country.regex' => 'Please enter a valid country for waypoint.',
+            ]
+        );
         // converting id's into waypoints in this way not to break any logic that been written before.
         $waypoint_ids = collect(request()->waypoints);
         $waypoints = collect([]);
