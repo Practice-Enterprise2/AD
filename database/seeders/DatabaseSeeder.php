@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             AddressSeeder::class,
             UserSeeder::class,
             EmployeeSeeder::class,
+            DimensionSeeder::class,
+            ShipmentSeeder::class,
         ]);
     }
 }
