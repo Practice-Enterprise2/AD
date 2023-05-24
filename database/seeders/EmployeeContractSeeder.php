@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,8 +13,8 @@ class EmployeeContractSeeder extends Seeder
     public function run(): void
     {
         $employees = DB::table('employees')->orderBy('created_at', 'desc')->take(7)->get();
-        $timestamp = date("Y-m-d");
-    
+        $timestamp = date('Y-m-d');
+
         $end_date = '2026-01-01';
         function randomDate($timestamp, $end_date)
         {
@@ -25,14 +24,15 @@ class EmployeeContractSeeder extends Seeder
 
             return date('Y-m-d', $val);
         }
-        for($i = 0; $i < count($employees); $i++)
-        DB::table('employee_contracts')->insert([
-            'employee_id' => $employees[$i]->id,
-            'start_date' => $timestamp,
-            'end_date' => randomDate($timestamp, $end_date),    
-            'created_at' => now(),
-            'updated_at' => now()        
-        ]);
+        for ($i = 0; $i < count($employees); $i++) {
+            DB::table('employee_contracts')->insert([
+                'employee_id' => $employees[$i]->id,
+                'start_date' => $timestamp,
+                'end_date' => randomDate($timestamp, $end_date),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
         $this->call([
             HolidaySaldoSeeder::class,
         ]);

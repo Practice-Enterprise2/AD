@@ -1,8 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
 use DateTime;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,11 +13,9 @@ class HolidaySaldoSeeder extends Seeder
      */
     public function run(): void
     {
-        $contracts =  DB::table("employee_contracts")->get();
+        $contracts = DB::table('employee_contracts')->get();
 
-        for($i = 0; $i<count($contracts); $i++)
-        {
-            
+        for ($i = 0; $i < count($contracts); $i++) {
             $startDate = $contracts[$i]->start_date;
             $endDate = $contracts[$i]->end_date;
             $startdate = new DateTime($startDate);
@@ -30,37 +28,32 @@ class HolidaySaldoSeeder extends Seeder
             $stopyear = intval($endDate.substr(0, 4));
 
             for ($b = $startyear; $b <= $stopyear; $b++) {
-                if($b == $startyear)
-                {
+                if ($b == $startyear) {
                     DB::table('holiday_saldos')->insert([
                         'employee_contract_id' => $contracts[$i]->id,
-                        'allowed_days' => random_int(0, $daysInStartYear/4),
+                        'allowed_days' => random_int(0, $daysInStartYear / 4),
                         'year' => $b,
                         'type' => 1,
                         'created_at' => now(),
-                        'updated_at' => now()
+                        'updated_at' => now(),
                     ]);
-                }
-                elseif($b == $stopyear)
-                {
+                } elseif ($b == $stopyear) {
                     DB::table('holiday_saldos')->insert([
                         'employee_contract_id' => $contracts[$i]->id,
-                        'allowed_days' => random_int(0, $daysInEndYear/4),
+                        'allowed_days' => random_int(0, $daysInEndYear / 4),
                         'year' => $b,
                         'type' => 1,
                         'created_at' => now(),
-                        'updated_at' => now()
+                        'updated_at' => now(),
                     ]);
-                }
-                else
-                {
+                } else {
                     DB::table('holiday_saldos')->insert([
                         'employee_contract_id' => $contracts[$i]->id,
                         'allowed_days' => random_int(0, 50),
                         'year' => $b,
                         'type' => 1,
                         'created_at' => now(),
-                        'updated_at' => now()
+                        'updated_at' => now(),
                     ]);
                 }
             }
