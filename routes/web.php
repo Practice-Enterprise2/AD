@@ -230,18 +230,18 @@ Route::middleware('auth')->group(function () {
 
 
     //Shifts
-Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts.index');
-Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
-Route::get('/shifts/{shift}', [ShiftsController::class, 'show'])->name('shifts.show');
-Route::get('/shifts/{shift}/edit', [ShiftsController::class, 'edit'])->name('shifts.edit');
-Route::put('/shifts/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
-Route::delete('/shifts/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
-Route::post('/shifts/delete', [ShiftsController::class, 'delete'])->name('shifts.delete');
-Route::resource('shifts', ShiftsController::class);
-Route::get('/shiftplanner', [ShiftsController::class, 'index']);
-Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
-Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
-});
+    Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts.index');
+    Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
+    Route::get('/shifts/{shift}', [ShiftsController::class, 'show'])->name('shifts.show');
+    Route::get('/shifts/{shift}/edit', [ShiftsController::class, 'edit'])->name('shifts.edit');
+    Route::put('/shifts/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
+    Route::delete('/shifts/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
+    Route::post('/shifts/delete', [ShiftsController::class, 'delete'])->name('shifts.delete');
+    Route::resource('shifts', ShiftsController::class);
+    Route::get('/shiftplanner', [ShiftsController::class, 'index']);
+    Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
+    Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
+    });
 
 
 
