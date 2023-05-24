@@ -27,12 +27,24 @@ class ShipmentController extends Controller
 
     public function index(): View
     {
-        $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
-            ->whereNot('status', 'Declined')
-            ->with('waypoints')
-            ->get();
+        if (auth()->user()->can('view_all_shipments')) {
+            $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
+                ->whereNot('status', 'Declined')
+                ->whereNot('status', 'Deleted')
+                ->with('waypoints')
+                ->get();
 
-        return view('shipments.index', compact('shipments'));
+            return view('shipments.index', compact('shipments'));
+        } else {
+            $shipments = Shipment::query()->whereNot('status', 'Awaiting Confirmation')
+                ->whereNot('status', 'Declined')
+                ->whereNot('status', 'Deleted')
+                ->where('user_id', auth()->user()->id)
+                ->with('waypoints')
+                ->get();
+
+            return view('shipments.index', compact('shipments'));
+        }
     }
 
     public function create(): View
