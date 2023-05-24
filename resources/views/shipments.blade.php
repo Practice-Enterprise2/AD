@@ -183,58 +183,58 @@
               <!-- -->
               @foreach ($shipments as $shipment)
                 @if ($shipment->user_id == Auth::user()->id)
-                  <tr
-                    class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}">
-                    <td
-                      class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
-                      {{ $shipment->receiver_name }}</td>
-                    <td
-                      class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
-                      {{ $shipment->shipment_date }}</td>
-                    <td
-                      class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
-                      {{ $shipment->delivery_date }}</td>
-                    <td
-                      class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
-                      @if ($shipment->status == 'Exception')
-                        <div
-                          class="rounded-md border-2 border-gray-900 bg-gray-500 py-2 text-center text-base font-bold text-white">
-                          Exception</div>
-                      @elseif ($shipment->status == 'Awaiting Confirmation')
-                        <div
-                          class="rounded-md border-2 border-orange-800 bg-orange-500 py-2 text-center text-base font-bold text-white">
-                          Awaiting Confirmation</div>
-                      @elseif ($shipment->status == 'Awaiting Pickup')
-                        <div
-                          class="rounded-md border-2 border-orange-800 bg-orange-500 py-2 text-center text-base font-bold text-white">
-                          Awaiting Pickup</div>
-                      @elseif ($shipment->status == 'Out For Delivery')
-                        <div
-                          class="rounded-md border-2 border-blue-900 bg-blue-500 py-2 text-center text-base font-bold text-white">
-                          Out For Delivery</div>
-                      @elseif ($shipment->status == 'In Transit')
-                        <div
-                          class="rounded-md border-2 border-lime-900 bg-lime-500 py-2 text-center text-base font-bold text-white">
-                          In Transit</div>
-                      @elseif ($shipment->status == 'Delivered')
-                        <div
-                          class="rounded-md border-2 border-green-900 bg-green-500 py-2 text-center text-base font-bold text-white">
-                          Delivered</div>
-                      @elseif ($shipment->status == 'Held At Location')
-                        <div
-                          class="rounded-md border-2 border-yellow-900 bg-yellow-500 py-2 text-center text-base font-bold text-white">
-                          Held At Location</div>
-                      @elseif ($shipment->status == 'Declined')
-                        <div
-                          class="rounded-md border-2 border-red-900 bg-red-500 py-2 text-center text-base font-bold text-white">
-                          Canceled</div>
-                          @elseif ($shipment->status == 'Deleted')
-                          <div
-                             class="rounded-md border-2 border-red-900 bg-red-700 py-2 text-center text-base font-bold text-white">
-                             Deleted</div>
-                          @endif
+                <tr
+                  class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gray-200 dark:bg-gray-500' }}">
+                  <td
+                    class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
+                    {{ $shipment->receiver_name }}</td>
+                  <td
+                    class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
+                    {{ $shipment->shipment_date }}</td>
+                  <td
+                    class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
+                    {{ $shipment->delivery_date }}</td>
+                  <td
+                    class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
+                    @if ($shipment->status == 'Exception')
+                      <div
+                        class="rounded-md border-2 border-red-400 bg-red-300 py-2 text-center text-base font-bold text-white">
+                        Exception</div>
+                    @elseif ($shipment->status == 'Awaiting Confirmation')
+                      <div
+                        class="rounded-md border-2 border-orange-800 bg-orange-500 py-2 text-center text-base font-bold text-white">
+                        Awaiting Confirmation</div>
+                    @elseif ($shipment->status == 'Awaiting Pickup')
+                      <div
+                        class="rounded-md border-2 border-orange-800 bg-orange-500 py-2 text-center text-base font-bold text-white">
+                        Awaiting Pickup</div>
+                    @elseif ($shipment->status == 'Out For Delivery')
+                      <div
+                        class="rounded-md border-2 border-blue-900 bg-blue-500 py-2 text-center text-base font-bold text-white">
+                        Out For Delivery</div>
+                    @elseif ($shipment->status == 'In Transit')
+                      <div
+                        class="rounded-md border-2 border-lime-900 bg-lime-500 py-2 text-center text-base font-bold text-white">
+                        In Transit</div>
+                    @elseif ($shipment->status == 'Delivered')
+                      <div
+                        class="rounded-md border-2 border-green-900 bg-green-500 py-2 text-center text-base font-bold text-white">
+                        Delivered</div>
+                    @elseif ($shipment->status == 'Held At Location')
+                      <div
+                        class="rounded-md border-2 border-yellow-900 bg-yellow-500 py-2 text-center text-base font-bold text-white">
+                        Held At Location</div>
+                    @elseif ($shipment->status == 'Declined')
+                      <div
+                        class="rounded-md border-2 border-red-900 bg-red-500 py-2 text-center text-base font-bold text-white">
+                        Canceled</div>
+                    @elseif ($shipment->status == 'Deleted')
+                    <div
+                      class="rounded-md border-2 border-red-900 bg-red-700 py-2 text-center text-base font-bold text-white">
+                      Deleted</div>
+                    @endif
 
-                    </td>
+                </td>
                     <td
                       class="whitespace-no-wrap border-b border-gray-400 px-6 py-4">
                       <a
