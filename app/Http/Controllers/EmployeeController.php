@@ -408,10 +408,10 @@ class EmployeeController extends Controller
                 $employee->Iban = $req->Iban;
                 $employee->save();
 
-                return redirect()->back()->with('alert', 'complete creation');
+                return redirect()->back()->with('alert', 'Employee Created');
             }
         }
 
-        return redirect()->back()->with('alert', 'Invalid IBAN!');
+        return redirect()->back()->withErrors(['alert' => 'Invalid data!']);
     }
 }
