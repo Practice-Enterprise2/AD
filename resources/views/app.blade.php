@@ -58,7 +58,7 @@
         description="View your invoices here"></x-canvas-tile>
 
       <x-canvas-tile :url="route('reviews.index')" title="Reviews"
-      description="Read Our Customer Stories, Know Why People Choose to Ship With BlueSky"></x-canvas-tile>
+        description="Read Our Customer Stories, Know Why People Choose to Ship With BlueSky"></x-canvas-tile>
     </div>
   </x-content-layout>
 </x-app-layout>
