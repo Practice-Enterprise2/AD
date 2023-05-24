@@ -332,7 +332,7 @@ class ShipmentController extends Controller
             'invoice_code' => $invoice->invoice_code,
         ];
         try {
-            Mail::to('r0758369@student.thomasmore.be')->send(new InvoiceMail($data));
+            Mail::to('r0902342@student.thomasmore.be')->send(new InvoiceMail($data));
             //For demonstration purposes I am using my email for now, please do not spam my email. This will be change to the above variable $emailke
             return view('invoices.invoice_generated', compact('data'));
         } catch (Exception $th) {
