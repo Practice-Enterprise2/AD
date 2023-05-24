@@ -17,8 +17,12 @@
           description="Manage user roles and access to company resources"></x-canvas-tile>
       @endrole
       @can('view_employee_count')
-        <x-canvas-tile :url="route('employeegraph')" title="Employee Graph"
+        <x-canvas-tile title="Employee Graph" :url="route('employeegraph')"
           description=" Visualize the company's employee count over time"></x-canvas-tile>
+      @endcan
+      @can('view_all_orders')
+        <x-canvas-tile :url="route('ai-graph')" title="AI Order Graph"
+          description="View the AI order graph"></x-canvas-tile>
       @endcan
       @can('edit_all_shipments')
         <x-canvas-tile title="Evaluate Shipment Requests"
@@ -38,6 +42,7 @@
         <x-canvas-tile :url="route('contact.index')" title="Problems"
           description="Respond to questions that the users have"></x-canvas-tile>
       @endcan
+
       <x-canvas-tile :url="route('contact.create')" title="Contact Us"
         description="Get in touch with us"></x-canvas-tile>
       <x-canvas-tile :url="route('complaints.messages')" title="Messages"
@@ -50,6 +55,12 @@
       @endif
       <x-canvas-tile :url="route('reviews.create')" title="Review Us"
         description="If you want to share your experience, you can leave a review"></x-canvas-tile>
+      <x-canvas-tile :url="route('invoice_overview')" title="Invoices"
+        description="View your invoices here"></x-canvas-tile>
+      @can('change_employee_contracts')
+        <x-canvas-tile :url="route('employee-view-contracts')" title="Contracts"
+          description="View All the contracts here"></x-canvas-tile>
+      @endcan
     </div>
   </x-content-layout>
 </x-app-layout>

@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Airport;
 use App\Models\Depot;
 use App\Models\Shipment;
+use App\Models\User;
 use App\Models\Waypoint;
+use App\Notifications\ShipmentUpdated;
 use Illuminate\Contracts\View\View;
 
 class WaypointController extends Controller
 {
     public function create(Shipment $shipment): View
     {
+        $country_codes = collect([]);
         $countries = [
             $shipment->source_address->country,
             $shipment->destination_address->country,
@@ -22,7 +26,11 @@ class WaypointController extends Controller
             $query->whereIn('country', $countries);
         })->get();
 
-        return view('shipments.set', compact(['shipment', 'depots']));
+        $airports = Airport::whereHas('address', function ($query) use ($countries) {
+            $query->whereIn('country', $countries);
+        })->get();
+
+        return view('shipments.set', compact(['shipment', 'depots', 'airports']));
     }
 
     public function store(Shipment $shipment): View
@@ -46,16 +54,18 @@ class WaypointController extends Controller
         );
         // converting id's into waypoints in this way not to break any logic that been written before.
         $waypoint_ids = collect(request()->waypoints);
-        $waypoints = collect([]);
 
+        $waypoints = collect([]);
         for ($i = 0; $i < $waypoint_ids->count(); $i++) {
             if (isset($waypoint_ids[$i]['depot_id'])) {
-                $address = Address::find($waypoint_ids[$i]['depot_id']);
+                $address = Depot::find($waypoint_ids[$i]['depot_id'])->address;
                 $waypoint = [];
+                $waypoint['id'] = $waypoint_ids[$i]['depot_id'];
                 $waypoint['type'] = 'depot'; //branch need a change to depot
-            } else {
-                $address = Address::find($waypoint_ids[$i]['airport_id']);
+            } elseif (isset($waypoint_ids[$i]['airport_id'])) {
+                $address = Airport::find($waypoint_ids[$i]['airport_id'])->address;
                 $waypoint = [];
+                $waypoint['id'] = $waypoint_ids[$i]['airport_id'];
                 $waypoint['type'] = 'airport';
             }
             $waypoint['street'] = $address->street;
@@ -90,13 +100,10 @@ class WaypointController extends Controller
                     $current_address->save();
                 }
 
-                // dd($current_address);
-
                 if (! $current_address) {
                     dd("Something is wrong with the \$current_address refer:'shipments.requests.evaluate.set.store'.");
                 }
 
-                // $next_address = $waypoints[$i];
                 $next_address = Address::query()->where([
                     'street' => $waypoints[$i]['street'],
                     'house_number' => $waypoints[$i]['house_number'],
@@ -106,7 +113,6 @@ class WaypointController extends Controller
                     'country' => $waypoints[$i]['country'],
                 ])->first();
 
-                // dd($next_address);
                 if (! $next_address) {
                     $next_address = new Address();
                     $next_address->street = $waypoints[$i]['street'];
@@ -116,8 +122,6 @@ class WaypointController extends Controller
                     $next_address->region = $waypoints[$i]['region'];
                     $next_address->country = $waypoints[$i]['country'];
                     $next_address->save();
-
-                    // dd($next_address);
                 }
                 $status = 'Awaiting Action';  // presents this is the current waypoint.
             } else {
@@ -142,8 +146,6 @@ class WaypointController extends Controller
                     $current_address->save();
                 }
 
-                // $next_address = $waypoints[$i];
-
                 $next_address = Address::query()->where([
                     'street' => $waypoints[$i]['street'],
                     'house_number' => $waypoints[$i]['house_number'],
@@ -153,7 +155,6 @@ class WaypointController extends Controller
                     'country' => $waypoints[$i]['country'],
                 ])->first();
 
-                // dd($next_address);
                 if (! $next_address) {
                     $next_address = new Address();
                     $next_address->street = $waypoints[$i]['street'];
@@ -163,8 +164,6 @@ class WaypointController extends Controller
                     $next_address->region = $waypoints[$i]['region'];
                     $next_address->country = $waypoints[$i]['country'];
                     $next_address->save();
-
-                    // dd($next_address);
                 }
 
                 $status = 'In Transit';
@@ -219,13 +218,10 @@ class WaypointController extends Controller
             $next_address->save();
         }
 
-        // dd("flag");
         $waypoint = new Waypoint();
         $waypoint->shipment_id = $shipment->id;
         $waypoint->status = 'In Transit';
-        // $waypoint->current_address = $waypoints[$waypoints->count() - 1];
         $waypoint->current_address_id = $current_address->id;
-        // $waypoint->next_address = $shipment->destination_address;
         $waypoint->next_address_id = $next_address->id;
         $waypoint->push();
 
@@ -279,7 +275,6 @@ class WaypointController extends Controller
                 $shipment->update();
             }
         } else {
-            // NEW CODE
             if ($current_waypoint->status == 'Out For Delivery') {
                 $current_waypoint->status = 'Received';
                 $current_waypoint->update();
@@ -294,6 +289,13 @@ class WaypointController extends Controller
                 $next_waypoint->update();
             }
         }
+
+        dd('waypoint with id: '.$current_waypoint->id.' state changed');
+
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));

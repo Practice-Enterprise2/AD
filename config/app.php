@@ -182,7 +182,9 @@ return [
         /*
          * Package Service Providers...
          */
-        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,        
+        Barryvdh\DomPDF\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -214,6 +216,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         // QR Code
+        'PDF ' => Barryvdh\DomPDF\Facade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        // to PDF
+        'PDF' => Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 ];
