@@ -380,7 +380,6 @@ class ShipmentController extends Controller
             $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
             .$street.'?output=xml&key='.$bingmaps_api_key;
 
-            dump($findURL);
             $output = file_get_contents($findURL);
             $response = new \SimpleXMLElement($output);
 
@@ -418,8 +417,6 @@ class ShipmentController extends Controller
         $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
         .$street.'?output=xml&key='.$bingmaps_api_key;
 
-        dump($findURL);
-
         $output = file_get_contents($findURL);
         $response = new \SimpleXMLElement($output);
 
@@ -435,15 +432,12 @@ class ShipmentController extends Controller
             'longitude' => $longitude,
         ];
 
-        dump($waypoints_geocodes);
-
         return view('shipments.track-shipment', compact('waypoints_geocodes', 'shipment'));
     }
 
     // shows user's shipments.
     public function listShipments()
     {
-        // dd(auth()->user()->shipments);
         $shipments = auth()->user()->shipments;
 
         return view('shipments.list-shipments', compact('shipments'));

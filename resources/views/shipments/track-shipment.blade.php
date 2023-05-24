@@ -234,9 +234,27 @@
         }
       }
 
-      var pushpin = new Microsoft.Maps.Pushpin(location, {
-        title: waypoints[i].waypoint_status
-      });
+      if(i == 0)
+      {
+        var pushpin = new Microsoft.Maps.Pushpin(location, {
+          title: `SOURCE ADDRESS ${waypoints[i].waypoint_status}`,
+          color: "black"
+        });
+      }
+      else if(i == (waypoints.length - 1))
+      {
+        var pushpin = new Microsoft.Maps.Pushpin(location, {
+          title: "DESTINATION ADDRESS",
+          color: "black"
+        });
+      }
+      else
+      {
+        var pushpin = new Microsoft.Maps.Pushpin(location, {
+          title: `WAYPOINT STATUS ${waypoints[i].waypoint_status}`,
+          color: "blue"
+        });
+      }
 
       map.entities.push(pushpin);
     }
