@@ -1,9 +1,9 @@
 <?php
 
 namespace Database\Seeders;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Seeder;
 
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeSeeder extends Seeder
 {
@@ -12,36 +12,36 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
+        $timestamp = now();
         $this->call([
-            UsersSeeder::class,
+            UserSeeder::class,
         ]);
-        $userList = DB::table('users')->get();
-        $userCount = count($userList);
-        $start_date = "1960-01-01";
-        $end_date = "1960-01-01";
-        $jobList = ["Accountant", "Manager", 'Developer', 'Lead Developer', 'Assistant Manager', 'Software Engineer', 'Data Analyst'];
-        
-        for($i = 0; $i > ($userCount/2); $i++)
+        $users = DB::table('users')->where('created_at', '>=', $timestamp)->get();
+        $start_date = '1960-01-01';
+        $end_date = '2005-01-01';
+        $jobList = ['Accountant', 'Manager', 'Developer', 'Lead Developer', 'Assistant Manager', 'Software Engineer', 'Data Analyst'];
+        $Ibans = ['NL32RABO2318696306', 'NL58INGB7723597010', 'NL79RABO7114507283', 'NL06RABO8902022560', 'NL28ABNA8193596846'];
+
+        function randomDate($start_date, $end_date)
         {
+            $min = strtotime($start_date);
+            $max = strtotime($end_date);
+            $val = rand($min, $max);
+
+            return date('Y-m-d', $val);
+        }
+
+        for ($i = 0; $i < count($users); $i++) {
             DB::table('employees')->insert([
-                'user_id' => $userCount-1,
-                'dateOfBirth' => EmployeeSeeder::randomDate($start_date, $end_date),
-                'jobTitle' => $jobList [random_int(0, 6)],
+                'user_id' => $users[$i]->id,
+                'dateOfBirth' => randomDate($start_date, $end_date),
+                'jobTitle' => $jobList[random_int(0, 6)],
                 'salary' => random_int(1500, 5000),
                 //too hard to generate valid IBANs
-                'Iban' => 'NL32RABO2318696306',
+                'Iban' => $Ibans[random_int(0, 4)],
                 'created_at' => now(),
-                'updated_at' => now()
-
+                'updated_at' => now(),
             ]);
         }
-    }
-    function randomDate($start_date, $end_date)
-    {
-    
-    $min = strtotime($start_date);
-    $max = strtotime($end_date);
-    $val = rand($min, $max);
-    return date('Y-m-d H:i:s', $val);
     }
 }

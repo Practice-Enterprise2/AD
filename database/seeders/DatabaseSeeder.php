@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             VacantJobsSeeder::class,
             AddressSeeder::class,
             UserSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }
