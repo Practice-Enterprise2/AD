@@ -30,15 +30,18 @@ class Employee extends Model implements ValidatesAttributes
 
     public const VALIDATION_RULE_JOB_TITLE = ['required'];
 
-    public const VALIDATION_RULE_JOB_SALARY = ['required'];
+    public const VALIDATION_RULE_SALARY = ['required'];
 
     public const VALIDATION_RULE_IBAN = ['required'];
+
+    public const VALIDATION_RULE_EMAIL = ['required', 'email'];
 
     public const VALIDATION_RULES = [
         'dateOfBirth' => self::VALIDATION_RULE_DATE_OF_BIRTH,
         'jobTitle' => self::VALIDATION_RULE_JOB_TITLE,
-        'salary' => self::VALIDATION_RULE_JOB_SALARY,
+        'salary' => self::VALIDATION_RULE_SALARY,
         'Iban' => self::VALIDATION_RULE_IBAN,
+        'email' => self::VALIDATION_RULE_EMAIL,
     ];
 
     protected $table = 'employees';

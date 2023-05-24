@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 /**
  * @property int $id
@@ -29,7 +30,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Shipment extends Model implements ValidatesAttributes
 {
+    use SoftDeletes;
+    use Sortable;
     use SoftDeletes, AppValidatesAttributes;
+
+    protected $primaryKey = 'id';
+
+    public $sortable = [
+        'receiver_name',
+        'shipment_date',
+        'delivery_date',
+        'status',
+    ];
 
     public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 

@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-mail::message>
 
   Thank you for placing a shipment <b>{{ $data['name'] }}</b> ! <br><br>

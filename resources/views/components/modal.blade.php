@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @props(['name', 'show' => false, 'maxWidth' => '2xl'])
 
 @php
