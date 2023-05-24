@@ -5,21 +5,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
+      
+      function getCurrentDateTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0');
+        var day = String(now.getDate()).padStart(2, '0');
+        var hours = String(now.getHours()).padStart(2, '0');
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var seconds = String(now.getSeconds()).padStart(2, '0');
+      
+        var dateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        return dateTime;
+      }
 
-function getCurrentDateTime() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = String(now.getMonth() + 1).padStart(2, '0');
-  var day = String(now.getDate()).padStart(2, '0');
-  var hours = String(now.getHours()).padStart(2, '0');
-  var minutes = String(now.getMinutes()).padStart(2, '0');
-  var seconds = String(now.getSeconds()).padStart(2, '0');
-
-  var dateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-  return dateTime;
-}
 
       function getEmployeeIdByName(employees, name) {
         var employeeId = null;
@@ -74,14 +78,18 @@ function getCurrentDateTime() {
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           dateClick: function(info) {
-            window.location.href = "/shiftplanner/day/" + info.dateStr;
+            if (calendar.view.type === 'dayGridMonth') {
+              // Go to week view of the clicked day
+              calendar.changeView('timeGridWeek', info.dateStr);
+            }
           },
           headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek'
           },
           editable: true,
+          selectHelper:true,
           dayMaxEvents: true, // when too many events in a day, show the popover
           events: <?php echo json_encode($shifts->map(function($shift) {
             return [
@@ -92,16 +100,15 @@ function getCurrentDateTime() {
           })->toArray());?>,
           
           eventReceive: function(info) {
-            info.event.setAllDay(true);
+            //info.event.setAllDay(true);
           },
+
           eventClick: function(info) {
-            event.startTime = getCurrentDateTime();
-            event.endTime = getCurrentDateTime();
-            console.log(event.startTime);
-            if(confirm("Are you sure you want to delete this event?")) {
+            if (confirm("Are you sure you want to remove this event?")) {
               info.event.remove();
             }
           },
+
 
           eventDrop: function(info) {
             var droppedEvent = info.event;
@@ -112,17 +119,27 @@ function getCurrentDateTime() {
             var day = droppedDate.getDate();
             var month = droppedDate.getMonth() + 1;
             var year = droppedDate.getFullYear();
-                
+
             var dateTimeS = year + '-' + month + '-' + day + ' ' + '07' + ':' + '00' + ':' + '00';
             var dateTimeE = year + '-' + month + '-' + day + ' ' + '15' + ':' + '00' + ':' + '00';
             console.log('Day:', day);
             console.log('Month:', month);
             console.log('Year:', year);
-
-            console.log(dateTimeS);
+            
+            info.event.start = dateTimeS;
+            info.event.end = dateTimeE;
                 
             // ... Perform your desired actions based on the dropped date
           },
+
+        eventResize: function(info) {
+          alert(info.event.title + " end is now " + info.event.end.toISOString());
+        
+          if (!confirm("is this okay?")) {
+            info.revert();
+          }
+         
+        }
         });
         calendar.render();
         var containerEl = document.getElementById('external-events');
@@ -138,7 +155,6 @@ function getCurrentDateTime() {
             title: title,
             start: startTime,
             end: endTime
-            
           };
         }
         });
