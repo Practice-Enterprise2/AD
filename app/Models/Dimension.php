@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Dimension extends Model implements ValidatesAttributes
 {
-    use AppValidatesAttributes;
+    use AppValidatesAttributes, HasFactory;
 
     const VALIDATION_RULE_LENGTH = ['required', 'gt:0', 'numeric'];
 

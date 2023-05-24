@@ -89,6 +89,7 @@ class AppServiceProvider extends ServiceProvider
         $role_employee->givePermissionTo('edit_all_shipments');
         $role_employee->givePermissionTo('accept_any_shipment');
         $role_employee->givePermissionTo('view_all_invoices');
+        $role_employee->givePermissionTo('view_all_shipments');
 
         $role_employee_hr->givePermissionTo('view_all_users');
         $role_employee_hr->givePermissionTo('edit_roles');
@@ -99,6 +100,8 @@ class AppServiceProvider extends ServiceProvider
         $role_employee_hr->givePermissionTo('edit_vacant_jobs');
         $role_employee_hr->givePermissionTo('edit_any_employee');
         $role_employee_hr->givePermissionTo('change_employee_contracts');
+        $role_employee_hr->givePermissionTo('view_employee_count');
+        $role_employee_hr->givePermissionTo('add_employee');
 
         $role_employee_it->givePermissionTo('view_basic_server_info');
         $role_employee_it->givePermissionTo('view_all_permissions');

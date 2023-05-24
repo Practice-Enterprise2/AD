@@ -68,16 +68,6 @@
       background-color: #0062cc;
     }
   </style>
-
-  <h1>Shipment Request</h1>
-
-  <p>Thank you for your shipment request.</p>
-
-  <p>The current status of your shipment is: <strong>Pending</strong>.</p>
-
-  <p>Please note that your shipment will not be sent until your payment has been
-    confirmed and the package is at the drop-off place. We will notify you once
-    your shipment has been confirmed.</p>
   <div id="rating">
     <p>
       Thank you for choosing our shipping service!<br> We hope you had a great
