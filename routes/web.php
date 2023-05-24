@@ -317,9 +317,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
     Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
     Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
-    Route::get('/shipments_delete/{id}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
+    Route::get('/delete-shipment/{id}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
     Route::get('/shipments_dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
-    Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
 

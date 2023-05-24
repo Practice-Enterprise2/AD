@@ -218,7 +218,6 @@ class ShipmentController extends Controller
         $id = DB::table('shipments')
             ->select('shipments.id')
             ->get();
-        $error = $this->cancel($id);
 
         return view('shipments',
             [
@@ -354,49 +353,39 @@ class ShipmentController extends Controller
 
 
     // Cancel a shipment with modal
-    public function cancel($id)
+    public function cancel($id): View
     {
+       
+        $shipment = Shipment::find($id);
+      
+        $inTransit = "In Transit";
         $errorMessage = '';
-
-        // Get status of the shipment with Id
-        $shipmentToCancel = DB::select('SELECT status FROM shipments WHERE id = 1');
-
-        if ($shipmentToCancel = 'Awaiting Confirmation' || $shipmentToCancel = 'Awaiting Pickup' || $shipmentToCancel = 'Held At Location') {
+        if($shipment->status === "Awaiting Confirmation" || $shipment->status === "Awaiting Pickup" || $shipment->status === "Held At Location") {
             // Can cancel ==> SUCCES
             $errorMessage = 'Succes! shipment has been canceled.';
             DB::update("UPDATE shipments SET status = 'Declined' WHERE id = ?", [$id]);
-        } elseif ($shipmentToCancel = 'Delivered') {
-            // Package already delivered
-            $errorMessage = "Can't be canceled! Package is already delivered.";
-        } elseif ($shipmentToCancel = 'Deleted') {
-            // You package has been canceled by Blue Sky
-            $errorMessage = "Can't be canceled! Package has been canceled by BlueSky";
-        } elseif ($shipmentToCancel = 'Declined') {
-            // Shipment already cancelled
-            $errorMessage = "Can't be canceled! Package is already canceled";
-        } elseif ($shipmentToCancel = 'Exception') {
-            // wait for HR to check
-            $errorMessage = 'This shipment is an exception, please wait for hr to review this!';
-        } else {
-            $errorMessage = "Can't be Canceled! package is in tranport and on its way";
         }
-        // Wait 5 secconds before going to the return page
-        // sleep(5);
-
-        // Navigate back to shipments page and load all data
-        $shipments = DB::table('shipments')
-            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
-            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
-            ->get();
-
-        $showError = true;
-
-        return $errorMessage;
-    }
-    public function cancel2($id) : View
-    {
-        return view('shipments.cancel', [
-            'shipment' => $shipment
+        else if($shipment->status === "Delivered") {    
+            $errorMessage = "Can't be canceled! Package is already delivered.";
+        }
+        else if($shipment->status === "Deleted") {
+            $errorMessage = "Can't be canceled! Package has been deleted by an Employee.";
+        }
+        else if($shipment->status === "Declined") {
+            $errorMessage = "Can't be canceled! Package is already Canceled/Declined.";
+        }
+        else if($shipment->status === "In Transit") {
+            $errorMessage = "Can't be canceled! Package is on its way to the shipping address";
+        }
+        else if($shipment->status === "Exception") {
+            $errorMessage = "Can't be canceled! There has been a problem, please make a new shipment.";
+        }
+        else if($shipment->status === "Out For Delivery") {
+            $errorMessage = "Can't be canceled! Package is going to get shipped soon!";
+        }
+    
+        return view('delete-shipment',[
+            'errorMessage' => $errorMessage
         ]);
     }
 
