@@ -214,7 +214,12 @@ class WaypointController extends Controller
 
         $shipment->status = 'Awaiting Pickup';
         $shipment->update();
-        dd('Check Waypoints Table');
+
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+
+        return view('shipments.show', compact('shipment'));
     }
 
     public function update(Shipment $shipment): void
@@ -280,6 +285,6 @@ class WaypointController extends Controller
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
-        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
+        dd('waypoint with id: '.$current_waypoint->id.' state changed');
     }
 }
