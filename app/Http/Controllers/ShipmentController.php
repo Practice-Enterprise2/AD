@@ -510,24 +510,7 @@ class ShipmentController extends Controller
 
         return $waypointsCollection;
     }
-}
-
-namespace App\Http\Controllers;
-
-use App\Mail\shipmentMail;
-use App\Models\Address;
-use App\Models\Shipment;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-
-class ShipmentController extends Controller
-{
-    //
-    use AuthorizesRequests, ValidatesRequests;
-
+ 
     public function insert(Request $request)
     {
         $ShipmentStreet = $request->input('Street');
@@ -551,11 +534,8 @@ class ShipmentController extends Controller
             $expense = 10;
         }
         $customerID = 1;
-        //$sourceAddress = DB::select('select address_id from customers where id = ?',[1]);
         $sourceAddress = DB::table('customers')->where('id', $customerID)->value('address_id');
         DB::insert('insert into shipments values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [null, $customerID, $ShipmentName, $sourceAddress, $AddressID, $shippingDate, $shippingDate, $ShipmentStatus, $expense, $ShipmentWeight, $ShipmentType, $current_date_time, $updated_date_time, 0, null]);
-
-        // Mail::to('killian.serluppens@gmail.com')->send(new shipmentMail());
 
         $id = DB::table('shipments')->latest()->value('id');
 
@@ -567,7 +547,6 @@ class ShipmentController extends Controller
         return view('shipmentOverview', ['data' => $data], ['srcAddress' => $address1, 'dstAddress' => $address2]);
 
     }
-
     public function getShipmentInfo($id)
     {
         $data = Shipment::find($id);
@@ -577,5 +556,6 @@ class ShipmentController extends Controller
 
         return view('/shipmentOverview/', ['data' => $data], ['srcAddress' => $address1, 'dstAddress' => $address2]);
 
-    }
+    } 
+
 }
