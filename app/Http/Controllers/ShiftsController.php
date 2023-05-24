@@ -80,23 +80,23 @@ class ShiftsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
+    public function store(Request $request)
     {
+        $data = $request->validate([
+            'planned_start_time' => 'required|date_format:Y-m-d H:i:s',
+            'planned_end_time' => 'required|date_format:Y-m-d H:i:s',
+            'employee_id' => 'required|exists:users,id',
+        ]);
     
-    $data = $request->validate([
-        'user_id' => 'required|exists:user,id',
-        'planned_start_time' => 'required|date_format:Y-m-d\TH:i',
-        'planned_end_time' => 'required|date_format:Y-m-d\TH:i',
-    ]);
-
-    Shift::create([
-        'planned_start_time' => $data['planned_start_time'],
-        'planned_end_time' => $data['planned_end_time'],
-        'employee_id' => $data['user_id'],
-    ]);
+        $data['actual_start_time'] = null;
+        $data['actual_end_time'] = null;
+        $data['created_at'] = now();
+        $data['updated_at'] = now();
+    
+        Shift::create($data);
+    
         return redirect()->route('shifts.index');
     }
-
     /**
      * Update the specified resource in storage.
      */

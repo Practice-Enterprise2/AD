@@ -23,8 +23,6 @@
         var dateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
         return dateTime;
       }
-
-
       function getEmployeeIdByName(employees, name) {
         var employeeId = null;
         employees.forEach(function(employee) {
@@ -34,27 +32,6 @@
         });
         return employeeId;
       }
-
-      function getStartTimeByName(employees, name) {
-        var startTime = null;
-        employees.forEach(function(employee) {
-        if (employee.name === name) {
-          startTime = employee.startTime;
-        }
-        });
-        return startTime;
-      }
-
-      function getEndTimeByName(employees, name) {
-        var endTime = null;
-        employees.forEach(function(employee) {
-        if (employee.name === name) {
-          endTime = employee.endTime;
-        }
-        });
-        return endTime;
-      }
-
       var employees = <?php echo json_encode($shifts->map(function($shift) {
               return [
                 'id' => $shift->employee->user->id,
@@ -71,8 +48,6 @@
               ];
             })->toArray());?>;
 
-
-      
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -94,13 +69,13 @@
           events: <?php echo json_encode($shifts->map(function($shift) {
             return [
               'title' => $shift->employee->user->name,
-              'start' => date('Y-m-d', strtotime($shift->planned_start_time)),
-              'end' => date('Y-m-d', strtotime($shift->planned_end_time)),
+              'start' => $shift->planned_start_time,
+              'end' => $shift->planned_end_time,
             ];
           })->toArray());?>,
           
           eventReceive: function(info) {
-            //info.event.setAllDay(true);
+            console.log('ayo');
           },
 
           eventClick: function(info) {
@@ -160,27 +135,27 @@
         });
         // Save button functionality
         document.getElementById('save-button').addEventListener('click', function() {
-          var events = calendar.getEvents();
-          //console.log(events);
-            events.forEach(function(event) {
-              console.log(event.startTime);
-              var formData = new FormData();
-              formData.append('planned_start_time', getCurrentDateTime());
-              formData.append('planned_end_time', getEndTimeByName(employees, event.title));
-              formData.append('actual_start_time', null);
-              formData.append('actual_end_time', null);
-              formData.append('employee_id', getEmployeeIdByName(employees, event.title));
-              console.log(getEmployeeIdByName(emps, event.title));
-            fetch('/shifts', {
-              method: 'POST',
-              body: formData,
-              headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-              }
-            }) 
-          });
-        });
-      });
+  var events = calendar.getEvents();
+  events.forEach(function(event) {
+    var formData = new FormData();
+    formData.append('planned_start_time', moment(event.start).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('planned_end_time', moment(event.end).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('actual_start_time', null);
+    formData.append('actual_end_time', null);
+    formData.append('employee_id', getEmployeeIdByName(employees, event.title));
+    formData.append('created_at', moment().format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('updated_at', moment().format('YYYY-MM-DD HH:mm:ss'));
+
+    fetch('/shifts', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    });
+    });
+    });
+    });
     </script>
   </head>
 
@@ -194,10 +169,6 @@
         @foreach($employees as $employee)
           <div class='fc-event bg-gray-100 rounded-md p-2 mb-2 hover:bg-gray-200 cursor-move'>{{$employee->user->name}}</div>
         @endforeach
-        <p class="mt-4">
-          <input type='checkbox' id='drop-remove' />
-          <label for='drop-remove'>remove after drop</label>
-        </p>
         <button id="save-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
           Save
         </button>
