@@ -6,7 +6,7 @@
       <div
         class="column overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
         <div class="p-6 text-gray-900 dark:text-gray-100">
-          {{ __('Order placed! You will receive an invoice in your mail box.') }}
+          {{ __('Order placed! You will receive an invoice in your mail box. Please navigate to your Invoices page in the user panel to finish your payment and complete your order.') }}
         </div>
         <div class="p-6 text-gray-900 dark:text-gray-100">
           <p>Did you not receive your mail? Click the button below!</p>
