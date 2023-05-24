@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 @if (!empty($url))
   <a href="{{ $url }}"
     class="mx-4 my-4 h-40 w-60 overflow-hidden rounded-lg bg-blue-100 transition-colors duration-200 ease-in-out hover:bg-blue-200">
@@ -13,7 +15,8 @@
       </svg>
     </div>
   @endif
-  <h2 class="mb-2 text-center text-lg font-bold">{{ $title }}</h2>
+  <h2 class="mb-2 text-center text-lg font-bold text-gray-950">
+    {{ $title }}</h2>
   <h3 class="mb-2 text-center text-sm font-medium text-gray-600">
     {{ $description }}</h3>
 </div>

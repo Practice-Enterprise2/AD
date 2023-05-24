@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvoiceMail;
 use App\Models\Address;
+use App\Models\Depot;
 use App\Models\Dimension;
 use App\Models\Invoice;
 use App\Models\Shipment;
@@ -13,8 +14,8 @@ use App\Notifications\ShipmentUpdated;
 use App\Traits\Invoices;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse; // Traits for invoices
+use Illuminate\Contracts\View\View; // Traits for invoices
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,6 @@ class ShipmentController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
-    //create
     public function create(): View
     {
         // Generate list of dates for the next 7 days
@@ -45,10 +45,14 @@ class ShipmentController extends Controller
             $deliveryDates[] = $i->format('Y-m-d');
         }
 
-        return view('shipments.create', compact('deliveryDates'));
+        // good old Database-Fundamentals query here:
+        $countries = Depot::join('addresses', 'depots.address_id', '=', 'addresses.id')
+            ->distinct()
+            ->pluck('addresses.country');
+
+        return view('shipments.create', compact('deliveryDates', 'countries'));
     }
 
-    //store
     public function store(): View|RedirectResponse
     {
         // Validate request
@@ -178,13 +182,15 @@ class ShipmentController extends Controller
 
     public function requests(): View
     {
-        // dd("Catch");
         $shipments = Shipment::query()->where('status', 'Awaiting Confirmation')->get();
-        // dd("Catch");
-        // dd($shipments);
-        return view('/shipments.requests', compact('shipments'));
+
+        return view('shipments.requests', compact('shipments'));
     }
 
+    /**
+     * Decline a shipment or redirect the user to the page to confirm the
+     * shipment by adding extra information.
+     */
     public function evaluate(Shipment $shipment): RedirectResponse
     {
         if (request()->has('decline')) {
@@ -197,6 +203,80 @@ class ShipmentController extends Controller
         } else {
             dd('Something gone wrong, refer Route with URI => [shipments/requests/evaluate/{shipment}]');
         }
+    }
+
+    public function showshipments()
+    {
+        $shipments = DB::table('shipments')
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
+            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
+            ->get();
+        $shipments = Shipment::sortable()->paginate(20);
+        $id = DB::table('shipments')
+            ->select('shipments.id')
+            ->get();
+        $error = $this->cancel($id);
+
+        return view('shipments',
+            ['shipments' => $shipments,
+                'error' => $error]);
+    }
+
+    public function showShipments_details($id)
+    {
+        $shipments = DB::table('shipments')
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
+            ->where('shipments.id', $id)
+            ->select('*')
+            ->get();
+        $shipment = Shipment::find($id);
+        $waypointsCollection = $this->track($shipment);
+
+        return view('shipments_details', [
+            'shipments' => $shipments,
+            'waypointsCollection' => $waypointsCollection,
+        ]);
+    }
+
+    // Cancel a shipment with modal
+    public function cancel($id)
+    {
+        $errorMessage = '';
+
+        // Get status of the shipment with Id
+        $shipmentToCancel = DB::select('SELECT status FROM shipments WHERE id = 1');
+
+        if ($shipmentToCancel = 'Awaiting Confirmation' || $shipmentToCancel = 'Awaiting Pickup' || $shipmentToCancel = 'Held At Location') {
+            // Can cancel ==> SUCCES
+            $errorMessage = 'Succes! shipment has been canceled.';
+            DB::update("UPDATE shipments SET status = 'Declined' WHERE id = ?", [$id]);
+        } elseif ($shipmentToCancel = 'Delivered') {
+            // Package already delivered
+            $errorMessage = "Can't be canceled! Package is already delivered.";
+        } elseif ($shipmentToCancel = 'Deleted') {
+            // You package has been canceled by Blue Sky
+            $errorMessage = "Can't be canceled! Package has been canceled by BlueSky";
+        } elseif ($shipmentToCancel = 'Declined') {
+            // Shipment already cancelled
+            $errorMessage = "Can't be canceled! Package is already canceled";
+        } elseif ($shipmentToCancel = 'Exception') {
+            // wait for HR to check
+            $errorMessage = 'This shipment is an exception, please wait for hr to review this!';
+        } else {
+            $errorMessage = "Can't be Canceled! package is in tranport and on its way";
+        }
+        // Wait 5 secconds before going to the return page
+        // sleep(5);
+
+        // Navigate back to shipments page and load all data
+        $shipments = DB::table('shipments')
+            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
+            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
+            ->get();
+
+        $showError = true;
+
+        return $errorMessage;
     }
 
     public function edit(Shipment $shipment): View
@@ -288,6 +368,8 @@ class ShipmentController extends Controller
 
     public function destroy(Shipment $shipment): Redirector|RedirectResponse
     {
+        $this->authorize('delete', $shipment);
+
         $shipment->status = 'Deleted';
         $shipment->update();
         $shipment->delete();
@@ -298,6 +380,8 @@ class ShipmentController extends Controller
 
     public function show(Shipment $shipment): View
     {
+        $this->authorize('view', $shipment);
+
         return view('shipments.show', compact('shipment'));
     }
 
@@ -332,30 +416,48 @@ class ShipmentController extends Controller
 
     // Bing Maps Locations API
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
-    public function track(): View
+    public function track(Shipment $shipment)
     {
+        $waypoints = $shipment->waypoints;
+        $waypoints_geocodes = collect([]);
+
+        // ADD YOUR API KEY TO ".env" file.
+        $bingmaps_api_key = env('BINGMAPS_KEY');
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
-
+        $waypointsCollection = collect();
+        //dd($shipment->waypoints);
         // (!) don't forget to add your bing maps key here.
-        $key = 'your_bing_maps_key';
-
+        $key = 'AsGfeENZ_hYN25e91OFGuGbFUm2PHIQrKbvKqg3O1XmJeVxfTgXk8h1p38nbJn1S';
         // address should be converted here, which will be used with the baseURL to send a request.
-        $country = str_ireplace(' ', '%20', request()->country);
-        $street = str_ireplace(' ', '%20', request()->street);
-        $state = str_ireplace(' ', '%20', request()->state);
-        $locality = str_ireplace(' ', '%20', request()->city);
-        $postalCode = str_ireplace(' ', '%20', request()->zipcode);
+
+        $country = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->country);
+        $street = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->street);
+        $housenr = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->house_number);
+        $locality = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->city);
+        $postalCode = str_ireplace(' ', '%20', $shipment->waypoints[0]->current_address->postal_code);
 
         //request URL is created here + response is retrieved with the DATA
-        $findURL = $baseURL.'/'.$country.'/'.$state.'/'.$postalCode.'/'.$locality.'/'
+        $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
         .$street.'?output=xml&key='.$key;
+
+        dump($findURL);
+
         $output = file_get_contents($findURL);
+        //dd($findURL);
         $response = new \SimpleXMLElement($output);
 
-        // DATA == latitude, longitude
-        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
-        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude->__toString();
+        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude->__toString();
+
+        $waypoints_geocodes[count($waypoints)] = [
+            'type' => 'next_address',
+            'waypoint_id' => $waypoints[count($waypoints) - 1]->id,
+            'waypoint_status' => $waypoints[count($waypoints) - 1]->status,
+            'waypoint' => $waypoints[count($waypoints) - 1],
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ];
 
         // here is the implementation to reverse geocodes into address again.
         // for debugging purposes.
@@ -364,8 +466,48 @@ class ShipmentController extends Controller
         $rgOutput = file_get_contents($revGeocodeURL);
         $rgResponse = new \SimpleXMLElement($rgOutput);
         $address = $rgResponse->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+        $coords = [
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ];
+        $waypointsCollection->push($coords);
+
+        for ($i = 0; $i < count($shipment->waypoints); $i++) {
+            $country2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->country);
+            $street2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->street);
+            $housenr2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->house_number);
+            $locality2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->city);
+            $postalCode2 = str_ireplace(' ', '%20', $shipment->waypoints[$i]->next_address->postal_code);
+            $status = $shipment->waypoints[$i]->status;
+            //request URL is created here + response is retrieved with the DATA
+            $findURL2 = $baseURL.'/'.$country2.'/'.$housenr2.'/'.$postalCode2.'/'.$locality2.'/'
+            .$street2.'?output=xml&key='.$key;
+            $output2 = file_get_contents($findURL2);
+            //dd($findURL);
+            $response2 = new \SimpleXMLElement($output2);
+
+            // DATA == latitude, longitude
+            $latitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
+            $longitude2 = $response2->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+
+            // here is the implementation to reverse geocodes into address again.
+            // for debugging purposes.
+            $centerPoint2 = $latitude2.','.$longitude2;
+            $revGeocodeURL2 = $baseURL.'/'.$centerPoint2.'?output=xml&key='.$key;
+            $rgOutput2 = file_get_contents($revGeocodeURL2);
+            $rgResponse2 = new \SimpleXMLElement($rgOutput2);
+            $address2 = $rgResponse2->ResourceSets->ResourceSet->Resources->Location->Address->FormattedAddress;
+            $coords = [
+                'latitude' => $latitude2,
+                'longitude' => $longitude2,
+                'status' => $status,
+            ];
+            $waypointsCollection->push($coords);
+        }
 
         // DATA is ready to be sent into view itself to be displayed within Bing Maps Javascript API.
         // returnSomething...
+
+        return $waypointsCollection;
     }
 }
