@@ -236,7 +236,7 @@ class WaypointController extends Controller
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
 
-        return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipement with id: {$shipment->id} set!");
+        return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipment with id: {$shipment->id} set!");
     }
 
     public function update(Shipment $shipment): void
