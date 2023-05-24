@@ -64,6 +64,7 @@
   <div class="reviews">
     <table>
       <tr>
+        <th>ID</th>
         <th>Rating</th>
         <th>Comment</th>
       </tr>
@@ -72,6 +73,7 @@
           <div class="review">
             <div class="review__body">
               <tr>
+                <td>{{ $reviews->id }}</td>
                 <td>{{ $reviews->rating }}</td>
                 <td>{{ $reviews->comment }}</td>
               </tr>

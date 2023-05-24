@@ -4,137 +4,18 @@
 
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">
-      <h2 class="mb-4 text-xl font-medium text-black">Track Shipment</h2>
+      {{-- Current user --}}
+      <h2 class="mb-4 text-sm font-medium">
+        Username: {{ auth()->user()->name }}
+        Id: {{ auth()->user()->id }}
+        Address: {{ auth()->user()->address }}
+
+      </h2>
+      <h2 class="mb-4 text-lg font-medium">Track Shipment</h2>
       <div id="myMap" style="width:100%;height:500px;"
         class="m-2 border border-black"></div>
 
-      <div>
-        <p class="text-sm text-black">
-          <span
-            class="mb-4 inline-block text-lg font-medium text-black underline">
-            Shipment with id: </span>
-          <span class="text-black">{{ $shipment->id }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-4 inline-block text-lg font-medium text-black underline">
-            Shipment status: </span>
-          <b class="text-black">{{ $shipment->status }}</b>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-2 inline-block text-lg font-medium text-black underline">
-            Shipment Source Address:</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Street:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->street }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            House Number:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->house_number }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Postal Code:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->postal_code }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            City:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->city }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Region:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->region }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-4 inline-block text-black">
-            Country:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->source_address->country }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-2 inline-block text-lg font-medium text-black underline">
-            Shipment Destination Address:
-          </span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Street:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->street }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            House Number:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->house_number }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Postal Code:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->postal_code }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            City:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->city }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-2 inline-block text-black">
-            Region:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->region }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <b class="mb-4 inline-block text-black">
-            Country:
-          </b>
-          <span
-            class="font-medium text-black">{{ $shipment->destination_address->country }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-4 inline-block text-lg font-medium text-black underline">
-            Receiver Name:</span>
-          <span class="text-black">{{ $shipment->receiver_name }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-4 inline-block text-lg font-medium text-black underline">
-            Receiver Email:</span>
-          <span class="text-black">{{ $shipment->receiver_email }}</span>
-        </p>
-        <p class="text-sm text-black">
-          <span
-            class="mb-4 inline-block text-lg font-medium text-black underline">
-            Handling Type:</span>
-          <span class="text-black">{{ $shipment->type }}</span>
-        </p>
-      </div>
+      <p>{{ $shipment }}</p>
     </div>
   </div>
 </x-app-layout>
@@ -169,7 +50,6 @@
       credentials: '',
       customMapStyle: myStyle
     });
-
 
     var waypoints = {!! json_encode($waypoints_geocodes) !!};
 
@@ -234,23 +114,13 @@
         }
       }
 
-      if (i == 0) {
-        var pushpin = new Microsoft.Maps.Pushpin(location, {
-          title: `SOURCE ADDRESS ${waypoints[i].waypoint_status}`,
-          color: "black"
-        });
-      } else if (i == (waypoints.length - 1)) {
-        var pushpin = new Microsoft.Maps.Pushpin(location, {
-          title: "DESTINATION ADDRESS",
-          color: "black"
-        });
-      } else {
-        var pushpin = new Microsoft.Maps.Pushpin(location, {
-          title: `WAYPOINT STATUS ${waypoints[i].waypoint_status}`,
-          color: "blue"
-        });
-      }
 
+      var pushpin = new Microsoft.Maps.Pushpin(location, {
+        title: waypoint.waypoint.name,
+        description: waypoint.waypoint.description
+      });
+
+      pushpins.push(pushpin);
       map.entities.push(pushpin);
     }
 

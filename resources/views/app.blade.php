@@ -9,8 +9,6 @@
       @endcan
       <x-canvas-tile :url="route('shipments.create')" title="Shipment Requests"
         description="Request new shipments and track their progress"></x-canvas-tile>
-      <x-canvas-tile :url="route('shipments.listShipments')" title="My Shipments"
-        description="Shows list of your shipments"></x-canvas-tile>
       <x-canvas-tile :url="route('pickups.create')" title="Order Package Pickup"
         description="Get your package from your doorstep to your recipient"></x-canvas-tile>
       @canany(['view_basic_server_info', 'view_all_users', 'view_all_roles',

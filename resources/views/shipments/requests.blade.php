@@ -2,12 +2,6 @@
 
 <x-app-layout>
 
-  @if (session('alert'))
-    <script>
-      alert("{{ session('alert') }}");
-    </script>
-  @endif
-
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 space-y-6 rounded-md bg-white p-6 shadow-md">
       {{-- Current user --}}

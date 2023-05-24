@@ -2,12 +2,6 @@
 
 <div class="mx-auto">
   <h1 class="m-5 text-center">New Employee</h1>
-  @if ($errors->any())
-    <h2 class="text-xl text-red-600">{{ $errors->first() }}</h2>
-  @endif
-  @if (\Session::has('alert'))
-    <h2 class="text-xl text-lime-400">{!! \Session::get('alert') !!}</h2>
-  @endif
   <div class="bg-gray-200 p-8">
     <form method="post" action="{{ route('employees.store') }}"
       accept-charset="UTF-8">
@@ -51,7 +45,7 @@
 
           <input type="text" id="street" name="street" required><br><br>
 
-          <input type="number" id="houseNumber" name="houseNumber"
+          <input type="text" id="houseNumber" name="houseNumber"
             required><br><br>
 
           <input type="text" id="province" name="province" required><br><br>

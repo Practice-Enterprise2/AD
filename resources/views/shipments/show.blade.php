@@ -250,11 +250,11 @@
               </div>
             @endforeach
           </div>
-          @can('edit_all_shipments')
-            <div class="mb-4 flex justify-end border p-2">
-              {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
-            </div>
-            <div class="mb-2 flex justify-end">
+          <div class="mb-4 flex justify-end border p-2">
+            {{ QrCode::size(200)->generate(route('shipments.update-waypoint', ['shipment' => $shipment->id])) }}
+          </div>
+          <div class="mb-2 flex justify-end">
+            @can('edit_all_shipments')
               <form action="{{ route('shipments.edit', $shipment->id) }}"
                 method="GET">
                 @csrf

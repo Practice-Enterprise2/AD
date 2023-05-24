@@ -13,23 +13,6 @@ use Illuminate\Contracts\View\View;
 
 class WaypointController extends Controller
 {
-    public function confirmWaypoint(string $shipment)
-    {
-        $shipmentData = Shipment::where('id', $shipment)->first();
-
-        return view('shipments.confirm-waypoint', [
-            'shipment' => $shipmentData,
-        ]);
-    }
-
-    public function exceptionWaypoint(string $shipment)
-    {
-        $shipmentData = Shipment::where('id', $shipment)->first();
-        $shipmentData->status = 'Exception';
-        $shipmentData->update();
-        dd('This shipment status has become Exception!!!!');
-    }
-
     public function create(Shipment $shipment): View
     {
         $country_codes = collect([]);
@@ -50,11 +33,11 @@ class WaypointController extends Controller
         return view('shipments.set', compact(['shipment', 'depots', 'airports']));
     }
 
-    public function store(Shipment $shipment)
+    public function store(Shipment $shipment): View
     {
         $shipment_exist = Waypoint::where('shipment_id', $shipment->id)->first();
         if ($shipment_exist) {
-            return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipment with id: {$shipment->id} already assigned!");
+            dd("Waypoints for shipment with id: {$shipment->id} already assigned!");
         }
 
         $waypoint_ids = collect(request()->waypoints);
@@ -231,12 +214,7 @@ class WaypointController extends Controller
 
         $shipment->status = 'Awaiting Pickup';
         $shipment->update();
-
-        $shipmentChanges = $shipment->getChanges();
-        $source_user = User::query()->where('id', $shipment->user_id)->first();
-        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
-
-        return redirect()->route('shipments.requests')->with('alert', "Waypoints for shipment with id: {$shipment->id} set!");
+        dd('Check Waypoints Table');
     }
 
     public function update(Shipment $shipment): void
@@ -244,9 +222,7 @@ class WaypointController extends Controller
         if ($shipment->status == 'Delivered') {
             dd('Shipments is already Delivered!');
         }
-        if ($shipment->status == 'Exception') {
-            dd('This Shipments has Exception status!!!!!');
-        }
+
         $current_waypoint = $shipment->waypoints()->where('status', 'Out For Delivery')->first();
 
         if (is_null($current_waypoint)) {
@@ -301,9 +277,15 @@ class WaypointController extends Controller
             }
         }
 
+        dd('waypoint with id: '.$current_waypoint->id.' state changed');
+
         $shipmentChanges = $shipment->getChanges();
         $source_user = User::query()->where('id', $shipment->user_id)->first();
         $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
-        dd('waypoint with id: '.$current_waypoint->id.' state changed');
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
+        $shipmentChanges = $shipment->getChanges();
+        $source_user = User::query()->where('id', $shipment->user_id)->first();
+        $source_user->notify(new ShipmentUpdated($shipment, $shipmentChanges));
+        redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
     }
 }
