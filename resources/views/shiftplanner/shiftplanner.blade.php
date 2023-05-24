@@ -142,7 +142,7 @@
     formData.append('planned_end_time', moment(event.end).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('actual_start_time', null);
     formData.append('actual_end_time', null);
-    formData.append('employee_id', getEmployeeIdByName(employees, event.title));
+    formData.append('employee_id', getEmployeeIdByName(emps, event.title));
     formData.append('created_at', moment().format('YYYY-MM-DD HH:mm:ss'));
     formData.append('updated_at', moment().format('YYYY-MM-DD HH:mm:ss'));
 
