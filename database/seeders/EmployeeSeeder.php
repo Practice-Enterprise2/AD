@@ -25,7 +25,7 @@ class EmployeeSeeder extends Seeder
         {
             DB::table('employees')->insert([
                 'user_id' => $userCount-1,
-                'dateOfBirth' => EmployeesSeeder::randomDate($start_date, $end_date),
+                'dateOfBirth' => EmployeeSeeder::randomDate($start_date, $end_date),
                 'jobTitle' => $jobList [random_int(0, 6)],
                 'salary' => random_int(1500, 5000),
                 //too hard to generate valid IBANs
