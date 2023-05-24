@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Airline;
 use App\Models\AirlineContract;
 use App\Models\airport;
+use App\Models\Contract;
 use Illuminate\Support\Facades\DB;
 
 class EditContractController extends Controller
@@ -43,7 +44,9 @@ class EditContractController extends Controller
         $id = 1;
         $contracts = null;
         if (! isset($_GET['q'])) {
-            $_GET['q'] = 1;
+            $tmp = Contract::all();
+            $id = $tmp[0]->id;
+                $_GET['q'] = $id;
         }
 
         if (is_numeric($_GET['q'])) {

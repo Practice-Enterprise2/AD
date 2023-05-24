@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 use App\Models\airport;
 use Illuminate\Support\Facades\DB;
 
+
 class NewContractController extends Controller
 {
     public function plaats(Request $request)
     {
-        
+
         $request->validate([
             'airlineid' => 'required',
             'creationdate' => 'required|date|after_or_equal:today',

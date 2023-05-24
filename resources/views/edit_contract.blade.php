@@ -24,18 +24,20 @@ if (!isset($_GET["q"]))
 
     <title>view records</title>
 
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
-    </script>
 
-    <script>
-      $(document).ready(function() {
-        $('.chosen-select').chosen();
-      });
-    </script>
+
+<!-- Load jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
+<!-- Then load Chosen -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" defer></script>
+
+<script>
+  $(document).ready(function() {
+    $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
+  });
+  </script>
+
     <style>
       /* HEY */
       .x {
@@ -89,13 +91,11 @@ if (!isset($_GET["q"]))
       }
 
     </style>
-    <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
-  </head>
-  <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
-  <script src="{{ asset('js/chosen.jquery.js') }}"></script>
-  <script src="{{ asset('js/chosen-initialization.js') }}"></script>
+
+
 
   <main style="margin-top: 58px">
+
     <div class="container pt-4">
       <div class="container">
       <div class="sidebars">
@@ -205,14 +205,14 @@ if (!isset($_GET["q"]))
                     {
                       ?>
             <input style="display:inline;" type="submit" name="deactivate"
-              id="deactivate" value="deactivate">
+              id="deactivate" value="deactivate" class="btn-danger bg-red-200">
 
             <?php
                     }
                     else {
                       ?>
             <input style="display:inline;" type="submit" name="reactivate"
-              id="reactivate" value="reactivate">
+              id="reactivate" value="reactivate" class="btn-green bg-green-100">
             <?php
                     }
 
