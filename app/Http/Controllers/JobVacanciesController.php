@@ -16,7 +16,7 @@ class JobVacanciesController extends Controller
             $job->applicantCount = VacancyApplications::where('job_vacancies_id', $job->id)->count();
         }
 
-        return view('job-vacancies.view_jobs_hr', compact('jobVacancies'));
+        return view('job-vacancies.view_jobs_hr', ['jobVacancies' => $jobVacancies]);
     }
 
     public function add_job(Request $req)
@@ -44,7 +44,7 @@ class JobVacanciesController extends Controller
             $applicant->job = $job;
         }
 
-        return view('Job-vacancies.view_applicants', compact('applicants'));
+        return view('Job-vacancies.view_applicants', ['applicants' => $applicants]);
     }
 
     public function mark_filled(Request $req)
@@ -83,7 +83,7 @@ class JobVacanciesController extends Controller
     {
         $jobVacancies = JobVacancy::where('filled', false)->get();
 
-        return view('job-vacancies.view_jobs_applicants', compact('jobVacancies'));
+        return view('job-vacancies.view_jobs_applicants', ['jobVacancies' => $jobVacancies]);
     }
 
     public function open_job($job)
@@ -94,7 +94,7 @@ class JobVacanciesController extends Controller
             return redirect()->route('view_jobs');
         }
 
-        return view('Job-vacancies.apply_job', compact('job'));
+        return view('Job-vacancies.apply_job', ['job' => $job]);
     }
 
     public function apply_job(Request $req)
