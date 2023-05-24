@@ -152,6 +152,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(WaypointController::class)->group(function () {
         Route::get('shipments/requests/evaluate/{shipment}/set', 'create')->name('shipments.requests.evaluate.set')->middleware('permission:edit_all_shipments');
         Route::post('shipments/requests/evaluate/{shipment}/set/store', 'store')->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
+        Route::get('shipments/{shipment}/confirm-waypoint', 'confirmWaypoint')->name('shipments.confirm-waypoint')->middleware('permission:edit_all_shipments');
+        Route::get('shipments/{shipment}/exception-waypoint', 'exceptionWaypoint')->name('shipments.exception-waypoint')->middleware('permission:edit_all_shipments');
         Route::get('shipments/{shipment}/update-waypoint', 'update')->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
     });
 
