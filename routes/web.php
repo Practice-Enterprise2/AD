@@ -3,15 +3,21 @@
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
 
+use App\Http\Controllers\AiGraphController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Contractlistcontroller;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
+use App\Http\Controllers\EditContractController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NewContractController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +38,11 @@ Route::view('/', 'landing-page')->name('landing-page');
 Route::view('/help', 'help')->name('help');
 Route::get('/airlines', [ApiController::class, 'apiCall'])->name('airlines.apiCall');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+
+//job vacancies person
+Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->name('view_jobs');
+Route::get('/viewJobs/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
+Route::post('/viewJobs/job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
 // Routes that require an authenticated session with a verified email.
 /*Route::middleware(['auth', 'verified'])->group(function () {*/
@@ -122,11 +133,21 @@ Route::controller(PickupController::class)->group(function () {
         });
     });
 
+    Route::get('/hrViewJobs', [JobVacanciesController::class, 'get_jobs_hr'])->name('hr_view_jobs')->middleware('permission:add_vacant_jobs|edit_vacant_jobs');
+    Route::view('/hrViewJobs/addJob', 'job-vacancies.add_job')->name('job.add')->middleware('permission:add_vacant_jobs');
+    Route::post('/hrViewJobs/vacantJob_add', [JobVacanciesController::class, 'add_job'])->name('JobVacanciesController.add');
+    Route::get('/hrViewJobs/{job}/applicants', [JobVacanciesController::class, 'view_applicants'])->name('view_applicants')->middleware('permission:edit_vacant_jobs');
+    Route::get('/hrViewJobs/{applicant}/openCV', [JobVacanciesController::class, 'open_cv'])->name('open_cv')->middleware('permission:edit_vacant_jobs');
+    Route::post('/hrViewJobs/filled', [JobVacanciesController::class, 'mark_filled'])->name('JobVacanciesController.filled');
     Route::view('/employeeComplaint', 'employeeComplaints')->name('employee_complaints')->middleware('permission:view_general_employee_content');
     Route::post('/employeeComplaint/send', [EmployeeComplaintController::class, 'sendComplaint'])->name('sendEmployeeComplaint');
 
     Route::controller(GraphController::class)->group(function () {
         Route::get('/employeegraph', 'index')->middleware('permission:view_employee_count')->name('employeegraph');
+    });
+
+    Route::controller(AIGraphController::class)->group(function () {
+        Route::get('/ai-graph', 'index')->middleware('permission:view_all_orders')->name('ai-graph');
     });
 
     Route::controller(ReviewController::class)->group(function () {
@@ -289,6 +310,47 @@ Route::middleware('auth')->group(function () {
         });
     });
 
+    //contact and messages
+    Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact/manager', [ContactController::class, 'index'])->name('contact.index')->middleware('permission:view_all_complaints');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_all_complaints');
+    Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show')->middleware('permission:view_all_complaints');
+    Route::post('/contact/{id}', [ComplaintsController::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_all_complaints');
+    Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
+    Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
+    Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
+
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
+    //contracts between airlines
+    Route::post('plaats', [NewContractController::class, 'plaats']);
+    Route::get('new_contract', [NewContractController::class, 'dropdown'])->name('new_contract');
+    Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
+    Route::get('edit', [EditContractController::class, 'simpleV2'])->name('edit_contract');
+    Route::get('/alter', [EditContractController::class, 'alter']);
+
+    //contract list
+    Route::get('/contract_list', function () {
+        return view('contract_list');
+    });
+
+    Route::get('contract_list', [contractlistcontroller::class, 'index'])->name('contract_list');
+    Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering'])->name('contract_list');
+    //Notification
+    Route::get('/markAsRead', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+    });
+
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
+        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+    });
+
+    Route::controller(CustomerOrderHistoryController::class)->group(function () {
+        Route::get('/order_history', 'index')->name('order-history');
+    });
     Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 
     // Email verification
