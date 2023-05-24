@@ -228,7 +228,11 @@
                         <div
                           class="rounded-md border-2 border-red-900 bg-red-500 py-2 text-center text-base font-bold text-white">
                           Canceled</div>
-                      @endif
+                          @elseif ($shipment->status == 'Deleted')
+                          <div
+                             class="rounded-md border-2 border-red-900 bg-red-700 py-2 text-center text-base font-bold text-white">
+                             Deleted</div>
+                          @endif
 
                     </td>
                     <td
@@ -237,9 +241,9 @@
                         href="{{ route('shipments.showShipments_details', $shipment->id) }}"><button
                           type="button"
                           class="rounded-md border-2 border-blue-600 bg-blue-200 px-4 py-2 text-black hover:bg-blue-300">Details</button></a>
-                      <button
-                        class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300"
-                        id="cancelButton">Cancel</button>
+                          <a href="{{ route('shipments.cancel', $shipment->id)}}"><button
+                            class="rounded-md border-2 border-red-600 bg-red-200 px-4 py-2 text-black hover:bg-red-300"
+                            id="cancelButton">Cancel</button></a>
 
                     </td>
                   </tr>
