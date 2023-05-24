@@ -31,6 +31,6 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->from('refund@mail.com')->subject('Refund')->view('mails.refundMessage')->with('data',$this->data);
+        return $this->from('cptn989@gmail.com')->subject('Refund')->view('mails.refundMessage')->with('data',$this->data);
     }
 }

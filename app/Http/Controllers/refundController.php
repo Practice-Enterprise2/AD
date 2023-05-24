@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
 use App\Models\refund;
-use App\Mail;
+use App\Mail\contactMail;
   
 class refundController extends Controller
 {

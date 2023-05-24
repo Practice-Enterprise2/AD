@@ -15,7 +15,7 @@
         class="mb-8 text-center font-light text-gray-500 dark:text-gray-400 sm:text-xl lg:mb-16">
         Refunds take 3-7 business days to appear on a customer's statement.</p>
         
-      <form method="post" action="{{ route('Refund.us.store') }}" class="space-y-8">
+      <form method="post" action="{{ route('Refund') }}" class="space-y-8">
         @csrf
         <div>
         <div>

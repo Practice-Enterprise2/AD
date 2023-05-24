@@ -177,7 +177,7 @@ Route::middleware('auth')->group(function () {
         return view('/refund/create_refund');
     });
     Route::get('/refund/create_refund', [refundController::class, 'index']);
-    Route::post('/refund/create_refund', [refundController::class, 'store'])->name('Refund.us.store');   
+    Route::post('/refund/create_refund', [refundController::class, 'store'])->name('Refund');   
 }); 
 
 require __DIR__.'/auth.php';
