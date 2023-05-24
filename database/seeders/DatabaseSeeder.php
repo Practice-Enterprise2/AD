@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DepotSeeder::class);
         $this->call(AiGraphSeeder::class);
         $this->call(VacantJobsSeeder::class);
+        $this->call(EmployeeSeeder::class);
     }
 }
