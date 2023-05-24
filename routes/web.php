@@ -7,16 +7,19 @@ use App\Http\Controllers\AiGraphController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Contractlistcontroller;
 use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderHistoryController;
 use App\Http\Controllers\EmployeeComplaintController;
+use App\Http\Controllers\EditContractController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NewContractController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
@@ -326,7 +329,38 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+    //contact and messages
+    Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact/manager', [ContactController::class, 'index'])->name('contact.index')->middleware('permission:view_all_complaints');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('permission:view_all_complaints');
+    Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show')->middleware('permission:view_all_complaints');
+    Route::post('/contact/{id}', [ComplaintsController::class, 'createChat'])->name('chatbox.create')->middleware('permission:view_all_complaints');
+    Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
+    Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
+    Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
+
+    //Email for invoice
+    Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
+    //contracts between airlines
+    Route::post('plaats', [NewContractController::class, 'plaats']);
+    Route::get('new_contract', [NewContractController::class, 'dropdown'])->name('new_contract');
+    Route::get('/contract_pdf/{id}', [contractlistcontroller::class, 'contract_pdf'])->name('contract_pdf');
+    Route::get('edit', [EditContractController::class, 'simpleV2'])->name('edit_contract');
+    Route::get('/alter', [EditContractController::class, 'alter']);
+
+    //contract list
+    Route::get('/contract_list', function () {
+        return view('contract_list');
+    });
+
+    Route::get('contract_list', [contractlistcontroller::class, 'index'])->name('contract_list');
+    Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering'])->name('contract_list');
+    //Notification
+    Route::get('/markAsRead', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+    });
 
     // Email verification
     /*Route::get('/email/verify', function () {

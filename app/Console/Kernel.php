@@ -17,7 +17,12 @@ class Kernel extends ConsoleKernel
 
         //run payslip controller every month on the 25th at 2 am
         $schedule->call('App\Http\Controllers\PayslipController@calculateSendPayslip')->monthlyOn(25, '2:00');
+        $schedule->command('contracts:update')->daily();
     }
+
+    protected $commands = [
+        \App\Console\Commands\UpdateContractsCommand::class,
+    ];
 
     /**
      * Register the commands for the application.
