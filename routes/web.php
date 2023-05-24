@@ -22,11 +22,11 @@ use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaypointController;
+use App\Http\Controllers\ShiftsController;
 use App\Models\Employee;
 use App\Models\Review;
 use App\Models\Shipment;
@@ -228,66 +228,70 @@ Route::middleware('auth')->group(function () {
     Route::post('shipments/requests/evaluate/{shipment}/set/store', [WaypointController::class, 'store'])->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
     Route::get('shipments/{shipment}/update-waypoint', [WaypointController::class, 'update'])->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
 
-    //Shifts
-    Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts.index');
-    Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
-    Route::get('/shifts/{shift}', [ShiftsController::class, 'show'])->name('shifts.show');
-    Route::get('/shifts/{shift}/edit', [ShiftsController::class, 'edit'])->name('shifts.edit');
-    Route::put('/shifts/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
-    Route::delete('/shifts/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
-    Route::post('/shifts/delete', [ShiftsController::class, 'delete'])->name('shifts.delete');
 
-    Route::resource('shifts', ShiftsController::class);
-    Route::get('/shiftplanner', [ShiftsController::class, 'index']);
-    Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
-    Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
+    //Shifts
+Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts.index');
+Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
+Route::get('/shifts/{shift}', [ShiftsController::class, 'show'])->name('shifts.show');
+Route::get('/shifts/{shift}/edit', [ShiftsController::class, 'edit'])->name('shifts.edit');
+Route::put('/shifts/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
+Route::delete('/shifts/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
+Route::post('/shifts/delete', [ShiftsController::class, 'delete'])->name('shifts.delete');
+Route::resource('shifts', ShiftsController::class);
+Route::get('/shiftplanner', [ShiftsController::class, 'index']);
+Route::get('/shiftplanner/day/{date}', 'App\Http\Controllers\ShiftsController@showDayView')->name('shiftplanner.day');
+Route::get('/shiftplanner/shifts-count/{date}', 'ShiftController@shiftsCount')->name('shifts.count');
 });
+
+
+
 
 // Email verification
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
-//FAQ page
-Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
-//review page
-Route::get('/review', [ReviewController::class, 'show'])->name('review');
-Route::post('/review_add', [ReviewController::class, 'save']);
-Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
-Route::get('/filterreview', [ReviewController::class, 'filter']);
+    //FAQ page
+    Route::get('/faq', [FaqController::class, 'show'])->name('faq.show');
+    //review page
+    Route::get('/review', [ReviewController::class, 'show'])->name('review');
+    Route::post('/review_add', [ReviewController::class, 'save']);
+    Route::get('/readreviews', [ReviewController::class, 'showread'])->name('readreviews');
+    Route::get('/filterreview', [ReviewController::class, 'filter']);
 
-// Email verification
-Route::view('/email/verify', 'auth.verify-email')
-    ->name('verification.notice');
+    // Email verification
+    Route::view('/email/verify', 'auth.verify-email')
+        ->name('verification.notice');
 
-Route::controller(ContactController::class)->group(function () {
-    Route::get('/contact', 'create')->name('contact.create');
-    Route::post('/contact', 'store')->name('contact.store');
-    Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
-    Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
-    Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
-});
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contact', 'create')->name('contact.create');
+        Route::post('/contact', 'store')->name('contact.store');
+        Route::get('/contact/manager', 'index')->name('contact.index')->middleware('permission:view_all_complaints');
+        Route::delete('/contact/{id}', 'destroy')->name('contact.destroy')->middleware('permission:view_all_complaints');
+        Route::get('/contact/{id}', 'show')->name('contact.show')->middleware('permission:view_all_complaints');
+    });
 
-Route::controller(ComplaintsController::class)->group(function () {
-    Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
-    Route::get('/messages', 'messages')->name('complaints.messages');
-    Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
-    Route::post('/chat-message', 'sendMessage');
-});
+    Route::controller(ComplaintsController::class)->group(function () {
+        Route::post('/contact/{id}', 'createChat')->name('chatbox.create')->middleware('permission:view_all_complaints');
+        Route::get('/messages', 'messages')->name('complaints.messages');
+        Route::get('/messages/content/{id}', 'viewChat')->name('complaint.viewMessage');
+        Route::post('/chat-message', 'sendMessage');
+    });
 
-Route::controller(NotificationController::class)->group(function () {
-    Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
-    Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
-});
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
+        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+    });
 
-Route::controller(CustomerOrderHistoryController::class)->group(function () {
-    Route::get('/order_history', 'index')->name('order-history');
-});
-Route::controller(InvoiceController::class)->group(function () {
-    //Invoice overview & payment
-    Route::get('/invoices', 'index')->name('invoice_overview');
-    Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
-    Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
-    Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
-});
+    Route::controller(CustomerOrderHistoryController::class)->group(function () {
+        Route::get('/order_history', 'index')->name('order-history');
+    });
+    Route::controller(InvoiceController::class)->group(function () {
+        //Invoice overview & payment
+        Route::get('/invoices', 'index')->name('invoice_overview');
+        Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
+        Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
+        Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
+    });
+
 
 require __DIR__.'/auth.php';
