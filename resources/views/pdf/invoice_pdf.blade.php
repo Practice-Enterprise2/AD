@@ -57,6 +57,10 @@
     .total-row {
       font-weight: bold;
     }
+
+    .status {
+      color: green;
+    }
   </style>
 </head>
 
@@ -70,6 +74,10 @@
       <div>
         <p class="font-semibold">Due Date:</p>
         <p>{{ $invoice['due_date'] }}</p>
+      </div>
+      <div>
+        <p class="font-semibold">Status:</p>
+        <p class="status">PAID</p>
       </div>
       <div>
         <p class="font-semibold">Created At:</p>

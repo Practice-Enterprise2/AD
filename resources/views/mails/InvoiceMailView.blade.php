@@ -4,6 +4,7 @@
 
   Thank you for placing a shipment <b>{{ $data['name'] }}</b> ! <br><br>
   Your unique invoice code: <b>{{ $data['invoice_code'] }}</b> <br><br>
+  Status: <b>PENDING</b><br><br>
   Weight: <br>
   <b>{{ $data['weight'] }}</b> kg <br><br>
   Price: <br>
