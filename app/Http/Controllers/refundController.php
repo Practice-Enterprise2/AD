@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
 use App\Models\refund;
-use App\Mail\ContactMail;
+use App\Mail;
   
 class refundController extends Controller
 {
@@ -36,7 +36,7 @@ class refundController extends Controller
             Log::info("data");
             Log::info($data);
         // Refund::create($request->all());
-        Mail::to('cptn989@gmail.com')->send(new ContactMail($data));
+        Mail::send(new ContactMail($data))->to('cptn989@gmail.com');
         return redirect()->back()
                          ->with(['success' => 'Thank you for contacting us. we will contact you shortly.']);
     }
