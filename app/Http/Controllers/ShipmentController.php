@@ -336,7 +336,7 @@ class ShipmentController extends Controller
             //For demonstration purposes I am using my email for now, please do not spam my email. This will be change to the above variable $emailke
             return view('invoices.invoice_generated', compact('data'));
         } catch (Exception $th) {
-            return response($th);
+            return redirect()->route('home');
         }
     }
 
