@@ -18,9 +18,8 @@ class ContactMail extends Mailable
      *
      * @return void
      */
-    public function __construct($data)
-    {
-        $this->data = $data;
+    public function __construct($data=[]){
+        $this->data = $data;    
     }
   
     /**
@@ -30,7 +29,7 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Contact US - '. $this->data->subject)
-                    ->view('emails.refundMessage');
+        return $this->subject('Refund -')
+                    ->view('mails.refundMessage')->with('data',$this->data);
     }
 }
