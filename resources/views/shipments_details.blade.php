@@ -55,7 +55,7 @@
     }
   </script>
   @foreach ($shipments as $shipment)
-    <div class="mx-auto h-screen max-w-6xl bg-white px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto h-screen max-w-7xl bg-white text-black px-4 py-8 sm:px-6 lg:px-8 dark:text-white dark:bg-gray-900">
       <h1 class="mb-4 text-2xl font-semibold">{{ __('Shipment Tracking') }}</h1>
       <div class="mb-8 flex justify-between">
         <div>
@@ -80,14 +80,14 @@
             {{ $shipment->status }}</p>
         </div>
       </div>
-      <div class="overflow-hidden rounded-lg bg-white shadow-lg">
+      <div class="overflow-hidden rounded-lg text-black bg-white shadow-lg dark:bg-gray-700 text-white">
         <div class="px-6 py-4">
           <h2 class="mb-4 text-xl font-semibold">{{ __('Sender Information') }}
           </h2>
-          <p class="mb-2 text-gray-700"><span
+          <p class="mb-2 text-gray-700 dark:text-white"><span
               class="font-medium">{{ __('Name') }}:</span>
             {{ $shipment->receiver_name }}</p>
-          <p class="mb-2 text-gray-700"><span
+          <p class="mb-2 text-gray-700 dark:text-white"><span
               class="font-medium">{{ __('Destination addres') }}:</span>
             {{ $shipment->street }} {{ $shipment->house_number }},
             {{ $shipment->city }} {{ $shipment->postal_code }}
@@ -96,10 +96,10 @@
       </div>
 
       <!-- Progress bar of shipment  -->
-      <div class="bg-darkTheme_gray rounded-lgs my-4 h-fit w-full p-6">
+      <div class="bg-darkTheme_gray rounded-lgs my-4 h-fit w-full p-6 dark:text-white">
         <div class="-mx-4 flex flex-wrap">
           <div class="md:w-2/2 w-full px-4">
-            <div class="rounded-lg bg-white shadow-lg">
+            <div class="rounded-lg bg-white shadow-lg dark:bg-gray-700">
               <div class="px-6 py-4">
                 <div class="mb-2 text-xl font-bold">Status of package</div>
 
@@ -109,47 +109,47 @@
                     class="absolute bottom-0 left-0 right-0 mb-3 h-2.5 rounded-full bg-black dark:border-b-gray-900">
                   </div> <!-- Gray Line -->
 
-                  @if ($shipment->status == 'Declined' || $shipment->status == 'Exception')
+                  @if ($shipment->status == 'Declined' || $shipment->status == 'Exception' || $shipment->status == 'Deleted')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Canceled / Exception</div>
+                      <div>Canceled / Exception / Deleted</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 dark:bg-red-500">
                       </div> <!-- Status 1: Green -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Awaiting Confirmation / Pickup</div>
+                      <div class="invisible">Awaiting Confirmation / Pickup</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 2: Yellow -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Held at location</div>
+                      <div class="invisible">Held at location</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 4: Purple -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>In Transit</div>
+                      <div class="invisible">In Transit</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Out For Delivery</div>
+                      <div class="invisible">Out For Delivery</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Delivered</div>
+                      <div class="invisible">Delivered</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 5: Red -->
                     </div>
                   @endif
@@ -159,7 +159,7 @@
                           $shipment->status == 'Awaiting Confirmation')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div class="invisible">Cancelled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
@@ -173,53 +173,53 @@
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Held at location</div>
+                      <div class="invisible">Held at location</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 4: Purple -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>In Transit</div>
+                      <div class="invisible">In Transit</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Out For Delivery</div>
+                      <div class="invisible">Out For Delivery</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Delivered</div>
+                      <div class="invisible">Delivered</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 5: Red -->
                     </div>
                   @endif
                   @if ($shipment->status == 'In Transit')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Canceled / Exception</div>
+                      <div class="invisible">Canceled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Awaiting Confirmation / Pickup</div>
+                      <div class="invisible">Awaiting Confirmation / Pickup</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 2: Yellow -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Held at location</div>
+                      <div class="invisible">Held at location</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 4: Purple -->
                     </div>
                     <div
@@ -231,16 +231,16 @@
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Out For Delivery</div>
+                      <div class="invisible">Out For Delivery</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Delivered</div>
+                      <div class="invisible">Delivered</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 5: Red -->
                     </div>
                   @endif
@@ -248,16 +248,16 @@
                   @if ($shipment->status == 'Held At Location')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div class="invisible">Cancelled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Awaiting Confirmation / Pickup</div>
+                      <div class="invisible">Awaiting Confirmation / Pickup</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 2: Yellow -->
                     </div>
                     <div
@@ -269,23 +269,23 @@
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>In Transit</div>
+                      <div class="invisible">In Transit</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Out For Delivery</div>
+                      <div class="invisible">Out For Delivery</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Delivered</div>
+                      <div class="invisible">Delivered</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 5: Red -->
                     </div>
                   @endif
@@ -293,37 +293,37 @@
                   @if ($shipment->status == 'Delivered')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div class="invisible">Cancelled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Awaiting Confirmation / Pickup</div>
+                      <div class="invisible">Awaiting Confirmation / Pickup</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 2: Yellow -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Held at location</div>
+                      <div class="invisible">Held at location</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 4: Purple -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>In Transit</div>
+                      <div class="invisible">In Transit</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Out For Delivery</div>
+                      <div class="invisible">Out For Delivery</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
@@ -337,30 +337,30 @@
                   @if ($shipment->status == 'Out For Delivery')
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Cancelled / Exception</div>
+                      <div class="invisible">Cancelled / Exception</div>
                       <div
                         class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 1: Green -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Awaiting Confirmation / Pickup</div>
+                      <div class="invisible">Awaiting Confirmation / Pickup</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 2: Yellow -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Held at location</div>
+                      <div class="invisible">Held at location</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 4: Purple -->
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>In Transit</div>
+                      <div class="invisible">In Transit</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 3: Blue -->
                     </div>
                     <div
@@ -372,9 +372,9 @@
                     </div>
                     <div
                       class="relative flex flex-col items-center justify-center text-center">
-                      <div>Delivered</div>
+                      <div class="invisible">Delivered</div>
                       <div
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-900">
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 dark:bg-gray-500">
                       </div> <!-- Status 5: Red -->
                     </div>
                   @endif
