@@ -6,6 +6,7 @@ use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,7 +34,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements MustVerifyEmail, ValidatesAttributes
 {
-    use HasApiTokens, Notifiable, SoftDeletes, HasRoles, AppValidatesAttributes;
+    use HasApiTokens, Notifiable, SoftDeletes, HasRoles, AppValidatesAttributes, HasFactory;
 
     public const VALIDATION_RULE_NAME = ['required', 'min:2', 'string', 'regex:/^[A-Za-z\s]+$/'];
 

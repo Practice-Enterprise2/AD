@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Address extends Model implements ValidatesAttributes
 {
-    use AppValidatesAttributes;
+    use AppValidatesAttributes,HasFactory;
 
     public const VALIDATION_RULE_STREET = ['required', 'string', 'regex:/^[A-Za-z0-9\s\p{L}\-]+$/u', 'min:2'];
 

@@ -10,7 +10,7 @@ class AirlineSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         DB::table('airlines')->insert([
             [
