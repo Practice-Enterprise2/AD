@@ -1,0 +1,107 @@
+name {
+    color: lightblue;
+}
+.child {
+    margin-bottom: 50px;
+}
+
+* {
+    color: white;
+}
+.wrapper {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.legendDiv {
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+.dataCard,
+.relButtons {
+    display: flex;
+    flex-direction: row;
+}
+.addDiv {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.airportCard {
+    width: 75vw;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid lightblue;
+    border-top: 1px solid lightblue;
+}
+
+label {
+    display:inline-block;
+    min-width: 6rem;
+    text-align:right;
+}
+
+.dataCard div,
+.legendDiv div {
+    min-width: 250px;
+    text-align: center;
+}
+
+.legendDiv {
+    font-weight: bold;
+}
+
+.relButtons div {
+    margin: 10px;
+}
+
+.containerForm {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px !important;
+}
+
+input,
+select,
+textarea {
+    background-color: rgba(43, 43, 43, 0.969);
+    border: 1px solid lightblue;
+}
+
+.wrap {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#myMap {
+    width: 30vw;
+    height: 30vh;
+    margin: 0 auto;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+table {
+    margin: 0 auto;
+    width: 20%;
+    text-align: center;
+}

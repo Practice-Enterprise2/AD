@@ -57,12 +57,16 @@ class AppServiceProvider extends ServiceProvider
         static::bootstrap_permission('view_all_users', 'View all the users.');
         static::bootstrap_permission('view_all_employees', 'View all the employees.');
         static::bootstrap_permission('view_basic_server_info', 'View basic server info like architecture, uptime, OS...');
+        static::bootstrap_permission('view_general_depot_content', 'See general depot content.');
+        static::bootstrap_permission('edit_depot_content', 'Edit all depot content.');
         static::bootstrap_permission('view_detailed_server_info', 'View detailed (and potentially private) server info.', ['view_basic_server_info']);
         static::bootstrap_permission('view_general_employee_content', 'See general employee content...');
         static::bootstrap_permission('view_own_user_info', 'View the currently logged in user\'s info.');
         static::bootstrap_permission('view_all_complaints', 'view complaints from customers and handle complaint');
         static::bootstrap_permission('view_own_shipments', 'view their shipments');
         static::bootstrap_permission('view_shipmentgraphs', 'view shipment graphs');
+        static::bootstrap_permission('edit_airline_content', 'Edit all airline content.');
+        static::bootstrap_permission('view_general_airline_content', 'See general airline content.');
         static::bootstrap_permission('view_employee_count', 'the amount of employees in the company');
         static::bootstrap_permission('view_reviews', 'the reviews of the customers');
         static::bootstrap_permission('add_vacant_jobs', 'add a vacant job');
@@ -89,10 +93,19 @@ class AppServiceProvider extends ServiceProvider
 
         // Assign the necessary permissions to all the roles.
         $role_employee->givePermissionTo('view_general_employee_content');
+        $role_employee->givePermissionTo('view_general_depot_content');
         $role_employee->givePermissionTo('view_all_complaints');
         $role_employee->givePermissionTo('view_all_shipments');
         $role_employee->givePermissionTo('view_shipmentgraphs');
         $role_employee->givePermissionTo('edit_all_shipments');
+
+        
+
+        $role_admin->givePermissionTo('edit_depot_content');
+        $role_admin->givePermissionTo('edit_airline_content');
+        $role_admin->givePermissionTo('view_general_airline_content');
+        $role_employee->givePermissionTo('edit_airline_content');
+        $role_employee->givePermissionTo('view_general_airline_content');
         $role_employee->givePermissionTo('accept_any_shipment');
         $role_employee->givePermissionTo('view_all_invoices');
 
