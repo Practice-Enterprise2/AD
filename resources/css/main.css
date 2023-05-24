@@ -1,0 +1,35 @@
+/* CSS defaults for ANY page */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+* NOTE: I don't know what exactly `layer` does, so this could be wrong. If
+* anyone can explain it clearly, please leave a comment with explanation and
+* remove this comment.
+*/
+/* Custom TailwindCSS classes that aren't possible with the ones provided */
+@layer components {
+    .fade-to-l {
+        mask-image: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.1) 10%,
+            rgba(0, 0, 0, 1) 40%
+        );
+    }
+
+    .fade-to-r {
+        mask-image: linear-gradient(
+            270deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.1) 10%,
+            rgba(0, 0, 0, 1) 40%
+        );
+    }
+}
+
+/* Required for all pages that use Alpine */
+[x-cloak] {
+    display: none !important;
+}

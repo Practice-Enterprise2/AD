@@ -50,6 +50,12 @@ return [
     */
 
     'channels' => [
+        'custom_txt_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/errors_and_exceptions.txt'),
+            'level' => 'error',
+            'ignore_exceptions' => false,
+        ],
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

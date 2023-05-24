@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <div>
   <form wire:submit.prevent="add_role">
     <label for="role_to_add"><button>Add</button></label>

@@ -179,7 +179,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -192,9 +191,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
         // QR Code
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        // to PDF
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -215,5 +217,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         // QR Code
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        // to PDF
+        'PDF' => Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 ];

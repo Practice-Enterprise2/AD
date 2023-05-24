@@ -1,3 +1,5 @@
+{{-- -*-html-*- --}}
+
 <x-app-layout>
   <div class="my-4 flex items-center justify-center">
     <div class="mx-auto w-3/5 rounded-md bg-white p-6 shadow-md">
@@ -296,6 +298,7 @@
         const toAddress = toStreet + ' ' + toSouseNumber;
         let check = false;
         let map;
+        let departureData, destinationData;
         let departurePin, destinationPin;
         let departureInfo, destinationInfo;
         let departureLocation, destinationLocation;
@@ -324,6 +327,7 @@
                   const departureLng = data.resourceSets[0].resources[0]
                     .geocodePoints[0].coordinates[1];
                   console.log(data.resourceSets[0].resources[0]);
+                  departureData = data.resourceSets[0].resources[0];
                   departureInfo = data.resourceSets[0].resources[0].address
                     .formattedAddress
                   departureLocation = new Microsoft.Maps.Location(departureLat,
@@ -362,11 +366,28 @@
                     const destinationLng = data.resourceSets[0].resources[0]
                       .geocodePoints[0].coordinates[1];
                     console.log(data.resourceSets[0].resources[0]);
+                    destinationData = data.resourceSets[0].resources[0];
                     destinationInfo = data.resourceSets[0].resources[0].address
                       .formattedAddress
                     destinationLocation = new Microsoft.Maps.Location(
                       destinationLat, destinationLng);
                     check = true;
+                    document.getElementsByName('source_country')[0].value =
+                      departureData.address.countryRegion;
+                    document.getElementsByName('source_city')[0].value =
+                      departureData.address.locality;
+                    document.getElementsByName('source_postalcode')[0].value =
+                      departureData.address.postalCode;
+                    document.getElementsByName('source_region')[0].value =
+                      departureData.address.adminDistrict;
+                    document.getElementsByName('destination_country')[0].value =
+                      destinationData.address.countryRegion;
+                    document.getElementsByName('destination_city')[0].value =
+                      destinationData.address.locality;
+                    document.getElementsByName('destination_postalcode')[0]
+                      .value = destinationData.address.postalCode;
+                    document.getElementsByName('destination_region')[0].value =
+                      destinationData.address.adminDistrict;
                     map = new Microsoft.Maps.Map("#map", {
                       credentials: 'ArfpIw0134XZnw8MWg9XmhlgicET7kV9fOElPvnnVw0COUFNWvmSUTor3nyQFiId',
                       center: new Microsoft.Maps.Location(destinationLat,
