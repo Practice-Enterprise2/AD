@@ -418,11 +418,6 @@ class ShipmentController extends Controller
     // Template API that CONVERTS ADDRESS TO GEOCODE(latitude, longitude) to be able to display each waypoint relevant to the shipment in concern.
     public function track(Shipment $shipment)
     {
-        $waypoints = $shipment->waypoints;
-        $waypoints_geocodes = collect([]);
-
-        // ADD YOUR API KEY TO ".env" file.
-        $bingmaps_api_key = env('BINGMAPS_KEY');
         // baseURL to request conversion
         $baseURL = 'http://dev.virtualearth.net/REST/v1/Locations';
         $waypointsCollection = collect();
@@ -440,24 +435,13 @@ class ShipmentController extends Controller
         //request URL is created here + response is retrieved with the DATA
         $findURL = $baseURL.'/'.$country.'/'.$housenr.'/'.$postalCode.'/'.$locality.'/'
         .$street.'?output=xml&key='.$key;
-
-        dump($findURL);
-
         $output = file_get_contents($findURL);
         //dd($findURL);
         $response = new \SimpleXMLElement($output);
 
-        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude->__toString();
-        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude->__toString();
-
-        $waypoints_geocodes[count($waypoints)] = [
-            'type' => 'next_address',
-            'waypoint_id' => $waypoints[count($waypoints) - 1]->id,
-            'waypoint_status' => $waypoints[count($waypoints) - 1]->status,
-            'waypoint' => $waypoints[count($waypoints) - 1],
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-        ];
+        // DATA == latitude, longitude
+        $latitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;
+        $longitude = $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
 
         // here is the implementation to reverse geocodes into address again.
         // for debugging purposes.

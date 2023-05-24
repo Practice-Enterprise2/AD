@@ -307,11 +307,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/shipments/{shipment}', [ShipmentController::class, 'destroy'])->name('shipments.destroy')->middleware('permission:edit_all_shipments');
     Route::get('/shipments/{shipment}', [ShipmentController::class, 'show'])->name('shipments.show');
 
-    //gilles route
-    // Route::get('shipments/{user_id}/get_shipments') (User $user)
-
-    Route::get('shipments/get_shipments/{shipment}/shipment_overview', [ShipmentController::class, 'track'])->name('shipments.track');
-
     //contact and messages
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
