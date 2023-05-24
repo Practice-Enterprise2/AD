@@ -354,7 +354,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/contract_list', function () {
         return view('contract_list');
     });
-
+    Route::controller(InvoiceController::class)->group(function () {
+        //Invoice overview & payment
+        Route::get('/invoices', 'index')->name('invoice_overview');
+        Route::get('/invoices/{id}/payment', 'nav_pay')->name('invoices.payment');
+        Route::get('/invoices/{id}/payment/success', 'pay')->name('invoices.payment_success');
+        Route::get('/invoices/{id}/pdf', 'createPDF')->name('createPDF');
+    });
     Route::get('contract_list', [contractlistcontroller::class, 'index'])->name('contract_list');
     Route::get('contract_list', [contractlistcontroller::class, 'contractFiltering'])->name('contract_list');
     //Notification
