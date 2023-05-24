@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->string('house_number', 20)->default('');
             $table->string('postal_code', 20);
             $table->string('city', 100);
-            $table->string('region', 100);
+            $table->string('region', 100)->default('');
             $table->string('country', 100);
             $table->timestamps();
         });

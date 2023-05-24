@@ -48,6 +48,15 @@ Route::get('/viewJobs', [JobVacanciesController::class, 'get_jobs_applicant'])->
 Route::get('/viewJobs/{job}/apply', [JobVacanciesController::class, 'open_job'])->name('open_job');
 Route::post('/viewJobs/job/apply', [JobVacanciesController::class, 'apply_job'])->name('JobVacanciesController.apply');
 
+//TicketController when not logged in
+Route::middleware('guest')->group(function () {
+    Route::controller(TicketController::class)->group(function () {
+        Route::get('/contact/create-ticket', [TicketController::class, 'showForm'])->name('create-ticket');
+        Route::post('/contact/submitted-ticket', [TicketController::class, 'store'])->name('submitted-ticket');
+        Route::get('/contact/submitted-ticket', [TicketController::class, 'showSubmittedTicket'])->name('show-ticket');
+    });
+});
+
 // Routes that require an authenticated session with a verified email.
 /*Route::middleware(['auth', 'verified'])->group(function () {*/
 /*
