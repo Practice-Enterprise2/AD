@@ -206,7 +206,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
-        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_as_read');
     });
 
     Route::controller(CustomerOrderHistoryController::class)->group(function () {
