@@ -14,11 +14,11 @@ return new class() extends Migration
         Schema::create('depots', function (Blueprint $table) {
             $table->id();
             $table->string('code', 10);
-            $table->foreignid('addressid');
+            $table->foreignid('address_id');
             $table->integer('size');
             $table->integer('amountFilled');
             $table->timestamps();
-            $table->foreign('addressid')->references('id')->on('addresses')->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->softDeletes();
         });
     }
