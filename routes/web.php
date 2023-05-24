@@ -10,7 +10,6 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Contractlistcontroller;
-use App\Http\Controllers\ControlPanelController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\CustomerOrderHistoryController;
@@ -71,9 +70,12 @@ Route::controller(PickupController::class)->group(function () {
         Route::get('/pickups', 'index')->name('pickups.index');
         Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     });
+});
+    
     Route::view('/respond', 'respond');
     Route::view('/employee', 'employee')->name('employee')->middleware('permission:view_general_employee_content');
     Route::view('/employees/create', 'employees.create')->name('employees.create')->can('create', Employee::class);
+    
 
     /*
      * Controllers that require custom code to be run for a request.
@@ -83,7 +85,6 @@ Route::controller(PickupController::class)->group(function () {
         Route::get('/pickups', 'index')->name('pickups.index');
         Route::get('/pickups/{pickup}/edit', 'edit')->name('pickups.edit');
     });
-
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employees', 'index')->name('employees.index')->middleware('permission:view_employee_count');
         Route::post('/employees', 'store')->name('employees.store')->can('create', Employee::class);
