@@ -87,6 +87,7 @@
               <th>@sortablelink('start_date', 'startdate')</th>
               <th>@sortablelink('end_date', 'enddate')</th>
               <th>@sortablelink('price', 'price')</th>
+              <th>@sortablelink('is_active','is_active')</th>
               <th>@sortablelink('depart_airport_id', 'depart location')</th>
               <th>@sortablelink('destination_airport_id', 'destination location')</th>
               <th>@sortablelink('created_at', 'Created at')</th>
@@ -101,6 +102,7 @@
                   <td>{{ $contract->start_date }}</td>
                   <td>{{ $contract->end_date }}</td>
                   <td>{{ $contract->price }}</td>
+                  <td>{{ $contract->is_active }}</td>
                   <td>{{ $contract->depart_airport_id }}</td>
                   <td>{{ $contract->destination_airport_id }}</td>
                   <td>{{ $contract->created_at }}</td>

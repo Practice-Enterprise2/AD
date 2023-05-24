@@ -15,7 +15,12 @@ class AirportController extends Controller
 
         return view('AirportManagement', ['airports' => $airports]);
     }
+    public function getAirports()
+    {
+        $airports = Airport::all();
 
+        return $airports;
+    }
     // POST Airports
     public function addData(Request $request)
     {
@@ -50,4 +55,5 @@ class AirportController extends Controller
 
         return redirect('/airport-management')->with('status', 'Data Deleted Succesfully');
     }
+
 }

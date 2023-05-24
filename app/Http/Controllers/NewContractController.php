@@ -6,6 +6,7 @@ use App\Models\Airline;
 use App\Models\Contract;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\airport;
 use Illuminate\Support\Facades\DB;
 
 class NewContractController extends Controller
@@ -44,7 +45,7 @@ class NewContractController extends Controller
         $test->is_active = true;
         $test->save();
         $data = DB::select('select * from airlines');
-        $airports = AirportController::getAirports();
+        $airports = airport::all();
         $airlines = Airline::all();
 
         return view('new_contract', compact('data', 'airports', 'airlines'));
@@ -53,7 +54,7 @@ class NewContractController extends Controller
     public function dropdown()
     {
         $data = DB::select('select * from airlines');
-        $airports = AirportController::getAirports();
+        $airports = airport::all();
         $airlines = Airline::all();
 
         return view('new_contract', compact('data', 'airports', 'airlines'));
