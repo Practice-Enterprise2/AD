@@ -30,8 +30,8 @@
           :url="route('shipments.requests')"></x-canvas-tile>
       @endcan
 
-      <x-canvas-tile :url="route('shipments.showshipments')" title="Show Shipments"
-        description="show your shipments"></x-canvas-tile>
+      <x-canvas-tile :url="route('shipments.dashboard')" title="Show Shipments"
+        description="Show shipment dashboard"></x-canvas-tile>
       <x-canvas-tile :url="route('pickups.index')" title="Pickups"
         description="See all your package pickups"></x-canvas-tile>
       @can('view_reviews')
@@ -58,6 +58,10 @@
       @can('contract_manager')
       <x-canvas-tile :url="route('contract_list')" title="Contract List"
         description="An overview of the contract between the airlines"></x-canvas-tile>
+      @endcan
+      @can('contract_manager')
+      <x-canvas-tile :url="route('airportList')" title="Airport List"
+        description="An overview of the airports"></x-canvas-tile>
       @endcan
       <x-canvas-tile :url="route('invoice_overview')" title="Invoices"
         description="View your invoices here"></x-canvas-tile>

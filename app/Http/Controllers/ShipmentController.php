@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class ShipmentController extends Controller
 {
@@ -207,6 +208,8 @@ class ShipmentController extends Controller
 
     public function showshipments()
     {
+        $test = "";
+
         $shipments = DB::table('shipments')
             ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
             ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
@@ -215,11 +218,11 @@ class ShipmentController extends Controller
         $id = DB::table('shipments')
             ->select('shipments.id')
             ->get();
-        $error = $this->cancel($id);
 
         return view('shipments',
-            ['shipments' => $shipments,
-                'error' => $error]);
+            [
+                'shipments' => $shipments,
+            ]);
     }
 
     public function showShipments_details($id)
@@ -238,45 +241,152 @@ class ShipmentController extends Controller
         ]);
     }
 
-    // Cancel a shipment with modal
-    public function cancel($id)
+
+    // Dashboard Functions
+    public function dashboard(): View
     {
+        // get Data from shipment table
+        $shipments = Shipment::all();
+
+        // Count total shipment of user.
+        $id = Auth::user()->id;
+        $countUser = DB::table('shipments')->where('user_id', $id)->count();
+        $roleUser = Auth::user()->role;
+
+        // Gathering count of each status
+        if ($roleUser == 1) {            
+            // Count of all shipments
+            $countUser = DB::table('shipments')->count();
+            // Count of all statusses            
+            $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->count();
+            $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->count();
+            $countInTran = DB::table('shipments')->where('status', 'In Transit')->count();
+            $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->count();
+            $countDelivered = DB::table('shipments')->where('status', 'Delivered')->count();
+            $countEx = DB::table('shipments')->where('status', 'Exception')->count();
+            $countHaL = DB::table('shipments')->where('status', 'Held At Location')->count();
+            $countDel = DB::table('shipments')->where('status', 'Deleted')->count();
+            $countDec = DB::table('shipments')->where('status', 'Declined')->count();
+            //count of All Types                 
+            $types = DB::table('shipments')
+            ->select(DB::raw('type, COUNT(type) as typeTotal'))           
+            ->groupBy('type')
+            ->get();
+            // all expense
+            $expenses = DB::table('shipments')
+            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+            ->groupBy('expense')
+            ->get();
+            // Last 5 shipments            
+            $latest = DB::table('shipments')
+            ->select('id', 'expense', 'receiver_name', 'status')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        } else if($roleUser != 1) {
+            // count of all shipments per user
+            $countUser = DB::table('shipments')->where('user_id', $id)->count();
+            // count of all statusses per shipment
+            $countAwaConf = DB::table('shipments')->where('status', 'Awaiting Confirmation')->where('user_id', $id)->count();
+            $countAwaPick = DB::table('shipments')->where('status', 'Awaiting Pickup')->where('user_id', $id)->count();
+            $countInTran = DB::table('shipments')->where('status', 'In Transit')->where('user_id', $id)->count();
+            $countOutFDel = DB::table('shipments')->where('status', 'Out For Delivery')->where('user_id', $id)->count();
+            $countDelivered = DB::table('shipments')->where('status', 'Delivered')->where('user_id', $id)->count();
+            $countEx = DB::table('shipments')->where('status', 'Exception')->where('user_id', $id)->count();
+            $countHaL = DB::table('shipments')->where('status', 'Held At Location')->where('user_id', $id)->count();
+            $countDel = DB::table('shipments')->where('status', 'Deleted')->where('user_id', $id)->count();
+            $countDec = DB::table('shipments')->where('status', 'Declined')->where('user_id', $id)->count();
+            // count of all types per user
+            $types = DB::table('shipments')
+            ->select(DB::raw('type, COUNT(type) as typeTotal'))
+            ->where('user_id', $id)
+            ->groupBy('type')
+            ->get();
+            // Expense per user
+            $expenses = DB::table('shipments')
+            ->select(DB::raw('expense, COUNT(type) as exepenseTotal'))
+            ->where('user_id', $id)
+            ->groupBy('expense')
+            ->get();
+            // last 5 shipments of that user
+            $latest = DB::table('shipments')
+            ->select('id', 'expense', 'receiver_name', 'status')
+            ->where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+        }
+
+        $pieLabels = [];
+        $pieData = [];
+        foreach ($types as $type) {
+            $pieLabels[] = $type->type;
+            $pieData[] = $type->typeTotal;
+        }
+        $blockLabels = [];
+        $blockData = [];
+        foreach ($expenses as $expense) {
+            $blockLabels[] = $expense->expense;
+            $blockData[] = $expense->exepenseTotal;
+        }
+
+        // Return the values
+        return view('shipments.dashboard', [
+            'countUser' => $countUser,
+            'countAwaConf' => $countAwaConf,
+            'countAwaPick' => $countAwaPick,
+            'countInTran' => $countInTran,
+            'countOutFDel' => $countOutFDel,
+            'countDelivered' => $countDelivered,
+            'countEx' => $countEx,
+            'countHaL' => $countHaL,
+            'countDel' => $countDel,
+            'countDec' => $countDec,
+            'pieData' => $pieData,
+            'pieLabels' => $pieLabels,
+            'blockLabels' => $blockLabels,
+            'blockData' => $blockData,
+            'latest' => $latest,
+        ]);
+    }
+
+
+    // Cancel a shipment with modal
+    public function cancel($id): View
+    {
+       
+        $shipment = Shipment::find($id);
+      
+        $inTransit = "In Transit";
         $errorMessage = '';
-
-        // Get status of the shipment with Id
-        $shipmentToCancel = DB::select('SELECT status FROM shipments WHERE id = 1');
-
-        if ($shipmentToCancel = 'Awaiting Confirmation' || $shipmentToCancel = 'Awaiting Pickup' || $shipmentToCancel = 'Held At Location') {
+        if($shipment->status === "Awaiting Confirmation" || $shipment->status === "Awaiting Pickup" || $shipment->status === "Held At Location") {
             // Can cancel ==> SUCCES
             $errorMessage = 'Succes! shipment has been canceled.';
             DB::update("UPDATE shipments SET status = 'Declined' WHERE id = ?", [$id]);
-        } elseif ($shipmentToCancel = 'Delivered') {
-            // Package already delivered
-            $errorMessage = "Can't be canceled! Package is already delivered.";
-        } elseif ($shipmentToCancel = 'Deleted') {
-            // You package has been canceled by Blue Sky
-            $errorMessage = "Can't be canceled! Package has been canceled by BlueSky";
-        } elseif ($shipmentToCancel = 'Declined') {
-            // Shipment already cancelled
-            $errorMessage = "Can't be canceled! Package is already canceled";
-        } elseif ($shipmentToCancel = 'Exception') {
-            // wait for HR to check
-            $errorMessage = 'This shipment is an exception, please wait for hr to review this!';
-        } else {
-            $errorMessage = "Can't be Canceled! package is in tranport and on its way";
         }
-        // Wait 5 secconds before going to the return page
-        // sleep(5);
-
-        // Navigate back to shipments page and load all data
-        $shipments = DB::table('shipments')
-            ->join('addresses', 'shipments.destination_address_id', '=', 'addresses.id')
-            ->select('shipments.receiver_name', 'shipments.id', 'shipments.user_id', 'addresses.street', 'addresses.house_number', 'addresses.postal_code', 'addresses.city', 'addresses.region', 'addresses.country', 'shipments.shipment_date', 'shipments.delivery_date', 'shipments.status')
-            ->get();
-
-        $showError = true;
-
-        return $errorMessage;
+        else if($shipment->status === "Delivered") {    
+            $errorMessage = "Can't be canceled! Package is already delivered.";
+        }
+        else if($shipment->status === "Deleted") {
+            $errorMessage = "Can't be canceled! Package has been deleted by an Employee.";
+        }
+        else if($shipment->status === "Declined") {
+            $errorMessage = "Can't be canceled! Package is already Canceled/Declined.";
+        }
+        else if($shipment->status === "In Transit") {
+            $errorMessage = "Can't be canceled! Package is on its way to the shipping address";
+        }
+        else if($shipment->status === "Exception") {
+            $errorMessage = "Can't be canceled! There has been a problem, please make a new shipment.";
+        }
+        else if($shipment->status === "Out For Delivery") {
+            $errorMessage = "Can't be canceled! Package is going to get shipped soon!";
+        }
+    
+        return view('delete-shipment',[
+            'errorMessage' => $errorMessage
+        ]);
     }
 
     public function edit(Shipment $shipment): View

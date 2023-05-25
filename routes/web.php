@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AirlineController;
+use App\Http\Controllers\AirportController;
 use App\Http\Controllers\ControlPanelController;
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
@@ -317,8 +318,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages', [ComplaintsController::class, 'messages'])->name('complaints.messages');
     Route::get('/messages/content/{id}', [ComplaintsController::class, 'viewChat'])->name('complaint.viewMessage');
     Route::post('/chat-message', [ComplaintsController::class, 'sendMessage']);
-
-    Route::get('/shipments/{shipment}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
+    Route::get('/delete-shipment/{id}', [ShipmentController::class, 'cancel'])->name('shipments.cancel');
+    Route::get('/shipments_dashboard', [ShipmentController::class, 'dashboard'])->name('shipments.dashboard');
     Route::get('/shipments', [ShipmentController::class, 'showshipments'])->name('shipments.showshipments');
     Route::get('/shipments_details/{id}', [ShipmentController::class, 'showShipments_details'])->name('shipments.showShipments_details');
 
@@ -365,6 +366,19 @@ Route::middleware('auth')->group(function () {
 
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
+    //airportlist
+    Route::get('airportList', [AirportController::class, 'airportFiltering'])->name('airportList');
+
+    // Add, delete and edit airportList
+    Route::get('/addAirportList', function () { 
+    return view('/addAirportList');
+    });
+
+    Route::post('/airportList/add', [AirportController::class, 'addAirport'])->name('add_airport');
+    Route::get('/deleteAirport/{id}', [AirportController::class, 'deleteAirport']);
+    Route::get('/editAirport/{id}', [AirportController::class, 'editAirport'])->name('edit_airport');
+    Route::post('/editAirport', [AirportController::class, 'updateAirport']);
 
     //contracts between airlines
     Route::post('plaats', [NewContractController::class, 'plaats']);

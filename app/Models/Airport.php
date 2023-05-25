@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 /**
  * @property int $id
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Airport extends Model implements ValidatesAttributes
 {
-    use SoftDeletes, AppValidatesAttributes;
+    use SoftDeletes, AppValidatesAttributes, Sortable;
 
     public const VALIDATION_RULE_IATA_CODE = ['required', 'max:3'];
 

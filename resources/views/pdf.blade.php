@@ -16,8 +16,8 @@
   <h2>Agreement:</h2>
   <h3>Duration: {{ $contract->start_date }} until {{ $contract->end_date }}</h3>
   <h3>Price: {{ $contract->price }} euro/kg</h3>
-  <h3>Departlocatioin: {{ $contract->depart_location }} airport</h3>
-  <h3>Endlocation: {{ $contract->destination_location }} airport</h3>
+  <h3>DepartlocationID: {{ $contract->depart_airport_id }}</h3>
+  <h3>EndlocationID: {{ $contract->destination_airport_id }}</h3>
   <h5>Signature of both parties indicate the acceptance of this agreement</h5>
   <h4>Jef Manager</h4>
   <h4>Blue Sky general manager</h4>

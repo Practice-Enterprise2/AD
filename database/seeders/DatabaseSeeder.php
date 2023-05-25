@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Airport;
 use App\Providers\AppServiceProvider;
 use Illuminate\Database\Seeder;
 
@@ -19,5 +20,8 @@ class DatabaseSeeder extends Seeder
         // it generates addresses and assign them into depots.
         $this->call(DepotSeeder::class);
         $this->call(AiGraphSeeder::class);
+        $this->call(airportTableSeeder::class);
+        $this->call(airlineSeeder::class);
+        $this->call(airportContractSeeder::class);
     }
 }
