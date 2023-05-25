@@ -227,12 +227,6 @@ Route::controller(RoleController::class)->group(function () {
     Route::post('/admin/roles', 'store')->name('roles.store');
 });
 
-Route::controller(TicketController::class)->group(function () {
-    Route::get('/create-ticket', 'showForm')->name('create-ticket');
-    Route::post('/submitted-ticket', 'store')->name('submitted-ticket');
-    Route::get('/submitted-ticket', 'showSubmittedTicket')->name('show-ticket');
-});
-
 Route::controller(CustomerController::class)->group(function () {
     Route::get('/customers', 'getCustomers')->name('customers')->middleware('permission:view_all_users');
     Route::get('/customers/{id}/edit', 'edit')->name('customer.edit');
@@ -285,7 +279,7 @@ Route::middleware('auth')->group(function () {
     //gilles route
     // Route::get('shipments/{user_id}/get_shipments') (User $user)
 
-    Route::get('shipments/get_shipments/{shipment}/shipment_overview', [ShipmentController::class, 'track'])->name('shipments.track');
+    // Route::get('shipments/get_shipments/{shipment}/shipment_overview', [ShipmentController::class, 'track'])->name('shipments.track');
 
     //contact and messages
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
