@@ -15,7 +15,7 @@ class NotificationController extends Controller
     /*
      * Mark the notification with `$id` for the current session's user as read.
      */
-    public function mark_as_read(int $id): void
+    public function mark_as_read(string $id): void
     {
         auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
     }

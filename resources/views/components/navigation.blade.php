@@ -149,7 +149,7 @@
         </div>
       </div>
 
-      <script type="module">
+      <script type="text/javascript">
         function markNotificationsAsRead(notifications) {
           if (notifications !== '0') {
             $.ajax({

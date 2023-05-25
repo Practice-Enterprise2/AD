@@ -14,6 +14,7 @@ use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\JobVacanciesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -73,6 +74,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/employee_view_contracts/details', 'employeeContractDetails')->name('employee-contract-details')->middleware('permission:change_employee_contracts');
         Route::get('/employee_contract_search', 'searchEmployeeContract')->name('employee-contract-search')->middleware('permission:change_employee_contracts');
         Route::post('/employee_view_contracts/pdf', 'createEmployeeContractPDF')->name('employee-download-contract')->middleware('permission:change_employee_contracts');
+    });
+
+    Route::controller(InvoicesController::class)->group(function () {
+        Route::get('/invoices_list', 'viewAllInvoices')->name('invoice-list')->middleware('permission:view_all_invoices');
+        Route::post('/invoices_list/details', 'viewInvoiceDetails')->name('invoice-details')->middleware('permission:view_all_invoices');
+        Route::get('/invoices_list/details/mail', 'invoiceMail')->name('invoice-mail')->middleware('permission:view_all_invoices');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -145,11 +152,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(WaypointController::class)->group(function () {
         Route::get('shipments/requests/evaluate/{shipment}/set', 'create')->name('shipments.requests.evaluate.set')->middleware('permission:edit_all_shipments');
         Route::post('shipments/requests/evaluate/{shipment}/set/store', 'store')->name('shipments.requests.evaluate.set.store')->middleware('permission:edit_all_shipments');
+        Route::get('shipments/{shipment}/confirm-waypoint', 'confirmWaypoint')->name('shipments.confirm-waypoint')->middleware('permission:edit_all_shipments');
+        Route::get('shipments/{shipment}/exception-waypoint', 'exceptionWaypoint')->name('shipments.exception-waypoint')->middleware('permission:edit_all_shipments');
         Route::get('shipments/{shipment}/update-waypoint', 'update')->name('shipments.update-waypoint')->middleware('permission:edit_all_shipments');
     });
 
     Route::controller(ShipmentController::class)->group(function () {
-        Route::get('/shipments', 'index')->name('shipments.index')->can('viewAny', Shipment::class);
+        Route::get('/shipments', 'index')->name('shipments.index');
+        Route::get('/shipments/list-shipments', 'listShipments')->name('shipments.listShipments');
         Route::get('/shipments/create', 'create')->name('shipments.create')->can('create', Shipment::class);
         Route::post('/shipments', 'store')->name('shipments.store')->can('create', Shipment::class);
         Route::get('/shipments/requests', 'requests')->name('shipments.requests')->can('acceptAny', Shipment::class);
@@ -199,7 +209,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/markAsRead', 'mark_all_as_read')->name('notifications.mark_all_as_read');
-        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_one_as_read');
+        Route::get('/markAsRead/{id}', 'mark_as_read')->name('notifications.mark_as_read');
     });
 
     Route::controller(CustomerOrderHistoryController::class)->group(function () {

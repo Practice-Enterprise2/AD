@@ -18,7 +18,7 @@
             <th class="border-b border-gray-300 px-4 py-2 dark:border-gray-700">
               Price</th>
             <th class="border-b border-gray-300 px-4 py-2 dark:border-gray-700">
-              Price incl. VAT</th>
+              Price excl. VAT</th>
             <th class="border-b border-gray-300 px-4 py-2 dark:border-gray-700">
               Created at</th>
             <th class="border-b border-gray-300 px-4 py-2 dark:border-gray-700">

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\Database\Eloquent\ValidatesAttributes;
 use App\Database\Eloquent\ValidatesAttributes as AppValidatesAttributes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Shipment extends Model implements ValidatesAttributes
 {
-    use SoftDeletes, AppValidatesAttributes;
+    use SoftDeletes, AppValidatesAttributes, HasFactory;
 
     public const VALIDATION_RULE_WEIGHT = ['required', 'numeric'];
 
