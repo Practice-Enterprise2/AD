@@ -59,6 +59,10 @@
       <x-canvas-tile :url="route('contract_list')" title="Contract List"
         description="An overview of the contract between the airlines"></x-canvas-tile>
       @endcan
+      @can('contract_manager')
+      <x-canvas-tile :url="route('airportList')" title="Airport List"
+        description="An overview of the airports"></x-canvas-tile>
+      @endcan
       <x-canvas-tile :url="route('invoice_overview')" title="Invoices"
         description="View your invoices here"></x-canvas-tile>
       @can('change_employee_contracts')

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AirlineController;
+use App\Http\Controllers\AirportController;
 use App\Http\Controllers\ControlPanelController;
 // All routes defined here are automatically assigned to the `web` middleware
 // group.
@@ -365,6 +366,19 @@ Route::middleware('auth')->group(function () {
 
     //Email for invoice
     Route::get('/mail/invoices/{invoice}', [ShipmentController::class, 'sendInvoiceMail'])->name('mail.invoices');
+
+    //airportlist
+    Route::get('airportList', [AirportController::class, 'airportFiltering'])->name('airportList');
+
+    // Add, delete and edit airportList
+    Route::get('/addAirportList', function () { 
+    return view('/addAirportList');
+    });
+
+    Route::post('/airportList/add', [AirportController::class, 'addAirport'])->name('add_airport');
+    Route::get('/deleteAirport/{id}', [AirportController::class, 'deleteAirport']);
+    Route::get('/editAirport/{id}', [AirportController::class, 'editAirport'])->name('edit_airport');
+    Route::post('/editAirport', [AirportController::class, 'updateAirport']);
 
     //contracts between airlines
     Route::post('plaats', [NewContractController::class, 'plaats']);
