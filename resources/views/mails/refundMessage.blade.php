@@ -1,5 +1,3 @@
-    
-<strong>Customer details: </strong><br>
 <strong>Firstname: </strong>{{ $data->Firstname }} <br>
 <strong>Lastname: </strong>{{ $data->Lastname }} <br>
 <strong>Email: </strong>{{ $data->email }} <br>

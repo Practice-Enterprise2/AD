@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
-use Mail;
+use Illuminate\Support\Mail;
+
 use App\Models\refund;
 use App\Mail\contactMail;
   
